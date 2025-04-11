@@ -1,0 +1,1396 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+  <!-- Preloader -->
+  <div id="preloader" class="preloader" data-delay="0" data-limit="3000">
+    <img src="assets/images/logo.svg" class="emblem" alt="Emblem" hidden="hidden" />
+  </div>
+
+  <head>
+
+    <!-- Display -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+    <!-- Identity -->
+    <title>Shock - Creative Multipurpose Bootstrap 5 Template</title>
+    <meta name="description" content="Shock is a creative multipurpose theme for building websites. It is based on Bootstrap 5 and other of the best and most up-to-date code libraries used by professional developers in the world.">
+    <meta name="author" content="Codings">
+    <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon" />
+  
+    <!-- Vendor CSS -->
+    <link rel="stylesheet" href="assets/css/vendor/preloader.min.css" />
+    <link rel="stylesheet" href="assets/css/vendor/font-family.min.css" />
+    <link rel="stylesheet" href="assets/css/vendor/font-awesome.min.css" />  
+    <link rel="stylesheet" href="assets/css/vendor/menu-engine.min.css" />
+    <link rel="stylesheet" href="assets/css/vendor/menu-grid.min.css" />
+    <link rel="stylesheet" href="assets/css/vendor/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/vendor/swiper.min.css" />
+    <link rel="stylesheet" href="assets/css/vendor/dynamic-slider.min.css" />
+    <link rel="stylesheet" href="assets/css/vendor/bricklayer.min.css" />
+    <link rel="stylesheet" href="assets/css/vendor/lightbox.min.css" />
+    <link rel="stylesheet" href="assets/css/vendor/aos.min.css" />
+  
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="assets/css/theme.css" />
+    <link rel="stylesheet" href="assets/css/core.css" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+  
+  </head>
+
+  <body class="shock-body">
+
+    <!-- Popup Bar -->
+    <div id="popup-bar" class="popup-bar bg-gradient scheme-2 shadow d-none">
+      <p class="description white-85">Don't miss this offer! It's for a limited time. 🥳</p>
+      <a href="https://codings.dev/?buy=shock-html" target="_blank" class="button simple">
+        <span class="button-text white white-hover"><mark class="animated-underline secondary active">Save Now</mark></span>
+        <i class="fa-solid fa-arrow-right button-icon white white-hover"></i>
+      </a>
+      <button id="popup-bar-dismiss" class="button close-button">
+        <i class="fa-solid fa-xmark button-icon white secondary-hover"></i>
+      </button>
+    </div>
+
+    <!-- Popup Box -->
+    <div id="popup-box" class="popup-box d-none">
+      <div class="card parent">
+        <div class="card-body rounded-3 small-shadow text-center bg-color white">
+          <h3 class="title max-w-85 mx-auto text-style-11 black">
+            <span class="bg-color white">Do you like cookies? 🍪</span>
+            <span class="zzz over-text scheme-1 gray"></span>
+          </h3>
+          <p class="description">We use cookie technology to provide you with a better browsing experience. You accept our terms if you continue to use this site.</p>
+          <!-- Button -->
+          <div class="button-wrapper align-h-center">
+            <a href="#your-link" target="_blank" class="button simple">
+              <span class="button-text black black-hover">Read more</span>
+            </a>
+            <button id="popup-box-dismiss" class="button simple">
+              <span class="button-text black black-hover"><mark class="animated-underline accent">Accept terms</mark></span>
+              <i class="fa-solid fa-arrow-right button-icon black black-hover"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Header -->
+    <header id="header" class="shock-header">    
+      <!-- Navbar -->
+      <nav id="navbar" class="navbar navbar-menu-grid scheme-1">
+        <div class="container-fluid">
+          <!-- Brand -->
+          <a class="navbar-brand" href="/">
+            <!-- <div class="site-title">Site Title</div> -->
+            <img src="assets/images/logo-white.svg" alt="Shock Theme" class="logo main-logo" />
+            <img src="assets/images/logo.svg" alt="Shock Theme" class="logo sticky-logo" />
+            <img src="assets/images/logo-white.svg" alt="Shock Theme" class="logo mobile-logo" />
+            <span class="logo-after-text">SHOCK</span>
+          </a>
+          <!-- Menu toggle -->
+          <div id="menu-toggle" class="menu-toggle is-inactive magnetic-effect scheme-1 tertiary">
+            <div class="menu-toggle-icon">
+              <div class="menu-toggle-container">
+                <span class="menu-toggle-line-top"></span>
+                <span class="menu-toggle-line-middle"></span>
+                <span class="menu-toggle-line-bottom"></span>
+              </div>
+            </div>
+            <div class="menu-toggle-circle">
+              <svg class="menu-toggle-menu-toggle-svg-circle">
+                <path class="menu-toggle-path-circle" fill="none" stroke-miterlimit="10" stroke-width="4" d="M 34 2 C 16.3 2 2 16.3 2 34 s 14.3 32 32 32 s 32 -14.3 32 -32 S 51.7 2 34 2" />
+              </svg>
+            </div>
+            <svg width="0" height="0">
+              <mask id="menu-toggle-mask">
+                <path class="path-mask" fill="none" stroke-miterlimit="10" stroke-width="4" d="M 34 2 c 11.6 0 21.8 6.2 27.4 15.5 c 2.9 4.8 5 16.5 -9.4 16.5 h -4" />
+              </mask>
+            </svg>
+            <div class="menu-toggle-path">
+              <div class="path-animation">
+                <div class="path-rotation"></div>
+              </div>
+            </div>
+          </div>
+          <!-- Menu grid -->
+          <nav id="menu-grid" class="menu-grid scheme-1 tertiary">
+            <div class="menu-grid-item item-1" data-direction="bt">
+              <div class="menu-grid-item-inner">
+                <!-- Label -->
+                <div class="menu-grid-label top">
+                  <span class="label-vertical">
+                    <span class="label-line gray"></span>
+                    <span class="label-text gray">SINCE 1986</span>
+                  </span>
+                </div>
+                <!-- Label -->
+                <div class="menu-grid-label bottom">
+                  <span class="label-vertical">
+                    <span class="label-line gray"></span>
+                    <span class="label-text gray">MARKET REFERENCE</span>
+                  </span>
+                </div>
+                <!-- Main menu -->
+                <div class="menu-grid-main">
+                  <a href="#your-link" class="menu-grid-main-item menu-item">Stories</a>
+                  <a href="#your-link" class="menu-grid-main-item menu-item">Portfolio</a>
+                  <a href="#your-link" class="menu-grid-main-item menu-item">Insights</a>
+                  <a href="#your-link" class="menu-grid-main-item menu-item">Contact</a>
+                </div> 
+                <!-- Form -->
+                <div class="menu-grid-search focus-trigger">
+                  <div class="form-area scheme-2 white">
+                    <form class="form-fields needs-validation" novalidate="novalidate">
+                      <div class="form-row row has-icon">
+                        <div class="form-col form-floating">
+                          <button class="button overlay-button"><i class="fa-solid fa-magnifying-glass overlay-icon"></i></button>
+                          <input id="InputSearchMenu" class="form-control focus-trigger-field" placeholder="Type keywords..." required="required">
+                          <label for="InputSearchMenu" class="form-label">Type keywords...</label>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="menu-grid-item item-2" data-direction="lr">
+              <div class="menu-grid-item-inner">
+                <!-- Image -->
+                <a href="#your-link" class="menu-grid-item-image">
+                  <img src="assets/images/jpg/c-22.jpg" alt="Image name" class="image" />
+                  <span class="title">View Portfolio</span>
+                </a>
+              </div>
+            </div>
+            <div class="menu-grid-item item-3" data-direction="bt">
+              <div class="menu-grid-item-inner">
+                <!-- Label -->
+                <div class="menu-grid-label">
+                  <span class="label-horizontal">
+                    <span class="label-line gray"></span>
+                    <span class="label-text gray">OUR SERVICES</span>
+                  </span>
+                </div>
+                <!-- Links -->
+                <div class="menu-grid-minor">
+                  <a href="#your-link" class="menu-grid-minor-item menu-item"><span class="menu-grid-minor-item-inner">Photography</span></a>
+                  <a href="#your-link" class="menu-grid-minor-item menu-item"><span class="menu-grid-minor-item-inner">Art Direction</span></a>
+                  <a href="#your-link" class="menu-grid-minor-item menu-item"><span class="menu-grid-minor-item-inner">Graphic Design</span></a>
+                  <a href="#your-link" class="menu-grid-minor-item menu-item"><span class="menu-grid-minor-item-inner">Brand Creation</span></a>
+                  <a href="#your-link" class="menu-grid-minor-item menu-item"><span class="menu-grid-minor-item-inner">Social Media</span></a>
+                  <a href="#your-link" class="menu-grid-minor-item menu-item"><span class="menu-grid-minor-item-inner">Marketing Digital</span></a>
+                </div>
+              </div>
+            </div>
+            <div class="menu-grid-item item-4" data-direction="rl">
+              <div class="menu-grid-item-inner">
+                <!-- Image -->
+                <a href="#your-link" class="menu-grid-item-image">
+                  <img src="assets/images/jpg/c-16.jpg" alt="Image name" class="image" />
+                  <span class="title">View Routes</span>                
+                </a>
+              </div>
+            </div>
+            <div class="menu-grid-item item-5" data-direction="tb">
+              <div class="menu-grid-item-inner">
+                <!-- Contacts -->
+                <div class="menu-grid-minor">
+                  <a href="tel:+19912345678" class="menu-grid-minor-item"><span class="menu-grid-minor-item-inner"><i class="fas fa-mobile-alt icon"></i>+1 (99) 1234 5678</span></a>
+                  <a href="tel:+19812345678" class="menu-grid-minor-item"><span class="menu-grid-minor-item-inner"><i class="fas fa-phone-alt icon"></i>+1 (98) 1234 5678</span></a>
+                  <a href="mailto:contact@mail.com" class="menu-grid-minor-item"><span class="menu-grid-minor-item-inner"><i class="fas fa-envelope icon"></i>contact@mail.com</span></a>
+                  <div class="menu-grid-icons">
+                    <a href="#your-link" class="menu-grid-minor-item"><span class="menu-grid-minor-item-inner"><i class="fab fa-facebook-f icon"></i></span></a>
+                    <a href="#your-link" class="menu-grid-minor-item"><span class="menu-grid-minor-item-inner"><i class="fab fa-twitter icon"></i></span></a>
+                    <a href="#your-link" class="menu-grid-minor-item"><span class="menu-grid-minor-item-inner"><i class="fab fa-linkedin-in icon"></i></span></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </nav>   
+    </header>
+    
+    <!-- Main -->
+    <main id="main" class="shock-main">
+
+      <!-- Banner -->
+      <section class="shock-section has-overlay">
+        <div class="banner">
+          <div class="content-wrapper">
+            <!-- Intro -->
+            <div class="basic-intro mb-25 text-center">
+              <h1 class="title white">
+                <span class="text-1 text-style-3 text-outline">Why design</span>
+                <span class="text-2 text-style-3 text-italic">matters to <mark class="animated-underline tertiary">our lives</mark> ?</span>
+              </h1>
+            </div>
+            <!-- Metadata -->
+            <div class="banner-metadata">
+              <div class="item">
+                <h5 class="text text-style-11 gray"><i class="icon fas fa-user-circle"></i>John Young</h5>
+              </div>
+              <div class="item">
+                <h5 class="text text-style-11 gray"><i class="icon fas fa-calendar-alt"></i>January 14, 2022</h5>
+              </div>
+              <div class="item">
+                <h5 class="text text-style-11 gray"><i class="icon fas fa-layer-group"></i>Branding</h5>
+              </div>
+            </div>
+          </div>
+          <!-- Image -->
+          <div class="image-wrapper">
+            <img src="assets/images/jpg/a-43.jpg" class="image vh-75 fit-cover" alt="This is an example description for this item." />
+          </div>
+          <!-- Overlay -->
+          <div class="overlay black-75"></div>
+        </div>
+      </section>
+
+      <!-- Post -->
+      <section class="shock-section pt-5 pb-5" data-bg-color="#1e1e24">
+        <div class="container max-w-85">
+          <div class="row g-5">
+            <div class="col-12 col-md-8">
+              <div class="content max-w-100 scheme-2">
+                
+                <!-- Breadcrumb -->
+                <div class="breadcrumb-nav scheme-2 tertiary">
+                  <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item has-icon">
+                        <a href="#" class="breadcrumb-link"><i class="fa-solid fa-house icon"></i><span class="text">Home</span></a>
+                      </li>
+                      <li class="breadcrumb-item">
+                        <a href="#" class="breadcrumb-link">Blog</a>
+                      </li>
+                      <li class="breadcrumb-item active" aria-current="page">
+                        Why design matters to our lives?
+                      </li>
+                    </ol>
+                  </nav>
+                </div>
+          
+                <!-- Paragraph -->
+                <h3>After all, why is design important?</h3>
+                <p>Design is a broad concept that represents the process of creating products based on technical and aesthetic excellence, with the aim of <mark class="animated-underline tertiary-50 text-white">solving problems</mark> and adding value. Good design delivers the best possible user experience.</p>
+                <p>Design is a thought process that comprises the creation of products to solve problems, including functional and <strong>aesthetic aspects</strong>.</p>
+                <p>This is the most objective definition possible for the concept, which encompasses numerous forms of idealization, conception, development and specification of objects.</p>
+                
+                <!-- Paragraph -->
+                <h3>Some of the types of designs that exist</h3>
+                <ul>
+                  <li><strong>Graphic design</strong> is the use of images, texts and illustrations for visual communication.</li>
+                  <li><strong>Game design</strong> focused on the development and <a href="#"><u>creation of games</u></a>.</li>
+                  <li><strong>Design thinking</strong> can be defined as the way of design thinking applied to the solution of challenges and innovation in business:
+                    <ul>
+                      <li><u>Immersion:</u> research and understanding of the problem and its context.</li>
+                      <li><u>Ideation:</u> generating ideas as a team from the data collected.</li>
+                      <li><u>Prototyping:</u> creating prototypes that validate learned content.</li>
+                    </ul>
+                  </li>
+                  <li><strong>Product design</strong>, works with the <mark class="animated-underline tertiary-50 text-white">creation of objects</mark> focused on solving problems.</li>
+                  <li><strong>Web design</strong> is the area that covers the creation of interfaces for software, websites, platforms and applications.</li>
+                  <li><strong>Interior design</strong> is the area responsible for planning, creating and executing indoor projects.</li>
+                </ul>
+          
+                <!-- Paragraph -->
+                <h3>The history of design</h3>
+                <p>If we take the term literally, our ancestors already practiced design when creating their chipped stone tools. However, to facilitate understanding, let's place the concept in our age.</p>
+                <p>In this case, who deserves the title of first designer in history is <a href="#"><u>Leonardo Da Vinci</u></a>.</p>
+                <p>The genius used design principles to design visionary inventions that revolutionized humanity and propelled science forward.</p>
+          
+                <!-- Image -->
+                <figure class="figure">
+                  <img src="assets/images/jpg/a-11.jpg" class="image shadow rounded" alt="Image name">
+                  <figcaption class="figure-caption text-center">A caption for the above image.</figcaption>
+                </figure>
+          
+                <!-- Paragraph -->
+                <p>Design is fundamental because it optimizes human creation, combining aesthetics with functionality. It is a process capable of adding value and generating more efficient, comfortable, safe and <mark class="animated-underline tertiary-50 text-white">beautiful solutions</mark>.</p>
+                <p>Proof of this is that common sense equates design with something beautiful and well done. For companies, design is one of the key success factors, from <strong>product development</strong> to customer value delivery.</p>
+          
+                <!-- Blockquote -->
+                <div class="blockquote mx-auto">
+                  <blockquote class="blockquote-body text-style-11 white">
+                    <p>"The design is not just what it looks like. The design is how it works".</p>
+                  </blockquote>
+                  <div class="blockquote-footer">
+                    <cite title="Source Title">Steve Jobs / Apple Founder</cite>
+                  </div>
+                  <i class="fas fa-quote-right overlay-icon gray-50"></i>
+                </div>
+                
+                <!-- Paragraph -->
+                <p>It's not just about enchanting the product's look, but thinking about the entire process of use and arriving at the best possible solution.</p>
+                <p>For this, the designer transforms ideas into products that actually solve problems, designed and executed in the smallest details.</p>
+                <h3>Is design considered an art?</h3>
+                <p>Personally, I usually say that design is the bridge between what already exists and what is possible to imagine and do.</p>
+                <p>Therefore, it is such a complex concept, which goes through art, business, culture, aesthetics, behavior and technology.</p>
+          
+                <!-- Gallery -->
+                <div class="block-section">
+                  <div class="gallery stretched-side has-gap">
+                    <div class="bricklayer" data-columns="3">
+                      <a href="assets/images/jpg/d-1.jpg" class="item lightbox-link">
+                        <div class="image-wrapper shadow rounded hover-zoom-rotate">
+                          <div class="overlay black-50"></div>
+                          <img src="assets/images/jpg/d-1.jpg" class="image rounded shadow" alt="This is an example description for this item." />
+                        </div>
+                      </a>
+                      <a href="assets/images/jpg/d-2.jpg" class="item lightbox-link">
+                        <div class="image-wrapper shadow rounded hover-zoom-rotate">
+                          <div class="overlay black-50"></div>
+                          <img src="assets/images/jpg/d-2.jpg" class="image rounded shadow" alt="This is an example description for this item." />
+                        </div>
+                      </a>
+                      <!-- Video -->
+                      <a href="https://vimeo.com/222990241" class="item active lightbox-link">
+                        <i class="fa-solid fa-circle-play gallery-icon white floating-item"></i>
+                        <div class="image-wrapper shadow rounded hover-zoom-rotate">
+                          <div class="overlay black-50"></div>
+                          <img src="assets/images/jpg/d-3.jpg" class="image rounded shadow" alt="This is an example description for this item." />
+                        </div>
+                      </a>
+                      <a href="assets/images/jpg/d-4.jpg" class="item lightbox-link">
+                        <div class="image-wrapper shadow rounded hover-zoom-rotate">
+                          <div class="overlay black-50"></div>
+                          <img src="assets/images/jpg/d-4.jpg" class="image rounded shadow" alt="This is an example description for this item." />
+                        </div>
+                      </a>
+                      <a href="assets/images/jpg/d-5.jpg" class="item lightbox-link">
+                        <div class="image-wrapper shadow rounded hover-zoom-rotate">
+                          <div class="overlay black-50"></div>
+                          <img src="assets/images/jpg/d-5.jpg" class="image rounded shadow" alt="This is an example description for this item." />
+                        </div>
+                      </a>
+                      <a href="assets/images/jpg/d-6.jpg" class="item lightbox-link">
+                        <div class="image-wrapper shadow rounded hover-zoom-rotate">
+                          <div class="overlay black-50"></div>
+                          <img src="assets/images/jpg/d-6.jpg" class="image rounded shadow" alt="This is an example description for this item." />
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+          
+                <!-- Paragraph -->
+                <h3>Can you already see design with a new look?</h3>
+                <p>As we have seen, it is not a simple term, as it concerns a process, science, profession and even attributes of everything we know.</p>
+                <p>No wonder you are surrounded by examples of design: the page of this blog, the decoration of your office, the model of your shirt and even the shape of your chair. That's why design is so important.</p>
+                <p>It allows the world we imagine to become reality in the best possible way.</p>
+          
+                <!-- Post navigation-->
+                <div class="block-section">
+                  <div class="post-navigation">
+                    <div class="post-navigation-buttons">
+                      <!-- Button -->
+                      <a href="#" class="arrow-button prev scheme-2 tertiary">
+                        <span class="arrow">
+                          <span class="item"></span>
+                          <span class="item"></span>
+                        </span>
+                        <span class="line"></span>
+                        <span class="text">PREV ARTICLE</span>
+                      </a>
+                      <!-- Button -->
+                      <a href="#" class="arrow-button next scheme-2 tertiary">
+                        <span class="arrow">
+                          <span class="item"></span>
+                          <span class="item"></span>
+                        </span>
+                        <span class="line"></span>
+                        <span class="text">NEXT ARTICLE</span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+          
+                <!-- Divider -->
+                <div class="block-section">
+                  <span class="zzz scheme-2 gray-75"></span>
+                </div>
+                
+                <!-- Tag Cloud -->
+                <div class="block-section">
+                  <h2>Tags</h2>
+                  <div class="tag-cloud">
+                    <a href="#your-link" class="link">                      
+                      <span class="badge outline gray-50 tertiary-hover">
+                        <span class="badge-text gray white-hover">Environment</span>
+                      </span>
+                    </a>
+                    <a href="#your-link" class="link">                      
+                      <span class="badge outline gray-50 tertiary-hover">
+                        <span class="badge-text gray white-hover">Events</span>
+                      </span>
+                    </a>
+                    <a href="#your-link" class="link">                      
+                      <span class="badge outline gray-50 tertiary-hover">
+                        <span class="badge-text gray white-hover">Technology</span>
+                      </span>
+                    </a>
+                    <a href="#your-link" class="link">                      
+                      <span class="badge outline gray-50 tertiary-hover">
+                        <span class="badge-text gray white-hover">Web</span>
+                      </span>
+                    </a>
+                    <a href="#your-link" class="link">                      
+                      <span class="badge outline gray-50 tertiary-hover">
+                        <span class="badge-text gray white-hover">Mobile</span>
+                      </span>
+                    </a>
+                    <a href="#your-link" class="link">                      
+                      <span class="badge outline gray-50 tertiary-hover">
+                        <span class="badge-text gray white-hover">Design</span>
+                      </span>
+                    </a>
+                    <a href="#your-link" class="link">                      
+                      <span class="badge outline active gray-50 tertiary-hover floating-item-smooth">
+                        <span class="badge-text gray white-hover">Branding</span>
+                      </span>
+                    </a>
+                    <a href="#your-link" class="link">                      
+                      <span class="badge outline gray-50 tertiary-hover">
+                        <span class="badge-text gray white-hover">Development</span>
+                      </span>
+                    </a>
+                    <a href="#your-link" class="link">                      
+                      <span class="badge outline gray-50 tertiary-hover">
+                        <span class="badge-text gray white-hover">Artificial</span>
+                      </span>
+                    </a>
+                    <a href="#your-link" class="link">                      
+                      <span class="badge outline gray-50 tertiary-hover">
+                        <span class="badge-text gray white-hover">Intelligence</span>
+                      </span>
+                    </a>
+                    <a href="#your-link" class="link">                      
+                      <span class="badge outline gray-50 tertiary-hover">
+                        <span class="badge-text gray white-hover">Engineering</span>
+                      </span>
+                    </a>
+                    <a href="#your-link" class="link">                      
+                      <span class="badge outline gray-50 tertiary-hover">
+                        <span class="badge-text gray white-hover">Innovation</span>
+                      </span>
+                    </a>
+                    <a href="#your-link" class="link">                      
+                      <span class="badge outline gray-50 tertiary-hover">
+                        <span class="badge-text gray white-hover">Social</span>
+                      </span>
+                    </a>
+                    <a href="#your-link" class="link">                      
+                      <span class="badge outline gray-50 tertiary-hover">
+                        <span class="badge-text gray white-hover">Fashion</span>
+                      </span>
+                    </a>
+                    <a href="#your-link" class="link">                      
+                      <span class="badge outline gray-50 tertiary-hover">
+                        <span class="badge-text gray white-hover">Product</span>
+                      </span>
+                    </a>
+                  </div>
+                </div>
+          
+                <!-- Post reference -->
+                <div class="block-section">
+                  <div class="post-reference" data-lax="inertia-top">
+                    <div class="post-reference-container">
+                      <div class="image-wrapper">
+                        <img src="assets/images/png/b-2.png" alt="Image name" class="image">
+                      </div>
+                      <div class="text-wrapper">
+                        <h5 class="title"><mark class="animated-underline tertiary-50">John Young</mark></h5>
+                        <p class="description">Co-founder of the Company. The Wall Street Journal named him the biggest influencer on the web.</p>
+                        <cite title="Source Title">Author of the article "Why design matters to our lives".</cite>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Comments -->
+                <div class="comments">
+                  <h2>Comments <span class="text-outline">(16)</span></h2>
+                  <div class="comments-wrapper">
+                    <!-- Comment -->
+                    <div id="comment-1" class="comment">
+                      <div class="comment-metadata">
+                        <div class="comment-author">
+                          <div class="author-photo">
+                            <img src="assets/images/jpg/p-1.jpg" class="image shadow" alt="Image name">
+                          </div>
+                          <h5 class="author-name">Alice Johnson</h5>         
+                        </div>
+                        <span class="comment-date">
+                          <i class="icon fas fa-calendar-alt"></i>
+                          <span class="text">14 days ago</span>
+                        </span>
+                      </div>
+                      <div class="comment-content">
+                        <p>Hello, this theme is really amazing! It has many features that make my job as a developer much easier. I'm sure my clients will love to see the final result of this project.</p>
+                      </div>
+                      <div class="comment-action">
+                        <!-- Button -->
+                        <a href="#comment-1" class="button simple">
+                          <span class="button-text white tertiary-hover">Reply comment</span>
+                          <i class="fa-solid fa-arrow-right button-icon white tertiary-hover"></i>
+                        </a>
+                        <i class="fa-solid fa-heart like-icon active tertiary"></i>             
+                      </div>
+                    </div>
+                    <!-- Comment -->
+                    <div id="comment-2" class="comment">
+                      <div class="comment-metadata">
+                        <div class="comment-author">
+                          <div class="author-photo">
+                            <img src="assets/images/jpg/p-1.jpg" class="image shadow" alt="Image name">
+                          </div>
+                          <h5 class="author-name">Kaled Ahmad</h5>         
+                        </div>
+                        <span class="comment-date">
+                          <i class="icon fas fa-calendar-alt"></i>
+                          <span class="text">17 days ago</span>
+                        </span>
+                      </div>
+                      <div class="comment-content">
+                        <p>مرحبًا ، هذا المظهر رائع حقًا! يحتوي على العديد من الميزات التي تجعل عملي كمطور أسهل بكثير. أنا متأكد من أن عملائي سيحبون رؤية موقع الويب الذي أقوم ببنائه لهم.</p>
+                      </div>
+                      <div class="comment-action">
+                        <!-- Button -->
+                        <a href="#comment-2" class="button simple">
+                          <span class="button-text white tertiary-hover">Reply comment</span>
+                          <i class="fa-solid fa-arrow-right button-icon white tertiary-hover"></i>
+                        </a>
+                        <i class="fa-solid fa-heart like-icon tertiary"></i>             
+                      </div>
+                    </div>
+                    <!-- Comment -->
+                    <div id="comment-3" class="comment">
+                      <div class="comment-metadata">
+                        <div class="comment-author">
+                          <div class="author-photo">
+                            <img src="assets/images/jpg/p-1.jpg" class="image shadow" alt="Image name">
+                          </div>
+                          <h5 class="author-name">Laura Garcia</h5>         
+                        </div>
+                        <span class="comment-date">
+                          <i class="icon fas fa-calendar-alt"></i>
+                          <span class="text">26 days ago</span>
+                        </span>
+                      </div>
+                      <div class="comment-content">
+                        <p>Hola, este tema es realmente increíble! Tiene muchas características que hacen que mi trabajo como desarrollador sea mucho más fácil. Estoy seguro de que a mis clientes les encantará ver el sitio web que estoy creando para ellos.</p>
+                      </div>
+                      <div class="comment-action">
+                        <!-- Button -->
+                        <a href="#comment-3" class="button simple">
+                          <span class="button-text white tertiary-hover">Reply comment</span>
+                          <i class="fa-solid fa-arrow-right button-icon white tertiary-hover"></i>
+                        </a>
+                        <i class="fa-solid fa-heart like-icon tertiary"></i>             
+                      </div>
+                    </div>
+                    <!-- Comment -->
+                    <div id="comment-4" class="comment">
+                      <div class="comment-metadata">
+                        <div class="comment-author">
+                          <div class="author-photo">
+                            <img src="assets/images/jpg/p-1.jpg" class="image shadow" alt="Image name">
+                          </div>
+                          <h5 class="author-name">Dimitri Smirnov</h5>         
+                        </div>
+                        <span class="comment-date">
+                          <i class="icon fas fa-calendar-alt"></i>
+                          <span class="text">14 days ago</span>
+                        </span>
+                      </div>
+                      <div class="comment-content">
+                        <p>Привет, эта тема действительно потрясающая! Он имеет множество функций, которые значительно облегчают мою работу как разработчика. Я уверен, что моим клиентам понравится конечный результат этого проекта.</p>
+                      </div>
+                      <div class="comment-action">
+                        <!-- Button -->
+                        <a href="#comment-4" class="button simple">
+                          <span class="button-text white tertiary-hover">Reply comment</span>
+                          <i class="fa-solid fa-arrow-right button-icon white tertiary-hover"></i>
+                        </a>
+                        <i class="fa-solid fa-heart like-icon tertiary"></i>             
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Form -->
+                  <div class="form-area scheme-2 tertiary">
+                    <h3>Leave a reply</h3>
+                    <p>To write a comment you need to <a href="#" target="_blank"><u>login</u></a> to your account.</p>
+                    <form class="form-fields needs-validation" novalidate="novalidate">
+                      <div class="form-row row">
+                        <div class="form-col col-12">
+                          <textarea class="form-control rounded-3 form-textarea" id="InputCompactExampleMessage" rows="3" placeholder="Comment" required="required"></textarea>
+                          <div class="invalid-feedback">Please type something to post a comment.</div>
+                        </div>
+                      </div>
+                      <div class="form-row row">
+                        <div class="form-col col-12">
+                          <div class="form-check">
+                            <input type="checkbox" name="terms" id="InputCheckbox" class="form-check-input" required="required">
+                            <label class="form-label form-check-label" for="InputCheckbox">
+                              I agree to the <a href="#your-link" class="link white tertiary-hover"><u>terms of use</u>.</a>
+                            </label>
+                            <div class="invalid-feedback">Please accept the terms to continue.</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-row row">
+                        <div class="form-col col-12">
+                          <!-- Button -->
+                          <button class="button shadow rounded-3 tertiary white-hover button-collision">
+                            <span class="button-text white black-hover">Post comment</span>
+                            <i class="fa-solid fa-arrow-right button-icon white black-hover"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>          
+              </div>
+            </div>
+            <!-- Sidebar -->
+            <div class="col-12 col-md-4">
+              <aside class="shock-sidebar top-sidebar scheme-2">  
+                <!-- Gallery -->
+                <div class="sidebar-block">
+                  <div class="gallery">
+                    <div class="row g-1">
+                      <div class="col-6">
+                        <a href="assets/images/png/a-1.png" class="item lightbox-link hover-opacity">
+                          <div class="image-wrapper">
+                            <div class="overlay has-border rounded gray"></div>
+                            <img src="assets/images/png/a-1.png" class="image p-1 fit-cover" alt="This is an example description for this item." />
+                          </div>
+                        </a>
+                      </div>
+                      <div class="col-6">
+                        <a href="assets/images/png/a-2.png" class="item lightbox-link hover-opacity">
+                          <div class="image-wrapper">
+                            <div class="overlay has-border rounded gray"></div>
+                            <img src="assets/images/png/a-2.png" class="image p-1 fit-cover" alt="This is an example description for this item." />
+                          </div>
+                        </a>
+                      </div>
+                      <div class="col-6">
+                        <a href="assets/images/png/a-3.png" class="item lightbox-link hover-opacity">
+                          <div class="image-wrapper">
+                            <div class="overlay has-border rounded gray"></div>
+                            <img src="assets/images/png/a-3.png" class="image p-1 fit-cover" alt="This is an example description for this item." />
+                          </div>
+                        </a>
+                      </div>
+                      <div class="col-6">
+                        <a href="assets/images/png/a-4.png" class="item lightbox-link hover-opacity">
+                          <div class="image-wrapper">
+                            <div class="overlay has-border rounded gray"></div>
+                            <img src="assets/images/png/a-4.png" class="image p-1 fit-cover" alt="This is an example description for this item." />
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </aside>
+              <aside class="shock-sidebar scheme-2" data-sticky="30">  
+                <!-- Search form -->
+                <div class="sidebar-block focus-trigger">
+                  <h5 class="title">What are you looking for?</h5>
+                  <div class="form-area scheme-2 tertiary">
+                    <form class="form-fields needs-validation" novalidate="novalidate">
+                      <div class="form-row row has-icon">
+                        <div class="form-col form-floating">
+                          <button class="button overlay-button"><img class="overlay-image-icon" src="assets/svg/send-outline.svg" alt="Icon name" data-shock-icon="32" /></button>
+                          <input id="InputSearchSidebar" class="form-control focus-trigger-field" name="InputSearchSidebar" placeholder="Type keywords..." required="required">
+                          <label for="InputSearchSidebar" class="form-label">Type keywords...</label>
+                          <div class="invalid-feedback">Please type something.</div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>  
+                <!-- List -->
+                <div class="sidebar-block">
+                  <h5 class="title">Main categories</h5>
+                  <ul class="icon-list has-counter scheme-2 tertiary">
+                    <li>
+                      <a href="#your-link" class="link"><img class="image-icon active" src="assets/svg/leaf-outline.svg" alt="Icon name" data-shock-icon="32" />  Environment</a>
+                      <span class="counter-line"></span>
+                      <span class="counter-number">32</span>
+                    </li>
+                    <li>
+                      <a href="#your-link" class="link"><img class="image-icon active" src="assets/svg/calendar-outline.svg" alt="Icon name" data-shock-icon="32" />  Events</a>
+                      <span class="counter-line"></span>
+                      <span class="counter-number">76</span>
+                    </li>
+                    <li>
+                      <a href="#your-link" class="link"><img class="image-icon active" src="assets/svg/cafe-outline.svg" alt="Icon name" data-shock-icon="32" />  Technology</a>
+                      <span class="counter-line"></span>
+                      <span class="counter-number">45</span>
+                    </li>
+                    <li>
+                      <ul class="icon-list">
+                        <li>
+                          <a href="#your-link" class="link"><img class="image-icon active" src="assets/svg/bug-outline.svg" alt="Icon name" data-shock-icon="32" />  Computing</a>
+                          <span class="counter-line"></span>
+                          <span class="counter-number">30</span>
+                        </li>
+                        <li>
+                          <a href="#your-link" class="link"><img class="image-icon active" src="assets/svg/planet-outline.svg" alt="Icon name" data-shock-icon="32" />  Programming</a>
+                          <span class="counter-line"></span>
+                          <span class="counter-number">58</span>
+                        </li>
+                        <li>
+                          <a href="#your-link" class="link"><img class="image-icon active" src="assets/svg/build-outline.svg" alt="Icon name" data-shock-icon="32" />  Engineering</a>
+                          <span class="counter-line"></span>
+                          <span class="counter-number">63</span>
+                        </li>
+                      </ul>
+                    </li>
+                    <li>
+                      <a href="#your-link" class="link"><img class="image-icon active" src="assets/svg/bulb-outline.svg" alt="Icon name" data-shock-icon="32" />  Innovation</a>
+                      <span class="counter-line"></span>
+                      <span class="counter-number">98</span>
+                    </li>
+                    <li>
+                      <a href="#your-link" class="link"><img class="image-icon active" src="assets/svg/heart-outline.svg" alt="Icon name" data-shock-icon="32" />  Social</a>
+                      <span class="counter-line"></span>
+                      <span class="counter-number">75</span>
+                    </li>
+                  </ul>
+                </div>    
+                <!-- Tag cloud -->
+                <div class="sidebar-block">
+                  <h5 class="title">Tag cloud</h5>
+                  <div class="tag-cloud">
+                    <a href="#your-link" class="link">                      
+                      <span class="badge outline gray-50 tertiary-hover">
+                        <span class="badge-text gray white-hover">Environment</span>
+                      </span>
+                    </a>
+                    <a href="#your-link" class="link">                      
+                      <span class="badge outline gray-50 tertiary-hover">
+                        <span class="badge-text gray white-hover">Events</span>
+                      </span>
+                    </a>
+                    <a href="#your-link" class="link">                      
+                      <span class="badge outline gray-50 tertiary-hover">
+                        <span class="badge-text gray white-hover">Technology</span>
+                      </span>
+                    </a>
+                    <a href="#your-link" class="link">                      
+                      <span class="badge outline gray-50 tertiary-hover">
+                        <span class="badge-text gray white-hover">Web</span>
+                      </span>
+                    </a>
+                    <a href="#your-link" class="link">                      
+                      <span class="badge outline gray-50 tertiary-hover">
+                        <span class="badge-text gray white-hover">Mobile</span>
+                      </span>
+                    </a>
+                    <a href="#your-link" class="link">                      
+                      <span class="badge outline gray-50 tertiary-hover">
+                        <span class="badge-text gray white-hover">Design</span>
+                      </span>
+                    </a>
+                    <a href="#your-link" class="link">                      
+                      <span class="badge outline active gray-50 tertiary-hover floating-item-smooth">
+                        <span class="badge-text gray white-hover">Branding</span>
+                      </span>
+                    </a>
+                    <a href="#your-link" class="link">                      
+                      <span class="badge outline gray-50 tertiary-hover">
+                        <span class="badge-text gray white-hover">Development</span>
+                      </span>
+                    </a>
+                    <a href="#your-link" class="link">                      
+                      <span class="badge outline gray-50 tertiary-hover">
+                        <span class="badge-text gray white-hover">Artificial</span>
+                      </span>
+                    </a>
+                    <a href="#your-link" class="link">                      
+                      <span class="badge outline gray-50 tertiary-hover">
+                        <span class="badge-text gray white-hover">Intelligence</span>
+                      </span>
+                    </a>
+                    <a href="#your-link" class="link">                      
+                      <span class="badge outline gray-50 tertiary-hover">
+                        <span class="badge-text gray white-hover">Engineering</span>
+                      </span>
+                    </a>
+                    <a href="#your-link" class="link">                      
+                      <span class="badge outline gray-50 tertiary-hover">
+                        <span class="badge-text gray white-hover">Innovation</span>
+                      </span>
+                    </a>
+                    <a href="#your-link" class="link">                      
+                      <span class="badge outline gray-50 tertiary-hover">
+                        <span class="badge-text gray white-hover">Social</span>
+                      </span>
+                    </a>
+                    <a href="#your-link" class="link">                      
+                      <span class="badge outline gray-50 tertiary-hover">
+                        <span class="badge-text gray white-hover">Fashion</span>
+                      </span>
+                    </a>
+                    <a href="#your-link" class="link">                      
+                      <span class="badge outline gray-50 tertiary-hover">
+                        <span class="badge-text gray white-hover">Product</span>
+                      </span>
+                    </a>
+                  </div>
+                </div>  
+              </aside>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Related posts -->
+      <section class="shock-section pt-5 pb-5 bg-color black">
+        <div class="container">
+          <!-- Intro -->
+          <div class="basic-intro mb-35 text-center">
+            <h2 class="title text-style-5 white">
+              <span class="text-1 text-outline">Also read </span>
+              <span class="text-2 text-italic">related <mark class="animated-underline tertiary">posts</mark>.</span>
+            </h2>
+            <div class="description gray">
+              <p>Over many years of work, we have built a very successful history in our area of expertise.</p>
+            </div>
+          </div>
+          <!-- Posts -->
+          <div class="swiper slider has-gap has-navigation has-pagination scheme-2 tertiary" data-columns="3,2,1,1">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">
+                <div class="card has-full-image vh-65 small-shadow rounded parent">
+                  <!-- Image -->
+                  <div class="image-wrapper hover-zoom">
+                    <img src="assets/images/jpg/a-18.jpg" alt="Image name" class="image" />
+                  </div>
+                  <!-- Icon -->
+                  <div class="sticky-post-icon secondary">
+                    <i class="fas fa-thumbtack icon white"></i>
+                  </div>
+                  <div class="card-body align-v-bottom">
+                    <div class="holder">
+                      <h3 class="title text-style-9 white">Why design<br> matters to our lives?</h3>
+                      <hr class="gray-25">
+                      <!-- Tag Cloud -->
+                      <div class="tag-cloud">
+                        <a href="#your-link" class="link">                      
+                          <span class="badge outline gray-50 secondary-hover">
+                            <span class="badge-text gray white-hover">John Young</span>
+                          </span>
+                        </a>
+                        <a href="#your-link" class="link">                      
+                          <span class="badge outline gray-50 secondary-hover">
+                            <span class="badge-text gray white-hover">5 days ago</span>
+                          </span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Overlay -->
+                  <div class="overlay black"></div>
+                  <!-- Link -->
+                  <a href="#your-link" class="full-link"></a>
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <div class="card has-full-image vh-65 small-shadow rounded parent">
+                  <!-- Image -->
+                  <div class="image-wrapper hover-zoom">
+                    <img src="assets/images/jpg/a-19.jpg" alt="Image name" class="image" />
+                  </div>
+                  <div class="card-body align-v-bottom">
+                    <div class="holder">
+                      <h3 class="title text-style-9 white">How to become a<br> successful web designer?</h3>
+                      <hr class="gray-25">
+                      <!-- Tag Cloud -->
+                      <div class="tag-cloud">
+                        <a href="#your-link" class="link">                      
+                          <span class="badge outline gray-50 secondary-hover">
+                            <span class="badge-text gray white-hover">Laura Garcia</span>
+                          </span>
+                        </a>
+                        <a href="#your-link" class="link">                      
+                          <span class="badge outline gray-50 secondary-hover">
+                            <span class="badge-text gray white-hover">14 days ago</span>
+                          </span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Overlay -->
+                  <div class="overlay black"></div>
+                  <!-- Link -->
+                  <a href="#your-link" class="full-link"></a>
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <div class="card has-full-image vh-65 small-shadow rounded parent">
+                  <!-- Image -->
+                  <div class="image-wrapper hover-zoom">
+                    <img src="assets/images/jpg/a-20.jpg" alt="Image name" class="image" />
+                  </div>
+                  <div class="card-body align-v-bottom">
+                    <div class="holder">
+                      <h3 class="title text-style-9 white">The best WordPress themes according to experts.</h3>
+                      <hr class="gray-25">
+                      <!-- Tag Cloud -->
+                      <div class="tag-cloud">
+                        <a href="#your-link" class="link">                      
+                          <span class="badge outline gray-50 secondary-hover">
+                            <span class="badge-text gray white-hover">Alice Johnson</span>
+                          </span>
+                        </a>
+                        <a href="#your-link" class="link">                      
+                          <span class="badge outline gray-50 secondary-hover">
+                            <span class="badge-text gray white-hover">17 days ago</span>
+                          </span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Overlay -->
+                  <div class="overlay black"></div>
+                  <!-- Link -->
+                  <a href="#your-link" class="full-link"></a>
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <div class="card has-full-image vh-65 small-shadow rounded parent">
+                  <!-- Image -->
+                  <div class="image-wrapper hover-zoom">
+                    <img src="assets/images/jpg/a-22.jpg" alt="Image name" class="image" />
+                  </div>
+                  <div class="card-body align-v-bottom">
+                    <div class="holder">
+                      <h3 class="title text-style-9 white">The search for digital marketing has increased.</h3>
+                      <hr class="gray-25">
+                      <!-- Tag Cloud -->
+                      <div class="tag-cloud">
+                        <a href="#your-link" class="link">                      
+                          <span class="badge outline gray-50 secondary-hover">
+                            <span class="badge-text gray white-hover">Kaled Ahmad</span>
+                          </span>
+                        </a>
+                        <a href="#your-link" class="link">                      
+                          <span class="badge outline gray-50 secondary-hover">
+                            <span class="badge-text gray white-hover">26 days ago</span>
+                          </span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Overlay -->
+                  <div class="overlay black"></div>
+                  <!-- Link -->
+                  <a href="#your-link" class="full-link"></a>
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <div class="card has-full-image vh-65 small-shadow rounded parent">
+                  <!-- Image -->
+                  <div class="image-wrapper hover-zoom">
+                    <img src="assets/images/jpg/a-18.jpg" alt="Image name" class="image" />
+                  </div>
+                  <!-- Icon -->
+                  <div class="sticky-post-icon secondary">
+                    <i class="fas fa-thumbtack icon white"></i>
+                  </div>
+                  <div class="card-body align-v-bottom">
+                    <div class="holder">
+                      <h3 class="title text-style-9 white">Why design<br> matters to our lives?</h3>
+                      <hr class="gray-25">
+                      <!-- Tag Cloud -->
+                      <div class="tag-cloud">
+                        <a href="#your-link" class="link">                      
+                          <span class="badge outline gray-50 secondary-hover">
+                            <span class="badge-text gray white-hover">John Young</span>
+                          </span>
+                        </a>
+                        <a href="#your-link" class="link">                      
+                          <span class="badge outline gray-50 secondary-hover">
+                            <span class="badge-text gray white-hover">5 days ago</span>
+                          </span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Overlay -->
+                  <div class="overlay black"></div>
+                  <!-- Link -->
+                  <a href="#your-link" class="full-link"></a>
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <div class="card has-full-image vh-65 small-shadow rounded parent">
+                  <!-- Image -->
+                  <div class="image-wrapper hover-zoom">
+                    <img src="assets/images/jpg/a-19.jpg" alt="Image name" class="image" />
+                  </div>
+                  <div class="card-body align-v-bottom">
+                    <div class="holder">
+                      <h3 class="title text-style-9 white">How to become a<br> successful web designer?</h3>
+                      <hr class="gray-25">
+                      <!-- Tag Cloud -->
+                      <div class="tag-cloud">
+                        <a href="#your-link" class="link">                      
+                          <span class="badge outline gray-50 secondary-hover">
+                            <span class="badge-text gray white-hover">Laura Garcia</span>
+                          </span>
+                        </a>
+                        <a href="#your-link" class="link">                      
+                          <span class="badge outline gray-50 secondary-hover">
+                            <span class="badge-text gray white-hover">14 days ago</span>
+                          </span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Overlay -->
+                  <div class="overlay black"></div>
+                  <!-- Link -->
+                  <a href="#your-link" class="full-link"></a>
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <div class="card has-full-image vh-65 small-shadow rounded parent">
+                  <!-- Image -->
+                  <div class="image-wrapper hover-zoom">
+                    <img src="assets/images/jpg/a-20.jpg" alt="Image name" class="image" />
+                  </div>
+                  <div class="card-body align-v-bottom">
+                    <div class="holder">
+                      <h3 class="title text-style-9 white">The best WordPress themes according to experts.</h3>
+                      <hr class="gray-25">
+                      <!-- Tag Cloud -->
+                      <div class="tag-cloud">
+                        <a href="#your-link" class="link">                      
+                          <span class="badge outline gray-50 secondary-hover">
+                            <span class="badge-text gray white-hover">Alice Johnson</span>
+                          </span>
+                        </a>
+                        <a href="#your-link" class="link">                      
+                          <span class="badge outline gray-50 secondary-hover">
+                            <span class="badge-text gray white-hover">17 days ago</span>
+                          </span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Overlay -->
+                  <div class="overlay black"></div>
+                  <!-- Link -->
+                  <a href="#your-link" class="full-link"></a>
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <div class="card has-full-image vh-65 small-shadow rounded parent">
+                  <!-- Image -->
+                  <div class="image-wrapper hover-zoom">
+                    <img src="assets/images/jpg/a-22.jpg" alt="Image name" class="image" />
+                  </div>
+                  <div class="card-body align-v-bottom">
+                    <div class="holder">
+                      <h3 class="title text-style-9 white">The search for digital marketing has increased.</h3>
+                      <hr class="gray-25">
+                      <!-- Tag Cloud -->
+                      <div class="tag-cloud">
+                        <a href="#your-link" class="link">                      
+                          <span class="badge outline gray-50 secondary-hover">
+                            <span class="badge-text gray white-hover">Kaled Ahmad</span>
+                          </span>
+                        </a>
+                        <a href="#your-link" class="link">                      
+                          <span class="badge outline gray-50 secondary-hover">
+                            <span class="badge-text gray white-hover">26 days ago</span>
+                          </span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Overlay -->
+                  <div class="overlay black"></div>
+                  <!-- Link -->
+                  <a href="#your-link" class="full-link"></a>
+                </div>
+              </div>
+            </div>
+            <div class="swiper-button-prev rounded-circle"></div>
+            <div class="swiper-button-next rounded-circle"></div>
+            <div class="swiper-pagination"></div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Side Widget -->
+    <div class="side-widget to-left invert-color mix-blend-difference d-only-desktop">
+      <div class="item">
+        <span class="widget label-icons">
+          <a href="#your-link" class="link black black-hover"><i class="icon fab fa-facebook-f"></i></a>
+          <a href="#your-link" class="link black black-hover"><i class="icon fab fa-twitter"></i></a>
+          <a href="#your-link" class="link black black-hover"><i class="icon fab fa-linkedin-in"></i></a>
+          <span class="label-line black"></span>
+        </span>
+      </div>
+    </div>
+
+    <!-- Side Widget -->
+    <div class="side-widget to-right invert-color mix-blend-difference d-only-desktop">
+      <div class="item">
+        <a href="#" class="link black black-hover hover-up">
+          <span class="widget label-vertical">
+            <span class="label-text black"><i class="fa-solid fa-arrow-right-long icon"></i>Scroll to top</span>
+          </span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer" class="shock-footer scheme-1 tertiary" data-bg-color="#1e1e24">
+      <div class="footer-content focus-trigger">
+        <div class="container">
+          <div class="row g-3">
+            <div class="col-12 col-md-6 col-lg-3">
+              <div class="footer-item">
+                <!-- Brand -->
+                <a href="/" class="footer-brand">
+                  <!-- <div class="site-title">Site Title</div> -->
+                  <img src="assets/images/logo-white.svg" alt="Shock Theme" class="logo" />
+                  <span class="logo-after-text">SHOCK</span>
+                </a>
+                <!-- Text -->
+                <div class="footer-text">
+                  <p>Shock is a creative multipurpose theme for building websites.</p>
+                </div>
+              </div>
+              <div class="footer-item">
+                <!-- Icon list -->
+                <div class="list-wrapper">
+                  <ul class="icon-h-list">
+                    <li class="item ms-0">
+                      <a href="#" class="link gray tertiary-hover hover-rotate"><i class="icon fab fa-facebook-f"></i></a>
+                    </li>
+                    <li class="item">
+                      <a href="#" class="link gray tertiary-hover hover-rotate"><i class="icon fab fa-twitter"></i></a>
+                    </li>
+                    <li class="item">
+                      <a href="#" class="link gray tertiary-hover hover-rotate"><i class="icon fab fa-linkedin-in"></i></a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="footer-item">
+                <!-- Button -->
+                <div class="hover-up-down">
+                  <a href="tel:+19912345678" class="button outline rounded gray tertiary-hover">
+                    <i class="fa-solid fa-phone button-icon left-icon gray white-hover"></i>
+                    <span class="button-text gray white-hover">+1 (99) 1234 5678</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+              <div class="footer-item">
+                <h6 class="title">Quick Links</h6>
+                <!-- Links list -->
+                <ul class="nav-list list-unstyled">
+                  <li class="nav-item">
+                    <a href="#" class="nav-link">
+                      <span class="text">Photography</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#" class="nav-link">
+                      <span class="text">Art Direction</span>
+                      <span class="badge flex ms-1 tertiary tertiary-hover">
+                        <span class="badge-text white white-hover">New</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#" class="nav-link">
+                      <span class="text">Graphic Design</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#" class="nav-link">
+                      <span class="text">Brand Creation</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#" class="nav-link">
+                      <span class="text">Social Media</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+              <div class="footer-item">
+                <h6 class="title">Popular Searches</h6>
+                <!-- Tag Cloud -->
+                <div class="tag-cloud">
+                  <a href="#your-link" class="link">                      
+                    <span class="badge outline gray-50 tertiary-hover">
+                      <span class="badge-text gray white-hover">Environment</span>
+                    </span>
+                  </a>
+                  <a href="#your-link" class="link">                      
+                    <span class="badge outline gray-50 tertiary-hover floating-item-smooth">
+                      <span class="badge-text gray white-hover">Events</span>
+                    </span>
+                  </a>
+                  <a href="#your-link" class="link">                      
+                    <span class="badge outline gray-50 tertiary-hover">
+                      <span class="badge-text gray white-hover">Technology</span>
+                    </span>
+                  </a>
+                  <a href="#your-link" class="link">                      
+                    <span class="badge outline gray-50 tertiary-hover">
+                      <span class="badge-text gray white-hover">Web</span>
+                    </span>
+                  </a>
+                  <a href="#your-link" class="link">                      
+                    <span class="badge outline gray-50 tertiary-hover">
+                      <span class="badge-text gray white-hover">Mobile</span>
+                    </span>
+                  </a>
+                  <a href="#your-link" class="link">                      
+                    <span class="badge outline gray-50 tertiary-hover">
+                      <span class="badge-text gray white-hover">Design</span>
+                    </span>
+                  </a>
+                  <a href="#your-link" class="link">                      
+                    <span class="badge outline gray-50 tertiary-hover">
+                      <span class="badge-text gray white-hover">Branding</span>
+                    </span>
+                  </a>
+                  <a href="#your-link" class="link">                      
+                    <span class="badge outline gray-50 tertiary-hover">
+                      <span class="badge-text gray white-hover">Development</span>
+                    </span>
+                  </a>
+                  <a href="#your-link" class="link">                      
+                    <span class="badge outline gray-50 tertiary-hover">
+                      <span class="badge-text gray white-hover">Artificial</span>
+                    </span>
+                  </a>
+                  <a href="#your-link" class="link">                      
+                    <span class="badge outline gray-50 tertiary-hover">
+                      <span class="badge-text gray white-hover">Intelligence</span>
+                    </span>
+                  </a>
+                  <a href="#your-link" class="link">                      
+                    <span class="badge outline gray-50 tertiary-hover">
+                      <span class="badge-text gray white-hover">Engineering</span>
+                    </span>
+                  </a>
+                  <a href="#your-link" class="link">                      
+                    <span class="badge outline gray-50 tertiary-hover">
+                      <span class="badge-text gray white-hover">Innovation</span>
+                    </span>
+                  </a>
+                  <a href="#your-link" class="link">                      
+                    <span class="badge outline gray-50 tertiary-hover">
+                      <span class="badge-text gray white-hover">Social</span>
+                    </span>
+                  </a>
+                  <a href="#your-link" class="link">                      
+                    <span class="badge outline gray-50 tertiary-hover">
+                      <span class="badge-text gray white-hover">Fashion</span>
+                    </span>
+                  </a>
+                  <a href="#your-link" class="link">                      
+                    <span class="badge outline gray-50 tertiary-hover">
+                      <span class="badge-text gray white-hover">Product</span>
+                    </span>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+              <div class="footer-item">
+                <h6 class="title">Susbcribe</h6>
+                <!-- Text -->
+                <div class="footer-text">
+                  <p>Subscribe to our newsletter and stay up to date with what's happening in the world.</p>
+                  <p>By submitting this form you agree to the <a href="#" class="link gray tertiary-hover"><u>terms of use</u>.</a></p>
+                </div>
+                <!-- Form -->
+                <div class="form-area scheme-2">
+                  <form action="php/sender.php" class="form-fields needs-validation ajax-form" novalidate="novalidate">
+                    <div class="form-row row has-icon">
+                      <div class="form-col form-floating">
+                        <button class="button overlay-button"><img class="overlay-image-icon" src="assets/svg/send-outline.svg" alt="Icon name" data-shock-icon="32" /></button>
+                        <input type="email" name="email" id="InputFloatingFooter" class="form-control focus-trigger-field" placeholder="Type your email..." required="required">
+                        <label for="InputFloatingFooter" class="form-label">Type your email...</label>
+                      </div>
+                    </div>
+                    <input type="hidden" name="subject" value="Message sent through the contact form.">
+                    <span class="form-alert success">Your message was sent successful. Thanks.</span>
+                    <span class="form-alert error">Sorry. We were unable to send your message.</span>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bottom-bar" data-bg-color="#1e1e24">
+        <div class="text">© 2023 - All rights reserved. The <a href="https://codings.dev?redirect=shock-html" class="link gray primary-hover"><u>Shock Theme</u></a> is developed and maintained by <a href="https://codings.dev?ref=shock-html" class="link gray primary-hover"><u>Codings Group</u></a>.</div>
+      </div>
+    </footer>
+    
+    <!-- Cursor -->
+    <svg class="cursor-effect tertiary" width="220" height="220" viewBox="0 0 220 220">
+      <defs>
+        <filter id="cursor-effect-filter" x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox">
+          <feTurbulence type="fractalNoise" baseFrequency="0" numOctaves="1" result="warp"></feTurbulence>
+          <feOffset dx="-30" result="warpOffset"></feOffset>
+          <feDisplacementMap xChannelSelector="R" yChannelSelector="G" scale="20" in="SourceGraphic" in2="warpOffset"></feDisplacementMap>
+        </filter>
+      </defs>
+      <circle class="cursor-effect-inner" cx="110" cy="110" r="20"></circle>
+    </svg>
+
+    <!-- Vendor JavaScript -->
+    <script src="assets/js/vendor/jquery.min.js"></script>
+    <script src="assets/js/vendor/imagesloaded.pkgd.min.js"></script>
+    <script src="assets/js/vendor/preloader.min.js"></script>
+    <script src="assets/js/vendor/inview.min.js"></script>
+    <script src="assets/js/vendor/menu-engine.min.js"></script>
+    <script src="assets/js/vendor/menu-grid.min.js"></script>
+    <script src="assets/js/vendor/bootstrap.min.js"></script>
+    <script src="assets/js/vendor/swiper.min.js"></script>
+    <script src="assets/js/vendor/anime.min.js"></script>
+    <script src="assets/js/vendor/dynamic-slider.min.js"></script>
+    <script src="assets/js/vendor/shuffle.min.js"></script>
+    <script src="assets/js/vendor/stickybits.min.js"></script>
+    <script src="assets/js/vendor/bricklayer.min.js"></script>
+    <script src="assets/js/vendor/lightbox.min.js"></script>
+    <script src="assets/js/vendor/typed.min.js"></script>
+    <script src="assets/js/vendor/progressbar.min.js"></script>
+    <script src="assets/js/vendor/map-styles.min.js"></script>
+    <script src="assets/js/vendor/magnetic-effect.min.js"></script>
+    <script src="assets/js/vendor/gsap.min.js"></script>
+    <script src="assets/js/vendor/aos.min.js"></script>
+    <script src="assets/js/vendor/lax.min.js"></script>
+    <script src="assets/js/vendor/cursor-effect.min.js"></script>
+
+    <!-- Main JavaScript -->
+    <script src="assets/js/main.js"></script>
+
+  </body>
+</html>

@@ -1,0 +1,421 @@
+@import url('base.css');
+
+/* Footer Bölümü Stilleri */
+.footer-section {
+    background-color: var(--patreon-black);
+    color: var(--patreon-light-gray);
+    padding: 60px 0 0;
+    position: relative;
+}
+
+.footer-section::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, var(--patreon-primary) 0%, var(--patreon-primary-dark) 100%);
+}
+
+.footer-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--patreon-white);
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.footer-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background-color: var(--patreon-primary);
+}
+
+.footer-description {
+    font-size: 15px;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.7);
+}
+
+.footer-social-links {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.footer-social-links .social-link {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-color: rgba(255,255,255,0.1);
+    color: var(--patreon-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.footer-social-links .social-link:hover {
+    background-color: var(--patreon-primary);
+    color: var(--patreon-white);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255, 66, 77, 0.3);
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    margin-bottom: 12px;
+}
+
+.footer-links a {
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    padding-left: 15px;
+    font-size: 15px;
+}
+
+.footer-links a::before {
+    content: '\f105';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--patreon-primary);
+    font-size: 12px;
+}
+
+.footer-links a:hover {
+    color: var(--patreon-white);
+    padding-left: 18px;
+}
+
+.footer-contact .contact-item {
+    display: flex;
+    margin-bottom: 15px;
+    align-items: flex-start;
+}
+
+.footer-contact .contact-item i {
+    color: var(--patreon-primary);
+    margin-right: 10px;
+    font-size: 16px;
+    margin-top: 3px;
+}
+
+.footer-contact .contact-item span,
+.footer-contact .contact-item a {
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    flex: 1;
+}
+
+.footer-contact .contact-item a:hover {
+    color: var(--patreon-white);
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding: 20px 0;
+    margin-top: 40px;
+}
+
+.copyright {
+    font-size: 14px;
+    color: rgba(255,255,255,0.6);
+    margin: 0;
+}
+
+.footer-bottom-links a {
+    color: rgba(255,255,255,0.6);
+    font-size: 14px;
+    text-decoration: none;
+    margin-left: 20px;
+    transition: all 0.3s ease;
+}
+
+.footer-bottom-links a:hover {
+    color: var(--patreon-white);
+}
+
+.footer-brand {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    margin-bottom: 15px;
+}
+
+.footer-logo {
+    height: 50px;
+    width: auto;
+    margin-right: 10px;
+}
+
+.brand-text {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--patreon-white);
+}
+
+/* Hizmet Bölgeleri Badge Stilleri */
+.service-regions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.region-badge {
+    background-color: rgba(255, 66, 77, 0.15);
+    color: var(--patreon-primary);
+    border: 1px solid rgba(255, 66, 77, 0.3);
+    padding: 5px 12px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.region-badge:hover {
+    background-color: var(--patreon-primary);
+    color: var(--patreon-white);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 66, 77, 0.3);
+}
+
+/* Çalışma Saatleri Stilleri */
+.working-hours {
+    margin-top: 15px;
+}
+
+.time-slot {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.time-slot i {
+    color: var(--patreon-primary);
+    margin-right: 10px;
+}
+
+.time-slot span {
+    color: rgba(255,255,255,0.7);
+    font-size: 14px;
+}
+
+.time-slot.closed span {
+    color: #ff6b6b;
+    font-style: italic;
+}
+
+.time-slot.closed i {
+    color: #ff6b6b;
+}
+
+.footer-cta .btn-outline-light {
+    border-color: var(--patreon-primary);
+    color: var(--patreon-white);
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.footer-cta .btn-outline-light:hover {
+    background-color: var(--patreon-primary);
+    border-color: var(--patreon-primary);
+    color: var(--patreon-white);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 66, 77, 0.3);
+}
+
+/* Mobil Görünüm Düzenlemeleri */
+@media (max-width: 767px) {
+    .footer-item {
+        margin-bottom: 30px;
+    }
+    
+    .footer-bottom {
+        text-align: center;
+    }
+    
+    .footer-bottom-links {
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+    }
+    
+    .footer-bottom-links a {
+        margin: 0 10px;
+    }
+    
+    .compact-tag-cloud {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+    }
+    
+    .compact-tag {
+        padding: 5px 10px;
+        font-size: 12px;
+    }
+    
+    .footer-item .title {
+        text-align: center;
+        margin-top: 20px;
+    }
+    
+    .footer-address {
+        text-align: center;
+    }
+    
+    .footer-logo-container {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 575px) {
+    .footer-item {
+        text-align: center;
+    }
+    
+    .social-links {
+        justify-content: center;
+    }
+    
+    .footer-logo-container {
+        justify-content: center;
+    }
+    
+    .footer-address {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+.social-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: visible;
+}
+
+.social-icon:hover {
+    transform: translateY(-3px);
+}
+
+.social-tooltip {
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 100;
+}
+
+.social-icon:hover .social-tooltip {
+    opacity: 1;
+    visibility: visible;
+}
+
+.instagram:hover {
+    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+    color: white;
+}
+
+.linkedin:hover {
+    background-color: #0077B5;
+    color: white;
+}
+
+.whatsapp:hover {
+    background-color: #25D366;
+    color: white;
+}
+
+.email:hover {
+    background-color: #EA4335;
+    color: white;
+}
+
+/* Logo ve sosyal medya ikonları için hover animasyonu */
+.footer-brand img:hover,
+.footer-image img:hover {
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* Haritada Göster Butonu Stili */
+.footer-address .btn-outline-primary {
+    border: 1px solid var(--patreon-primary);
+    color: var(--patreon-primary);
+    transition: all 0.3s ease;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 6px 12px;
+    margin-top: 10px;
+    border-radius: 6px;
+}
+
+.footer-address .btn-outline-primary:hover {
+    background-color: var(--patreon-primary);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(106, 76, 147, 0.3);
+}
+
+.footer-address .btn-outline-primary i {
+    font-size: 14px;
+    transition: transform 0.3s ease;
+}
+
+.footer-address .btn-outline-primary:hover i {
+    transform: translateY(-2px);
+}

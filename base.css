@@ -1,0 +1,55 @@
+  /* Patreon 2024 Design - CSS Reset ve Temel Değişkenler */
+  :root {
+    --patreon-primary: #5d3b85;       /* Daha koyu mor */
+    --patreon-primary-dark: #553982;  /* Koyu mor */
+    --patreon-black: #1d1929;         /* Morumsu siyah */
+    --patreon-dark-gray: #3a334d;     /* Morumsu koyu gri */
+    --patreon-gray: #595269;          /* Daha koyu morumsu gri */
+    --patreon-light-gray: #f7f5fb;    /* Hafif morumsu açık gri */
+    --patreon-white: #FFFFFF;         /* Beyaz aynı */
+    --patreon-border: rgba(106, 76, 147, 0.1); /* Mor tonunda border */
+    --header-height: 70px;
+    --font-primary: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --transition-standard: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --border-radius-lg: 1rem;
+    --service-gray: #5a6577;         /* Daha koyu gri */
+    --text-dark: #333333;            /* Ana metin rengi */
+    --text-medium: #555555;          /* İkincil metin rengi */
+}
+
+/* Global Stiller */
+body {
+    font-family: var(--font-primary);
+    color: var(--patreon-dark-gray);
+    background-color: var(--patreon-white);
+    line-height: 1.5;
+    font-size: 16px;
+    overflow-x: hidden;
+}
+
+/* Sosyal Medya İkonları */
+.member-social {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.social-icon {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #f5f5f5;
+  color: #6a4c93;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+  background: #6a4c93;
+  color: #fff;
+  transform: translateY(-3px);
+}

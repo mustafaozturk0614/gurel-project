@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gürel Yönetim - Edremit'te Profesyonel Site ve Apartman Yönetimi</title>
+    
+    <!-- Meta tags for SEO -->
+    <meta name="description" content="Balıkesir Edremit bölgesinde profesyonel apartman, site ve mülk yönetimi hizmetleri sunan güvenilir çözüm ortağınız. 9 farklı bölgede hizmet veriyoruz.">
+    <meta name="keywords" content="site yönetimi, apartman yönetimi, mülk yönetimi, Edremit, Akçay, Güre, Burhaniye, Altınoluk, Küçükkuyu, Pelitköy, Gömeç, Ayvalık, Balıkesir">
+    <meta name="author" content="Gürel Yönetim">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Gürel Yönetim - Profesyonel Site ve Apartman Yönetimi">
+    <meta property="og:description" content="Balıkesir Edremit bölgesinde profesyonel apartman ve site yönetimi hizmetleri">
+    <meta property="og:image" content="assets/images/logo3.png">
+    <meta property="og:url" content="https://www.gurelyonetim.com/">
+    <meta property="og:type" content="website">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="assets/images/logo3.png" type="image/x-icon">
+    <link rel="shortcut icon" href="assets/images/logo3.png" type="image/x-icon">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/shock.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+    <link rel="stylesheet" href="assets/css/section-transition.css">
+    <link rel="stylesheet" href="assets/css/services.css">
+    
+    <!-- Birleştirilmiş CSS Dosyası -->
+     <link rel="stylesheet" href="header.css">
+     <link rel="stylesheet" href="contact.css">
+     <link rel="stylesheet" href="about.css">
+     <link rel="stylesheet" href="footer.css">
+     <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="combined.css">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    
+    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/fontawesome.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/solid.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/brands.min.css" rel="stylesheet">
+
+    <!-- Swiper.js for mobile carousel -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css">
+    
+    <!-- AOS - Animate On Scroll Library -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+    
+    <!-- Kritik JavaScript Dosyaları -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Gürel Yönetim",
+  "image": "https://www.gurelyonetim.com/assets/images/logo3.png",
+  "description": "Balıkesir'de profesyonel apartman, site ve mülk yönetimi hizmetleri",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Soğanyemez, 513. Sk. No:6/19",
+    "addressLocality": "Edremit",
+    "addressRegion": "Balıkesir",
+    "postalCode": "10300",
+    "addressCountry": "TR"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 39.59245070539585,
+    "longitude": 27.01689447544059
+  },
+  "url": "https://www.gurelyonetim.com/",
+  "telephone": "+905305556007",
+  "email": "gurelyonetim@gmail.com",
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "09:00",
+      "closes": "18:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Saturday",
+      "opens": "09:00",
+      "closes": "14:00"
+    }
+  ],
+  "areaServed": ["Edremit", "Akçay", "Güre", "Burhaniye", "Altınoluk", "Küçükkuyu", "Pelitköy", "Gömeç", "Ayvalık"]
+}
+</script>
+
+<style>
+/* Tab Sistem Stilleri */
+/* ... existing styles ... */
+
+.property-advantages {
+    padding: 30px;
+    background-color: #f8f9fa;
+    border-radius: 12px;
+}
+
+.advantage-card {
+    text-align: center;
+    padding: 25px 20px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    height: 100%;
+    transition: all 0.3s ease;
+}
+
+.advantage-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 25px rgba(var(--bs-primary-rgb), 0.15);
+}
+
+.advantage-icon {
+    width: 70px;
+    height: 70px;
+    background-color: rgba(var(--bs-primary-rgb), 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 28px;
+    color: var(--bs-primary);
+    transition: all 0.3s ease;
+}
+
+.advantage-card:hover .advantage-icon {
+    background-color: var(--bs-primary);
+    color: white;
+    transform: rotateY(360deg);
+    transition: transform 0.8s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+.advantage-card h5 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.advantage-card p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 0;
+}
+</style>
+</head>
+<body data-bs-spy="scroll" data-bs-target=".navbar" data-bs-offset="51" class="shock-active">
+    <!-- Page loader -->
+    <div id="loading">
+        <div id="loading-center">
+            <div id="loading-center-absolute">
+                <div class="object" id="object_one"></div>
+                <div class="object" id="object_two"></div>
+                <div class="object" id="object_three"></div>
+                <div class="object" id="object_four"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Patreon Style Modern Header -->
+    <header class="patreon-header transparent">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg">
+                <a class="navbar-brand" href="#">
+                    <img src="assets/images/logo3.png" alt="Gürel Yönetim" width="150" height="50" loading="lazy" class="header-logo">
+                    <span class="brand-name">Gürel Yönetim</span>
+                </a>
+                
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="toggler-icon"></span>
+                    <span class="toggler-icon"></span>
+                    <span class="toggler-icon"></span>
+                </button>
+                
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#home">Ana Sayfa</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#about">Hakkımızda</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#services">Hizmetler</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#why-us">Neden Biz?</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#testimonials">Referanslar</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contact">İletişim</a>
+                        </li>
+                    </ul>
+                    <div class="header-action">
+                        <a href="#contact" class="btn btn-primary">Teklif Alın</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="patreon-hero" id="home">
+        <div class="hero-video-background">
+            <video autoplay muted loop playsinline>
+                <source src="assets/videos/20250405_1356_Blend Video_blend_01jr2sgeepe5bacvv560fftha6.mp4" type="video/mp4">
+            </video>
+            <div class="video-overlay"></div>
+        </div>
+        <!-- Dalga şeklinde organik geçiş elementi -->
+        <div class="hero-wave-transition"></div>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-7">
+                    <div class="hero-content">
+                        <div class="hero-badge">2022'DEN BERİ PROFESYONELLİK</div>
+                        <h1 class="hero-title">Mülkünüzü <span class="accent-text">güvenle</span> yönetiyoruz</h1>
+                        <p class="hero-description">Gürel Yönetim, Balıkesir'in Edremit, Akçay, Güre, Burhaniye, Altınoluk, Küçükkuyu, Pelitköy, Gömeç ve Ayvalık bölgelerinde şeffaf, güvenilir ve profesyonel mülk yönetimi çözümleriyle hizmetinizdedir.</p>
+                        
+                        <div class="hero-buttons">
+                            <a href="#contact" class="btn btn-primary">ÜCRETSİZ KEŞİF</a>
+                            <a href="#services" class="btn btn-outline">HİZMETLERİMİZ</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <!-- Alt hizmetler için vurgu kartları -->
+                    <div class="subsidiary-wrapper">
+                        <!-- Işıldayan parçacıklar efekti -->
+                        <div class="subsidiary-glow-particles">
+                            <div class="glow-particle"></div>
+                            <div class="glow-particle"></div>
+                            <div class="glow-particle"></div>
+                </div>
+                        <h4 class="section-title">Hizmet Alanlarımız</h4>
+                        <div class="subsidiary-companies">
+                            <div class="row g-2">
+                                <div class="col-md-6">
+                                    <div class="subsidiary-card">
+                                        <div class="subsidiary-logo">
+                                            <img src="assets/images/logo3.png" alt="Gürel Apartman ve Site Yönetimi" class="img-fluid">
+            </div>
+                                        <div class="subsidiary-content">
+                                            <h4>Apartman ve Site Yönetimi</h4>
+                                            <p>Aidat yönetimi, bakım ve onarım hizmetleri</p>
+                                            <div class="badge-container">
+                                                <span class="service-badge">Profesyonel</span>
+                                                <span class="service-badge">Güvenilir</span>
+        </div>
+            </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="subsidiary-card">
+                                        <div class="subsidiary-logo">
+                                            <img src="assets/images/logo4.png" alt="Gürel Mülk Yönetimi" class="img-fluid">
+                                        </div>
+                                        <div class="subsidiary-content">
+                                            <h4>Mülk Yönetimi</h4>
+                                            <p>Gayrimenkul değerini koruyan kapsamlı hizmetler</p>
+                                            <div class="badge-container">
+                                                <span class="service-badge">Uzman</span>
+                                                <span class="service-badge">Şeffaf</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Creative Section Transition -->
+    <div class="section-transition">
+        <svg class="wave-divider" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 120" preserveAspectRatio="none">
+            <path fill="#f5f7fa" fill-opacity="0.7" d="M0,64L48,80C96,96,192,128,288,128C384,128,480,96,576,90.7C672,85,768,139,864,165.3C960,192,1056,192,1152,165.3C1248,139,1344,85,1392,58.7L1440,32L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+        </svg>
+        <div class="floating-elements">
+            <div class="floating-circle" style="--delay: 0s; --size: 15px; --left: 15%;"></div>
+            <div class="floating-circle" style="--delay: 1s; --size: 25px; --left: 35%;"></div>
+            <div class="floating-circle" style="--delay: 2s; --size: 18px; --left: 65%;"></div>
+            <div class="floating-circle" style="--delay: 0.5s; --size: 22px; --left: 85%;"></div>
+            <div class="floating-square" style="--delay: 1.5s; --size: 15px; --left: 25%;"></div>
+            <div class="floating-square" style="--delay: 2.5s; --size: 12px; --left: 75%;"></div>
+        </div>
+    </div>
+
+    <!-- Modern About Us Section -->
+    <section id="about" class="about-section modern-about">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+        </div>
+        <div class="container">
+            <div class="section-header text-center" data-aos="fade-up">
+                <div class="badge-label animated-badge">HAKKIMIZDA</div>
+                <h2 class="section-title reveal-title">Gürel <span class="highlight">Yönetim</span> ile Profesyonel Hizmet</h2>
+                <div class="title-separator"><span></span></div>
+                    </div>
+                    
+            <div class="row align-items-center g-5 mt-4">
+                <div class="col-lg-6" data-aos="fade-right" data-aos-delay="100" data-aos-duration="800">
+                    <div class="about-content">
+                        <div class="content-blob"></div>
+                        <div class="about-badge">2022'DEN BERİ HİZMETİNİZDEYİZ</div>
+                        <p class="section-description lead-text">
+                            <strong>Gürel Yönetim</strong>, Balıkesir genelinde <strong>profesyonel apartman, site ve mülk yönetimi</strong> hizmetleri sunan güvenilir bir iş ortağıdır.
+                    </p>
+                    
+                    <p class="section-description">
+                            <strong>Gürel Yönetim olarak</strong>, toplu yaşam alanlarında <mark>aidat yönetimi</mark>, <mark>bütçe planlaması</mark>, <mark>bakım ve onarım süreçleri</mark> 
+                            gibi temel ihtiyaçlara modern ve şeffaf çözümler sunuyoruz. Hem <mark>apartman ve site yönetimi</mark> hem de <mark>bireysel mülk yönetimi</mark> alanında uzmanlaşmış kadromuzla, 
+                            <mark>kiralama süreçleri</mark>, <mark>gelir-gider yönetimi</mark> ve <mark>raporlama</mark> gibi hizmetlerle mülk sahiplerinin ve site sakinlerinin ihtiyaçlarını karşılıyoruz.
+                        </p>
+                        
+                    <h4 class="mt-4">Neden Biz?</h4>
+                        <div class="about-principles">
+                            <div class="principle-item" data-aos="fade-up" data-aos-delay="100">
+                                <div class="principle-icon">
+                                    <i class="fas fa-search"></i>
+                                </div>
+                                <div class="principle-text">
+                                    <h5>Şeffaflık</h5>
+                                    <p>Her aşamada açık ve dürüst iletişim</p>
+                                </div>
+                            </div>
+                            
+                            <div class="principle-item" data-aos="fade-up" data-aos-delay="200">
+                                <div class="principle-icon">
+                                    <i class="fas fa-handshake"></i>
+                                </div>
+                                <div class="principle-text">
+                                    <h5>Güvenilirlik</h5>
+                                    <p>Söz verdiğimiz hizmetleri zamanında sunarız</p>
+                            </div>
+                                </div>
+                            
+                            <div class="principle-item" data-aos="fade-up" data-aos-delay="300">
+                                <div class="principle-icon">
+                                    <i class="fas fa-award"></i>
+                                </div>
+                                <div class="principle-text">
+                                    <h5>Profesyonellik</h5>
+                                    <p>Alanında uzman kadromuzla kaliteli hizmet</p>
+                                </div>
+                            </div>
+                            </div>
+
+                    <div class="more-benefits mt-4">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="benefit-item">
+                                    <i class="fas fa-headset"></i>
+                                    <span>7/24 Destek</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="benefit-item">
+                                    <i class="fas fa-glasses"></i>
+                                    <span>Şeffaf Yönetim</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="benefit-item">
+                                    <i class="fas fa-chart-pie"></i>
+                                    <span>Dijital Raporlar</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="benefit-item">
+                                    <i class="fas fa-lock"></i>
+                                    <span>Güvenli Ödeme</span>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                        
+                        <div class="about-cta mt-4" data-aos="fade-up">
+                            <a href="about.html" class="btn btn-primary">Daha Fazla Bilgi <i class="fas fa-arrow-right ms-2"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200" data-aos-duration="800">
+                    <div class="about-visual-elements">
+                        <div class="about-image-container glowing-border" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-perspective="800">
+                            <img src="assets/newimg/gy1.png" alt="Gürel Yönetim" class="img-fluid rounded">
+                            <div class="quote-overlay">
+                                <div class="quote-content">
+                                    <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+                                    <p>"Mülkünüzü değer katan çözümlerle yönetiyoruz."</p>
+                                </div>
+                    </div>
+                </div>
+                
+                        <div class="regions-summary mt-4">
+                            <div class="regions-header">
+                                <i class="fas fa-map-marked-alt pulse-icon"></i>
+                            <h4>Hizmet Bölgelerimiz</h4>
+                                </div>
+                            <div class="region-tags-grid">
+                                <div class="region-tag-item">
+                                    <i class="fas fa-city"></i>
+                                    <span>Edremit</span>
+                                </div>
+                                <div class="region-tag-item">
+                                    <i class="fas fa-water"></i>
+                                    <span>Akçay</span>
+                            </div>
+                                <div class="region-tag-item">
+                                    <i class="fas fa-mountain"></i>
+                                    <span>Güre</span>
+                                </div>
+                                <div class="region-tag-item">
+                                    <i class="fas fa-tree"></i>
+                                    <span>Burhaniye</span>
+                                </div>
+                                <div class="region-tag-item">
+                                    <i class="fas fa-umbrella-beach"></i>
+                                    <span>Altınoluk</span>
+                            </div>
+                                <div class="region-tag-item">
+                                    <i class="fas fa-ship"></i>
+                                    <span>Küçükkuyu</span>
+                        </div>
+                                <div class="region-tag-item">
+                                    <i class="fas fa-home"></i>
+                                    <span>Pelitköy</span>
+                        </div>
+                                <div class="region-tag-item">
+                                    <i class="fas fa-leaf"></i>
+                                    <span>Gömeç</span>
+                        </div>
+                                <div class="region-tag-item">
+                                    <i class="fas fa-sun"></i>
+                                    <span>Ayvalık</span>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ekip Üyeleri Bölümü -->
+    <section id="team" class="team-section padding-medium bg-light">
+        <div class="container">
+            <div class="section-heading text-center mb-5">
+                <span class="badge rounded-pill bg-primary mb-2">Profesyonel Ekibimiz</span>
+                <h2 class="title">Yönetim Ekibimiz</h2>
+                <p class="subtitle">Sizlere en iyi hizmeti sunmak için çalışan uzman ekibimizle tanışın</p>
+                <div class="title-separator"><span></span></div>
+            </div>
+            
+            <div class="row justify-content-center">
+                <!-- Ekip Üyesi 1 -->
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="team-profile-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="team-profile-header">
+                            <div class="team-profile-img">
+                                <img src="assets/images/team/elif.jpg" alt="Elif Çicibaş" onerror="this.src='assets/images/team/placeholder.jpg'">
+                                <div class="team-social-icons">
+                                    <a href="tel:05075353909" class="team-social-link">
+                                        <i class="fas fa-phone-alt"></i>
+                                    </a>
+                                    <a href="mailto:contact@gurelyonetim.com" class="team-social-link">
+                                        <i class="fas fa-envelope"></i>
+                                    </a>
+                                    <a href="https://wa.me/905075353909" class="team-social-link">
+                                        <i class="fab fa-whatsapp"></i>
+                                    </a>
+                        </div>
+                        </div>
+                        </div>
+                        <div class="team-profile-body">
+                            <div class="badge mb-2 bg-primary-subtle text-primary">Müdür Yardımcısı</div>
+                            <h4 class="name">Elif Çicibaş</h4>
+                            <div class="expertise-areas">
+                                <div class="expertise-tag"><i class="fas fa-check-circle"></i> Veri Giriş Takibi</div>
+                                <div class="expertise-tag"><i class="fas fa-check-circle"></i> Özlük Dosyaları</div>
+                                <div class="expertise-tag"><i class="fas fa-check-circle"></i> Fatura Takipleri</div>
+                                <div class="expertise-tag"><i class="fas fa-check-circle"></i> Arıza ve Şikayet Yönetimi</div>
+                                <div class="expertise-tag"><i class="fas fa-check-circle"></i> Kiralama Kontrat Yönetimi</div>
+                                </div>
+                            <a href="tel:05075353909" class="btn btn-sm btn-primary team-contact-btn">
+                                <i class="fas fa-headset me-1"></i> İletişime Geç
+                            </a>
+                    </div>
+                </div>
+            </div>
+            
+                <!-- Ekip Üyesi 2 -->
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="team-profile-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="team-profile-header">
+                            <div class="team-profile-img">
+                                <img src="assets/images/team/ceyda.jpg" alt="Ceyda Azman" onerror="this.src='assets/images/team/placeholder.jpg'">
+                                <div class="team-social-icons">
+                                    <a href="tel:05524558643" class="team-social-link">
+                                        <i class="fas fa-phone-alt"></i>
+                                    </a>
+                                    <a href="mailto:contact@gurelyonetim.com" class="team-social-link">
+                                        <i class="fas fa-envelope"></i>
+                                    </a>
+                                    <a href="https://wa.me/905524558643" class="team-social-link">
+                                        <i class="fab fa-whatsapp"></i>
+                                    </a>
+                        </div>
+                    </div>
+                                </div>
+                        <div class="team-profile-body">
+                            <div class="badge mb-2 bg-primary-subtle text-primary">Müdür Yardımcısı</div>
+                            <h4 class="name">Ceyda Azman</h4>
+                            <div class="expertise-areas">
+                                <div class="expertise-tag"><i class="fas fa-check-circle"></i> Veri Giriş Takibi</div>
+                                <div class="expertise-tag"><i class="fas fa-check-circle"></i> Kalite Yönetimi</div>
+                                <div class="expertise-tag"><i class="fas fa-check-circle"></i> Şikayet ve Arıza Takibi</div>
+                                <div class="expertise-tag"><i class="fas fa-check-circle"></i> Teknik Personel Planlaması</div>
+                                <div class="expertise-tag"><i class="fas fa-check-circle"></i> Taşeron Sözleşme Yönetimi</div>
+                            </div>
+                            <a href="tel:05524558643" class="btn btn-sm btn-primary team-contact-btn">
+                                <i class="fas fa-headset me-1"></i> İletişime Geç
+                            </a>
+                        </div>
+                    </div>
+                                </div>
+                            </div>
+                
+            <div class="text-center mt-4">
+                <p class="team-description">
+                    Gürel Yönetim ekibi olarak, müşterilerimizin ihtiyaçlarını anlamak ve en iyi çözümleri sunmak için sürekli kendimizi geliştiriyoruz. 
+                    Her bir ekip üyemiz kendi alanında uzmanlaşmış profesyonellerden oluşmaktadır.
+                </p>
+                        </div>
+                                </div>
+    </section>
+    <!-- Ekip Üyeleri Bölümü Sonu -->
+
+  
+    <!-- Hizmetlerimiz -->
+ 
+
+  
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials-section section-padding bg-light">
+        <div class="container">
+            <div class="section-heading text-center mb-5">
+                <h2 class="title text-style-3">Müşterilerimizin Yorumları</h2>
+                <p class="description">Memnun mülk sahipleri ve kiracılarımızdan dinleyin</p>
+            
+            <!-- Referans Filtreleme Butonları -->
+            <div class="testimonial-filter mt-4">
+                <button class="filter-btn active" data-filter="all">Tümü</button>
+                <button class="filter-btn" data-filter="site">Apartman ve Site Yönetimi</button>
+                <button class="filter-btn" data-filter="mulk">Mülk Yönetimi</button>
+            </div>
+            </div>
+            
+            <div class="testimonial-slider">
+                <div class="row">
+                <!-- Apartman ve Site Yönetimi Referansı -->
+                <div class="col-md-4 mb-4 testimonial-item" data-category="site">
+                        <div class="testimonial-card">
+                        <div class="category-badge site">Apartman Yönetimi</div>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p class="testimonial-text">"Gürel Yönetim, apartman kompleksimizin nasıl yönetildiğini tamamen değiştirdi. Detaylara gösterdikleri dikkat ve hızlı hizmetleri olağanüstü."</p>
+                            <div class="client-info">
+                            <img src="https://via.placeholder.com/50x50" alt="Ahmet Yılmaz - Apartman Sahibi" loading="lazy" width="50" height="50" class="client-image">
+                                <div class="client-details">
+                                    <h5>Ahmet Yılmaz</h5>
+                                    <p>Apartman Sahibi</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                <!-- Mülk Yönetimi Referansı -->
+                <div class="col-md-4 mb-4 testimonial-item" data-category="mulk">
+                        <div class="testimonial-card">
+                        <div class="category-badge mulk">Mülk Yönetimi</div>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p class="testimonial-text">"Birden fazla mülk sahibi olarak, Gürel Mülk Yönetimi'nin sunduğu profesyonel hizmetten daha memnun olamazdım."</p>
+                            <div class="client-info">
+                            <img src="https://via.placeholder.com/50x50" alt="Ayşe Kaya - Mülk Yatırımcısı" loading="lazy" width="50" height="50" class="client-image">
+                                <div class="client-details">
+                                    <h5>Ayşe Kaya</h5>
+                                    <p>Mülk Yatırımcısı</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                <!-- Site Yönetimi Referansı -->
+                <div class="col-md-4 mb-4 testimonial-item" data-category="site">
+                        <div class="testimonial-card">
+                        <div class="category-badge site">Site Yönetimi</div>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <p class="testimonial-text">"Gürel'in yönetim hizmetlerindeki şeffaflık ve verimlilik, konut kompleksimizi daha iyi bir yaşam alanı haline getirdi."</p>
+                            <div class="client-info">
+                            <img src="https://via.placeholder.com/50x50" alt="Mehmet Demir - Site Yönetim Kurulu Başkanı" loading="lazy" width="50" height="50" class="client-image">
+                                <div class="client-details">
+                                    <h5>Mehmet Demir</h5>
+                                    <p>Site Yönetim Kurulu Başkanı</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <a href="#" class="btn btn-primary">Tüm Referanslarımızı Görün</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- İletişim Bölümü -->
+    <section id="contact" class="contact-section">
+        <div class="contact-overlay-gradient"></div>
+        
+        <div class="contact-particle-container">
+            <div class="contact-particle particle-1"></div>
+            <div class="contact-particle particle-2"></div>
+            <div class="contact-particle particle-3"></div>
+            <div class="contact-particle particle-4"></div>
+            <div class="contact-particle particle-5"></div>
+        </div>
+                            
+        <div class="contact-shape-top">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100">
+                <path d="M0,64L60,58.7C120,53,240,43,360,48C480,53,600,75,720,80C840,85,960,75,1080,64C1200,53,1320,43,1380,37.3L1440,32L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+        </svg>
+                                </div>
+                                
+        <div class="container">
+            <div class="row justify-content-center text-center mb-5">
+                <div class="col-lg-8" data-aos="fade-up">
+                    <div class="contact-title-wrapper">
+                        <div class="contact-badge">7/24 YANINIZDAYIZ</div>
+                        <h2 class="contact-main-title">Hemen <span class="highlight-text">İletişime Geçin</span></h2>
+                        <p class="contact-subtitle">Profesyonel mülk yönetimi hizmetlerimiz hakkında bilgi almak ve ücretsiz keşif için formu doldurun veya doğrudan arayın.</p>
+                        <div class="title-separator">
+                            <span></span>
+                            <i class="fas fa-envelope-open-text pulse-icon"></i>
+                            <span></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                                
+            <div class="row">
+                <div class="col-lg-5">
+                    <div class="contact-info-container" data-aos="fade-right">
+                        <div class="contact-info-card">
+                            <div class="contact-card-header">
+                                <div class="contact-header-icon floating-3d">
+                                    <i class="fas fa-headset"></i>
+                    </div>
+                                <h3 class="contact-card-title">Bizimle İletişime Geçin</h3>
+                </div>
+                    
+                            <div class="contact-info-items">
+                                <div class="contact-info-item" data-aos="fade-up" data-aos-delay="100">
+                                    <div class="contact-icon">
+                                        <i class="fas fa-map-marked-alt"></i>
+            </div>
+                                    <div class="contact-text">
+                                        <h5>Ofis Adresimiz</h5>
+                                            <p>Soğanyemez, 513. Sk. No:6/19, 10300 Edremit/Balıkesir</p>
+                                        <a href="https://www.google.com/maps/dir/?api=1&destination=39.59245070539585,27.01689447544059&travelmode=driving" target="_blank" class="contact-link">
+                                            <i class="fas fa-directions"></i> Yol Tarifi
+                                        </a>
+        </div>
+            </div>
+            
+                                <div class="contact-info-item" data-aos="fade-up" data-aos-delay="200">
+                                    <div class="contact-icon">
+                                            <i class="fas fa-phone-alt"></i>
+                                    </div>
+                                    <div class="contact-text">
+                                        <h5>Bizi Arayın</h5>
+                                        <p><a href="tel:+905305556007" class="highlight-phone">0530 555 60 07</a></p>
+                                        <span class="availability">7/24 Teknik Destek Hattı</span>
+                                </div>
+                            </div>
+                                    
+                                <div class="contact-info-item" data-aos="fade-up" data-aos-delay="300">
+                                    <div class="contact-icon">
+                                            <i class="fas fa-envelope"></i>
+                                </div>
+                                    <div class="contact-text">
+                                        <h5>E-posta Gönder</h5>
+                                            <p><a href="mailto:gurelyonetim@gmail.com">gurelyonetim@gmail.com</a></p>
+                                        <span class="response-time">24 saat içinde yanıt</span>
+                                </div>
+                                </div>
+                                    
+                                <div class="contact-info-item" data-aos="fade-up" data-aos-delay="400">
+                                    <div class="contact-icon">
+                                            <i class="fas fa-clock"></i>
+                            </div>
+                                    <div class="contact-text">
+                                            <h5>Çalışma Saatleri</h5>
+                                        <div class="working-hours">
+                                            <div class="day-slot">
+                                                <span class="day">Pazartesi - Cuma:</span>
+                                                <span class="hours">09:00 - 18:00</span>
+                        </div>
+                                            <div class="day-slot">
+                                                <span class="day">Cumartesi:</span>
+                                                <span class="hours">09:00 - 14:00</span>
+                    </div>
+                                            <div class="day-slot closed">
+                                                <span class="day">Pazar:</span>
+                                                <span class="hours">Kapalı</span>
+                                    </div>
+                                </div>
+                            </div>
+                                </div>
+                                </div>
+                                
+                            <!-- Harita ekliyorum -->
+                            <div class="office-map-container mt-4" data-aos="fade-up" data-aos-delay="500">
+                                <h5><i class="fas fa-map-marked-alt me-2"></i> Ofis Konumumuz</h5>
+                                
+                                <div class="map-container mb-3">
+                                    <div class="map-interaction-layer"></div>
+                                    <div class="map-pin-marker">
+                                        <div class="pin-pulse"></div>
+                                        <div class="pin-icon">
+                                            <i class="fas fa-map-pin"></i>
+                                        </div>
+                                    </div>
+                                    <iframe 
+                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3074.5429183382953!2d27.01689447544059!3d39.59245070539585!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14b097e9eb4be623%3A0xd991ced6e038799e!2zR8O8cmVsIEFwYXJ0bWFuIHZlIFNpdGUgWcO2bmV0aW1pIC8gR8O8cmVsIE3DvGxrIFnDtm5ldGltaQ!5e0!3m2!1str!2sus!4v1732455657201!5m2!1str!2sus" 
+                                        width="100%" 
+                                        height="250" 
+                                        class="interactive-map-image"
+                                        style="border:0; border-radius: 10px;" 
+                                        allowfullscreen="" 
+                                        loading="lazy" 
+                                        referrerpolicy="no-referrer-when-downgrade">
+                                    </iframe>
+                                    <div class="map-expand-button" data-bs-toggle="modal" data-bs-target="#mapModal">
+                                        <i class="fas fa-expand-alt"></i> Haritayı Genişlet
+                                    </div>
+                                </div>
+                                
+                                <div class="region-tags mb-3">
+                                    <h5 class="mb-2"><i class="fas fa-map-marked-alt me-2"></i> Hizmet Bölgelerimiz</h5>
+                                    <div class="region-tags-container">
+                                        <span class="region-tag active" data-region="Edremit"><i class="fas fa-city me-1"></i> Edremit</span>
+                                        <span class="region-tag" data-region="Akçay"><i class="fas fa-water me-1"></i> Akçay</span>
+                                        <span class="region-tag" data-region="Güre"><i class="fas fa-hot-tub me-1"></i> Güre</span>
+                                        <span class="region-tag" data-region="Burhaniye"><i class="fas fa-tree me-1"></i> Burhaniye</span>
+                                        <span class="region-tag" data-region="Altınoluk"><i class="fas fa-umbrella-beach me-1"></i> Altınoluk</span>
+                                        <span class="region-tag" data-region="Küçükkuyu"><i class="fas fa-ship me-1"></i> Küçükkuyu</span>
+                                        <span class="region-tag" data-region="Pelitköy"><i class="fas fa-home me-1"></i> Pelitköy</span>
+                                        <span class="region-tag" data-region="Gömeç"><i class="fas fa-leaf me-1"></i> Gömeç</span>
+                                        <span class="region-tag" data-region="Ayvalık"><i class="fas fa-sun me-1"></i> Ayvalık</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="map-actions">
+                                    <div class="dropdown d-inline-block me-2">
+                                        <button class="map-action-btn dropdown-toggle" type="button" id="routeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fas fa-directions"></i> Yol Tarifi Al
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="routeDropdown">
+                                            <li><a class="dropdown-item" href="https://www.google.com/maps/dir/?api=1&destination=39.59245070539585,27.01689447544059&travelmode=driving" target="_blank"><i class="fas fa-car me-2"></i> Araçla</a></li>
+                                            <li><a class="dropdown-item" href="https://www.google.com/maps/dir/?api=1&destination=39.59245070539585,27.01689447544059&travelmode=walking" target="_blank"><i class="fas fa-walking me-2"></i> Yürüyerek</a></li>
+                                            <li><a class="dropdown-item" href="https://www.google.com/maps/dir/?api=1&destination=39.59245070539585,27.01689447544059&travelmode=transit" target="_blank"><i class="fas fa-bus me-2"></i> Toplu Taşıma</a></li>
+                                        </ul>
+                                    </div>
+                                    <a href="tel:+905305556007" class="map-action-btn">
+                                        <i class="fas fa-phone"></i> Hemen Ara
+                                    </a>
+                                </div>
+                            </div>
+                                
+                            <div class="social-connect" data-aos="fade-up" data-aos-delay="600">
+                                <h5>Sosyal Medyada Bizi Takip Edin</h5>
+                                <div class="social-buttons">
+                                    <a href="https://www.instagram.com/gurel_yonetim/" target="_blank" rel="noopener" title="Instagram" class="social-icon instagram" aria-label="Instagram Sayfamız">
+                                        <i class="fab fa-instagram" aria-hidden="true"></i>
+                                        <span class="social-tooltip">Instagram</span>
+                                        </a>
+                                    <a href="https://www.linkedin.com/company/gürel-yönetim/" target="_blank" rel="noopener" title="LinkedIn" class="social-icon linkedin" aria-label="LinkedIn Sayfamız">
+                                            <i class="fab fa-linkedin-in" aria-hidden="true"></i>
+                                            <span class="social-tooltip">LinkedIn</span>
+                                        </a>
+                                    <a href="https://wa.me/905305556007" target="_blank" rel="noopener" title="WhatsApp" class="social-icon whatsapp" aria-label="WhatsApp İletişim">
+                                            <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                                            <span class="social-tooltip">WhatsApp</span>
+                                        </a>
+                                    <a href="#contact" class="social-icon email" aria-label="E-posta İletişim">
+                                        <i class="fas fa-envelope" aria-hidden="true"></i>
+                                        <span class="social-tooltip">E-posta</span>
+                                        </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                        <div class="contact-quick-action" data-aos="fade-up">
+                            <div class="quick-action-card">
+                                <div class="quick-action-icon">
+                                    <i class="fas fa-headset"></i>
+                                    </div>
+                                <div class="quick-action-text">
+                                    <h5>Acil Teknik Destek mi Lazım?</h5>
+                                    <p>7/24 hizmet veren teknik destek ekibimizle anında bağlantı kurun.</p>
+                                </div>
+                                <a href="tel:+905305556007" class="btn btn-primary quick-call-btn">
+                                    <i class="fas fa-phone-alt"></i> Hemen Ara
+                                    </a>
+                            </div>
+                                </div>
+                                </div>
+                                </div>
+                    
+                <div class="col-lg-7">
+                    <div class="contact-form-container">
+                        <div class="contact-form-card">
+                            <div class="form-card-header">
+                                <div class="form-icon-container">
+                                    <div class="form-icon">
+                                        <i class="fas fa-envelope"></i>
+                            </div>
+                        </div>
+                                <h3 class="form-title">Bizimle İletişime Geçin</h3>
+                                <p class="form-subtitle">Size en kısa sürede dönüş yapacağız</p>
+                    </div>
+                            
+                            <form id="contactForm" class="contact-form">
+                                <div class="form-floating mb-4">
+                                    <input type="text" class="form-control" id="nameInput" name="name" placeholder="Ad Soyad">
+                                    <label for="nameInput"><i class="fas fa-user me-2"></i>Ad Soyad</label>
+                                    <div class="error-message" data-field="name"></div>
+                </div>
+                                
+                                <div class="form-floating mb-4">
+                                    <input type="email" class="form-control" id="emailInput" name="email" placeholder="E-posta Adresi">
+                                    <label for="emailInput"><i class="fas fa-envelope me-2"></i>E-posta Adresi</label>
+                                    <div class="error-message" data-field="email"></div>
+            </div>
+            
+                                <div class="form-floating mb-4">
+                                    <input type="tel" class="form-control" id="phoneInput" name="phone" placeholder="Telefon Numarası">
+                                    <label for="phoneInput"><i class="fas fa-phone me-2"></i>Telefon Numarası</label>
+                                    <div class="error-message" data-field="phone"></div>
+            </div>
+                                
+                                <div class="form-floating mb-4">
+                                    <select class="form-select" id="serviceSelect" name="service">
+                                        <option value="">Seçiniz</option>
+                                        <option value="site">Apartman ve Site Yönetimi</option>
+                                        <option value="property">Mülk Yönetimi</option>
+                                        <option value="both">Her İkisi</option>
+                                        <option value="other">Diğer</option>
+                                    </select>
+                                    <label for="serviceSelect"><i class="fas fa-briefcase me-2"></i>İlgilendiğiniz Hizmet</label>
+                                    <div class="error-message" data-field="service"></div>
+        </div>
+        
+                                <div class="form-floating mb-4">
+                                    <textarea class="form-control" id="messageInput" name="message" placeholder="Mesajınız" style="height: 150px"></textarea>
+                                    <label for="messageInput"><i class="fas fa-comment me-2"></i>Mesajınız</label>
+                                    <div class="error-message" data-field="message"></div>
+        </div>
+                                
+                                <div class="form-actions">
+                                    <button type="submit" class="btn-send">
+                                        <span class="btn-text">Mesaj Gönder</span>
+                                        <span class="btn-icon">
+                                            <i class="fas fa-paper-plane"></i>
+                                        </span>
+                                    </button>
+                        </div>
+                            </form>
+                                </div>
+                                </div>
+                            </div>
+                                </div>
+            
+            <div class="contact-faq" data-aos="fade-up">
+                <div class="contact-faq-header text-center">
+                    <h3 class="faq-title">Sık Sorulan Sorular</h3>
+                    <p class="faq-subtitle">Bize en çok sorulan sorular</p>
+                                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="faq-item" data-aos="fade-up">
+                            <div class="faq-question">
+                                <span class="faq-icon"><i class="fas fa-question-circle"></i></span>
+                                <h5>Apartman yönetim ücretleriniz nedir?</h5>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Yönetim ücretleri, sitenizin/apartmanınızın özellikleri ve ihtiyaçlarına göre değişmektedir. Ücretsiz keşif sonrası size özel teklif sunuyoruz.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    <div class="col-md-6">
+                        <div class="faq-item" data-aos="fade-up" data-aos-delay="100">
+                            <div class="faq-question">
+                                <span class="faq-icon"><i class="fas fa-question-circle"></i></span>
+                                <h5>Hangi bölgelerde hizmet veriyorsunuz?</h5>
+                        </div>
+                            <div class="faq-answer">
+                                <p>Edremit, Akçay, Güre, Burhaniye, Altınoluk, Küçükkuyu, Pelitköy, Gömeç ve Ayvalık bölgelerinde hizmet vermekteyiz.</p>
+                    </div>
+                </div>
+                                </div>
+                    
+                    <div class="col-md-6">
+                        <div class="faq-item" data-aos="fade-up" data-aos-delay="200">
+                            <div class="faq-question">
+                                <span class="faq-icon"><i class="fas fa-question-circle"></i></span>
+                                <h5>Aidat takibi nasıl yapılıyor?</h5>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Modern yazılımlar ve takip sistemleri ile aidat takibi yapıyor, kat maliklerine düzenli raporlama sağlıyoruz.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    <div class="col-md-6">
+                        <div class="faq-item" data-aos="fade-up" data-aos-delay="300">
+                            <div class="faq-question">
+                                <span class="faq-icon"><i class="fas fa-question-circle"></i></span>
+                                <h5>Acil durumlarda nasıl hizmet veriyorsunuz?</h5>
+                        </div>
+                            <div class="faq-answer">
+                                <p>7/24 acil müdahale ekibimiz ve teknik servis ağımızla en kısa sürede sorunlarınıza müdahale ediyoruz.</p>
+                    </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-cta text-center mt-4">
+                    <a href="#contact" class="btn btn-outline-primary">
+                        <i class="fas fa-question-circle me-2"></i> Başka Sorunuz Mu Var?
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="contact-shape-bottom">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100">
+                <path d="M0,32L60,37.3C120,43,240,53,360,64C480,75,600,85,720,80C840,75,960,53,1080,48C1200,43,1320,53,1380,58.7L1440,64L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Harita Genişletme Modal -->
+    <div class="modal fade" id="mapModal" tabindex="-1" aria-labelledby="mapModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mapModalLabel"><i class="fas fa-map-marked-alt me-2"></i> <span id="mapModalTitle">Gürel Yönetim Lokasyonu</span></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <div class="row g-0">
+                        <div class="col-md-9">
+                            <iframe id="modalMap" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3074.5429183382953!2d27.01689447544059!3d39.59245070539585!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14b097e9eb4be623%3A0xd991ced6e038799e!2zR8O8cmVsIEFwYXJ0bWFuIHZlIFNpdGUgWcO2bmV0aW1pIC8gR8O8cmVsIE3DvGxrIFnDtm5ldGltaQ!5e0!3m2!1str!2sus!4v1732455657201!5m2!1str!2sus" width="100%" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                        <div class="col-md-3 p-3 border-start">
+                            <div class="mb-4">
+                                <h5 class="mb-3"><i class="fas fa-location-dot text-primary me-2"></i> Hizmet Bölgelerimiz</h5>
+                                <div class="list-group region-select-list">
+                                    <button type="button" class="list-group-item list-group-item-action active" data-region="Edremit" data-lat="39.59245070539585" data-lng="27.01689447544059">
+                                        <i class="fas fa-building me-2"></i> Edremit (Merkez)
+                                    </button>
+                                    <button type="button" class="list-group-item list-group-item-action" data-region="Akçay" data-lat="39.58055" data-lng="26.93778">
+                                        <i class="fas fa-map-marker-alt me-2"></i> Akçay
+                                    </button>
+                                    <button type="button" class="list-group-item list-group-item-action" data-region="Güre" data-lat="39.56583" data-lng="26.87056">
+                                        <i class="fas fa-map-marker-alt me-2"></i> Güre
+                                    </button>
+                                    <button type="button" class="list-group-item list-group-item-action" data-region="Burhaniye" data-lat="39.49722" data-lng="26.97750">
+                                        <i class="fas fa-map-marker-alt me-2"></i> Burhaniye
+                                    </button>
+                                    <button type="button" class="list-group-item list-group-item-action" data-region="Altınoluk" data-lat="39.56944" data-lng="26.73611">
+                                        <i class="fas fa-map-marker-alt me-2"></i> Altınoluk
+                                    </button>
+                                    <button type="button" class="list-group-item list-group-item-action" data-region="Küçükkuyu" data-lat="39.55083" data-lng="26.60639">
+                                        <i class="fas fa-map-marker-alt me-2"></i> Küçükkuyu
+                                    </button>
+                                    <button type="button" class="list-group-item list-group-item-action" data-region="Pelitköy" data-lat="39.45833" data-lng="26.87944">
+                                        <i class="fas fa-map-marker-alt me-2"></i> Pelitköy
+                                    </button>
+                                    <button type="button" class="list-group-item list-group-item-action" data-region="Gömeç" data-lat="39.41889" data-lng="26.86056">
+                                        <i class="fas fa-map-marker-alt me-2"></i> Gömeç
+                                    </button>
+                                    <button type="button" class="list-group-item list-group-item-action" data-region="Ayvalık" data-lat="39.31917" data-lng="26.69389">
+                                        <i class="fas fa-map-marker-alt me-2"></i> Ayvalık
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="card mt-3">
+                                <div class="card-body">
+                                    <h5 class="mb-3"><i class="fas fa-route text-primary me-2"></i> Yol Tarifi Al</h5>
+                                    <div class="d-grid gap-2">
+                                        <a id="modalDrivingLink" href="https://www.google.com/maps/dir/?api=1&destination=39.5924466,27.0194694&travelmode=driving" target="_blank" class="btn btn-outline-primary">
+                                            <i class="fas fa-car me-2"></i> Araçla
+                                        </a>
+                                        <a id="modalWalkingLink" href="https://www.google.com/maps/dir/?api=1&destination=39.5924466,27.0194694&travelmode=driving&travelmode=walking" target="_blank" class="btn btn-outline-success">
+                                            <i class="fas fa-walking me-2"></i> Yürüyerek
+                                        </a>
+                                        <a id="modalTransitLink" href="https://www.google.com/maps/dir/?api=1&destination=39.5924466,27.0194694&travelmode=transit" target="_blank" class="btn btn-outline-info">
+                                            <i class="fas fa-bus me-2"></i> Toplu Taşıma
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4">
+                                <a href="tel:+905305556007" class="btn btn-primary w-100 mb-2">
+                                    <i class="fas fa-phone-alt me-2"></i> Hemen Ara
+                                </a>
+                                <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">
+                                    <i class="fas fa-times me-2"></i> Kapat
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer id="footer" class="shock-footer scheme-light">
+        <div class="footer-content focus-trigger">
+            <div class="container">
+                <div class="row g-3">
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <div class="footer-item">
+                            <!-- Brand -->
+                            <a href="/" class="footer-brand floating-item">
+                                <img src="assets/images/logo3.png" alt="Gürel Yönetim" class="logo footer-logo transparent-bg" />
+                                <span class="logo-after-text">GÜREL YÖNETİM</span>
+                            </a>
+                            <!-- Text -->
+                            <div class="footer-text">
+                                <p>
+                                    Temmuz 2022'de kurulan Gürel Yönetim, müşteri memnuniyeti odaklı ve profesyonel hizmet anlayışıyla Balıkesir'in 9 farklı bölgesinde hizmet vermektedir.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="footer-item">
+                            <h6 class="title text-style-11">Bize Ulaşın</h6>
+                            <!-- Links list -->
+                            <ul class="nav-list list-unstyled">
+                                <li class="nav-item">
+                                    <a href="tel:+905305556007" class="nav-link has-icon">
+                                        <i class="fas fa-phone text-primary me-2"></i>
+                                        <span class="text">0530 555 60 07</span>
+                                        <span class="badge flex ms-1 primary primary-hover">
+                                            <span class="badge-text white white-hover">Pazartesi-Cumartesi</span>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="mailto:gurelyonetim@gmail.com" class="nav-link has-icon">
+                                        <i class="fas fa-envelope text-primary me-2"></i>
+                                        <span class="text">gurelyonetim@gmail.com</span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <!-- Sosyal Medya Linkleri -->
+                            <div class="social-links">
+                                <a href="https://www.instagram.com/gurel_yonetim/" target="_blank" rel="noopener" title="Instagram" class="social-icon instagram" aria-label="Instagram Sayfamız">
+                                    <i class="fab fa-instagram" aria-hidden="true"></i>
+                                    <span class="social-tooltip">Instagram</span>
+                                </a>
+                                <a href="https://www.linkedin.com/company/gürel-yönetim/" target="_blank" rel="noopener" title="LinkedIn" class="social-icon linkedin" aria-label="LinkedIn Sayfamız">
+                                    <i class="fab fa-linkedin-in" aria-hidden="true"></i>
+                                    <span class="social-tooltip">LinkedIn</span>
+                                </a>
+                                <a href="https://wa.me/905305556007" target="_blank" rel="noopener" title="WhatsApp" class="social-icon whatsapp" aria-label="WhatsApp İletişim">
+                                    <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                                    <span class="social-tooltip">WhatsApp</span>
+                                </a>
+                                <a href="#contact" class="social-icon email" aria-label="E-posta İletişim">
+                                    <i class="fas fa-envelope" aria-hidden="true"></i>
+                                    <span class="social-tooltip">E-posta</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-2">
+                        <div class="footer-item">
+                            <h6 class="title text-style-11">Hızlı Bağlantılar</h6>
+                            <!-- Links list -->
+                            <ul class="nav-list list-unstyled">
+                                <li class="nav-item">
+                                    <a href="#home" class="nav-link has-icon">
+                                        <img class="image-icon" src="assets/svg/chevron-forward-sharp.svg" alt="Ok işareti" data-shock-icon="32" />
+                                        <span class="text">Ana Sayfa</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#about" class="nav-link has-icon">
+                                        <img class="image-icon" src="assets/svg/chevron-forward-sharp.svg" alt="Ok işareti" data-shock-icon="32" />
+                                        <span class="text">Biz Kimiz</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#services" class="nav-link has-icon">
+                                        <img class="image-icon" src="assets/svg/chevron-forward-sharp.svg" alt="Ok işareti" data-shock-icon="32" />
+                                        <span class="text">Hizmetlerimiz</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#testimonials" class="nav-link has-icon">
+                                        <img class="image-icon" src="assets/svg/chevron-forward-sharp.svg" alt="Ok işareti" data-shock-icon="32" />
+                                        <span class="text">Referanslar</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#contact" class="nav-link has-icon">
+                                        <img class="image-icon" src="assets/svg/chevron-forward-sharp.svg" alt="Ok işareti" data-shock-icon="32" />
+                                        <span class="text">İletişim</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="footer-item">
+                            <!-- Button -->
+                            <a href="#contact" class="btn btn-sm btn-outline-primary d-inline-flex align-items-center justify-content-center mx-auto w-100">
+                                <span class="me-1">İletişime Geç</span>
+                                <i class="fa-solid fa-arrow-right small"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="footer-item">
+                            <h6 class="title text-style-11">Hizmet Bölgelerimiz</h6>
+                            <!-- Kompakt Tag Cloud -->
+                            <div class="compact-tag-cloud">
+                                <a href="#contact" onclick="setRegion('Edremit')" class="compact-tag"><i class="fas fa-map-marker-alt"></i> Edremit</a>
+                                <a href="#contact" onclick="setRegion('Akçay')" class="compact-tag"><i class="fas fa-map-marker-alt"></i> Akçay</a>
+                                <a href="#contact" onclick="setRegion('Güre')" class="compact-tag"><i class="fas fa-map-marker-alt"></i> Güre</a>
+                                <a href="#contact" onclick="setRegion('Burhaniye')" class="compact-tag"><i class="fas fa-map-marker-alt"></i> Burhaniye</a>
+                                <a href="#contact" onclick="setRegion('Altınoluk')" class="compact-tag"><i class="fas fa-map-marker-alt"></i> Altınoluk</a>
+                                <a href="#contact" onclick="setRegion('Küçükkuyu')" class="compact-tag"><i class="fas fa-map-marker-alt"></i> Küçükkuyu</a>
+                                <a href="#contact" onclick="setRegion('Pelitköy')" class="compact-tag"><i class="fas fa-map-marker-alt"></i> Pelitköy</a>
+                                <a href="#contact" onclick="setRegion('Gömeç')" class="compact-tag"><i class="fas fa-map-marker-alt"></i> Gömeç</a>
+                                <a href="#contact" onclick="setRegion('Ayvalık')" class="compact-tag"><i class="fas fa-map-marker-alt"></i> Ayvalık</a>
+                            </div>
+                        </div>
+                        <div class="footer-item mt-4">
+                            <h6 class="title text-style-11">Çalışma Saatleri</h6>
+                            <div class="working-hours">
+                                <div class="time-slot">
+                                    <i class="far fa-clock text-primary me-2"></i>
+                                    <span class="text-primary">Pazartesi - Cuma: 09:00 - 18:00</span>
+                                </div>
+                                <div class="time-slot">
+                                    <i class="far fa-clock text-primary me-2"></i>
+                                    <span class="text-primary">Cumartesi: 09:00 - 14:00</span>
+                                </div>
+                                <div class="time-slot closed">
+                                    <i class="far fa-clock text-primary me-2"></i>
+                                    <span>Pazar: Kapalı</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <div class="footer-item">
+                            <h6 class="title text-style-11">Kurumsal Logolar</h6>
+                            <div class="footer-item d-flex footer-logo-container">
+                                <!-- Images with transparent background -->
+                                <a href="#" class="footer-image transparent-bg-container">
+                                    <img src="assets/images/logo4.png" alt="Gürel Yönetim Logo" class="image transparent-bg" loading="lazy" width="120" height="70" />
+                                </a>
+                                <a href="#" class="footer-image transparent-bg-container">
+                                    <img src="assets/images/logo3.png" alt="Gürel Yönetim Logo" class="image transparent-bg" />
+                                </a>
+                            </div>
+                        </div>
+                        <div class="footer-item">
+                            <h6 class="title text-style-11">Adres ve Konum</h6>
+                            <div class="footer-address mb-3">
+                                <i class="fas fa-map-marker-alt text-primary me-2" aria-hidden="true"></i>
+                                <address class="link dark m-0">
+                                    Soğanyemez, 513. Sk. No:6/19, 10300 Edremit/Balıkesir
+                                </address>
+                                <a href="https://goo.gl/maps/nLq8nY6W5Z7B4XYKA" class="btn btn-sm btn-outline-primary mt-2 d-inline-flex align-items-center justify-content-center mx-auto w-100" target="_blank" rel="noopener">
+                                    <i class="fas fa-map-marked-alt me-1 small"></i> Haritada Göster
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom-bar light-gray">
+            <div class="text">
+                © <span id="copyright-year"></span> - Tüm Hakları Saklıdır.
+                <a href="#">Gürel Yönetim</a> | 
+                Tasarım: <a href="" target="_blank" rel="noopener">Mustafa Öztürk</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.1/dist/vanilla-tilt.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js" defer></script>
+    <script src="app.js"></script>
+    <script src="modules.js"></script>
+    
+</body>
+</html>

@@ -1,0 +1,204 @@
+/* Section Transition Styling */
+.section-transition {
+    position: relative;
+    z-index: 6;
+    height: 100px;
+    overflow: visible;
+    margin-top: -100px;
+}
+
+.wave-divider {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 120px;
+    z-index: 5;
+    filter: drop-shadow(0 -5px 10px rgba(0, 94, 99, 0.1));
+}
+
+.section-transition .floating-elements {
+    position: relative;
+    height: 0;
+    z-index: 7;
+}
+
+.floating-circle, .floating-square {
+    position: absolute;
+    top: -60px;
+    left: var(--left, 50%);
+    width: var(--size, 20px);
+    height: var(--size, 20px);
+    opacity: 0;
+    animation: float-up 4s ease-in-out infinite;
+    animation-delay: var(--delay, 0s);
+    z-index: 7;
+}
+
+.floating-circle {
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    box-shadow: 0 3px 12px rgba(0, 94, 99, 0.3);
+}
+
+.floating-square {
+    border-radius: 4px;
+    background: linear-gradient(135deg, var(--accent-color) 0%, #e6c680 100%);
+    transform: rotate(45deg);
+    box-shadow: 0 3px 12px rgba(214, 173, 96, 0.3);
+}
+
+@keyframes float-up {
+    0% {
+        transform: translateY(30px) rotate(0deg);
+        opacity: 0;
+    }
+    20% {
+        opacity: 0.7;
+    }
+    80% {
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateY(-80px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Particle effect container */
+.particles-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+/* Mouse-based scroll indicator */
+.hero-scroll-indicator {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #fff;
+    z-index: 10;
+    opacity: 0;
+    animation: fade-in 1s forwards 2s;
+}
+
+@keyframes fade-in {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.mouse-icon {
+    width: 30px;
+    height: 50px;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    border-radius: 20px;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.wheel {
+    width: 6px;
+    height: 12px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 3px;
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: scroll 2s infinite;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(-50%) translateY(20px);
+        opacity: 0;
+    }
+}
+
+.scroll-text {
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Advanced Hero Structure */
+.advanced-hero {
+    position: relative;
+    overflow: visible !important;
+}
+
+.advanced-hero::after {
+    content: none; /* Removed as we're using the SVG wave divider now */
+}
+
+/* About section styling update */
+.about-section {
+    position: relative;
+    margin-top: -2px;
+    padding-top: 120px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, #ffffff 100%);
+    z-index: 4;
+}
+
+/* Add subtle 3D effect to the about section */
+.about-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0) 50%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Add floating animations to enhance the transition */
+@keyframes float-subtle {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+}
+
+.about-image {
+    position: relative;
+    animation: float-subtle 8s ease-in-out infinite;
+    transform-origin: center bottom;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Parallax Effect */
+.parallax-section {
+    transform-style: preserve-3d;
+    perspective: 1000px;
+}
+
+/* Animated Text Effect */
+.animated-text {
+    background: linear-gradient(90deg, #ffffff, var(--accent-color), #ffffff);
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradient-text 5s linear infinite;
+}
+
+@keyframes gradient-text {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+} 

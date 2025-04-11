@@ -1,0 +1,2734 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gürel Yönetim - Profesyonel Site ve Mülk Yönetimi</title>
+    <!-- Meta tags for SEO -->
+    <meta name="description" content="Balıkesir Edremit bölgesinde profesyonel apartman ve site yönetimi hizmetleri">
+    <meta name="keywords" content="site yönetimi, apartman yönetimi, mülk yönetimi, Edremit, Akçay, Balıkesir">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+    
+    <!-- CSS Files from Shock Template -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/shock.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+    <link rel="stylesheet" href="assets/css/section-transition.css">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- Swiper.js - Mobil görünüm carousel için -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
+    
+    <!-- Particles.js for modern background effects -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    
+    <style>
+        /* Modern header kısmı için yeni stiller */
+        /* Top Bar Styles - Creative Redesign */
+        .top-bar {
+            background: linear-gradient(90deg, #007bff 0%, #0056b3 100%);
+            padding: 6px 0;
+            font-size: 0.85rem;
+            transition: transform 0.4s ease, background-color 0.3s ease;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1001;
+            color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .top-bar::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0.1) 100%);
+        }
+        
+        .top-bar-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .top-contact-item {
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .top-contact-item:hover {
+            color: #fff;
+            transform: translateY(-1px);
+        }
+        
+        .top-contact-item i {
+            margin-right: 8px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            background: rgba(255, 255, 255, 0.15);
+            height: 22px;
+            width: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .top-contact-item:hover i {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.1);
+        }
+        
+        .top-contact-item a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .top-contact-item a:hover {
+            color: #fff;
+        }
+        
+        .top-bar-social {
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        .top-bar-social a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            margin-left: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.15);
+            color: rgba(255, 255, 255, 0.9);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .top-bar-social a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(0);
+            transition: transform 0.3s ease;
+            border-radius: 50%;
+        }
+        
+        .top-bar-social a:hover {
+            background-color: rgba(255, 255, 255, 0.25);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+        
+        .top-bar-social a:hover::before {
+            transform: scale(1.5);
+            opacity: 0;
+        }
+        
+        /* Modern header kısmı için yeni stiller - Creative Redesign */
+        .modern-navbar {
+            padding: 18px 0;
+            transition: all 0.4s ease, top 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .has-topbar .modern-navbar {
+            top: 36px; /* Height of topbar */
+        }
+        
+        .modern-navbar .container {
+            max-width: 1300px; /* Slightly wider container for more breathing room */
+            position: relative;
+        }
+        
+        .modern-navbar.transparent {
+            background-color: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(8px);
+            box-shadow: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .modern-navbar.scrolled {
+            padding: 14px 0;
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+        
+        .modern-navbar::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(0, 123, 255, 0.2) 20%, 
+                rgba(0, 123, 255, 0.4) 50%, 
+                rgba(0, 123, 255, 0.2) 80%, 
+                transparent 100%);
+            transform: scaleX(0.8);
+            opacity: 0;
+            transition: all 0.6s ease;
+        }
+        
+        .modern-navbar.scrolled::after {
+            opacity: 1;
+            transform: scaleX(1);
+        }
+        
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            margin-right: 30px; /* Increased space after logo */
+            position: relative;
+            z-index: 1;
+        }
+        
+        .navbar-brand::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -15px;
+            width: calc(100% + 30px);
+            height: calc(100% + 20px);
+            background: radial-gradient(circle, rgba(0,123,255,0.08) 0%, rgba(255,255,255,0) 70%);
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.4s ease;
+        }
+        
+        .navbar-brand:hover::before {
+            opacity: 1;
+        }
+        
+        .brand-logo img {
+            height: 45px;
+            margin-right: 18px;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transform: perspective(400px) rotateY(0deg);
+        }
+        
+        .navbar-brand:hover .brand-logo img {
+            transform: perspective(400px) rotateY(8deg);
+            box-shadow: 0 6px 12px rgba(0, 123, 255, 0.15);
+        }
+        
+        .scrolled .brand-logo img {
+            height: 40px;
+        }
+        
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .brand-name {
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: #333;
+            margin-bottom: 3px;
+            line-height: 1.2;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+            position: relative;
+        }
+        
+        .brand-name::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #007bff, #3a9fff);
+            transition: width 0.3s ease;
+            opacity: 0.8;
+        }
+        
+        .navbar-brand:hover .brand-name::after {
+            width: 100%;
+        }
+        
+        .transparent .brand-name {
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .brand-slogan {
+            font-size: 0.85rem;
+            color: #6c757d;
+            transition: all 0.3s ease;
+            opacity: 0.85;
+        }
+        
+        .navbar-brand:hover .brand-slogan {
+            color: #007bff;
+            opacity: 1;
+        }
+        
+        .transparent .brand-slogan {
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Navigation Menu Creative Design */
+        .navbar-nav {
+            margin-left: 30px;
+        }
+        
+        .navbar-nav .nav-link {
+            font-weight: 600;
+            padding: 0.5rem 1.4rem;
+            color: #495057;
+            position: relative;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            margin: 0 2px; /* Additional horizontal spacing */
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .navbar-nav .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #007bff, #3a9fff);
+            transition: width 0.3s ease, left 0.3s ease;
+            z-index: -1;
+            opacity: 0.8;
+        }
+        
+        .navbar-nav .nav-link::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 0;
+            height: 100%;
+            background-color: rgba(0, 123, 255, 0.05);
+            transition: width 0.3s ease, left 0.3s ease;
+            z-index: -2;
+            border-radius: 4px;
+        }
+        
+        .navbar-nav .nav-link:hover::before,
+        .navbar-nav .nav-link.active::before {
+            width: 80%;
+            left: 10%;
+        }
+        
+        .navbar-nav .nav-link:hover::after,
+        .navbar-nav .nav-link.active::after {
+            width: 100%;
+            left: 0;
+        }
+        
+        .transparent .navbar-nav .nav-link {
+            color: #fff;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+        
+        .navbar-nav .nav-link:hover,
+        .navbar-nav .nav-link.active {
+            color: #007bff;
+            transform: translateY(-1px);
+        }
+        
+        .transparent .navbar-nav .nav-link:hover,
+        .transparent .navbar-nav .nav-link.active {
+            color: #fff;
+            opacity: 1;
+        }
+        
+        .transparent .navbar-nav .nav-link::before {
+            background: linear-gradient(90deg, rgba(255,255,255,0.8), rgba(255,255,255,0.5));
+        }
+        
+        .transparent .navbar-nav .nav-link::after {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Mobile Menu Toggle - Creative Design */
+        .navbar-toggler {
+            border: none;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            position: relative;
+            transition: all 0.3s ease;
+            background-color: transparent;
+            margin-left: 20px;
+            border-radius: 4px;
+            outline: none !important;
+        }
+        
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+        
+        .navbar-toggler .toggler-icon {
+            width: 100%;
+            height: 2px;
+            display: block;
+            position: absolute;
+            background-color: #333;
+            border-radius: 2px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: all 0.3s ease;
+        }
+        
+        .transparent .navbar-toggler .toggler-icon {
+            background-color: #fff;
+        }
+        
+        .navbar-toggler .toggler-icon:nth-child(1) {
+            top: 12px;
+            width: 80%;
+        }
+        
+        .navbar-toggler .toggler-icon:nth-child(2) {
+            top: 19px;
+        }
+        
+        .navbar-toggler .toggler-icon:nth-child(3) {
+            top: 26px;
+            width: 80%;
+            left: 20%;
+        }
+        
+        .navbar-toggler.active .toggler-icon:nth-child(1) {
+            top: 19px;
+            transform: rotate(45deg);
+            width: 100%;
+        }
+        
+        .navbar-toggler.active .toggler-icon:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .navbar-toggler.active .toggler-icon:nth-child(3) {
+            top: 19px;
+            transform: rotate(-45deg);
+            width: 100%;
+            left: 0;
+        }
+        
+        /* Update for advanced hero section spacing to account for topbar */
+        .advanced-hero {
+            position: relative;
+            min-height: 100vh;
+            padding-top: 160px; /* Increased space for header + topbar */
+            overflow: hidden;
+        }
+        
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .overlay-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('assets/images/pattern-overlay.png');
+            opacity: 0.2;
+            z-index: 1;
+        }
+        
+        .animated-gradient {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #2c3e50, #4ca1af, #2c3e50);
+            background-size: 400% 400%;
+            z-index: 0;
+            animation: gradientAnimation 15s ease infinite;
+        }
+        
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Responsive adjustments for topbar */
+        @media (max-width: 991.98px) {
+            .top-bar {
+                padding: 5px 0;
+            }
+            
+            .top-contact-item {
+                margin-right: 15px;
+                font-size: 0.8rem;
+            }
+            
+            .has-topbar .modern-navbar {
+                top: 33px; /* Height of topbar on mobile */
+            }
+            
+            .advanced-hero {
+                padding-top: 120px;
+            }
+        }
+        
+        @media (max-width: 767.98px) {
+            .top-contact-item.email-item {
+                display: none;
+            }
+            
+            .top-bar-info {
+                justify-content: center;
+            }
+            
+            .top-bar-social {
+                justify-content: center;
+                margin-top: 5px;
+            }
+            
+            .top-bar .row > div:last-child {
+                display: none;
+            }
+        }
+        
+        /* Simplified contact info */
+        .header-contact-info {
+            display: flex;
+            align-items: center;
+            margin-right: 25px;
+        }
+        
+        .header-contact-item {
+            margin-right: 30px;
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+        
+        .header-contact-item:last-child {
+            margin-right: 0;
+        }
+        
+        .header-contact-item i {
+            color: #007bff;
+            margin-right: 12px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .transparent .header-contact-item i {
+            color: #fff;
+        }
+        
+        .header-contact-item span, 
+        .header-contact-item a {
+            color: #495057;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .transparent .header-contact-item span, 
+        .transparent .header-contact-item a {
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header-contact-item a:hover {
+            color: #007bff;
+        }
+        
+        .transparent .header-contact-item a:hover {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        /* Better spaced social links */
+        .header-social-links {
+            display: flex;
+            align-items: center;
+            margin-left: 10px;
+        }
+        
+        .header-social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            margin-left: 12px;
+            border-radius: 50%;
+            background-color: #f0f2f5;
+            color: #6c757d;
+            transition: all 0.3s ease;
+        }
+        
+        .transparent .header-social-links a {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+        
+        .header-social-links a:hover {
+            background-color: #007bff;
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+        
+        .transparent .header-social-links a:hover {
+            background-color: rgba(255, 255, 255, 0.4);
+            color: #fff;
+        }
+        
+        /* Improved hamburger menu style */
+        .navbar-toggler {
+            border: none;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            position: relative;
+            transition: all 0.3s ease;
+            background-color: transparent;
+            margin-left: 20px;
+        }
+        
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+        
+        .navbar-toggler .toggler-icon {
+            width: 100%;
+            height: 2px;
+            display: block;
+            position: absolute;
+            background-color: #333;
+            border-radius: 2px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: all 0.3s ease;
+        }
+        
+        .transparent .navbar-toggler .toggler-icon {
+            background-color: #fff;
+        }
+        
+        .navbar-toggler .toggler-icon:nth-child(1) {
+            top: 12px;
+        }
+        
+        .navbar-toggler .toggler-icon:nth-child(2) {
+            top: 19px;
+        }
+        
+        .navbar-toggler .toggler-icon:nth-child(3) {
+            top: 26px;
+        }
+        
+        .navbar-toggler.active .toggler-icon:nth-child(1) {
+            top: 19px;
+            transform: rotate(45deg);
+        }
+        
+        .navbar-toggler.active .toggler-icon:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .navbar-toggler.active .toggler-icon:nth-child(3) {
+            top: 19px;
+            transform: rotate(-45deg);
+        }
+        
+        /* Simplified mobile menu */
+        .mobile-menu-wrapper {
+            padding: 30px 15px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .transparent .mobile-menu-wrapper {
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .mobile-contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: #495057;
+            font-size: 1rem;
+        }
+        
+        .transparent .mobile-contact-item {
+            color: #fff;
+        }
+        
+        .mobile-contact-item i {
+            width: 25px;
+            color: #007bff;
+            margin-right: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .transparent .mobile-contact-item i {
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .mobile-contact-item a {
+            color: #495057;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+        
+        .transparent .mobile-contact-item a {
+            color: #fff;
+        }
+        
+        .mobile-social-links {
+            display: flex;
+            justify-content: flex-start;
+            margin-top: 25px;
+            max-width: 250px;
+        }
+        
+        .mobile-social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: #f8f9fa;
+            color: #495057;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin-right: 15px;
+        }
+        
+        .transparent .mobile-social-links a {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+        
+        .mobile-social-links a:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+        
+        /* Advanced hero section spacing */
+        .advanced-hero {
+            position: relative;
+            min-height: 100vh;
+            padding-top: 100px; /* Increased space for header */
+            overflow: hidden;
+        }
+        
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .overlay-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('assets/images/pattern-overlay.png');
+            opacity: 0.2;
+            z-index: 1;
+        }
+        
+        .animated-gradient {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #2c3e50, #4ca1af, #2c3e50);
+            background-size: 400% 400%;
+            z-index: 0;
+            animation: gradientAnimation 15s ease infinite;
+        }
+        
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .particles-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+        }
+        
+        /* Scroll indicator */
+        .hero-scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            z-index: 5;
+            animation: fadeInUpDown 2s ease-in-out infinite;
+            cursor: pointer;
+        }
+        
+        .mouse-icon {
+            width: 30px;
+            height: 45px;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            position: relative;
+            margin-bottom: 10px;
+        }
+        
+        .wheel {
+            width: 4px;
+            height: 8px;
+            background-color: #fff;
+            border-radius: 2px;
+            position: absolute;
+            top: 6px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: scroll 1.5s ease infinite;
+        }
+        
+        .scroll-text {
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        @keyframes scroll {
+            0% { 
+                opacity: 1;
+                top: 6px;
+            }
+            100% { 
+                opacity: 0;
+                top: 20px;
+            }
+        }
+        
+        @keyframes fadeInUpDown {
+            0%, 100% { 
+                opacity: 0.6;
+                transform: translate(-50%, 0);
+            }
+            50% { 
+                opacity: 1;
+                transform: translate(-50%, -5px);
+            }
+        }
+        
+        /* Footer Styles */
+        .footer-item .social-links {
+            display: flex;
+            justify-content: flex-start;
+            margin-top: 15px;
+        }
+        
+        .footer-item .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            margin-right: 10px;
+            border-radius: 50%;
+            background-color: #f0f2f5;
+            color: #6c757d;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-item .social-links a:hover {
+            background-color: #007bff;
+            color: #ffffff;
+            transform: translateY(-3px);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 991.98px) {
+            .header-contact-info {
+                display: none;
+            }
+            
+            .header-social-links {
+                display: none;
+            }
+            
+            .modern-navbar {
+                padding: 15px 0;
+            }
+            
+            .brand-logo img {
+                height: 38px;
+                margin-right: 12px;
+            }
+            
+            .brand-name {
+                font-size: 1.2rem;
+            }
+            
+            .brand-slogan {
+                font-size: 0.75rem;
+            }
+            
+            .advanced-hero {
+                padding-top: 80px;
+            }
+            
+            .navbar-collapse {
+                margin-top: 15px;
+            }
+            
+            .navbar-nav .nav-item {
+                margin: 5px 0;
+            }
+            
+            .navbar-nav .nav-link {
+                padding: 10px 15px;
+                border-radius: 5px;
+                background-color: rgba(0,0,0,0.02);
+            }
+            
+            .transparent .navbar-nav .nav-link {
+                background-color: rgba(255,255,255,0.1);
+            }
+        }
+        
+        @media (max-width: 767.98px) {
+            .footer-item .social-links {
+                justify-content: center;
+            }
+            
+            .hero-content {
+                padding: 20px !important;
+            }
+            
+            .modern-navbar {
+                padding: 12px 0;
+            }
+            
+            .brand-logo img {
+                height: 35px;
+            }
+            
+            .brand-name {
+                font-size: 1.1rem;
+            }
+        }
+        
+        /* Hero Section Creative Enhancement */
+        .advanced-hero {
+            position: relative;
+            min-height: 100vh;
+            padding-top: 160px; /* Increased space for header + topbar */
+            overflow: hidden;
+        }
+        
+        /* Creative Particles Animation */
+        .particles-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+        }
+        
+        /* Split Content Structure Enhancement */
+        .hero-content-wrapper {
+            position: relative;
+            z-index: 5;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .hero-half {
+            position: relative;
+            width: 50%;
+            padding: 6rem 2rem;
+            overflow: hidden;
+        }
+        
+        @media (max-width: 991.98px) {
+            .hero-half {
+                width: 100%;
+                padding: 3rem 1.5rem;
+            }
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .hero-overlay.with-gradient::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 100%);
+            z-index: 0;
+        }
+        
+        /* Creative Floating Elements */
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            overflow: hidden;
+        }
+        
+        .floating-shape {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            animation: floatingAnimation 15s infinite linear;
+        }
+        
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            top: -150px;
+            left: -100px;
+        }
+        
+        .shape-3 {
+            width: 200px;
+            height: 200px;
+            bottom: -100px;
+            right: 10%;
+            animation-delay: 2s;
+            animation-duration: 12s;
+        }
+        
+        .shape-4 {
+            width: 250px;
+            height: 250px;
+            top: 20%;
+            left: -120px;
+            animation-delay: 1s;
+            animation-duration: 18s;
+        }
+        
+        @keyframes floatingAnimation {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(10px, 10px) rotate(5deg);
+            }
+            50% {
+                transform: translate(5px, 15px) rotate(10deg);
+            }
+            75% {
+                transform: translate(-5px, 5px) rotate(5deg);
+            }
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+        }
+        
+        .floating-icon {
+            position: absolute;
+            bottom: 20%;
+            right: 10%;
+            font-size: 8rem;
+            color: rgba(255, 255, 255, 0.08);
+            animation: floatingIconAnimation 8s ease-in-out infinite;
+        }
+        
+        @keyframes floatingIconAnimation {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+        }
+        
+        /* Enhanced Hero Content */
+        .hero-content {
+            color: #fff;
+            max-width: 600px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-badge {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            background-color: rgba(0, 123, 255, 0.8);
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+            transform: translateY(0);
+            transition: all 0.3s ease;
+        }
+        
+        .hero-badge.glow-effect {
+            animation: badgeGlow 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes badgeGlow {
+            0% {
+                box-shadow: 0 5px 15px rgba(0, 123, 255, 0.2);
+            }
+            100% {
+                box-shadow: 0 5px 20px rgba(0, 123, 255, 0.6);
+            }
+        }
+        
+        .hero-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .text-style-2 {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .text-style-2::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background-color: rgba(0, 123, 255, 0.3);
+            z-index: -1;
+            transform: skewX(-15deg);
+        }
+        
+        .animated-text {
+            background: linear-gradient(90deg, #fff, #e5e5e5, #fff);
+            background-size: 200% auto;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textShine 3s linear infinite;
+        }
+        
+        @keyframes textShine {
+            to {
+                background-position: 200% center;
+            }
+        }
+        
+        .hero-tagline {
+            font-size: 1.2rem;
+            font-weight: 400;
+            margin-bottom: 2rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        /* Hero Scroll Indicator Enhanced */
+        .hero-scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            z-index: 5;
+            animation: fadeInUpDown 2s ease-in-out infinite;
+            cursor: pointer;
+        }
+        
+        .mouse-icon {
+            width: 30px;
+            height: 45px;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            position: relative;
+            margin-bottom: 10px;
+        }
+        
+        .wheel {
+            width: 4px;
+            height: 8px;
+            background-color: #fff;
+            border-radius: 2px;
+            position: absolute;
+            top: 6px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: scroll 1.5s ease infinite;
+        }
+        
+        .scroll-text {
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        @keyframes scroll {
+            0% { 
+                opacity: 1;
+                top: 6px;
+            }
+            100% { 
+                opacity: 0;
+                top: 20px;
+            }
+        }
+        
+        @keyframes fadeInUpDown {
+            0%, 100% { 
+                opacity: 0.6;
+                transform: translate(-50%, 0);
+            }
+            50% { 
+                opacity: 1;
+                transform: translate(-50%, -5px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Bar with Contact Info and Social Media -->
+    <div class="top-bar" id="top-bar">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <div class="top-bar-info">
+                        <div class="top-contact-item">
+                            <i class="fas fa-phone-alt"></i>
+                            <a href="tel:+905305556007">0530 555 60 07</a>
+                        </div>
+                        <div class="top-contact-item email-item">
+                            <i class="fas fa-envelope"></i>
+                            <a href="mailto:gurelyonetim@gmail.com">gurelyonetim@gmail.com</a>
+                        </div>
+                        <div class="top-contact-item d-none d-lg-flex">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Edremit, Balıkesir</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="top-bar-social">
+                        <a href="https://www.instagram.com/gurel_yonetim/" target="_blank" title="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/company/g%C3%BCrel-y%C3%B6netim/" target="_blank" title="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://wa.me/905305556007" target="_blank" title="WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="#contact" data-bs-toggle="modal" data-bs-target="#modal-1" title="Bize Ulaşın">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modern Header Section -->
+    <header class="modern-navbar transparent has-topbar" id="main-header">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg">
+                <!-- Logo and Brand Name -->
+                <a class="navbar-brand" href="#">
+                    <div class="brand-logo">
+                        <img src="assets/images/logo1.jpeg" alt="Gürel Yönetim Logo" class="main-logo">
+                    </div>
+                    <div class="brand-text">
+                        <div class="brand-name">GÜREL YÖNETİM</div>
+                        <div class="brand-slogan">Profesyonel Yönetim Çözümleri</div>
+                    </div>
+                </a>
+                
+                <!-- Mobile Menu Toggle -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="toggler-icon"></span>
+                    <span class="toggler-icon"></span>
+                    <span class="toggler-icon"></span>
+                </button>
+                
+                <!-- Navigation Links -->
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#home">Ana Sayfa</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#services">Hizmetlerimiz</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#about">Hakkımızda</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contact">İletişim</a>
+                        </li>
+                    </ul>
+                    
+                    <!-- Mobile Contact Info (Mobile only) -->
+                    <div class="mobile-menu-wrapper d-lg-none">
+                        <div class="mobile-contact-item">
+                            <i class="fas fa-phone-alt"></i>
+                            <a href="tel:+905305556007">0530 555 60 07</a>
+                        </div>
+                        <div class="mobile-contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <a href="mailto:gurelyonetim@gmail.com">gurelyonetim@gmail.com</a>
+                        </div>
+                        <div class="mobile-contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Edremit, Balıkesir</span>
+                        </div>
+                        
+                        <!-- Mobile Social Links -->
+                        <div class="mobile-social-links">
+                            <a href="https://www.instagram.com/gurel_yonetim/" target="_blank">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/company/g%C3%BCrel-y%C3%B6netim/" target="_blank">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="https://wa.me/905305556007" target="_blank">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                            <a href="#contact" data-bs-toggle="modal" data-bs-target="#modal-1">
+                                <i class="fas fa-envelope"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Modern Parallax Hero Section -->
+    <section id="hero" class="advanced-hero">
+        <!-- Background Structure -->
+        <div class="hero-background">
+            <div class="overlay-pattern"></div>
+            <div class="animated-gradient"></div>
+            
+            <!-- Particle Animation for Modern Effect -->
+            <div class="particles-container" id="particles-js"></div>
+        </div>
+        
+        <!-- Split Content Structure with Parallax Effect -->
+        <div class="hero-content-wrapper">
+            <!-- Sol Taraf: Apartman & Site Yönetimi -->
+            <div class="hero-half parallax-section" id="site-management" data-depth="0.2">
+                <div class="hero-overlay with-gradient"></div>
+                <!-- Floating Elements -->
+                <div class="floating-elements">
+                    <div class="floating-shape shape-1" data-speed="0.03"></div>
+                    <div class="floating-shape shape-3" data-speed="0.02"></div>
+                    <div class="floating-icon"><i class="fas fa-building"></i></div>
+                </div>
+                
+                <div class="hero-content reveal-content">
+                    <div class="hero-badge glow-effect">PROFESYONELLİK</div>
+                    <h2 class="hero-title text-style-2 animated-text">Gürel Apartman & Site Yönetimi</h2>
+                    <div class="hero-tagline">Güvenilir ve şeffaf yönetim</div>
+                    <div class="hero-details fade-in-up">
+                        <h3 class="text-style-3">Kapsamlı Site Yönetim Çözümleri</h3>
+                        <p>Apartman ve site kompleksleri için profesyonel ve şeffaf yönetim hizmetleri sunuyoruz.</p>
+                        <ul class="hero-features staggered-animation">
+                            <li><i class="fas fa-check-circle pulse-icon"></i> Aidat ve Muhasebe Yönetimi</li>
+                            <li><i class="fas fa-check-circle pulse-icon"></i> Ortak Alan Temizlik Hizmetleri</li>
+                            <li><i class="fas fa-check-circle pulse-icon"></i> Teknik Bakım ve Onarım</li>
+                            <li><i class="fas fa-check-circle pulse-icon"></i> 7/24 Teknik Destek</li>
+                        </ul>
+                        <div class="hero-buttons">
+                            <a href="#services" class="btn btn-primary btn-glow btn-lg">Detaylı Bilgi</a>
+                            <a href="#contact" class="btn btn-outline-light btn-hover-slide btn-lg">
+                                <span class="btn-text">İletişime Geç</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sağ Taraf: Mülk Yönetimi -->
+            <div class="hero-half parallax-section" id="property-management" data-depth="0.1">
+                <div class="hero-overlay with-gradient"></div>
+                <!-- Floating Elements -->
+                <div class="floating-elements">
+                    <div class="floating-shape shape-4" data-speed="0.04"></div>
+                    <div class="floating-icon"><i class="fas fa-home"></i></div>
+                </div>
+                
+                <div class="hero-content reveal-content">
+                    <div class="hero-badge glow-effect">GÜVENİLİRLİK</div>
+                    <h2 class="hero-title text-style-2 animated-text">Gürel Mülk Yönetimi</h2>
+                    <div class="hero-details fade-in-up">
+                        <h3 class="text-style-3">Gayrimenkul Değerinizi Koruyup Artırıyoruz</h3>
+                        <p>Mülk sahipleri için kiralama, bakım ve yönetim hizmetleri ile mülkünüzü en iyi şekilde değerlendiriyoruz.</p>
+                        <ul class="hero-features staggered-animation">
+                            <li><i class="fas fa-check-circle pulse-icon"></i> Kiralama ve Sözleşme Yönetimi</li>
+                            <li><i class="fas fa-check-circle pulse-icon"></i> Düzenli Kira Takibi</li>
+                            <li><i class="fas fa-check-circle pulse-icon"></i> Periyodik Bakım ve Kontroller</li>
+                            <li><i class="fas fa-check-circle pulse-icon"></i> Detaylı Finansal Raporlama</li>
+                        </ul>
+                        <div class="hero-buttons">
+                            <a href="#services" class="btn btn-primary btn-glow btn-lg">Detaylı Bilgi</a>
+                            <a href="#contact" class="btn btn-outline-light btn-hover-slide btn-lg">
+                                <span class="btn-text">İletişime Geç</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Modern Mouse Scroll Indicator -->
+        <div class="hero-scroll-indicator">
+            <div class="mouse-icon">
+                <div class="wheel"></div>
+            </div>
+            <div class="scroll-text">Aşağı Kaydır</div>
+        </div>
+    </section>
+
+    <!-- Creative Section Transition -->
+    <div class="section-transition">
+        <svg class="wave-divider" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 120" preserveAspectRatio="none">
+            <path fill="#ffffff" fill-opacity="1" d="M0,64L48,80C96,96,192,128,288,128C384,128,480,96,576,85.3C672,75,768,85,864,96C960,107,1056,117,1152,112C1248,107,1344,85,1392,74.7L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+        </svg>
+        <div class="floating-elements">
+            <div class="floating-circle" style="--delay: 0s; --size: 15px; --left: 15%;"></div>
+            <div class="floating-circle" style="--delay: 1s; --size: 25px; --left: 35%;"></div>
+            <div class="floating-circle" style="--delay: 2s; --size: 18px; --left: 65%;"></div>
+            <div class="floating-circle" style="--delay: 0.5s; --size: 22px; --left: 85%;"></div>
+            <div class="floating-square" style="--delay: 1.5s; --size: 15px; --left: 25%;"></div>
+            <div class="floating-square" style="--delay: 2.5s; --size: 12px; --left: 75%;"></div>
+        </div>
+    </div>
+
+    <!-- About Us Section -->
+    <section id="about" class="about-section section-padding">
+        <div class="container">
+            <div class="row align-items-center">
+                <!-- Left Column: About Image -->
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <div class="about-image overflow-hidden rounded shadow-lg">
+                        <img src="assets/images/about-image.jpg" alt="Hakkımızda" class="img-fluid w-100">
+                        <!-- The overlay adds a modern gradient effect -->
+                        <div class="image-overlay"></div>
+                    </div>
+                </div>
+                <!-- Right Column: Content -->
+                <div class="col-lg-6">
+                    <div class="section-heading text-start">
+                        <h6 class="subtitle text-uppercase text-style-12 mb-2">Hakkımızda</h6>
+                        <h2 class="title mb-3 text-dark text-style-3">Mülk Yönetiminde Güvenilir Ortağınız</h2>
+                        <p class="lead text-muted">
+                            Gürel Yönetim, Balıkesir genelinde ve özellikle Edremit, Akçay, Güre, Burhaniye, Altınoluk, Küçükkuyu, Pelitköy, Gömeç ve Ayvalık gibi bölgelerde şeffaflık, verimlilik ve müşteri memnuniyeti odaklı kapsamlı mülk ve apartman yönetimi çözümleri sunmaktadır.
+                        </p>
+                    </div>
+                    <!-- Achievements styled as modern cards -->
+                    <div class="achievements row mt-4 gy-3">
+                        <div class="col-6">
+                            <div class="achievement-item text-center p-3 border rounded">
+                                <h3 class="mb-1">10+</h3>
+                                <p class="mb-0">Yıllık Deneyim</p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="achievement-item text-center p-3 border rounded">
+                                <h3 class="mb-1">500+</h3>
+                                <p class="mb-0">Yönetilen Mülk</p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="achievement-item text-center p-3 border rounded">
+                                <h3 class="mb-1">98%</h3>
+                                <p class="mb-0">Müşteri Memnuniyeti</p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="achievement-item text-center p-3 border rounded">
+                                <h3 class="mb-1">24/7</h3>
+                                <p class="mb-0">Destek Hizmeti</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <a href="#services" class="btn btn-primary btn-lg shadow">Hizmetlerimiz</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services-section section-padding bg-light">
+        <div class="container">
+            <div class="section-heading text-center mb-5">
+                <h6 class="subtitle text-uppercase text-style-12">Hizmetlerimiz</h6>
+                <h2 class="title text-style-3">Neler Sunuyoruz?</h2>
+                <p class="description">Tüm mülk yönetimi ihtiyaçlarınız için kapsamlı çözümler sunuyoruz</p>
+            </div>
+            
+            <!-- Service Categories -->
+            <ul class="nav nav-pills justify-content-center mb-5" id="services-tab">
+                <li class="nav-item">
+                    <a class="nav-link active" data-bs-toggle="pill" href="#apartment">Apartman ve Site Yönetimi</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="pill" href="#property">Mülk Yönetimi</a>
+                </li>
+            </ul>
+            
+            <!-- Service Content -->
+            <div class="tab-content">
+                <!-- Apartment & Site Management -->
+                <div class="tab-pane fade show active" id="apartment">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-3 mb-4">
+                            <div class="service-card">
+                                <div class="icon">
+                                    <i class="fas fa-calculator"></i>
+                                </div>
+                                <h4 class="text-style-7">Muhasebe ve Aidat Hizmetleri</h4>
+                                <p>Şeffaf aidat toplama ve mülkünüz için finansal yönetim.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3 mb-4">
+                            <div class="service-card">
+                                <div class="icon">
+                                    <i class="fas fa-broom"></i>
+                                </div>
+                                <h4 class="text-style-7">Temizlik Hizmetleri</h4>
+                                <p>Ortak alanlar için düzenli temizlik ve bakım hizmetleri.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3 mb-4">
+                            <div class="service-card">
+                                <div class="icon">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <h4 class="text-style-7">Güvenlik Hizmetleri</h4>
+                                <p>Konut kompleksiniz için profesyonel güvenlik hizmetleri.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3 mb-4">
+                            <div class="service-card">
+                                <div class="icon">
+                                    <i class="fas fa-tools"></i>
+                                </div>
+                                <h4 class="text-style-7">Bakım ve Onarım Hizmetleri</h4>
+                                <p>Tüm tesislerin düzenli kontrol ve bakımı.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Property Management -->
+                <div class="tab-pane fade" id="property">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-3 mb-4">
+                            <div class="service-card">
+                                <div class="icon">
+                                    <i class="fas fa-file-contract"></i>
+                                </div>
+                                <h4 class="text-style-7">Kiralama ve Sözleşme Takibi</h4>
+                                <p>Kapsamlı sözleşme yönetimi ve kira takip hizmetleri.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3 mb-4">
+                            <div class="service-card">
+                                <div class="icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <h4 class="text-style-7">Kiracı-Ev Sahibi İlişkileri</h4>
+                                <p>Kiracı ve ev sahibi ilişkilerinin profesyonel yönetimi.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3 mb-4">
+                            <div class="service-card">
+                                <div class="icon">
+                                    <i class="fas fa-gavel"></i>
+                                </div>
+                                <h4 class="text-style-7">Hukuk Danışmanlığı</h4>
+                                <p>Mülk ile ilgili konularda uzman hukuki danışmanlık.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3 mb-4">
+                            <div class="service-card">
+                                <div class="icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <h4 class="text-style-7">Gayrimenkul Değerlendirmesi</h4>
+                                <p>Detaylı mülk değerlendirmesi ve performans raporlaması.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section id="why-us" class="why-us-section section-padding">
+        <div class="container">
+            <div class="section-heading text-center mb-5">
+                <h2 class="title text-style-3">Gürel Avantajı</h2>
+                <p class="description">Mülk yönetimi hizmetlerimizi diğerlerinden farklı kılan özellikler</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="feature-card">
+                        <div class="icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h4>7/24 Destek</h4>
+                        <p>Tüm mülk ihtiyaçlarınız ve acil durumlar için 7/24 müşteri desteği.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="feature-card">
+                        <div class="icon">
+                            <i class="fas fa-glasses"></i>
+                        </div>
+                        <h4>Şeffaf Yönetim</h4>
+                        <p>Net ve şeffaf finansal raporlama ve yönetim uygulamaları.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="feature-card">
+                        <div class="icon">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <h4>Dijital Raporlar ve Analizler</h4>
+                        <p>Veri odaklı karar verme için detaylı dijital raporlar ve analizler.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="feature-card">
+                        <div class="icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <h4>Güvenli Ödeme Sistemleri</h4>
+                        <p>Sorunsuz işlemler için güvenli ve pratik ödeme yöntemleri.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="feature-card">
+                        <div class="icon">
+                            <i class="fas fa-smile"></i>
+                        </div>
+                        <h4>Yüksek Müşteri Memnuniyeti</h4>
+                        <p>Memnun müşteriler ve mülk sahipleri ile kanıtlanmış başarı.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="feature-card">
+                        <div class="icon">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <h4>Sertifikalı Profesyoneller</h4>
+                        <p>Deneyimli ve sertifikalı mülk yönetimi profesyonelleri ekibi.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials-section section-padding bg-light">
+        <div class="container">
+            <div class="section-heading text-center mb-5">
+                <h2 class="title text-style-3">Müşterilerimizin Yorumları</h2>
+                <p class="description">Memnun mülk sahipleri ve kiracılarımızdan dinleyin</p>
+            </div>
+            
+            <div class="testimonial-slider">
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="testimonial-card">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p class="testimonial-text">"Gürel Yönetim, apartman kompleksimizin nasıl yönetildiğini tamamen değiştirdi. Detaylara gösterdikleri dikkat ve hızlı hizmetleri olağanüstü."</p>
+                            <div class="client-info">
+                                <img src="assets/images/client1.jpg" alt="Müşteri" class="client-image">
+                                <div class="client-details">
+                                    <h5>Ahmet Yılmaz</h5>
+                                    <p>Apartman Sahibi</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="testimonial-card">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p class="testimonial-text">"Birden fazla mülk sahibi olarak, Gürel Mülk Yönetimi'nin sunduğu profesyonel hizmetten daha memnun olamazdım."</p>
+                            <div class="client-info">
+                                <img src="assets/images/client2.jpg" alt="Müşteri" class="client-image">
+                                <div class="client-details">
+                                    <h5>Ayşe Kaya</h5>
+                                    <p>Mülk Yatırımcısı</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="testimonial-card">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <p class="testimonial-text">"Gürel'in yönetim hizmetlerindeki şeffaflık ve verimlilik, konut kompleksimizi daha iyi bir yaşam alanı haline getirdi."</p>
+                            <div class="client-info">
+                                <img src="assets/images/client3.jpg" alt="Müşteri" class="client-image">
+                                <div class="client-details">
+                                    <h5>Mehmet Demir</h5>
+                                    <p>Site Yönetim Kurulu Başkanı</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <a href="#" class="btn btn-primary">Tüm Referanslarımızı Görün</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section (Optional) -->
+    <section id="blog" class="blog-section">
+        <!-- Blog content will go here -->
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section section-padding">
+        <div class="container">
+            <div class="section-heading text-center mb-5">
+                <h6 class="subtitle text-uppercase text-style-12">İletişim</h6>
+                <h2 class="title text-style-3">Bize Ulaşın</h2>
+                <p class="description">Sorularınız veya teklif talepleriniz için bizimle iletişime geçin</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-6 mb-4">
+                    <div class="contact-form-wrapper">
+                        <h4>Teklif İsteyin</h4>
+                        <form id="contactForm" class="contact-form">
+                            <div class="form-group mb-3">
+                                <input type="text" class="form-control" placeholder="Ad Soyad" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <input type="email" class="form-control" placeholder="E-posta Adresi" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <input type="tel" class="form-control" placeholder="Telefon Numarası" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <textarea class="form-control" rows="5" placeholder="Mesajınız" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Mesaj Gönder</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="contact-info-wrapper">
+                        <h4>İletişim Bilgileri</h4>
+                        <div class="contact-info">
+                            <div class="info-item mb-4">
+                                <div class="icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div class="location-text">
+                                    <h5>Merkez Ofis</h5>
+                                    <p>Soğanyemez, 513. Sk. No:6/19, 10300 Edremit/Balıkesir</p>
+                                </div>
+                            </div>
+                            <div class="info-item mb-4">
+                                <div class="icon">
+                                    <i class="fas fa-phone-alt"></i>
+                                </div>
+                                <div class="details">
+                                    <h5>Telefon Numarası</h5>
+                                    <p>0530 555 60 07</p>
+                                </div>
+                            </div>
+                            <div class="info-item mb-4">
+                                <div class="icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="details">
+                                    <h5>E-posta Adresi</h5>
+                                    <p>gurelyonetim@gmail.com</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="social-contact mt-4">
+                            <h5>Bizi Takip Edin</h5>
+                            <div class="social-icons">
+                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#"><i class="fab fa-instagram"></i></a>
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-whatsapp"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                 
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Takımımız Section -->
+    <section id="team" class="team-section section-padding">
+        <div class="container">
+            <div class="section-heading text-center mb-5">
+                <h6 class="subtitle text-uppercase text-style-12">Profesyoneller</h6>
+                <h2 class="title text-style-3">Takımımız <span class="text-primary">ile Tanışın</span></h2>
+                <p class="description">Gürel Yönetim'in başarısının arkasındaki uzman kadromuz</p>
+            </div>
+            
+            <div class="team-members-container">
+                <div class="row g-4 justify-content-center">
+                    <!-- Mustafa Öztürk -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="team-member-card">
+                            <div class="member-avatar">
+                                <div class="avatar-wrapper">
+                                    <img src="assets/svg/person-circle-outline.svg" alt="Mustafa Öztürk" class="rounded-circle">
+                                    <div class="member-badge primary">
+                                        <i class="fas fa-crown"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="member-info">
+                                <h4 class="member-name">Mustafa Öztürk</h4>
+                                <div class="member-position">Genel Müdür</div>
+                                <div class="member-skills">
+                                    <span class="skill-tag">Site Yönetimi</span>
+                                    <span class="skill-tag">Mülk Yönetimi</span>
+                                    <span class="skill-tag">İş Geliştirme</span>
+                                </div>
+                                <div class="member-description">
+                                    <ul class="list-unstyled responsibility-list">
+                                        <li><i class="fas fa-check-circle"></i> Şirket Stratejisi ve Yönetimi</li>
+                                        <li><i class="fas fa-check-circle"></i> İş Geliştirme ve Büyüme</li>
+                                        <li><i class="fas fa-check-circle"></i> Müşteri İlişkileri Yönetimi</li>
+                                        <li><i class="fas fa-check-circle"></i> Stratejik Ortaklıklar</li>
+                                    </ul>
+                                </div>
+                                <div class="member-contact">
+                                    <a href="https://wa.me/905305556007" class="contact-button whatsapp">
+                                        <i class="fab fa-whatsapp"></i> 0530 555 60 07
+                                    </a>
+                                    <a href="mailto:gurelyonetim@gmail.com" class="contact-button email">
+                                        <i class="fas fa-envelope"></i> E-posta
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Elif Çicibaş -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="team-member-card">
+                            <div class="member-avatar">
+                                <div class="avatar-wrapper">
+                                    <img src="assets/svg/person-circle-outline.svg" alt="Elif Çicibaş" class="rounded-circle">
+                                    <div class="member-badge accent">
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="member-info">
+                                <h4 class="member-name">Elif Çicibaş</h4>
+                                <div class="member-position">Müdür Yardımcısı</div>
+                                <div class="member-skills">
+                                    <span class="skill-tag">Veri Yönetimi</span>
+                                    <span class="skill-tag">Fatura Takibi</span>
+                                    <span class="skill-tag">Arıza Yönetimi</span>
+                                </div>
+                                <div class="member-description">
+                                    <ul class="list-unstyled responsibility-list">
+                                        <li><i class="fas fa-check-circle"></i> Veri Giriş Takibi</li>
+                                        <li><i class="fas fa-check-circle"></i> Özlük Dosyalarının Yönetimi</li>
+                                        <li><i class="fas fa-check-circle"></i> Fatura Takipleri</li>
+                                        <li><i class="fas fa-check-circle"></i> Arıza ve Şikayet Yönetimi</li>
+                                        <li><i class="fas fa-check-circle"></i> Kiralama Kontrat Yönetimi</li>
+                                    </ul>
+                                </div>
+                                <div class="member-contact">
+                                    <a href="https://wa.me/905075353909" class="contact-button whatsapp">
+                                        <i class="fab fa-whatsapp"></i> 0507 535 39 09
+                                    </a>
+                                    <a href="mailto:bilgi@gurelyonetim.com" class="contact-button email">
+                                        <i class="fas fa-envelope"></i> E-posta
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Ceyda Azman -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="team-member-card">
+                            <div class="member-avatar">
+                                <div class="avatar-wrapper">
+                                    <img src="assets/svg/person-circle-outline.svg" alt="Ceyda Azman" class="rounded-circle">
+                                    <div class="member-badge secondary">
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="member-info">
+                                <h4 class="member-name">Ceyda Azman</h4>
+                                <div class="member-position">Müdür Yardımcısı</div>
+                                <div class="member-skills">
+                                    <span class="skill-tag">Kalite Yönetimi</span>
+                                    <span class="skill-tag">Teknik Planlama</span>
+                                    <span class="skill-tag">Sözleşme Yönetimi</span>
+                                </div>
+                                <div class="member-description">
+                                    <ul class="list-unstyled responsibility-list">
+                                        <li><i class="fas fa-check-circle"></i> Veri Giriş Takibi</li>
+                                        <li><i class="fas fa-check-circle"></i> Kalite Yönetim Sistemi Takibi</li>
+                                        <li><i class="fas fa-check-circle"></i> Şikayet ve Arıza Takibi</li>
+                                        <li><i class="fas fa-check-circle"></i> Teknik Personel Planlaması</li>
+                                        <li><i class="fas fa-check-circle"></i> Taşeron Sözleşme Yönetimi</li>
+                                    </ul>
+                                </div>
+                                <div class="member-contact">
+                                    <a href="https://wa.me/905524558643" class="contact-button whatsapp">
+                                        <i class="fab fa-whatsapp"></i> 0552 455 86 43
+                                    </a>
+                                    <a href="mailto:bilgi@gurelyonetim.com" class="contact-button email">
+                                        <i class="fas fa-envelope"></i> E-posta
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="join-team text-center mt-5">
+                <div class="join-text mb-3">Profesyonel ve dinamik ekibimizde siz de yerinizi almak ister misiniz?</div>
+                <a href="#contact" class="btn btn-primary">Bizimle İletişime Geçin</a>
+            </div>
+        </div>
+        
+        <!-- Dekoratif arka plan dalga efekti -->
+        <div class="team-wave-bottom">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                <path fill="#ffffff" fill-opacity="1" d="M0,128L48,122.7C96,117,192,107,288,101.3C384,96,480,96,576,117.3C672,139,768,181,864,176C960,171,1056,117,1152,96C1248,75,1344,85,1392,90.7L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+        </svg>
+        </div>
+    </section>
+
+    <!-- Özel Harita Bölümü - Contact ve Footer arasına eklenecek -->
+    <section id="map-section" class="map-experience-section">
+        <div class="map-overlay-gradient"></div>
+        <div class="container position-relative">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="map-content-card">
+                        <div class="map-icon-wrapper">
+                            <i class="fas fa-map-marked-alt pulse"></i>
+                        </div>
+                        <h2 class="map-title text-style-3">Bizi <span class="highlight">Keşfedin</span></h2>
+                        <p class="map-subtitle text-style-12">Gürel Yönetim'in bulunduğu konumu keşfedin ve ofisimizi ziyaret edin.</p>
+                        
+                        <div class="location-details">
+                            <div class="location-item">
+                                <div class="icon-box">
+                                    <i class="fas fa-building"></i>
+                                </div>
+                                <div class="location-text">
+                                    <h5>Merkez Ofis</h5>
+                                    <p>Soğanyemez, 513. Sk. No:6/19, 10300 Edremit/Balıkesir</p>
+                                </div>
+                            </div>
+                            <div class="location-item">
+                                <div class="icon-box">
+                                    <i class="fas fa-phone-alt"></i>
+                                </div>
+                                <div class="location-text">
+                                    <h5>İletişim</h5>
+                                    <p>0530 555 60 07</p>
+                                    <p>gurelyonetim@gmail.com</p>
+                                </div>
+                            </div>
+                            <div class="location-item">
+                                <div class="icon-box">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="location-text">
+                                    <h5>Çalışma Saatleri</h5>
+                                    <p>Pazartesi - Cuma: 09:00 - 18:00</p>
+                                    <p>Cumartesi: 09:00 - 14:00</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="map-actions">
+                            <a href="https://goo.gl/maps/xQJ1mB1eLKXRh5wz5" target="_blank" class="btn btn-primary">
+                                <i class="fas fa-directions me-2"></i> Yol Tarifi Al
+                            </a>
+                            <button class="btn btn-outline-primary map-expand-btn" data-bs-toggle="modal" data-bs-target="#mapModal">
+                                <i class="fas fa-expand-alt me-2"></i> Haritayı Genişlet
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="map-container">
+                        <div class="map-frame">
+                            <div class="map-pin-marker">
+                                <div class="pin-pulse"></div>
+                                <div class="pin-icon">
+                                    <i class="fas fa-map-pin"></i>
+                                </div>
+                            </div>
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3074.5429183382953!2d27.01689447544059!3d39.59245070539585!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14b097e9eb4be623%3A0xd991ced6e038799e!2zR8O8cmVsIEFwYXJ0bWFuIHZlIFNpdGUgWcO2bmV0aW1pIC8gR8O8cmVsIE3DvGxrIFnDtm5ldGltaQ!5e0!3m2!1str!2sus!4v1732455657201!5m2!1str!2sus" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                        
+                        <div class="service-areas">
+                            <div class="area-badge" style="top: 30%; left: 20%;">Edremit</div>
+                            <div class="area-badge" style="top: 45%; left: 40%;">Akçay</div>
+                            <div class="area-badge" style="top: 60%; left: 15%;">Güre</div>
+                            <div class="area-badge" style="top: 20%; left: 70%;">Burhaniye</div>
+                            <div class="area-badge" style="top: 70%; left: 60%;">Altınoluk</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Dalgalı Arka Plan Şekli -->
+        <div class="map-shape-top">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                <path fill="#ffffff" fill-opacity="1" d="M0,288L48,272C96,256,192,224,288,197.3C384,171,480,149,576,165.3C672,181,768,235,864,234.7C960,235,1056,181,1152,170.7C1248,160,1344,192,1392,208L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+            </svg>
+        </div>
+        <div class="map-shape-bottom">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                <path fill="#ffffff" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,218.7C672,203,768,149,864,149.3C960,149,1056,203,1152,213.3C1248,224,1344,192,1392,176L1440,160L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Harita Genişletme Modal -->
+    <div class="modal fade" id="mapModal" tabindex="-1" aria-labelledby="mapModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mapModalLabel">Gürel Yönetim Lokasyonu</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3074.5429183382953!2d27.01689447544059!3d39.59245070539585!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14b097e9eb4be623%3A0xd991ced6e038799e!2zR8O8cmVsIEFwYXJ0bWFuIHZlIFNpdGUgWcO2bmV0aW1pIC8gR8O8cmVsIE3DvGxrIFnDtm5ldGltaQ!5e0!3m2!1str!2sus!4v1732455657201!5m2!1str!2sus" width="100%" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+                <div class="modal-footer">
+                    <a href="https://goo.gl/maps/xQJ1mB1eLKXRh5wz5" target="_blank" class="btn btn-primary">
+                        <i class="fas fa-directions me-2"></i> Yol Tarifi Al
+                    </a>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hizmet Bölgeleri Section -->
+    <section id="service-areas" class="service-areas-section section-padding">
+        <div class="container">
+            <div class="section-heading text-center mb-5">
+                <h6 class="subtitle text-uppercase text-style-12">Hizmet Ağımız</h6>
+                <h2 class="title text-style-3">Hizmet Verdiğimiz <span class="text-primary">Bölgeler</span></h2>
+                <p class="description">Balıkesir'in birçok noktasında profesyonel yönetim hizmetlerimizle yanınızdayız</p>
+            </div>
+            
+            <div class="service-locations">
+                <div class="row g-4 justify-content-center">
+                    <!-- Edremit -->
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <div class="location-card shadow-hover">
+                            <div class="location-icon">
+                                <i class="fas fa-building"></i>
+                            </div>
+                            <h4 class="location-name text-style-7">Edremit</h4>
+                            <div class="location-highlight"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Akçay -->
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <div class="location-card shadow-hover">
+                            <div class="location-icon">
+                                <i class="fas fa-umbrella-beach"></i>
+                            </div>
+                            <h4 class="location-name text-style-7">Akçay</h4>
+                            <div class="location-highlight"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Güre -->
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <div class="location-card shadow-hover">
+                            <div class="location-icon">
+                                <i class="fas fa-hot-tub"></i>
+                            </div>
+                            <h4 class="location-name text-style-7">Güre</h4>
+                            <div class="location-highlight"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Burhaniye -->
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <div class="location-card shadow-hover">
+                            <div class="location-icon">
+                                <i class="fas fa-tree"></i>
+                            </div>
+                            <h4 class="location-name text-style-7">Burhaniye</h4>
+                            <div class="location-highlight"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Küçükkuyu -->
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <div class="location-card shadow-hover">
+                            <div class="location-icon">
+                                <i class="fas fa-water"></i>
+                            </div>
+                            <h4 class="location-name text-style-7">Küçükkuyu</h4>
+                            <div class="location-highlight"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Altınoluk -->
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <div class="location-card shadow-hover">
+                            <div class="location-icon">
+                                <i class="fas fa-sun"></i>
+                            </div>
+                            <h4 class="location-name text-style-7">Altınoluk</h4>
+                            <div class="location-highlight"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Pelitköy -->
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <div class="location-card shadow-hover">
+                            <div class="location-icon">
+                                <i class="fas fa-home"></i>
+                            </div>
+                            <h4 class="location-name text-style-7">Pelitköy</h4>
+                            <div class="location-highlight"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Gömeç -->
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <div class="location-card shadow-hover">
+                            <div class="location-icon">
+                                <i class="fas fa-mountain"></i>
+                            </div>
+                            <h4 class="location-name text-style-7">Gömeç</h4>
+                            <div class="location-highlight"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Ayvalık -->
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <div class="location-card shadow-hover">
+                            <div class="location-icon">
+                                <i class="fas fa-ship"></i>
+                            </div>
+                            <h4 class="location-name text-style-7">Ayvalık</h4>
+                            <div class="location-highlight"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-5">
+                <a href="#contact" class="btn btn-primary">Teklif Alın</a>
+            </div>
+        </div>
+        
+        <!-- Dekoratif arka plan dalgası -->
+        <div class="bg-wave">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                <path fill="#ffffff" fill-opacity="1" d="M0,64L48,90.7C96,117,192,171,288,170.7C384,171,480,117,576,122.7C672,128,768,192,864,186.7C960,181,1056,107,1152,80C1248,53,1344,75,1392,85.3L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+        </svg>
+    </div>
+</section>
+
+    <!-- Footer Section - Beyaz arka plan için güncellendi -->
+    <footer id="footer" class="shock-footer scheme-light">
+        <div class="footer-content focus-trigger">
+            <div class="container">
+                <div class="row g-3">
+                    <div class="col-12 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+                        <div class="footer-item">
+                            <!-- Brand -->
+                            <a href="/" class="footer-brand floating-item">
+                                <img src="assets/images/logo3.png" alt="Gürel Yönetim" class="logo footer-logo transparent-bg" />
+                                <span class="logo-after-text">GÜREL YÖNETİM</span>
+                            </a>
+                            <!-- Text -->
+                            <div class="footer-text">
+                                <p>
+                                    Temmuz 2022'de kurulan Gürel Yönetim, müşteri memnuniyeti odaklı ve profesyonel hizmet anlayışıyla Balıkesir'in 9 farklı bölgesinde hizmet vermektedir.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="footer-item">
+                            <h6 class="title text-style-11">Bize Ulaşın</h6>
+                            <!-- Links list -->
+                            <ul class="nav-list list-unstyled">
+                                <li class="nav-item">
+                                    <a href="tel:+905305556007" class="nav-link has-icon">
+                                        <i class="fas fa-phone text-primary me-2"></i>
+                                        <span class="text">0530 555 60 07</span>
+                                        <span class="badge flex ms-1 primary primary-hover">
+                                            <span class="badge-text white white-hover">Pazartesi-Cumartesi</span>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="mailto:gurelyonetim@gmail.com" class="nav-link has-icon">
+                                        <i class="fas fa-envelope text-primary me-2"></i>
+                                        <span class="text">gurelyonetim@gmail.com</span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <!-- Sosyal Medya Linkleri -->
+                            <div class="social-links">
+                                <a href="https://www.instagram.com/gurel_yonetim/" target="_blank" title="Instagram">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                <a href="https://www.linkedin.com/company/g%C3%BCrel-y%C3%B6netim/" target="_blank" title="LinkedIn">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                                <a href="https://wa.me/905305556007" target="_blank" title="WhatsApp">
+                                    <i class="fab fa-whatsapp"></i>
+                                </a>
+                                <a href="#contact" data-bs-toggle="modal" data-bs-target="#modal-1" title="Bize Ulaşın">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-2" data-aos="fade-up" data-aos-delay="200">
+                        <div class="footer-item">
+                            <h6 class="title text-style-11">Hızlı Bağlantılar</h6>
+                            <!-- Links list -->
+                            <ul class="nav-list list-unstyled">
+                                <li class="nav-item">
+                                    <a href="#home" class="nav-link has-icon">
+                                        <img class="image-icon" src="assets/svg/chevron-forward-sharp.svg" alt="Ok işareti" data-shock-icon="32" />
+                                        <span class="text">Ana Sayfa</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#about" class="nav-link has-icon">
+                                        <img class="image-icon" src="assets/svg/chevron-forward-sharp.svg" alt="Ok işareti" data-shock-icon="32" />
+                                        <span class="text">Biz Kimiz</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#services" class="nav-link has-icon">
+                                        <img class="image-icon" src="assets/svg/chevron-forward-sharp.svg" alt="Ok işareti" data-shock-icon="32" />
+                                        <span class="text">Hizmetlerimiz</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#testimonials" class="nav-link has-icon">
+                                        <img class="image-icon" src="assets/svg/chevron-forward-sharp.svg" alt="Ok işareti" data-shock-icon="32" />
+                                        <span class="text">Referanslar</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#contact" class="nav-link has-icon">
+                                        <img class="image-icon" src="assets/svg/chevron-forward-sharp.svg" alt="Ok işareti" data-shock-icon="32" />
+                                        <span class="text">İletişim</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="footer-item">
+                            <!-- Button -->
+                            <a href="#contact" data-bs-toggle="modal" data-bs-target="#modal-1" class="button outline gray primary-hover">
+                                <span class="hover-rotate">
+                                    <span class="button-text gray white-hover">Bize Ulaşın</span>
+                                    <i class="fa-solid fa-arrow-right button-icon gray white-hover"></i>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                        <div class="footer-item">
+                            <h6 class="title text-style-11">Hizmet Bölgelerimiz</h6>
+                            <!-- Kompakt Tag Cloud -->
+                            <div class="compact-tag-cloud">
+                                <a href="#" class="compact-tag"><i class="fas fa-map-marker-alt"></i> Edremit</a>
+                                <a href="#" class="compact-tag"><i class="fas fa-map-marker-alt"></i> Akçay</a>
+                                <a href="#" class="compact-tag"><i class="fas fa-map-marker-alt"></i> Güre</a>
+                                <a href="#" class="compact-tag"><i class="fas fa-map-marker-alt"></i> Burhaniye</a>
+                                <a href="#" class="compact-tag"><i class="fas fa-map-marker-alt"></i> Küçükkuyu</a>
+                                <a href="#" class="compact-tag"><i class="fas fa-map-marker-alt"></i> Altınoluk</a>
+                                <a href="#" class="compact-tag"><i class="fas fa-map-marker-alt"></i> Pelitköy</a>
+                                <a href="#" class="compact-tag"><i class="fas fa-map-marker-alt"></i> Gömeç</a>
+                                <a href="#" class="compact-tag"><i class="fas fa-map-marker-alt"></i> Ayvalık</a>
+                            </div>
+                        </div>
+                        <div class="footer-item mt-4">
+                            <h6 class="title text-style-11">Çalışma Saatleri</h6>
+                            <div class="working-hours">
+                                <div class="time-slot">
+                                    <i class="far fa-clock text-primary me-2"></i>
+                                    <span>Pazartesi - Cuma: 09:00 - 18:00</span>
+                                </div>
+                                <div class="time-slot">
+                                    <i class="far fa-clock text-primary me-2"></i>
+                                    <span>Cumartesi: 09:00 - 14:00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
+                        <div class="footer-item">
+                            <h6 class="title text-style-11">Kurumsal Logolar</h6>
+                            <div class="footer-item d-flex footer-logo-container">
+                                <!-- Images with transparent background -->
+                                <a href="#" class="footer-image transparent-bg-container">
+                                    <img src="assets/images/logo4.png" alt="Gürel Yönetim Logo" class="image transparent-bg" />
+                                </a>
+                                <a href="#" class="footer-image transparent-bg-container">
+                                    <img src="assets/images/logo3.png" alt="Gürel Yönetim Logo" class="image transparent-bg" />
+                                </a>
+                            </div>
+                        </div>
+                        <div class="footer-item">
+                            <h6 class="title text-style-11">Adres ve Konum</h6>
+                            <div class="footer-address mb-3">
+                                <i class="fas fa-map-marker-alt text-primary me-2"></i>
+                                <span class="link dark">
+                                    Soğanyemez, 513. Sk. No:6/19, 10300 Edremit/Balıkesir
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom-bar light-gray">
+            <div class="text">
+                © 2024 - Tüm Hakları Saklıdır.
+                <a href="#">Gürel Yönetim</a> 
+                Design By:
+                <a href="">Mustafa Öztürk</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/shock.js"></script>
+    <script src="assets/js/custom.js"></script>
+    
+    <!-- Header Scroll Efekti Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const header = document.getElementById('main-header');
+            const topBar = document.getElementById('top-bar');
+            const navbarToggler = document.querySelector('.navbar-toggler');
+            const heroSection = document.querySelector('.advanced-hero');
+            
+            // Variables for advanced scroll effects
+            let lastScrollTop = 0;
+            let ticking = false;
+            
+            // Header scrolling efekti
+            function updateHeaderClass() {
+                const scrollTop = window.scrollY;
+                
+                if (scrollTop > 100) {
+                    // Scrolled down state
+                    header.classList.add('scrolled');
+                    header.classList.remove('transparent');
+                    
+                    // Smooth hide top bar 
+                    topBar.style.transform = 'translateY(-100%)';
+                    header.style.top = '0';
+                    
+                    // Add parallax effect to hero background
+                    if (heroSection) {
+                        const heroBackground = heroSection.querySelector('.hero-background');
+                        if (heroBackground) {
+                            heroBackground.style.transform = `translateY(${scrollTop * 0.4}px)`;
+                        }
+                    }
+                } else {
+                    // Top state
+                    header.classList.remove('scrolled');
+                    if (window.innerWidth > 992) {
+                        header.classList.add('transparent');
+                    }
+                    
+                    // Show top bar
+                    topBar.style.transform = 'translateY(0)';
+                    
+                    // Calculate top position based on topbar height
+                    const topBarHeight = topBar.offsetHeight;
+                    header.style.top = topBarHeight + 'px';
+                    
+                    // Reset hero background
+                    if (heroSection) {
+                        const heroBackground = heroSection.querySelector('.hero-background');
+                        if (heroBackground) {
+                            heroBackground.style.transform = 'translateY(0)';
+                        }
+                    }
+                }
+                
+                // Animate floating elements with scroll
+                const floatingElements = document.querySelectorAll('.floating-shape, .floating-icon');
+                floatingElements.forEach(element => {
+                    const speed = element.dataset.speed || 0.05;
+                    const yPos = -(scrollTop * speed);
+                    element.style.transform = `translateY(${yPos}px)`;
+                });
+                
+                // Progressive transparency for navbar based on scroll position
+                if (scrollTop > 0 && scrollTop < 100) {
+                    const opacity = 0.92 + (scrollTop / 100) * 0.08;
+                    header.style.backgroundColor = `rgba(255, 255, 255, ${opacity})`;
+                }
+                
+                lastScrollTop = scrollTop;
+            }
+            
+            // Hamburger menü toggle efekti
+            navbarToggler.addEventListener('click', function() {
+                this.classList.toggle('active');
+            });
+            
+            // Smooth scroll for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        // Close mobile menu if open
+                        const navbarCollapse = document.getElementById('navbarNav');
+                        if (navbarCollapse.classList.contains('show')) {
+                            navbarToggler.click();
+                        }
+                        
+                        // Smooth scroll with offset for header
+                        const headerHeight = header.offsetHeight;
+                        const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY;
+                        const offsetPosition = targetPosition - headerHeight;
+                        
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Hero scroll indicator click handler
+            const scrollIndicator = document.querySelector('.hero-scroll-indicator');
+            if (scrollIndicator) {
+                scrollIndicator.addEventListener('click', function() {
+                    const nextSection = document.querySelector('#about') || document.querySelector('section:nth-child(2)');
+                    if (nextSection) {
+                        const headerHeight = header.offsetHeight;
+                        const targetPosition = nextSection.getBoundingClientRect().top + window.scrollY;
+                        const offsetPosition = targetPosition - headerHeight;
+                        
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            }
+            
+            // Sayfa ilk yüklendiğinde header durumunu kontrol et
+            updateHeaderClass();
+            
+            // Scroll olayını dinle (throttled)
+            window.addEventListener('scroll', function() {
+                if (!ticking) {
+                    window.requestAnimationFrame(function() {
+                        updateHeaderClass();
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            });
+            
+            // Pencere boyutu değiştiğinde header durumunu güncelle
+            window.addEventListener('resize', updateHeaderClass);
+            
+            // Hamburger menü toggle efekti - kollapsa göre durum değişiklikleri
+            const navbarCollapse = document.getElementById('navbarNav');
+            navbarCollapse.addEventListener('show.bs.collapse', function () {
+                header.classList.remove('transparent');
+            });
+            
+            navbarCollapse.addEventListener('hidden.bs.collapse', function () {
+                if (window.scrollY <= 100) {
+                    header.classList.add('transparent');
+                }
+            });
+        });
+    </script>
+    
+    <!-- Modal-1 (Contact Form) -->
+    <div class="modal fade" id="modal-1" tabindex="-1" aria-labelledby="modal-1-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-1-label">Bize Ulaşın</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="contactModalForm" class="contact-form">
+                        <div class="form-group mb-3">
+                            <input type="text" class="form-control" placeholder="Ad Soyad" required>
+                        </div>
+                        <div class="form-group mb-3">
+                            <input type="email" class="form-control" placeholder="E-posta Adresi" required>
+                        </div>
+                        <div class="form-group mb-3">
+                            <input type="tel" class="form-control" placeholder="Telefon Numarası" required>
+                        </div>
+                        <div class="form-group mb-3">
+                            <textarea class="form-control" rows="4" placeholder="Mesajınız" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Mesaj Gönder</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Swiper.js - Mobil görünüm carousel için -->
+    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+    
+    <!-- Particles.js Ayarları -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            /* Particles.js başlatma */
+            if(document.getElementById('particles-js')) {
+                particlesJS('particles-js', {
+                    "particles": {
+                        "number": {
+                            "value": 80,
+                            "density": {
+                                "enable": true,
+                                "value_area": 800
+                            }
+                        },
+                        "color": {
+                            "value": "#ffffff"
+                        },
+                        "shape": {
+                            "type": "circle",
+                            "stroke": {
+                                "width": 0,
+                                "color": "#000000"
+                            },
+                        },
+                        "opacity": {
+                            "value": 0.5,
+                            "random": false,
+                            "anim": {
+                                "enable": false,
+                                "speed": 1,
+                                "opacity_min": 0.1,
+                                "sync": false
+                            }
+                        },
+                        "size": {
+                            "value": 3,
+                            "random": true,
+                            "anim": {
+                                "enable": false,
+                                "speed": 40,
+                                "size_min": 0.1,
+                                "sync": false
+                            }
+                        },
+                        "line_linked": {
+                            "enable": true,
+                            "distance": 150,
+                            "color": "#ffffff",
+                            "opacity": 0.4,
+                            "width": 1
+                        },
+                        "move": {
+                            "enable": true,
+                            "speed": 6,
+                            "direction": "none",
+                            "random": false,
+                            "straight": false,
+                            "out_mode": "out",
+                            "bounce": false,
+                            "attract": {
+                                "enable": false,
+                                "rotateX": 600,
+                                "rotateY": 1200
+                            }
+                        }
+                    },
+                    "interactivity": {
+                        "detect_on": "canvas",
+                        "events": {
+                            "onhover": {
+                                "enable": true,
+                                "mode": "grab"
+                            },
+                            "onclick": {
+                                "enable": true,
+                                "mode": "push"
+                            },
+                            "resize": true
+                        },
+                        "modes": {
+                            "grab": {
+                                "distance": 140,
+                                "line_linked": {
+                                    "opacity": 1
+                                }
+                            },
+                            "bubble": {
+                                "distance": 400,
+                                "size": 40,
+                                "duration": 2,
+                                "opacity": 8,
+                                "speed": 3
+                            },
+                            "repulse": {
+                                "distance": 200,
+                                "duration": 0.4
+                            },
+                            "push": {
+                                "particles_nb": 4
+                            },
+                            "remove": {
+                                "particles_nb": 2
+                            }
+                        }
+                    },
+                    "retina_detect": true
+                });
+            }
+        });
+    </script>
+</body>
+</html>

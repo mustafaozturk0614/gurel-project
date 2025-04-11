@@ -1,0 +1,79 @@
+{
+  "editor": {
+    "formatOnSave": true,
+    "tabSize": 2,
+    "insertSpaces": true,
+    "defaultFormatter": "prettier",
+    "rulers": [80, 100]
+  },
+  "javascript": {
+    "mainFile": "app.js",
+    "format": {
+      "semi": true,
+      "singleQuote": true,
+      "trailingComma": "es5",
+      "bracketSpacing": true,
+      "arrowParens": "avoid"
+    },
+    "rules": {
+      "noUnusedVars": "warn",
+      "noConsole": "warn",
+      "preferConst": "warn"
+    },
+    "organization": {
+      "imports": "top",
+      "functions": "alphabetical",
+      "eventListeners": "bottom"
+    }
+  },
+  "css": {
+    "mainFile": "temizlenmiş-stiller.css",
+    "format": {
+      "indentWidth": 2,
+      "maxEmptyLines": 1
+    },
+    "organization": {
+      "mediaQueries": "bottom",
+      "variables": "top",
+      "animations": "afterVariables"
+    }
+  },
+  "html": {
+    "format": {
+      "wrapLineLength": 100,
+      "wrapAttributes": "auto",
+      "unformatted": ["pre", "code", "textarea"]
+    }
+  },
+  "folders": {
+    "assets": {
+      "images": "assets/images",
+      "css": "assets/css",
+      "js": "assets/js",
+      "svg": "assets/svg",
+      "videos": "assets/videos"
+    }
+  },
+  "lint": {
+    "javascript": {
+      "extends": ["eslint:recommended"],
+      "plugins": ["prettier"],
+      "env": {
+        "browser": true,
+        "es6": true
+      }
+    },
+    "css": {
+      "extends": ["stylelint-config-standard"],
+      "plugins": ["stylelint-order"]
+    }
+  },
+  "git": {
+    "ignore": [
+      "node_modules",
+      ".DS_Store",
+      ".env",
+      "*.log"
+    ]
+  }
+} 

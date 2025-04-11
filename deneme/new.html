@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Gürel Yönetim - İstanbul'da profesyonel site ve bina yönetimi hizmetleri. Aidat takibi, bakım-onarım, güvenlik ve temizlik hizmetleri ile yaşam kalitenizi artırıyoruz.">
+    <meta name="keywords" content="site yönetimi, bina yönetimi, aidat takibi, bakım onarım, güvenlik hizmetleri, temizlik hizmetleri, gürel yönetim">
+    <meta name="author" content="Gürel Yönetim">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#17312f">
+    <title>Gürel Yönetim | Profesyonel Site Yönetim Hizmetleri</title>
+    <link rel="icon" href="../assets/images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.20/dist/lenis.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="newStyle.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body class="page-loading">
+    <!-- Özel İmleç -->
+    <div class="cursor">
+        <div class="cursor-content">
+            <p class="cursor-paragraph">Keşfet</p>
+        </div>
+    </div>
+    
+    <!-- Trail Efekti İçin -->
+    <div class="trail-wrap">
+        <div class="trail-item"></div>
+        <div class="trail-item"></div>
+        <div class="trail-item"></div>
+    </div>
+
+    <!-- Sayfa Yükleyici -->
+    <div class="loader-grid">
+        <div class="loader-item"></div>
+        <div class="loader-item"></div>
+        <div class="loader-item"></div>
+        <div class="loader-item"></div>
+        <div class="loader-item"></div>
+        <div class="loader-item"></div>
+        <div class="loader-item"></div>
+        <div class="loader-item"></div>
+        <div class="loader-item"></div>
+    </div>
+
+    <!-- Sayfa Sarmalayıcı -->
+    <div class="page-wrapper">
+        <!-- Header -->
+        <header id="main-header" class="header transparent">
+            <div class="container">
+                <div class="header-inner">
+                    <div class="header-logo">
+                        <a href="index.html">
+                            <img src="../assets/images/logo-white.svg" alt="Gürel Yönetim Logo" class="logo-img">
+                        </a>
+                    </div>
+                    <nav class="header-nav">
+                        <ul class="navbar-nav">
+                            <li class="nav-item"><a href="#hizmetler" class="nav-link" data-cursor="Keşfet">Hizmetler</a></li>
+                            <li class="nav-item"><a href="#hakkimizda" class="nav-link" data-cursor="Keşfet">Hakkımızda</a></li>
+                            <li class="nav-item"><a href="#referanslar" class="nav-link" data-cursor="Keşfet">Referanslar</a></li>
+                            <li class="nav-item"><a href="#iletisim" class="nav-link" data-cursor="Keşfet">İletişim</a></li>
+                        </ul>
+                    </nav>
+                    <div class="header-button">
+                        <a href="#iletisim" class="btn btn-primary btn-animate-chars" data-cursor="İletişim">Bizimle Çalışın</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Ana İçerik -->
+        <main class="main-content">
+            <!-- Hero Bölümü -->
+            <section class="hero-section">
+                <div class="hero-bg">
+                    <img src="../assets/newimg/apartment-min.png" alt="Gürel Yönetim" class="hero-bg-img">
+                    <div class="hero-overlay"></div>
+                </div>
+                <div class="container">
+                    <div class="hero-content trail-content">
+                        <div class="heading-wrapper">
+                            <h1 class="hero-heading" data-animate-txt="words-scale-in">
+                                <span class="word-wrapper">
+                                    <div class="word">Gürel</div>
+                                    <div class="word">ile</div>
+                                </span>
+                                <div class="marquee-advanced" data-marquee-direction="left" data-marquee-speed="30">
+                                    <div class="marquee-advanced__scroll">
+                                        <div class="marquee-advanced__collection">
+                                            <div class="marquee-advanced__item">
+                                                <span>siteler</span>
+                                            </div>
+                                            <div class="marquee-advanced__item">
+                                                <span>apartmanlar</span>
+                                            </div>
+                                            <div class="marquee-advanced__item">
+                                                <span>mülkler</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="word-wrapper">
+                                    <div class="word">değerine</div>
+                                    <div class="word">kavuşturun</div>
+                                </span>
+                            </h1>
+                        </div>
+                        <div class="hero-description" data-animate-txt="lines-fade-in">
+                            <p>Gürel Yönetim olarak 15 yılı aşkın tecrübemizle<br>
+                            site ve bina yönetiminizi profesyonel şekilde üstleniyor,<br>
+                            değerinize değer katıyoruz.</p>
+                        </div>
+                        <div class="hero-buttons" data-animate-el="scale-in">
+                            <a href="#hizmetler" class="btn btn-primary btn-animate-chars" data-cursor="Keşfet">Hizmetlerimiz</a>
+                            <a href="#iletisim" class="btn btn-outline btn-animate-chars" data-cursor="İletişim">İletişime Geçin</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-scroll-indicator">
+                    <a href="#hizmetler" class="scroll-down">
+                        <span class="scroll-text">Aşağı Kaydır</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Hizmetler Bölümü -->
+            <section id="hizmetler" class="services-section section-padding">
+                <div class="container">
+                    <div class="section-header">
+                        <h2 class="section-title" data-animate-txt="words-scale-in">
+                            <div class="word">Profesyonel</div>
+                            <div class="word">Yönetim</div>
+                            <div class="word">Hizmetlerimiz</div>
+                        </h2>
+                        <p class="section-subtitle" data-animate-txt="lines-fade-in">
+                            Site ve bina yönetiminde ihtiyacınız olan<br>tüm profesyonel hizmetler tek çatı altında.
+                        </p>
+                    </div>
+
+                    <div class="services-grid">
+                        <div class="service-card" data-animate-el="scale-in" data-cursor="Detay">
+                            <div class="service-image">
+                                <img src="../assets/newimg/gy1.png" alt="Site Yönetimi">
+                            </div>
+                            <div class="service-content">
+                                <div class="service-icon">
+                                    <i class="fas fa-building"></i>
+                                </div>
+                                <h3 class="service-title">Site Yönetimi</h3>
+                                <p class="service-description">Site yönetiminizi profesyonel ekibimize emanet edin, huzuru yaşayın.</p>
+                            </div>
+                        </div>
+                        <div class="service-card" data-animate-el="scale-in" data-cursor="Detay">
+                            <div class="service-image">
+                                <img src="../assets/newimg/muhasebe1-min.png" alt="Aidat Takibi">
+                            </div>
+                            <div class="service-content">
+                                <div class="service-icon">
+                                    <i class="fas fa-hand-holding-usd"></i>
+                                </div>
+                                <h3 class="service-title">Aidat Takibi</h3>
+                                <p class="service-description">Aidat takibi ve tahsilatını sistemli şekilde yönetiyoruz.</p>
+                            </div>
+                        </div>
+                        <div class="service-card" data-animate-el="scale-in" data-cursor="Detay">
+                            <div class="service-image">
+                                <img src="../assets/newimg/bakimonarim1-min.png" alt="Bakım Onarım">
+                            </div>
+                            <div class="service-content">
+                                <div class="service-icon">
+                                    <i class="fas fa-tools"></i>
+                                </div>
+                                <h3 class="service-title">Bakım Onarım</h3>
+                                <p class="service-description">Düzenli bakım ve hızlı onarım hizmetleriyle sorunları çözüyoruz.</p>
+                            </div>
+                        </div>
+                        <div class="service-card" data-animate-el="scale-in" data-cursor="Detay">
+                            <div class="service-image">
+                                <img src="../assets/newimg/guvenlik1-min.png" alt="Güvenlik Hizmetleri">
+                            </div>
+                            <div class="service-content">
+                                <div class="service-icon">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <h3 class="service-title">Güvenlik Hizmetleri</h3>
+                                <p class="service-description">7/24 güvenlik çözümleriyle yaşam alanlarınızı koruyoruz.</p>
+                            </div>
+                        </div>
+                        <div class="service-card" data-animate-el="scale-in" data-cursor="Detay">
+                            <div class="service-image">
+                                <img src="../assets/newimg/temizlik1-min.png" alt="Temizlik Hizmetleri">
+                            </div>
+                            <div class="service-content">
+                                <div class="service-icon">
+                                    <i class="fas fa-broom"></i>
+                                </div>
+                                <h3 class="service-title">Temizlik Hizmetleri</h3>
+                                <p class="service-description">Düzenli ve detaylı temizlik hizmetleriyle yaşam kalitenizi artırıyoruz.</p>
+                            </div>
+                        </div>
+                        <div class="service-card" data-animate-el="scale-in" data-cursor="Detay">
+                            <div class="service-image">
+                                <img src="../assets/newimg/hukuk1-min.png" alt="Hukuki Destek">
+                            </div>
+                            <div class="service-content">
+                                <div class="service-icon">
+                                    <i class="fas fa-file-contract"></i>
+                                </div>
+                                <h3 class="service-title">Hukuki Destek</h3>
+                                <p class="service-description">Site yönetiminde karşılaşılan hukuki süreçlerde profesyonel destek sağlıyoruz.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- İstatistikler Bölümü -->
+            <section class="stats-section section-padding">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3 col-6">
+                            <div class="stat-item" data-animate-el="scale-in">
+                                <div class="stat-number" data-counter>15+</div>
+                                <div class="stat-text">Yıl Deneyim</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="stat-item" data-animate-el="scale-in">
+                                <div class="stat-number" data-counter>200+</div>
+                                <div class="stat-text">Yönetilen Site</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="stat-item" data-animate-el="scale-in">
+                                <div class="stat-number" data-counter>5000+</div>
+                                <div class="stat-text">Mutlu Sakin</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="stat-item" data-animate-el="scale-in">
+                                <div class="stat-number" data-counter>50+</div>
+                                <div class="stat-text">Uzman Personel</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Hakkımızda Bölümü -->
+            <section id="hakkimizda" class="about-section section-padding">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6">
+                            <div class="about-content">
+                                <h2 data-animate-txt="words-scale-in">
+                                    <div class="word">Gürel</div>
+                                    <div class="word">Yönetim</div>
+                                    <div class="word">Hakkında</div>
+                                </h2>
+                                <div class="about-text" data-animate-txt="lines-fade-in">
+                                    <p>Gürel Yönetim olarak, 15 yılı aşkın süredir profesyonel site ve bina yönetim hizmetleri sunmaktayız. Deneyimli kadromuz ve yenilikçi çözümlerimizle, mülk sahiplerinin ve site sakinlerinin yaşam kalitesini artırmak için çalışıyoruz.</p>
+                                    <p>Aidat yönetimi, bakım-onarım, güvenlik, temizlik ve hukuki destek gibi tüm yönetim süreçlerini şeffaf ve profesyonel bir şekilde yürütüyoruz. Güncel teknolojileri kullanarak site yönetim süreçlerini dijitalleştiriyor, sakinlerin yaşamını kolaylaştırıyoruz.</p>
+                                </div>
+                                <div class="about-stats">
+                                    <div class="stat-item">
+                                        <div class="stat-number">%100</div>
+                                        <div class="stat-text">Memnuniyet</div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <div class="stat-number">7/24</div>
+                                        <div class="stat-text">Destek</div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <div class="stat-number">%40</div>
+                                        <div class="stat-text">Tasarruf</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="about-image" data-animate-el="scale-in">
+                                <img src="../assets/newimg/gmy2.png" alt="Gürel Yönetim Ekibi">
+                                <div class="about-image-text">15 YILLIK DENEYİM</div>
+                                <div class="about-image-shape"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Referanslar Bölümü -->
+            <section id="referanslar" class="testimonials-section section-padding">
+                <div class="section-bg-pattern"></div>
+                <div class="container">
+                    <div class="section-header">
+                        <h2 class="section-title" data-animate-txt="words-scale-in">
+                            <div class="word">Müşteri</div>
+                            <div class="word">Yorumları</div>
+                        </h2>
+                        <p class="section-subtitle" data-animate-txt="lines-fade-in">
+                            Memnun müşterilerimizin bizim hakkımızdaki görüşleri
+                        </p>
+                    </div>
+
+                    <div class="swiper testimonial-slider" data-animate-el="scale-in">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <div class="testimonial-card">
+                                    <div class="testimonial-content">
+                                        "Gürel Yönetim'in profesyonel yaklaşımı sayesinde sitemizin yönetim sorunları ortadan kalktı. Özellikle aidat takibi ve bakım onarım hizmetlerindeki hızlı çözümleri için teşekkürler."
+                                    </div>
+                                    <div class="testimonial-author">
+                                        <div class="testimonial-info">
+                                            <div class="testimonial-name">Ahmet Yılmaz</div>
+                                            <div class="testimonial-position">Site Yönetim Kurulu Başkanı</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="testimonial-card">
+                                    <div class="testimonial-content">
+                                        "5 yıldır sitemizin yönetimini Gürel'e emanet ediyoruz. Şeffaf finansal raporlama ve hızlı iletişimleri sayesinde hiçbir sorun yaşamıyoruz. Kesinlikle tavsiye ediyorum."
+                                    </div>
+                                    <div class="testimonial-author">
+                                        <div class="testimonial-info">
+                                            <div class="testimonial-name">Zeynep Kaya</div>
+                                            <div class="testimonial-position">Rezidans Sakini</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="testimonial-card">
+                                    <div class="testimonial-content">
+                                        "Gürel ile çalışmaya başladıktan sonra sitemizde düzen ve kalite arttı. Özellikle dijital uygulamaları ve online ödeme sistemleri hayatımızı çok kolaylaştırdı."
+                                    </div>
+                                    <div class="testimonial-author">
+                                        <div class="testimonial-info">
+                                            <div class="testimonial-name">Mehmet Demir</div>
+                                            <div class="testimonial-position">Apartman Yöneticisi</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-pagination"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- İletişim Bölümü -->
+            <section id="iletisim" class="contact-section section-padding">
+                <div class="container">
+                    <div class="section-header">
+                        <h2 class="section-title" data-animate-txt="words-scale-in">
+                            <div class="word">İletişime</div>
+                            <div class="word">Geçin</div>
+                        </h2>
+                        <p class="section-subtitle" data-animate-txt="lines-fade-in">
+                            Sorularınız için bize ulaşın, en kısa sürede dönüş yapacağız
+                        </p>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="contact-info" data-animate-el="scale-in">
+                                <div class="contact-map">
+                                    <img src="../assets/newimg/bahce1-min.png" alt="Gürel Yönetim Merkez Ofis" class="contact-map-img">
+                                </div>
+                                <div class="contact-item">
+                                    <div class="contact-icon">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                    </div>
+                                    <div class="contact-text">
+                                        <h4 class="contact-title">Adres</h4>
+                                        <p class="contact-info-text">Ataşehir, İstanbul, Türkiye</p>
+                                    </div>
+                                </div>
+                                <div class="contact-item">
+                                    <div class="contact-icon">
+                                        <i class="fas fa-phone"></i>
+                                    </div>
+                                    <div class="contact-text">
+                                        <h4 class="contact-title">Telefon</h4>
+                                        <p class="contact-info-text">+90 (216) 123 45 67</p>
+                                    </div>
+                                </div>
+                                <div class="contact-item">
+                                    <div class="contact-icon">
+                                        <i class="fas fa-envelope"></i>
+                                    </div>
+                                    <div class="contact-text">
+                                        <h4 class="contact-title">E-posta</h4>
+                                        <p class="contact-info-text">info@gurelyonetim.com</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="contact-form" data-animate-el="scale-in">
+                                <form id="contactForm">
+                                    <div class="row">
+                                        <div class="col-md-6 form-group">
+                                            <input type="text" class="form-control" id="name" placeholder="Adınız" required>
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <input type="email" class="form-control" id="email" placeholder="E-posta Adresiniz" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="subject" placeholder="Konu" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea class="form-control" id="message" rows="5" placeholder="Mesajınız" required></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary w-100 pulse">Gönder</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-bg-pattern"></div>
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-logo">
+                        <img src="../assets/images/logo-white.svg" alt="Gürel Yönetim Logo" class="footer-logo-img">
+                        <p>Profesyonel Site Yönetim Hizmetleri</p>
+                    </div>
+                    <div class="footer-links">
+                        <h3>Hızlı Bağlantılar</h3>
+                        <ul>
+                            <li><a href="#hizmetler">Hizmetler</a></li>
+                            <li><a href="#hakkimizda">Hakkımızda</a></li>
+                            <li><a href="#referanslar">Referanslar</a></li>
+                            <li><a href="#iletisim">İletişim</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-links">
+                        <h3>Hizmetlerimiz</h3>
+                        <ul>
+                            <li><a href="#hizmetler">Site Yönetimi</a></li>
+                            <li><a href="#hizmetler">Aidat Takibi</a></li>
+                            <li><a href="#hizmetler">Bakım Onarım</a></li>
+                            <li><a href="#hizmetler">Güvenlik Hizmetleri</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-contact">
+                        <h3>İletişim Bilgileri</h3>
+                        <div class="footer-contact-item">
+                            <div class="footer-contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="footer-contact-text">
+                                Ataşehir, İstanbul, Türkiye
+                            </div>
+                        </div>
+                        <div class="footer-contact-item">
+                            <div class="footer-contact-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="footer-contact-text">
+                                +90 (216) 123 45 67
+                            </div>
+                        </div>
+                        <div class="footer-contact-item">
+                            <div class="footer-contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="footer-contact-text">
+                                info@gurelyonetim.com
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <div class="footer-copyright">
+                        &copy; 2023 Gürel Yönetim. Tüm hakları saklıdır.
+                    </div>
+                    <div class="footer-social">
+                        <a href="#" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/gsap@3.12.3/dist/gsap.min.js"></script>
+    <script src="https://unpkg.com/gsap@3.12.3/dist/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="newApp.js"></script>
+    
+    <!-- Schema.org yapılandırılmış veri -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "Gürel Yönetim",
+        "description": "Profesyonel Site ve Bina Yönetim Hizmetleri",
+        "image": "../assets/images/logo.png",
+        "url": "https://www.gurelyonetim.com",
+        "telephone": "+90 (216) 123 45 67",
+        "email": "info@gurelyonetim.com",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Ataşehir",
+            "addressLocality": "İstanbul",
+            "addressRegion": "Marmara",
+            "postalCode": "34000",
+            "addressCountry": "TR"
+        },
+        "sameAs": [
+            "https://www.facebook.com/gurelyonetim",
+            "https://www.twitter.com/gurelyonetim",
+            "https://www.instagram.com/gurelyonetim",
+            "https://www.linkedin.com/company/gurelyonetim"
+        ],
+        "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday"
+            ],
+            "opens": "09:00",
+            "closes": "18:00"
+        }
+    }
+    </script>
+</body>
+</html>
