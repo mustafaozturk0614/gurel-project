@@ -704,7 +704,7 @@
     </section>
 
     <!-- Ekip Üyeleri Bölümü -->
-    <section id="team" class="team-section modern-team-section py-5 bg-light">
+    <section id="team" class="team-section py-5">
         <div class="container">
             <div class="section-header text-center mb-5" data-aos="fade-up">
                 <div class="badge-label animated-badge mb-2">EKİBİMİZ</div>
@@ -713,149 +713,239 @@
                 <p class="subtitle mt-3">Sizlere en iyi hizmeti sunmak için çalışan uzman ekibimizle tanışın</p>
             </div>
             
-            <div class="row g-4">
+            <!-- Mouse takibi için floating dots -->
+            <div class="floating-dots">
+                <div class="dot dot-1"></div>
+                <div class="dot dot-2"></div>
+                <div class="dot dot-3"></div>
+                <div class="dot dot-4"></div>
+                <div class="dot dot-5"></div>
+                <div class="dot dot-6"></div>
+            </div>
+            
+            <!-- Mobil için kaydırma ipucu -->
+            <div class="swipe-hint d-md-none text-center mb-3">
+                <i class="fas fa-arrow-left"></i> Daha fazla ekip üyesi görmek için kaydırın <i class="fas fa-arrow-right"></i>
+            </div>
+            
+            <div class="row justify-content-center team-container">
                 <!-- Ekip Üyesi 1 -->
-                <div class="col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="100">
-                    <div class="team-card bg-white rounded-3 shadow-sm position-relative overflow-hidden h-100">
+                <div class="col-lg-5 col-md-6 mb-4">
+                    <div class="team-card" data-aos="fade-up" data-aos-delay="100" tabindex="0">
                         <div class="card-decoration"></div>
-                        <div class="team-card-header p-4 text-center position-relative">
-                            <div class="avatar-container mx-auto mb-3">
-                                <div class="avatar-circle bg-gradient">
-                                    <i class="fas fa-user fa-3x text-white"></i>
+                        <div class="team-card-header text-center position-relative">
+                            <div class="avatar-container" data-mouse-parallax-element data-mouse-parallax-speed="2">
+                                <div class="avatar-circle">
+                                    <div class="avatar-aura"></div>
+                                    <div class="avatar-pattern"></div>
+                                    <span class="avatar-initials" data-mouse-parallax-element data-mouse-parallax-speed="3">CA</span>
                                 </div>
                             </div>
-                            <h4 class="team-name mb-1">Elif Çicibaş</h4>
-                            <div class="team-role py-1 px-3 rounded-pill d-inline-block mb-2">
+                            <h4 class="team-name" data-text="Ceyda Azman" data-mouse-parallax-element data-mouse-parallax-speed="1.5">Ceyda Azman</h4>
+                            <div class="team-role" data-mouse-parallax-element data-mouse-parallax-speed="1">
                                 <span>Müdür Yardımcısı</span>
                             </div>
                         </div>
-                        <div class="team-card-body p-4">
-                            <div class="team-expertise mb-3">
-                                <p class="text-muted mb-3">Müşteri ilişkileri ve operasyon yönetimi konusunda uzman</p>
+                        <div class="team-card-content">
+                            <div class="team-expertise mb-3" data-mouse-parallax-element data-mouse-parallax-speed="0.5">
+                                <p class="text-muted mb-3">Operasyon ve kalite yönetiminde uzman ekip üyemiz</p>
                                 <div class="team-skills">
-                                    <span class="skill-tag">Veri Yönetimi</span>
-                                    <span class="skill-tag">Şikayet Takibi</span>
-                                    <span class="skill-tag">Personel Yönetimi</span>
+                                    <span class="skill-tag"><i class="fas fa-check-circle me-1"></i><span>Veri Giriş Takibi</span></span>
+                                    <span class="skill-tag"><i class="fas fa-check-circle me-1"></i><span>Kalite Yönetim Sistemi</span></span>
+                                    <span class="skill-tag"><i class="fas fa-check-circle me-1"></i><span>Şikayet ve Arıza Takibi</span></span>
+                                    <span class="skill-tag"><i class="fas fa-check-circle me-1"></i><span>Teknik Personel Planlaması</span></span>
+                                    <span class="skill-tag"><i class="fas fa-check-circle me-1"></i><span>Taşeron Sözleşme Yönetimi</span></span>
                                 </div>
                             </div>
-                            <div class="social-links text-center mt-3">
-                                <a href="tel:05075353909" class="social-link" title="Telefon">
-                                    <div class="icon-circle bg-light">
+                            <div class="social-links" data-mouse-parallax-element data-mouse-parallax-speed="1">
+                                <a href="tel:05524558643" class="social-link" title="Telefon" aria-label="Telefonla ara">
+                                    <div class="icon-circle">
                                         <i class="fas fa-phone-alt"></i>
                                     </div>
-                                    </a>
-                                <a href="mailto:contact@gurelyonetim.com" class="social-link" title="E-posta">
-                                    <div class="icon-circle bg-light">
+                                </a>
+                                <a href="mailto:info@gurelyonetim.com" class="social-link" title="E-posta" aria-label="E-posta gönder">
+                                    <div class="icon-circle">
                                         <i class="fas fa-envelope"></i>
                                     </div>
-                                    </a>
-                                <a href="https://wa.me/905075353909" class="social-link" title="WhatsApp">
-                                    <div class="icon-circle bg-light">
+                                </a>
+                                <a href="https://wa.me/905524558643" class="social-link" title="WhatsApp" aria-label="WhatsApp ile mesaj gönder">
+                                    <div class="icon-circle">
                                         <i class="fab fa-whatsapp"></i>
                                     </div>
-                                    </a>
+                                </a>
+                            </div>
                         </div>
-                        </div>
-                        </div>
-                                </div>
+                    </div>
+                </div>
                 
                 <!-- Ekip Üyesi 2 -->
-                <div class="col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="200">
-                    <div class="team-card bg-white rounded-3 shadow-sm position-relative overflow-hidden h-100">
+                <div class="col-lg-5 col-md-6 mb-4">
+                    <div class="team-card" data-aos="fade-up" data-aos-delay="200" tabindex="0">
                         <div class="card-decoration"></div>
-                        <div class="team-card-header p-4 text-center position-relative">
-                            <div class="avatar-container mx-auto mb-3">
-                                <div class="avatar-circle bg-gradient">
-                                    <i class="fas fa-user fa-3x text-white"></i>
+                        <div class="team-card-header text-center position-relative">
+                            <div class="avatar-container" data-mouse-parallax-element data-mouse-parallax-speed="2">
+                                <div class="avatar-circle">
+                                    <div class="avatar-aura"></div>
+                                    <div class="avatar-pattern"></div>
+                                    <span class="avatar-initials" data-mouse-parallax-element data-mouse-parallax-speed="3">NA</span>
+                                </div>
+                            </div>
+                            <h4 class="team-name" data-text="Nevin Aydın" data-mouse-parallax-element data-mouse-parallax-speed="1.5">Nevin Aydın</h4>
+                            <div class="team-role" data-mouse-parallax-element data-mouse-parallax-speed="1">
+                                <span>Ön Muhasebe Personeli</span>
+                            </div>
+                        </div>
+                        <div class="team-card-content">
+                            <div class="team-expertise mb-3" data-mouse-parallax-element data-mouse-parallax-speed="0.5">
+                                <p class="text-muted mb-3">Finansal yönetim ve muhasebe süreçlerinde uzman ekip üyemiz</p>
+                                <div class="team-skills">
+                                    <span class="skill-tag"><i class="fas fa-check-circle me-1"></i><span>Finansal Kayıtlar</span></span>
+                                    <span class="skill-tag"><i class="fas fa-check-circle me-1"></i><span>Aidat Takibi</span></span>
+                                    <span class="skill-tag"><i class="fas fa-check-circle me-1"></i><span>Fatura İşlemleri</span></span>
+                                    <span class="skill-tag"><i class="fas fa-check-circle me-1"></i><span>Bütçe Planlaması</span></span>
+                                </div>
+                            </div>
+                            <div class="social-links" data-mouse-parallax-element data-mouse-parallax-speed="1">
+                                <a href="tel:05524558643" class="social-link" title="Telefon" aria-label="Telefonla ara">
+                                    <div class="icon-circle">
+                                        <i class="fas fa-phone-alt"></i>
+                                    </div>
+                                </a>
+                                <a href="mailto:info@gurelyonetim.com" class="social-link" title="E-posta" aria-label="E-posta gönder">
+                                    <div class="icon-circle">
+                                        <i class="fas fa-envelope"></i>
+                                    </div>
+                                </a>
+                                <a href="https://wa.me/905524558643" class="social-link" title="WhatsApp" aria-label="WhatsApp ile mesaj gönder">
+                                    <div class="icon-circle">
+                                        <i class="fab fa-whatsapp"></i>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                            <h4 class="team-name mb-1">Ceyda Azman</h4>
-                            <div class="team-role py-1 px-3 rounded-pill d-inline-block mb-2">
-                                <span>Müdür Yardımcısı</span>
             </div>
-                        </div>
-                        <div class="team-card-body p-4">
-                            <div class="team-expertise mb-3">
-                                <p class="text-muted mb-3">Kalite yönetimi ve teknik operasyon süreçleri uzmanı</p>
-                                <div class="team-skills">
-                                    <span class="skill-tag">Kalite Kontrolü</span>
-                                    <span class="skill-tag">Süreç Yönetimi</span>
-                                    <span class="skill-tag">Sözleşme Takibi</span>
-                                </div>
-                            </div>
-                            <div class="social-links text-center mt-3">
-                                <a href="tel:05524558643" class="social-link" title="Telefon">
-                                    <div class="icon-circle bg-light">
-                                        <i class="fas fa-phone-alt"></i>
-                                    </div>
-                                    </a>
-                                <a href="mailto:contact@gurelyonetim.com" class="social-link" title="E-posta">
-                                    <div class="icon-circle bg-light">
-                                        <i class="fas fa-envelope"></i>
-                                    </div>
-                                    </a>
-                                <a href="https://wa.me/905524558643" class="social-link" title="WhatsApp">
-                                    <div class="icon-circle bg-light">
-                                        <i class="fab fa-whatsapp"></i>
-                                    </div>
-                                    </a>
-                        </div>
-                    </div>
-                                </div>
-                            </div>
-                
-                <!-- Ekip Üyesi 3 -->
-                <div class="col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="300">
-                    <div class="team-card bg-white rounded-3 shadow-sm position-relative overflow-hidden h-100">
-                        <div class="card-decoration"></div>
-                        <div class="team-card-header p-4 text-center position-relative">
-                            <div class="avatar-container mx-auto mb-3">
-                                <div class="avatar-circle bg-gradient">
-                                    <i class="fas fa-user fa-3x text-white"></i>
-                                </div>
-                            </div>
-                            <h4 class="team-name mb-1">Ali Yılmaz</h4>
-                            <div class="team-role py-1 px-3 rounded-pill d-inline-block mb-2">
-                                <span>Teknik Destek Uzmanı</span>
-                            </div>
-                        </div>
-                        <div class="team-card-body p-4">
-                            <div class="team-expertise mb-3">
-                                <p class="text-muted mb-3">Bakım, onarım ve teknik destek hizmetleri sorumlusu</p>
-                                <div class="team-skills">
-                                    <span class="skill-tag">Teknik Bakım</span>
-                                    <span class="skill-tag">Onarım</span>
-                                    <span class="skill-tag">Acil Müdahale</span>
-                                </div>
-                            </div>
-                            <div class="social-links text-center mt-3">
-                                <a href="tel:05555555555" class="social-link" title="Telefon">
-                                    <div class="icon-circle bg-light">
-                                        <i class="fas fa-phone-alt"></i>
-                                    </div>
-                                </a>
-                                <a href="mailto:contact@gurelyonetim.com" class="social-link" title="E-posta">
-                                    <div class="icon-circle bg-light">
-                                        <i class="fas fa-envelope"></i>
-                        </div>
-                                </a>
-                                <a href="https://wa.me/905555555555" class="social-link" title="WhatsApp">
-                                    <div class="icon-circle bg-light">
-                                        <i class="fab fa-whatsapp"></i>
-                    </div>
-                                </a>
-                                </div>
-                            </div>
-                    </div>
-                </div>
-                        </div>
-                                </div>
+
+            <!-- Mobil için kaydırma kontrolleri -->
+            <div class="team-scroll-nav">
+                <button class="scroll-arrow prev" aria-label="Önceki">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <button class="scroll-arrow next" aria-label="Sonraki">
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
     </section>
 
+    <!-- Ekip Animasyonları için JavaScript -->
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Sayfanın bu kısmı yüklendiğinde önce kartları gizli yap
+        const teamCards = document.querySelectorAll('.team-card');
+        teamCards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(50px)';
+        });
+        
+        // Sonra onları sırayla göster
+        setTimeout(() => {
+            teamCards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                    card.classList.add('animate-in');
+                }, 100 * index);
+            });
+        }, 500);
 
-    <!-- Ekip Üyeleri Bölümü Sonu -->
+        // IntersectionObserver ile scroll animasyonu
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
 
-  
+        teamCards.forEach(card => {
+            observer.observe(card);
+        });
+
+        // Floating dots yaratma
+        const floatingDots = document.querySelector('.floating-dots');
+        if (floatingDots) {
+            for (let i = 0; i < 10; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'dot';
+                dot.style.width = Math.random() * 10 + 5 + 'px';
+                dot.style.height = dot.style.width;
+                dot.style.left = Math.random() * 100 + '%';
+                dot.style.top = Math.random() * 100 + '%';
+                dot.style.animationDuration = Math.random() * 10 + 5 + 's';
+                dot.style.animationDelay = Math.random() * 5 + 's';
+                floatingDots.appendChild(dot);
+            }
+        }
+
+        // Mouse takibi efektleri
+        const cards = document.querySelectorAll('.team-card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                
+                card.style.setProperty('--mouse-x', `${x}%`);
+                card.style.setProperty('--mouse-y', `${y}%`);
+                
+                // 3D kart döndürme efekti
+                const rotateY = (((x - 50) / 50) * 5);
+                const rotateX = (((y - 50) / 50) * -5);
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                
+                // Paralaks efekti
+                const elements = card.querySelectorAll('[data-mouse-parallax-element]');
+                elements.forEach(element => {
+                    const speed = element.getAttribute('data-mouse-parallax-speed') || 1;
+                    const offsetX = (x - 50) * speed * 0.1;
+                    const offsetY = (y - 50) * speed * 0.1;
+                    element.style.transform = `translate3d(${offsetX}px, ${offsetY}px, 20px)`;
+                });
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+                
+                const elements = card.querySelectorAll('[data-mouse-parallax-element]');
+                elements.forEach(element => {
+                    element.style.transform = 'translate3d(0, 0, 0)';
+                });
+            });
+        });
+        
+        // Mobil kaydırma kontrolleri
+        const teamContainer = document.querySelector('.team-container');
+        const prevButton = document.querySelector('.scroll-arrow.prev');
+        const nextButton = document.querySelector('.scroll-arrow.next');
+        
+        if (teamContainer && prevButton && nextButton) {
+            prevButton.addEventListener('click', () => {
+                const firstCard = teamContainer.querySelector('.col-md-6');
+                const cardWidth = firstCard.offsetWidth;
+                teamContainer.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+            });
+            
+            nextButton.addEventListener('click', () => {
+                const firstCard = teamContainer.querySelector('.col-md-6');
+                const cardWidth = firstCard.offsetWidth;
+                teamContainer.scrollBy({ left: cardWidth, behavior: 'smooth' });
+            });
+        }
+    });
+    </script>
+
     <!-- Hizmetlerimiz -->
     <section id="services" class="services-section bg-light pt-5 pb-5">
         <div class="container">
