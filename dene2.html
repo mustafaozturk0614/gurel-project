@@ -3,7 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gürel Yönetim - Edremit'te Profesyonel Site ve Apartman Yönetimi</title>
+    <title>Gürel Yönetim - Profesyonel Site ve Apartman Yönetimi</title>
+    <meta name="description" content="Balıkesir'de profesyonel site ve apartman yönetim hizmetleri. Gürel Yönetim ile mülkünüz güvende!">
+    <meta name="keywords" content="site yönetimi, apartman yönetimi, profesyonel yönetim, Balıkesir, Edremit, Akçay">
+    
+    <!-- favicon -->
+    <link rel="icon" href="assets/img/favicon.png" type="image/png">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    
+    <!-- AOS CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+    
+    <!-- Özel CSS -->
+    <link rel="stylesheet" href="custom.css">
+    <link rel="stylesheet" href="base.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Ana Renkler */
+        :root {
+            --primary-color: #0e4c92;
+            --secondary-color: #e6ddc4;
+            --accent-color: #ffb347;
+            --base-color: #ffffff;
+            --text-color: #181818;
+            --border-radius: 10px;
+        }
+        
+        /* Sayfa Geçişi */
+        .page-transition {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary-color);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+            transition: opacity 0.8s ease-out;
+        }
+        
+        .page-transition.fade-out {
+            opacity: 0;
+        }
+        
+        /* Rating Circle Stil */
+        .rating-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            box-shadow: 0 6px 15px rgba(14, 76, 146, 0.2);
+        }
+        
+        .review-cta .btn {
+            border-radius: 30px;
+            padding: 12px 28px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .review-cta .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(14, 76, 146, 0.15);
+        }
+        
+     
+        
+        .stars-container {
+            font-size: 1.2rem;
+        }
+        
+        .modern-reviews {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+    </style>
     
     <!-- Meta tags for SEO -->
     <meta name="description" content="Balıkesir Edremit bölgesinde profesyonel apartman, site ve mülk yönetimi hizmetleri sunan güvenilir çözüm ortağınız. 9 farklı bölgede hizmet veriyoruz.">
@@ -419,7 +508,7 @@
                             <div class="mission-vision-card">
                                 <h4><i class="fas fa-bullseye"></i> Misyonumuz</h4>
                                 <p>Mülk sahiplerinin ve site sakinlerinin yaşam kalitesini yükseltmek, gayrimenkul değerlerini artırmak ve şeffaf, güvenilir ve profesyonel bir yönetim sistemi ile tüm paydaşlarımıza maksimum fayda sağlamaktır.</p>
-                            </div>
+                                </div>
                             <div class="mission-vision-card vision">
                                 <h4><i class="fas fa-binoculars"></i> Vizyonumuz</h4>
                                 <p>Balıkesir genelinde profesyonel apartman ve site yönetiminin referans noktası olmak, teknoloji odaklı yönetim standartları geliştirerek sektörün gelişimine öncülük etmek ve müşteri memnuniyetinde daima ilk sırada yer almaktır.</p>
@@ -476,7 +565,7 @@
                                 </div>
                             </div>
                         </div>  <!-- .about-principles kapanışı -->
-                    </div>
+                        </div>
                 </div>  <!-- .col-lg-6 kapanışı -->
                     
                 <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200" data-aos-duration="800">
@@ -554,24 +643,62 @@
                                 <div class="service-area-result" id="service-area-result"></div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                            </div>
+                                    </div>
+                                </div>
+                                    </div>
     </section>
 
     <!-- Müşteri Yorumları Bölümü -->
     <section id="testimonials" class="testimonials-section py-5 bg-light">
-        <div class="container">
+        <div class="container-fluid px-lg-5">
             <div class="section-header text-center mb-4" data-aos="fade-up">
                 <div class="badge-label animated-badge mb-2">MÜŞTERİ YORUMLARI</div>
                 <h2 class="section-title reveal-title">Bize <span class="highlight">Güvenenler</span> Ne Diyor?</h2>
                 <div class="title-separator"><span></span></div>
+                <p class="section-description mt-4">Müşterilerimizin deneyimlerini dinleyin ve hizmet kalitemizi keşfedin</p>
                                 </div>
             
-            <div class="trustmary-container mt-4 bg-white p-4 rounded shadow">
+            <div class="trustmary-wrapper modern-reviews">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                <div class="trustmary-header mb-4">
+                    <div class="d-flex align-items-center justify-content-center mb-4">
+                        <div class="overall-rating me-4">
+                            <div class="rating-circle bg-primary text-white d-flex align-items-center justify-content-center shadow-lg">
+                                 <span class="rating-value fw-bold fs-3">4.9</span>
+                             </div>
+                         </div>
+                        <div class="rating-stars d-flex flex-column align-items-start">
+                            <div class="stars-container mb-2">
+                             <i class="fas fa-star text-warning"></i>
+                             <i class="fas fa-star text-warning"></i>
+                             <i class="fas fa-star text-warning"></i>
+                             <i class="fas fa-star text-warning"></i>
+                             <i class="fas fa-star text-warning"></i>
+                            </div>
+                            <div class="rating-count text-muted">
+                                <span class="fw-medium">35+ değerlendirme</span>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+                 
+                 <div class="">
                 <!-- Trustmary Widget -->
                 <script src="https://widget.trustmary.com/oyGuoLpy1"></script>
+                 </div>
+                 
+                 <div class="review-cta text-center mt-5">
+                     <a href="https://g.page/r/CV7ZFrWcbQZXEAI/review" target="_blank" class="btn btn-outline-primary btn-lg me-2">
+                         <i class="fab fa-google me-2"></i>Siz de Değerlendirme Yapın
+                     </a>
+                     <a href="https://g.page/r/CV7ZFrWcbQZXEAI" target="_blank" class="btn btn-primary btn-lg">
+                         <i class="fab fa-google me-2"></i>Bizi Google'da Görüntüleyin
+                     </a>
+                 </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
