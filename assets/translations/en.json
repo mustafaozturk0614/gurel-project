@@ -1,0 +1,227 @@
+{
+  "lang": {
+    "code": "en",
+    "name": "English",
+    "nativeName": "English",
+    "direction": "ltr"
+  },
+  "seo": {
+    "title": "Gurel Management | Property and Building Management",
+    "description": "We provide professional property and building management services in Edremit and surrounding areas.",
+    "keywords": "property management, building management, real estate management, Edremit"
+  },
+  "general": {
+    "loading": "Loading...",
+    "error": "An error occurred!",
+    "success": "Operation successful!",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "save": "Save",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "header": {
+    "navigation": {
+      "home": "Home",
+      "about": "About Us",
+      "services": "Our Services",
+      "whyUs": "Why Choose Us",
+      "references": "Our References",
+      "contact": "Contact"
+    },
+    "cta": "Get a Quote",
+    "languageSwitcher": "Language",
+    "get_quote": "Contact Us",
+    "free_consultation": "Free Consultation"
+  },
+  "settings": {
+    "title": "Settings",
+    "themeMode": "Theme Mode",
+    "light": "Light",
+    "dark": "Dark",
+    "highContrast": "High Contrast",
+    "fontSize": "Font Size",
+    "textSize": "Text Size",
+    "small": "Small",
+    "normal": "Normal",
+    "large": "Large",
+    "themeColor": "Theme Color"
+  },
+  "home": {
+    "hero": {
+      "badge": "PROFESSIONAL SINCE 2022",
+      "title_line1": "We manage",
+      "title_accent": "safely",
+      "title_line2": "your property",
+      "description": "Gurel Management is at your service with transparent, reliable, and professional property management solutions in 9 different regions of Balıkesir.",
+      "btn_discovery": "FREE DISCOVERY",
+      "btn_services": "OUR SERVICES"
+    },
+    "stats": {
+      "sites": "Properties Managed",
+      "apartments": "Buildings Managed",
+      "clients": "Satisfied Clients"
+    },
+    "services": {
+      "title": "Our Services",
+      "subtitle": "Comprehensive Services We Offer",
+      "maintenance": {
+        "title": "Maintenance & Repair",
+        "description": "With our regular and emergency maintenance-repair services, we ensure your property and building are always in the best condition."
+      },
+      "financial": {
+        "title": "Financial Management",
+        "description": "We professionally manage your financial processes with transparent dues tracking, budget management, and detailed reporting."
+      },
+      "security": {
+        "title": "Security Services",
+        "description": "We ensure the security of your living space with 24/7 security personnel, camera systems, and emergency management."
+      },
+      "cleaning": {
+        "title": "Cleaning Services",
+        "description": "We ensure that your property and building always remain clean and orderly with regular cleaning and maintenance of common areas."
+      },
+      "expertise_areas": "Our Areas of Expertise",
+      "site_management": "Site Management",
+      "property_management": "Property Management",
+      "site_card": {
+        "title": "Apartment and Site Management",
+        "description": "Dues management, maintenance and repair services",
+        "badge1": "Professional",
+        "badge2": "Reliable"
+      },
+      "property_card": {
+        "title": "Property Management",
+        "description": "Comprehensive services that preserve property value",
+        "badge1": "Expert",
+        "badge2": "Transparent"
+      },
+      "more_info": "More Info"
+    },
+    "about": {
+      "title": "About Gurel Management",
+      "description": "Since 2013, we have been providing professional property and building management services in Edremit and surrounding areas. With our experienced team and technological infrastructure, we aim to provide the highest quality service to our clients.",
+      "cta": "Learn More"
+    }
+  },
+  "about": {
+    "badge": "ABOUT US",
+    "title": "Professional Service with Gurel <span class='highlight'>Management</span>",
+    "since_badge": "SERVING SINCE 2022",
+    "intro": "<strong>Gurel Management</strong> is a reliable business partner offering <strong>professional apartment, site, and property management</strong> services throughout Balıkesir.",
+    "description": "<strong>As Gurel Management</strong>, we offer modern and transparent solutions to basic needs in communal living areas such as <span class='bg-light text-primary px-1 rounded'>dues management</span>, <span class='bg-light text-primary px-1 rounded'>budget planning</span>, <span class='bg-light text-primary px-1 rounded'>maintenance and repair processes</span>. With our team specialized in both <span class='bg-light text-primary px-1 rounded'>apartment and site management</span> and <span class='bg-light text-primary px-1 rounded'>individual property management</span>, we meet the needs of property owners and site residents with services such as <span class='bg-light text-primary px-1 rounded'>rental processes</span>, <span class='bg-light text-primary px-1 rounded'>income-expense management</span>, and <span class='bg-light text-primary px-1 rounded'>reporting</span>.",
+    "why_us_title": "Why Choose Us?",
+    "principles": {
+      "transparency": {
+        "title": "Transparency",
+        "desc": "Open and honest communication at every stage"
+      },
+      "reliability": {
+        "title": "Reliability",
+        "desc": "We deliver the services we promise on time"
+      },
+      "professionalism": {
+        "title": "Professionalism",
+        "desc": "Quality service with our expert team"
+      }
+    }
+  },
+  "services": {
+    "title": "Our Services",
+    "subtitle": "Comprehensive Solutions We Offer",
+    "items": {
+      "facilityManagement": {
+        "title": "Facility Management",
+        "description": "Regular maintenance and control of your property's technical infrastructure."
+      },
+      "administrativeManagement": {
+        "title": "Administrative Management",
+        "description": "Professional administrative management in accordance with Condominium Law and management plans."
+      },
+      "financialManagement": {
+        "title": "Financial Management",
+        "description": "Dues tracking, payment processing, and preparation of financial reports."
+      },
+      "legalManagement": {
+        "title": "Legal Management",
+        "description": "Tracking and management of legal processes, collection of dues debts."
+      },
+      "technicalManagement": {
+        "title": "Technical Management",
+        "description": "Maintenance and management of technical systems such as elevators, generators, and water tanks."
+      },
+      "securityManagement": {
+        "title": "Security Management",
+        "description": "24/7 security services, camera systems, and emergency management."
+      }
+    }
+  },
+  "whyUs": {
+    "title": "Why Choose Us",
+    "subtitle": "Discover Our Difference",
+    "items": {
+      "experience": {
+        "title": "Experience",
+        "description": "We offer professional solutions with 10+ years of industry experience."
+      },
+      "technology": {
+        "title": "Technology",
+        "description": "With our digital infrastructure, you can track all transactions from our online platform."
+      },
+      "transparency": {
+        "title": "Transparency",
+        "description": "All income and expense accounts are regularly reported and shared."
+      },
+      "responsiveness": {
+        "title": "Quick Response",
+        "description": "We address and resolve your issues as quickly as possible."
+      }
+    }
+  },
+  "references": {
+    "title": "Our References",
+    "subtitle": "Properties We Proudly Serve",
+    "more": "All Our References"
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Get in Touch With Us",
+    "address": "Address",
+    "phone": "Phone",
+    "email": "Email",
+    "form": {
+      "name": "Your Name",
+      "email": "Your Email Address",
+      "phone": "Your Phone Number",
+      "subject": "Subject",
+      "message": "Your Message",
+      "submit": "Send",
+      "required": "This field is required",
+      "invalidEmail": "Please enter a valid email address",
+      "success": "Your message has been sent successfully. We will get back to you as soon as possible."
+    }
+  },
+  "footer": {
+    "about": "About Us",
+    "services": "Our Services",
+    "contact": "Contact",
+    "followUs": "Follow Us",
+    "copyright": "© 2023 Gurel Management. All rights reserved.",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service"
+  },
+  "languages": {
+    "tr": "Türkçe",
+    "en": "English",
+    "de": "Deutsch"
+  },
+  "language": {
+    "select": "Select Language",
+    "turkish": "Turkish",
+    "english": "English",
+    "german": "German"
+  }
+} 

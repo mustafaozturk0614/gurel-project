@@ -1,0 +1,253 @@
+{
+  "lang": {
+    "code": "tr",
+    "name": "Türkçe",
+    "nativeName": "Türkçe",
+    "direction": "ltr"
+  },
+  "seo": {
+    "title": "Gürel Yönetim | Site ve Bina Yönetimi",
+    "description": "Edremit ve çevresinde profesyonel site ve bina yönetimi hizmetleri sunuyoruz.",
+    "keywords": "site yönetimi, bina yönetimi, emlak yönetimi, Edremit"
+  },
+  "general": {
+    "loading": "Yükleniyor...",
+    "error": "Bir hata oluştu!",
+    "success": "İşlem başarılı!",
+    "confirm": "Onayla",
+    "cancel": "İptal",
+    "save": "Kaydet",
+    "close": "Kapat",
+    "back": "Geri",
+    "next": "İleri",
+    "yes": "Evet",
+    "no": "Hayır"
+  },
+  "header": {
+    "navigation": {
+      "home": "Ana Sayfa",
+      "about": "Hakkımızda",
+      "services": "Hizmetlerimiz",
+      "whyUs": "Neden Biz",
+      "references": "Referanslarımız",
+      "contact": "İletişim"
+    },
+    "cta": "Teklif Alın",
+    "languageSwitcher": "Dil",
+    "get_quote": "Bize Ulaşın",
+    "free_consultation": "Ücretsiz Danışmanlık",
+    "our_services": "Hizmetlerimiz",
+    "dark_mode": "Karanlık Mod"
+  },
+  "settings": {
+    "title": "Ayarlar",
+    "themeMode": "Tema Modu",
+    "light": "Açık",
+    "dark": "Koyu",
+    "highContrast": "Yüksek Kontrast",
+    "fontSize": "Yazı Boyutu",
+    "textSize": "Metin Boyutu",
+    "small": "Küçük",
+    "normal": "Normal",
+    "large": "Büyük",
+    "themeColor": "Tema Rengi"
+  },
+  "home": {
+    "hero": {
+      "badge": "2022'DEN BERİ PROFESYONELLİK",
+      "title_line1": "Mülkünüzü",
+      "title_accent": "güvenle",
+      "title_line2": "yönetiyoruz",
+      "description": "Gürel Yönetim, Balıkesir'in 9 farklı bölgesinde şeffaf, güvenilir ve profesyonel mülk yönetimi çözümleriyle hizmetinizdedir.",
+      "btn_discovery": "ÜCRETSİZ KEŞİF",
+      "btn_services": "HİZMETLERİMİZ",
+      "title": "Profesyonel Site ve Bina Yönetimi",
+      "subtitle": "Edremit'te 10 yılı aşkın deneyimimizle site ve binanızın tüm yönetim ihtiyaçlarını karşılıyoruz.",
+      "cta": "Hizmetlerimiz"
+    },
+    "stats": {
+      "sites": "Yönetilen Site",
+      "apartments": "Yönetilen Bina",
+      "clients": "Memnun Müşteri"
+    },
+    "services": {
+      "title": "Hizmetlerimiz",
+      "subtitle": "Sunduğumuz Kapsamlı Hizmetler",
+      "maintenance": {
+        "title": "Bakım & Onarım",
+        "description": "Düzenli ve acil bakım-onarım hizmetlerimizle site ve binanızın her zaman en iyi durumda olmasını sağlıyoruz."
+      },
+      "financial": {
+        "title": "Mali Yönetim",
+        "description": "Şeffaf aidat takibi, bütçe yönetimi ve detaylı raporlama ile mali süreçlerinizi profesyonelce yönetiyoruz."
+      },
+      "security": {
+        "title": "Güvenlik Hizmetleri",
+        "description": "7/24 güvenlik personeli, kamera sistemleri ve acil durum yönetimi ile yaşam alanınızın güvenliğini sağlıyoruz."
+      },
+      "cleaning": {
+        "title": "Temizlik Hizmetleri",
+        "description": "Ortak alanların düzenli temizliği ve bakımı ile site ve binanızın her zaman temiz ve düzenli kalmasını sağlıyoruz."
+      },
+      "expertise_areas": "Uzmanlaştığımız Alanlar",
+      "site_management": "Site Yönetimi",
+      "property_management": "Mülk Yönetimi",
+      "site_card": {
+        "title": "Apartman ve Site Yönetimi",
+        "description": "Aidat yönetimi, bakım ve onarım hizmetleri",
+        "badge1": "Profesyonel",
+        "badge2": "Güvenilir"
+      },
+      "property_card": {
+        "title": "Mülk Yönetimi",
+        "description": "Gayrimenkul değerini koruyan kapsamlı hizmetler",
+        "badge1": "Uzman",
+        "badge2": "Şeffaf"
+      },
+      "more_info": "Detaylı Bilgi"
+    },
+    "about": {
+      "title": "Gürel Yönetim Hakkında",
+      "description": "2013 yılından bu yana Edremit ve çevresinde profesyonel site ve bina yönetimi hizmetleri sunmaktayız. Deneyimli ekibimiz ve teknolojik altyapımızla müşterilerimize en kaliteli hizmeti sunmayı hedefliyoruz.",
+      "cta": "Daha Fazla Bilgi"
+    }
+  },
+  "about": {
+    "badge": "HAKKIMIZDA",
+    "title": "Gürel <span class='highlight'>Yönetim</span> ile Profesyonel Hizmet",
+    "since_badge": "2022'DEN BERİ HİZMETİNİZDEYİZ",
+    "intro": "<strong>Gürel Yönetim</strong>, Balıkesir genelinde <strong>profesyonel apartman, site ve mülk yönetimi</strong> hizmetleri sunan güvenilir bir iş ortağıdır.",
+    "description": "<strong>Gürel Yönetim olarak</strong>, toplu yaşam alanlarında <span class='bg-light text-primary px-1 rounded'>aidat yönetimi</span>, <span class='bg-light text-primary px-1 rounded'>bütçe planlaması</span>, <span class='bg-light text-primary px-1 rounded'>bakım ve onarım süreçleri</span> gibi temel ihtiyaçlara modern ve şeffaf çözümler sunuyoruz. Hem <span class='bg-light text-primary px-1 rounded'>apartman ve site yönetimi</span> hem de <span class='bg-light text-primary px-1 rounded'>bireysel mülk yönetimi</span> alanında uzmanlaşmış kadromuzla, <span class='bg-light text-primary px-1 rounded'>kiralama süreçleri</span>, <span class='bg-light text-primary px-1 rounded'>gelir-gider yönetimi</span> ve <span class='bg-light text-primary px-1 rounded'>raporlama</span> gibi hizmetlerle mülk sahiplerinin ve site sakinlerinin ihtiyaçlarını karşılıyoruz.",
+    "why_us_title": "Neden Biz?",
+    "principles": {
+      "transparency": {
+        "title": "Şeffaflık",
+        "desc": "Her aşamada açık ve dürüst iletişim"
+      },
+      "reliability": {
+        "title": "Güvenilirlik",
+        "desc": "Söz verdiğimiz hizmetleri zamanında sunarız"
+      },
+      "professionalism": {
+        "title": "Profesyonellik",
+        "desc": "Uzman kadromuzla kaliteli hizmet"
+      }
+    },
+    "title": "Hakkımızda",
+    "subtitle": "Gürel Yönetim'i Tanıyın",
+    "mission": {
+      "title": "Misyonumuz",
+      "description": "Sitelerin ve binaların profesyonel yönetimini sağlayarak, sakinlerin konforlu ve sorunsuz bir yaşam sürmelerini sağlamak."
+    },
+    "vision": {
+      "title": "Vizyonumuz",
+      "description": "Edremit ve çevresinde en çok tercih edilen, güvenilir ve yenilikçi site yönetim şirketi olmak."
+    },
+    "values": {
+      "title": "Değerlerimiz",
+      "professionalValue": "Profesyonellik",
+      "transparency": "Şeffaflık",
+      "customerService": "Müşteri Memnuniyeti",
+      "innovation": "Yenilikçilik"
+    },
+    "team": {
+      "title": "Ekibimiz",
+      "description": "Uzman ve deneyimli ekibimizle her zaman yanınızdayız."
+    }
+  },
+  "services": {
+    "title": "Hizmetlerimiz",
+    "subtitle": "Sunduğumuz Kapsamlı Çözümler",
+    "items": {
+      "facilityManagement": {
+        "title": "Tesis Yönetimi",
+        "description": "Sitenizin teknik altyapısının düzenli bakımı ve kontrolü."
+      },
+      "administrativeManagement": {
+        "title": "İdari Yönetim",
+        "description": "Kat Mülkiyeti Kanunu ve yönetim planına uygun profesyonel idari yönetim."
+      },
+      "financialManagement": {
+        "title": "Mali Yönetim",
+        "description": "Aidat takibi, ödemelerin yapılması ve mali raporların hazırlanması."
+      },
+      "legalManagement": {
+        "title": "Hukuki Yönetim",
+        "description": "Hukuki süreçlerin takibi ve yönetimi, aidat borçlarının tahsili."
+      },
+      "technicalManagement": {
+        "title": "Teknik Yönetim",
+        "description": "Asansör, jeneratör, su deposu gibi teknik sistemlerin bakımı ve yönetimi."
+      },
+      "securityManagement": {
+        "title": "Güvenlik Yönetimi",
+        "description": "7/24 güvenlik hizmetleri, kamera sistemleri ve acil durum yönetimi."
+      }
+    }
+  },
+  "whyUs": {
+    "title": "Neden Biz?",
+    "subtitle": "Farkımızı Keşfedin",
+    "items": {
+      "experience": {
+        "title": "Deneyim",
+        "description": "10+ yıllık sektör deneyimimizle profesyonel çözümler sunuyoruz."
+      },
+      "technology": {
+        "title": "Teknoloji",
+        "description": "Dijital altyapımız ile tüm işlemleri online platformumuzdan takip edebilirsiniz."
+      },
+      "transparency": {
+        "title": "Şeffaflık",
+        "description": "Tüm gelir-gider hesapları düzenli olarak raporlanır ve paylaşılır."
+      },
+      "responsiveness": {
+        "title": "Hızlı Çözüm",
+        "description": "Sorunlarınıza en kısa sürede müdahale eder ve çözüm üretiriz."
+      }
+    }
+  },
+  "references": {
+    "title": "Referanslarımız",
+    "subtitle": "Güvenle Hizmet Verdiğimiz Siteler",
+    "more": "Tüm Referanslarımız"
+  },
+  "contact": {
+    "title": "İletişim",
+    "subtitle": "Bizimle İletişime Geçin",
+    "address": "Adres",
+    "phone": "Telefon",
+    "email": "E-posta",
+    "form": {
+      "name": "Adınız",
+      "email": "E-posta Adresiniz",
+      "phone": "Telefon Numaranız",
+      "subject": "Konu",
+      "message": "Mesajınız",
+      "submit": "Gönder",
+      "required": "Bu alan zorunludur",
+      "invalidEmail": "Lütfen geçerli bir e-posta adresi girin",
+      "success": "Mesajınız başarıyla gönderildi. En kısa sürede size geri dönüş yapacağız."
+    }
+  },
+  "footer": {
+    "about": "Hakkımızda",
+    "services": "Hizmetlerimiz",
+    "contact": "İletişim",
+    "followUs": "Bizi Takip Edin",
+    "copyright": "© 2023 Gürel Yönetim. Tüm hakları saklıdır.",
+    "privacyPolicy": "Gizlilik Politikası",
+    "termsOfService": "Kullanım Koşulları"
+  },
+  "languages": {
+    "tr": "Türkçe",
+    "en": "English",
+    "de": "Deutsch"
+  },
+  "language": {
+    "select": "Dil Seçiniz",
+    "turkish": "Türkçe",
+    "english": "English",
+    "german": "Deutsch"
+  }
+} 

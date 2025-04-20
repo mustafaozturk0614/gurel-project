@@ -1274,6 +1274,125 @@
             color: #007bff;
             text-shadow: none;
         }
+
+        /* Tema Değiştirici Buton */
+        .theme-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            border-radius: var(--border-radius-circle);
+            background-color: var(--white-color);
+            box-shadow: var(--box-shadow-lg);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .theme-switcher:hover {
+            transform: scale(1.1);
+        }
+
+        .theme-icon {
+            font-size: 18px;
+            color: var(--primary-color);
+            transition: transform 0.5s ease;
+        }
+
+        [data-theme="dark"] .theme-icon.sun {
+            display: block;
+        }
+
+        [data-theme="dark"] .theme-icon.moon {
+            display: none;
+        }
+
+        [data-theme="light"] .theme-icon.sun {
+            display: none;
+        }
+
+        [data-theme="light"] .theme-icon.moon {
+            display: block;
+        }
+
+        /* Tema Ayarları Paneli */
+        .theme-panel {
+            position: fixed;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            background-color: var(--white-color);
+            box-shadow: var(--box-shadow-lg);
+            border-radius: 10px 0 0 10px;
+            padding: 20px;
+            z-index: 1000;
+            transition: transform 0.4s ease;
+            transform: translateX(100%);
+        }
+
+        .theme-panel.active {
+            transform: translateX(0) translateY(-50%);
+        }
+
+        .theme-panel-toggle {
+            position: absolute;
+            top: 50%;
+            left: -40px;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px 0 0 10px;
+            cursor: pointer;
+            box-shadow: var(--box-shadow-md);
+        }
+
+        .theme-panel-title {
+            margin-bottom: 15px;
+            font-weight: bold;
+            color: var(--heading-color);
+        }
+
+        .theme-option {
+            margin-bottom: 15px;
+        }
+
+        .theme-option-label {
+            margin-bottom: 8px;
+            display: block;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .theme-color-options {
+            display: flex;
+            gap: 8px;
+        }
+
+        .theme-color {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            border: 2px solid transparent;
+        }
+
+        .theme-color.active {
+            transform: scale(1.2);
+            border-color: var(--primary-color);
+        }
+
+        .theme-color:hover {
+            transform: scale(1.1);
+        }
     </style>
 </head>
 <body>
@@ -1729,76 +1848,41 @@
 
     <!-- Testimonials Section -->
     <section id="testimonials" class="testimonials-section section-padding bg-light">
-        <div class="container">
-            <div class="section-heading text-center mb-5">
-                <h2 class="title text-style-3">Müşterilerimizin Yorumları</h2>
-                <p class="description">Memnun mülk sahipleri ve kiracılarımızdan dinleyin</p>
+        <div data-trustmary-status="active">
+            <div id="tm-zh2dwh">
+                <div class="go2402097865">
+                    <div class="go941208248">
+                        <div style="max-width: 100vw;">
+                            <div class="go11">
+                                <div class="go316439965 tm-widget">
+                                    <h2 class="go372176402 tm-title" data-tm-edit="widget-layout">Müşterilerimiz Neler Söylüyor ...</h2>
+                                    <div class="go2990454101 tm-content"></div>
+                                    <div class="go3864472833 tm-carousel-wrapper">
+                                        <div style="max-width: 100vw;">
+                                            <div class="go3136508558">
+                                                <div>
+                                                    <div style="display: flex; width: 21600px; transform: translate3d(-5361.5px, 0px, 0px); transition: 300ms ease-in-out;">
+                                                        <!-- Trustmary widget carousel items will load here dynamically -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Carousel navigation (arrows/dots) is managed by the widget -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            
-            <div class="testimonial-slider">
-                <div class="row">
-                    <div class="col-md-4 mb-4">
-                        <div class="testimonial-card">
-                            <div class="rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <p class="testimonial-text">"Gürel Yönetim, apartman kompleksimizin nasıl yönetildiğini tamamen değiştirdi. Detaylara gösterdikleri dikkat ve hızlı hizmetleri olağanüstü."</p>
-                            <div class="client-info">
-                                <img src="assets/images/client1.jpg" alt="Müşteri" class="client-image">
-                                <div class="client-details">
-                                    <h5>Ahmet Yılmaz</h5>
-                                    <p>Apartman Sahibi</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-4">
-                        <div class="testimonial-card">
-                            <div class="rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <p class="testimonial-text">"Birden fazla mülk sahibi olarak, Gürel Mülk Yönetimi'nin sunduğu profesyonel hizmetten daha memnun olamazdım."</p>
-                            <div class="client-info">
-                                <img src="assets/images/client2.jpg" alt="Müşteri" class="client-image">
-                                <div class="client-details">
-                                    <h5>Ayşe Kaya</h5>
-                                    <p>Mülk Yatırımcısı</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-4">
-                        <div class="testimonial-card">
-                            <div class="rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                            </div>
-                            <p class="testimonial-text">"Gürel'in yönetim hizmetlerindeki şeffaflık ve verimlilik, konut kompleksimizi daha iyi bir yaşam alanı haline getirdi."</p>
-                            <div class="client-info">
-                                <img src="assets/images/client3.jpg" alt="Müşteri" class="client-image">
-                                <div class="client-details">
-                                    <h5>Mehmet Demir</h5>
-                                    <p>Site Yönetim Kurulu Başkanı</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="text-center mt-4">
-                    <a href="#" class="btn btn-primary">Tüm Referanslarımızı Görün</a>
-                </div>
+        </div>
+        <div class="go4269172405">
+            <div data-tm-edit="branding" class="go2048136271">
+                <span class="go1476009939">
+                    <span class="go3873761283">
+                        <a href="https://trustmary.com/google-review-widget/?utm_source=widget&amp;utm_medium=badge&amp;utm_campaign=powered-by" target="_blank" class="go3297426415">Google review widget</a> by <span class="go1392771034">Trustmary</span>
+                    </span>
+                </span>
             </div>
         </div>
     </section>
@@ -2726,5 +2810,46 @@
             }
         });
     </script>
+
+    <!-- Tema Değiştirici Buton -->
+    <div class="theme-switcher" id="themeSwitcher">
+        <i class="fas fa-sun theme-icon sun"></i>
+        <i class="fas fa-moon theme-icon moon"></i>
+    </div>
+
+    <!-- Tema Ayarları Paneli -->
+    <div class="theme-panel" id="themePanel">
+        <div class="theme-panel-toggle" id="themePanelToggle">
+            <i class="fas fa-palette"></i>
+        </div>
+        
+        <h4 class="theme-panel-title">Tema Ayarları</h4>
+        
+        <!-- Tema Modu -->
+        <div class="theme-option">
+            <span class="theme-option-label">Tema Modu</span>
+            <div class="neuro-toggle" id="themeToggle">
+                <div class="neuro-toggle-slider"></div>
+            </div>
+        </div>
+        
+        <!-- Birincil Renk -->
+        <div class="theme-option">
+            <span class="theme-option-label">Ana Renk</span>
+            <div class="theme-color-options">
+                <div class="theme-color active" style="background-color: #0B3D91;" data-color="default"></div>
+                <div class="theme-color" style="background-color: #2563eb;" data-color="blue"></div>
+                <div class="theme-color" style="background-color: #7c3aed;" data-color="purple"></div>
+                <div class="theme-color" style="background-color: #16a34a;" data-color="green"></div>
+                <div class="theme-color" style="background-color: #ea580c;" data-color="orange"></div>
+            </div>
+        </div>
+        
+        <!-- Font Boyutu -->
+        <div class="theme-option">
+            <span class="theme-option-label">Font Boyutu</span>
+            <input type="range" min="80" max="120" value="100" class="input-neuro" id="fontSizeSlider">
+        </div>
+    </div>
 </body>
 </html>

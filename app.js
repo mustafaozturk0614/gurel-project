@@ -78,9 +78,139 @@ const MAP_LOCATIONS = {
     }
 };
 
+// Modern Hero Özellikleri
+function initModernHero() {
+    // Paralaks efekti
+    if (window.innerWidth > 1199) {
+        document.addEventListener('mousemove', (e) => {
+            const layers = document.querySelectorAll('.parallax-layer');
+            const pageX = e.clientX;
+            const pageY = e.clientY;
+            
+            layers.forEach(layer => {
+                const speed = layer.getAttribute('data-depth');
+                const x = (window.innerWidth - pageX * speed) / 100;
+                const y = (window.innerHeight - pageY * speed) / 100;
+                layer.style.transform = `translateX(${x}px) translateY(${y}px)`;
+            });
+        });
+    }
+    
+    // 3D kart efekti
+    const card = document.querySelector('.hero-3d-card');
+    if (card && window.innerWidth > 1199) {
+        card.addEventListener('mousemove', (e) => {
+            const cardRect = card.getBoundingClientRect();
+            const cardCenterX = cardRect.left + cardRect.width / 2;
+            const cardCenterY = cardRect.top + cardRect.height / 2;
+            const mouseX = e.clientX - cardCenterX;
+            const mouseY = e.clientY - cardCenterY;
+            
+            const rotateX = -mouseY / 10;
+            const rotateY = mouseX / 10;
+            
+            card.querySelector('.card-3d-wrapper').style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            
+            // Depth effect
+            const items = card.querySelectorAll('.service-icon, h4, p');
+            items.forEach((item, index) => {
+                const depth = index * 0.5 + 2;
+                item.style.transform = `translateZ(${depth}px)`;
+            });
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.querySelector('.card-3d-wrapper').style.transform = 'rotateX(0deg) rotateY(0deg)';
+            
+            // Reset depth
+            const items = card.querySelectorAll('.service-icon, h4, p');
+            items.forEach(item => {
+                item.style.transform = 'translateZ(0px)';
+            });
+        });
+    }
+    
+    // Badge pulse animation fix
+    const heroBadge = document.querySelector('.hero-badge');
+    if (heroBadge) {
+        heroBadge.addEventListener('animationiteration', () => {
+            heroBadge.style.animationPlayState = 'running';
+        });
+    }
+    
+    // Scroll indicator
+    const scrollIndicator = document.querySelector('.scroll-indicator');
+    if (scrollIndicator) {
+        scrollIndicator.addEventListener('click', () => {
+            const aboutSection = document.querySelector('#about');
+            if (aboutSection) {
+                aboutSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                scrollIndicator.classList.add('hidden');
+            } else {
+                scrollIndicator.classList.remove('hidden');
+            }
+        });
+    }
+    
+    // Location pills hover effect
+    const locationPills = document.querySelectorAll('.location-pill');
+    locationPills.forEach(pill => {
+        pill.addEventListener('mouseenter', () => {
+            const region = pill.getAttribute('data-region');
+            // Burada istediğiniz bölge vurgulama efektlerini ekleyebilirsiniz
+            console.log(`Bölge vurgulandı: ${region}`);
+        });
+    });
+    
+    // Tooltip için Bootstrap initializations
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    if (tooltipTriggerList.length > 0) {
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+    }
+    
+    // Sayaç animasyonu (Hero stats için)
+    startHeroStatsCounter();
+}
+
+function startHeroStatsCounter() {
+    const heroStats = document.querySelectorAll('.hero-stats .counting');
+    if (heroStats.length === 0) return;
+    
+    const observer = new IntersectionObserver(
+        entries => entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const target = +entry.target.getAttribute('data-count');
+                const increment = Math.max(1, Math.trunc(target / 50));
+                let current = 0;
+                
+                const updateCount = () => {
+                    if (current < target) {
+                        current += increment;
+                        if (current > target) current = target;
+                        entry.target.textContent = current;
+                        requestAnimationFrame(updateCount);
+                    }
+                };
+                
+                updateCount();
+                observer.unobserve(entry.target);
+            }
+        }),
+        { threshold: 0.5 }
+    );
+    
+    heroStats.forEach(stat => observer.observe(stat));
+}
+
 // Ana başlatma fonksiyonu
 document.addEventListener('DOMContentLoaded', () => {
     initializeApp();
+    initModernHero(); // Hero modern özelliklerini başlat
 });
 
 function initializeApp() {
@@ -108,12 +238,24 @@ function initHeaderScroll() {
     if (!header) return;
 
     const updateHeader = (scrollTop) => {
-        const isScrolled = scrollTop > SCROLL_SETTINGS.threshold;
-        const opacity = Math.min(scrollTop / SCROLL_SETTINGS.threshold * SCROLL_SETTINGS.headerOpacity, SCROLL_SETTINGS.headerOpacity);
-        const blur = Math.min(scrollTop / SCROLL_SETTINGS.threshold * SCROLL_SETTINGS.blurAmount, SCROLL_SETTINGS.blurAmount);
+        // Threshold değerini azaltalım - daha erken değişim başlasın
+        const threshold = 50;
+        const isScrolled = scrollTop > threshold;
+        
+        // Opacity değerini düşük tutalım, daha şeffaf bir header
+        const opacity = Math.min(scrollTop / threshold * 0.9, 0.9);
+        // Blur değeri de daha az olsun
+        const blur = Math.min(scrollTop / threshold * 3, 3);
 
         header.classList.toggle('scrolled', isScrolled);
-        header.style.backgroundColor = `rgba(255, 255, 255, ${opacity})`;
+        
+        // Transparent headersa beyaz arka plan, değilse daha koyu bir ton
+        if (header.classList.contains('transparent')) {
+            header.style.backgroundColor = `rgba(255, 255, 255, ${opacity})`;
+        } else {
+            header.style.backgroundColor = isScrolled ? 'rgba(255, 255, 255, 0.95)' : 'transparent';
+        }
+        
         header.style.backdropFilter = `blur(${blur}px)`;
 
         // Floating elements efekti
@@ -212,6 +354,7 @@ function initTiltEffect() {
 function initMobileNavigation() {
     const navCollapse = document.querySelector('.navbar-collapse');
     const navToggler = document.querySelector('.navbar-toggler');
+    const header = document.querySelector('.patreon-header');
 
     document.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', () => {
@@ -219,12 +362,24 @@ function initMobileNavigation() {
                 navCollapse.classList.remove('show');
                 navToggler?.classList.remove('active');
                 navToggler?.setAttribute('aria-expanded', 'false');
+                
+                // Kapatıldığında header'ı normal dönüştür
+                if (header && window.scrollY <= 50) {
+                    header.style.backgroundColor = 'transparent';
+                }
             }
         });
     });
 
     navToggler?.addEventListener('click', function() {
         this.classList.toggle('active');
+        
+        // Navbar açıldığında header arkaplanını beyaza dönüştür
+        if (navCollapse?.classList.contains('show') && header) {
+            header.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
+        } else if (header && window.scrollY <= 50) {
+            header.style.backgroundColor = 'transparent';
+        }
     });
 }
 
@@ -392,7 +547,7 @@ function setupFormIconsAnimation() {
 function initSocialButtonsEffects() {
     document.querySelectorAll('.social-button').forEach(button => {
         ['mouseenter', 'mouseleave'].forEach(eventType => {
-            button.addEventListener(eventType, () => {
+            button.addEventListener('mouseenter', () => {
                 button.style.transform = eventType === 'mouseenter'
                     ? 'translateY(-5px) rotate(5deg)'
                     : 'translateY(0) rotate(0deg)';
@@ -642,4 +797,306 @@ document.addEventListener('DOMContentLoaded', function() {
             this.style.boxShadow = '0 3px 10px rgba(0, 0, 0, 0.1)';
         });
     });
+});
+
+// Header advanced interactions
+function initHeaderInteractions() {
+  const header = document.querySelector('.patreon-header');
+  const navItems = document.querySelectorAll('.nav-item');
+  const brand = document.querySelector('.navbar-brand');
+  
+  // Tek bir transform uygulamak için değişkenler tanımla
+  let brandTransform = 'translateZ(0)';
+  let navItemTransforms = {};
+  
+  // Scroll reveal kısmını kaldırıyorum - bu elemanların kaybolmasına neden oluyor
+  // Sadece ilk yükleme sırasında temiz görünsün
+  if (navItems.length > 0) {
+    navItems.forEach((item, index) => {
+      // Opacity değerini 1 olarak ata, transform'u resetle
+      item.style.opacity = '1';
+      item.style.transform = 'translateY(0) translateZ(0)';
+    });
+  }
+  
+  // Subtle parallax for header elements (sadece desktop'ta)
+  if (header && window.innerWidth > 1199) {
+    // Mousemove yalnızca header üzerinde olduğunda çalışsın
+    header.addEventListener('mousemove', (e) => {
+      const headerRect = header.getBoundingClientRect();
+      
+      // Mouse header içinde mi kontrol et
+      if (
+        e.clientX >= headerRect.left && 
+        e.clientX <= headerRect.right && 
+        e.clientY >= headerRect.top && 
+        e.clientY <= headerRect.bottom
+      ) {
+        const xAxis = (headerRect.width / 2 - (e.clientX - headerRect.left)) / 60;
+        const yAxis = (headerRect.height / 2 - (e.clientY - headerRect.top)) / 60;
+        
+        // Logo subtle movement (sınırlı hareket)
+        if (brand) {
+          brandTransform = `translateX(${xAxis/4}px) translateY(${yAxis/4}px) translateZ(0)`;
+          brand.style.transform = brandTransform;
+        }
+        
+        // Nav items hover state enhancement (sınırlı hareket)
+        navItems.forEach((item, index) => {
+          const delay = index * 0.05;
+          const x = xAxis * (1 - delay);
+          const y = yAxis * (1 - delay);
+          const transform = `translateX(${x/6}px) translateY(${y/6}px) translateZ(0)`;
+          navItemTransforms[index] = transform;
+          item.style.transform = transform;
+        });
+      }
+    });
+    
+    // Mouse header'dan çıktığında tüm efektleri sıfırla
+    header.addEventListener('mouseleave', () => {
+      if (brand) {
+        brand.style.transform = 'translateZ(0)';
+      }
+      
+      navItems.forEach(item => {
+        item.style.transform = 'translateZ(0)';
+      });
+    });
+  }
+  
+  // Magnetic button effect for CTA (sınırlı hareket ve sadece butona hover ettiğinde)
+  const ctaButton = document.querySelector('.header-action .btn-primary');
+  if (ctaButton && window.innerWidth > 1199) {
+    ctaButton.addEventListener('mouseenter', function() {
+      // Mouse enter - magnetik efekti aktif et
+      const handleMagneticEffect = (e) => {
+        const rect = this.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        
+        // Hareketi sınırla, maksimum 8px
+        const maxMove = 8;
+        const moveX = Math.min(Math.max(x/5, -maxMove), maxMove);
+        const moveY = Math.min(Math.max(y/5, -maxMove), maxMove);
+        
+        this.style.transform = `translate(${moveX}px, ${moveY}px) translateZ(0)`;
+      };
+      
+      // Mousemove efekti sadece hover durumunda aktif olsun
+      ctaButton.addEventListener('mousemove', handleMagneticEffect);
+      
+      // Butondan çıkınca event listener'ı kaldır
+      ctaButton.addEventListener('mouseleave', function onLeave() {
+        this.style.transform = 'translateZ(0)';
+        ctaButton.removeEventListener('mousemove', handleMagneticEffect);
+        ctaButton.removeEventListener('mouseleave', onLeave);
+      });
+    });
+  }
+}
+
+// Header scroll debounce
+let scrollTimer;
+let lastScrollTop = 0;
+let isNearPageEnd = false;
+
+function handleScroll() {
+  const header = document.querySelector('.patreon-header');
+  if (!header) return;
+  
+  // Sayfa scroll pozisyonunu kontrol et
+  const scrollTop = window.scrollY;
+  const scrollHeight = document.documentElement.scrollHeight;
+  const clientHeight = document.documentElement.clientHeight;
+  const scrollDistance = scrollHeight - clientHeight;
+  
+  // Sayfa sonuna yakın olup olmadığımızı kontrol et (son 100px)
+  isNearPageEnd = scrollTop + clientHeight >= scrollHeight - 100;
+  
+  // Scroll yönünü tespit et
+  const isScrollingDown = scrollTop > lastScrollTop;
+  lastScrollTop = scrollTop;
+  
+  // Update scroll progress bar - requestAnimationFrame kullanarak performans optimizasyonu
+  requestAnimationFrame(() => updateScrollProgress(scrollTop, scrollDistance));
+  
+  if (scrollTimer) clearTimeout(scrollTimer);
+  scrollTimer = setTimeout(() => {
+    // Sabit değere göre stil değişimi (threshold)
+    const isScrolled = scrollTop > 50;
+    header.classList.toggle('scrolled', isScrolled);
+    
+    // Sayfa sonuna çok yakınsa ve aşağı doğru kaydırılıyorsa stil değişikliklerini engelle
+    if (isNearPageEnd && isScrollingDown) {
+      return;
+    }
+    
+    // Sayfa başında dinamik opacity - ama sadece scroll edilen header değilse
+    if (!isScrolled) {
+      const opacity = Math.min(scrollTop / 50, 0.85);
+      header.style.backgroundColor = `rgba(255, 255, 255, ${opacity})`;
+      header.style.backdropFilter = `blur(${opacity * 10}px)`;
+    }
+  }, 15); // 15ms debounce - daha stabil bir deneyim için
+}
+
+// Update scroll progress bar and indicator with optimized performance
+function updateScrollProgress(scrollTop, totalHeight) {
+  const progressBar = document.querySelector('.scroll-progress-bar');
+  const scrollIndicator = document.querySelector('.scroll-indicator');
+  const scrollIndicatorInner = document.querySelector('.scroll-indicator-inner');
+  const scrollIndicatorCenter = document.querySelector('.scroll-indicator-center');
+  
+  if (!progressBar) return;
+  
+  // Sıfıra bölünmeyi önle
+  if (totalHeight <= 0) return;
+  
+  // Progress hesapla (0-100 arasında sınırla)
+  const progressPercent = Math.min(Math.max((scrollTop / totalHeight) * 100, 0), 100);
+  const roundedProgress = Math.round(progressPercent);
+  
+  // Update progress bar with hardware acceleration
+  progressBar.style.transform = `translateX(${progressPercent - 100}%)`;
+  
+  // Update scroll indicator
+  if (scrollIndicatorInner && scrollIndicatorCenter) {
+    scrollIndicatorInner.style.background = `conic-gradient(var(--patreon-primary) ${progressPercent}%, transparent 0%)`;
+    scrollIndicatorCenter.textContent = `${roundedProgress}%`;
+    
+    // Show/hide based on scroll position
+    if (scrollIndicator) {
+      // Eğer sayfa sonuna çok yakınsak ve yüzde göstergesi 90'dan büyükse gösterge sabit kalsın
+      if (isNearPageEnd && progressPercent > 90) {
+        scrollIndicator.classList.add('visible');
+        scrollIndicator.classList.add('end-of-page');
+      } 
+      // Normal görünürlük kontrolü
+      else if (scrollTop > 300 && !isNearPageEnd) {
+        scrollIndicator.classList.add('visible');
+        scrollIndicator.classList.remove('end-of-page');
+      } 
+      // Sayfa başındayken gizle
+      else if (scrollTop <= 300) {
+        scrollIndicator.classList.remove('visible');
+        scrollIndicator.classList.remove('end-of-page');
+      }
+    }
+  }
+
+  // Ayrıca aktif section'a göre navbar'ı güncelle
+  updateActiveNavItem();
+}
+
+// Hangi section'da olduğumuza göre navbar'daki active elemanı güncelle
+function updateActiveNavItem() {
+  // Tüm section'ları al
+  const sections = document.querySelectorAll('section[id]');
+  // Navbar linklerini al
+  const navItems = document.querySelectorAll('.patreon-header .nav-link');
+  
+  if (!sections.length || !navItems.length) return;
+  
+  // Header yüksekliği (offset için gerekli)
+  const headerHeight = document.querySelector('.patreon-header')?.offsetHeight || 0;
+  
+  // Şu anki scroll pozisyonu
+  const scrollY = window.scrollY + headerHeight + 50; // 50px offset ekliyoruz daha iyi algılama için
+  
+  // Her section'ı kontrol et ve hangisinin görünür olduğunu belirle
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop;
+    const sectionHeight = section.offsetHeight;
+    const sectionId = section.getAttribute('id');
+    
+    // Bu section görünür aralıkta mı?
+    if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+      // Tüm nav-link'lerden active class'ını kaldır
+      navItems.forEach(item => {
+        item.classList.remove('active');
+      });
+      
+      // Bu section'a karşılık gelen nav-link'i bul ve active yap
+      const correspondingNavItem = document.querySelector(`.patreon-header .nav-link[href="#${sectionId}"]`);
+      if (correspondingNavItem) {
+        correspondingNavItem.classList.add('active');
+      }
+    }
+  });
+  
+  // Eğer sayfa başındaysak ve hiçbir section aktif değilse Ana Sayfa'yı aktif yap
+  if (window.scrollY < 100) {
+    navItems.forEach(item => {
+      item.classList.remove('active');
+    });
+    
+    const homeNavItem = document.querySelector('.patreon-header .nav-link[href="#home"]') || 
+                       document.querySelector('.patreon-header .nav-link[href="index.html"]') ||
+                       document.querySelector('.patreon-header .nav-link[href="/"]') ||
+                       document.querySelector('.patreon-header .nav-link[href="#"]');
+    
+    if (homeNavItem) {
+      homeNavItem.classList.add('active');
+    }
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialize existing functions
+  handleScroll(); // Set initial state
+  window.addEventListener('scroll', handleScroll);
+  
+  // Initialize header interactions
+  initHeaderInteractions();
+  
+  // Add click handler for scroll indicator to scroll to top
+  const scrollIndicator = document.querySelector('.scroll-indicator');
+  if (scrollIndicator) {
+    scrollIndicator.addEventListener('click', function() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  }
+  
+  // Rest of your initialization code
+  if (window.VanillaTilt && document.querySelector('.hero-3d-card')) {
+    VanillaTilt.init(document.querySelector('.hero-3d-card'), {
+      max: 10,
+      speed: 300,
+      glare: true,
+      "max-glare": 0.2,
+      gyroscope: true
+    });
+  }
+  
+  // Video Lazy Loading
+  const heroVideo = document.getElementById('hero-video');
+  if (heroVideo) {
+    const loadVideo = () => {
+      if (heroVideo.getAttribute('data-loaded') === 'true') return;
+      heroVideo.setAttribute('data-loaded', 'true');
+      heroVideo.load();
+      heroVideo.play();
+    };
+    
+    // IntersectionObserver API ile görüntüye girdiğinde yükle
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          loadVideo();
+          observer.unobserve(heroVideo);
+        }
+      });
+    });
+    
+    observer.observe(heroVideo);
+    
+    // Yedek olarak kullanıcı etkileşimi durumunda yükle
+    window.addEventListener('scroll', loadVideo, {once: true});
+    window.addEventListener('mousemove', loadVideo, {once: true});
+    window.addEventListener('touchstart', loadVideo, {once: true});
+  }
 });

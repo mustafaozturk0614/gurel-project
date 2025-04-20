@@ -1,0 +1,251 @@
+{
+  "lang": {
+    "code": "de",
+    "name": "Deutsch",
+    "nativeName": "Deutsch",
+    "direction": "ltr"
+  },
+  "seo": {
+    "title": "Gürel Management | Immobilien- und Gebäudeverwaltung",
+    "description": "Wir bieten professionelle Immobilien- und Gebäudeverwaltungsdienste in Edremit und Umgebung an.",
+    "keywords": "Immobilienverwaltung, Gebäudeverwaltung, Hausverwaltung, Edremit"
+  },
+  "general": {
+    "loading": "Wird geladen...",
+    "error": "Ein Fehler ist aufgetreten!",
+    "success": "Operation erfolgreich!",
+    "confirm": "Bestätigen",
+    "cancel": "Abbrechen",
+    "save": "Speichern",
+    "close": "Schließen",
+    "back": "Zurück",
+    "next": "Weiter",
+    "yes": "Ja",
+    "no": "Nein"
+  },
+  "header": {
+    "navigation": {
+      "home": "Startseite",
+      "about": "Über Uns",
+      "services": "Dienstleistungen",
+      "whyUs": "Warum Wir",
+      "references": "Referenzen",
+      "contact": "Kontakt"
+    },
+    "cta": "Angebot anfordern",
+    "languageSwitcher": "Sprache",
+    "get_quote": "Kontaktieren Sie uns",
+    "free_consultation": "Kostenlose Beratung"
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "themeMode": "Designmodus",
+    "light": "Hell",
+    "dark": "Dunkel",
+    "highContrast": "Hoher Kontrast",
+    "fontSize": "Schriftgröße",
+    "textSize": "Textgröße",
+    "small": "Klein",
+    "normal": "Normal",
+    "large": "Groß",
+    "themeColor": "Themenfarbe"
+  },
+  "home": {
+    "hero": {
+      "badge": "PROFESSIONELL SEIT 2022",
+      "title_line1": "Wir verwalten",
+      "title_accent": "sicher",
+      "title_line2": "Ihre Immobilie",
+      "description": "Gürel Management steht Ihnen mit transparenten, zuverlässigen und professionellen Immobilienverwaltungslösungen in 9 verschiedenen Regionen von Balıkesir zur Verfügung.",
+      "btn_discovery": "KOSTENLOSE BERATUNG",
+      "btn_services": "UNSERE DIENSTLEISTUNGEN",
+      "title": "Professionelle Immobilien- und Gebäudeverwaltung",
+      "subtitle": "Mit über 10 Jahren Erfahrung in Edremit erfüllen wir alle Verwaltungsbedürfnisse Ihrer Immobilien und Gebäude.",
+      "cta": "Unsere Dienstleistungen"
+    },
+    "stats": {
+      "sites": "Verwaltete Immobilien",
+      "apartments": "Verwaltete Gebäude",
+      "clients": "Zufriedene Kunden"
+    },
+    "services": {
+      "title": "Unsere Dienstleistungen",
+      "subtitle": "Umfassende Dienstleistungen, die wir anbieten",
+      "maintenance": {
+        "title": "Wartung & Reparatur",
+        "description": "Mit unseren regelmäßigen und notfallmäßigen Wartungs- und Reparaturdiensten sorgen wir dafür, dass Ihre Immobilie und Ihr Gebäude immer in bestem Zustand sind."
+      },
+      "financial": {
+        "title": "Finanzverwaltung",
+        "description": "Wir verwalten Ihre Finanzprozesse professionell mit transparenter Beitragsverfolgung, Budgetverwaltung und detaillierter Berichterstattung."
+      },
+      "security": {
+        "title": "Sicherheitsdienste",
+        "description": "Wir gewährleisten die Sicherheit Ihres Wohnraums mit 24/7 Sicherheitspersonal, Kamerasystemen und Notfallmanagement."
+      },
+      "cleaning": {
+        "title": "Reinigungsdienste",
+        "description": "Wir sorgen dafür, dass Ihre Immobilie und Ihr Gebäude mit regelmäßiger Reinigung und Wartung der Gemeinschaftsflächen immer sauber und ordentlich bleiben."
+      },
+      "expertise_areas": "Unsere Fachgebiete",
+      "site_management": "Anlagenverwaltung",
+      "property_management": "Immobilienverwaltung",
+      "site_card": {
+        "title": "Wohnanlage- und Siedlungsverwaltung",
+        "description": "Beitragsverwaltung, Wartungs- und Reparaturdienste",
+        "badge1": "Professionell",
+        "badge2": "Zuverlässig"
+      },
+      "property_card": {
+        "title": "Immobilienverwaltung",
+        "description": "Umfassende Dienstleistungen, die den Immobilienwert erhalten",
+        "badge1": "Experte",
+        "badge2": "Transparent"
+      },
+      "more_info": "Weitere Informationen"
+    },
+    "about": {
+      "title": "Über Gürel Management",
+      "description": "Seit 2013 bieten wir professionelle Immobilien- und Gebäudeverwaltungsdienste in Edremit und Umgebung an. Mit unserem erfahrenen Team und unserer technologischen Infrastruktur zielen wir darauf ab, unseren Kunden den bestmöglichen Service zu bieten.",
+      "cta": "Mehr erfahren"
+    }
+  },
+  "about": {
+    "badge": "ÜBER UNS",
+    "title": "Professioneller Service mit Gürel <span class='highlight'>Management</span>",
+    "since_badge": "SEIT 2022 FÜR SIE DA",
+    "intro": "<strong>Gürel Management</strong> ist ein zuverlässiger Geschäftspartner, der <strong>professionelle Wohnanlage-, Siedlungs- und Immobilienverwaltung</strong> in ganz Balıkesir anbietet.",
+    "description": "<strong>Als Gürel Management</strong> bieten wir moderne und transparente Lösungen für grundlegende Bedürfnisse in Gemeinschaftsräumen wie <span class='bg-light text-primary px-1 rounded'>Beitragsverwaltung</span>, <span class='bg-light text-primary px-1 rounded'>Budgetplanung</span>, <span class='bg-light text-primary px-1 rounded'>Wartungs- und Reparaturprozesse</span>. Mit unserem Team, das sowohl auf <span class='bg-light text-primary px-1 rounded'>Wohnanlage- und Siedlungsverwaltung</span> als auch auf <span class='bg-light text-primary px-1 rounded'>individuelle Immobilienverwaltung</span> spezialisiert ist, decken wir die Bedürfnisse von Immobilienbesitzern und Siedlungsbewohnern mit Dienstleistungen wie <span class='bg-light text-primary px-1 rounded'>Vermietungsprozessen</span>, <span class='bg-light text-primary px-1 rounded'>Einnahmen-Ausgaben-Management</span> und <span class='bg-light text-primary px-1 rounded'>Berichterstattung</span> ab.",
+    "why_us_title": "Warum uns wählen?",
+    "principles": {
+      "transparency": {
+        "title": "Transparenz",
+        "desc": "Offene und ehrliche Kommunikation in jeder Phase"
+      },
+      "reliability": {
+        "title": "Zuverlässigkeit",
+        "desc": "Wir liefern die versprochenen Dienstleistungen pünktlich"
+      },
+      "professionalism": {
+        "title": "Professionalität",
+        "desc": "Qualitätsservice mit unserem Expertenteam"
+      }
+    },
+    "title": "Über Uns",
+    "subtitle": "Lernen Sie Gürel Management kennen",
+    "mission": {
+      "title": "Unsere Mission",
+      "description": "Professionelle Verwaltung von Immobilien und Gebäuden bereitzustellen, damit die Bewohner ein komfortables und problemloses Leben führen können."
+    },
+    "vision": {
+      "title": "Unsere Vision",
+      "description": "Das bevorzugte, zuverlässige und innovative Immobilienverwaltungsunternehmen in Edremit und Umgebung zu werden."
+    },
+    "values": {
+      "title": "Unsere Werte",
+      "professionalValue": "Professionalität",
+      "transparency": "Transparenz",
+      "customerService": "Kundenzufriedenheit",
+      "innovation": "Innovation"
+    },
+    "team": {
+      "title": "Unser Team",
+      "description": "Wir stehen Ihnen mit unserem Expertenteam und unserer Erfahrung immer zur Seite."
+    }
+  },
+  "services": {
+    "title": "Unsere Dienstleistungen",
+    "subtitle": "Umfassende Lösungen, die wir anbieten",
+    "items": {
+      "facilityManagement": {
+        "title": "Facility Management",
+        "description": "Regelmäßige Wartung und Kontrolle der technischen Infrastruktur Ihrer Immobilie."
+      },
+      "administrativeManagement": {
+        "title": "Administrative Verwaltung",
+        "description": "Professionelle administrative Verwaltung gemäß Wohnungseigentumsgesetz und Verwaltungsplänen."
+      },
+      "financialManagement": {
+        "title": "Finanzverwaltung",
+        "description": "Beitragsverfolgung, Zahlungsabwicklung und Erstellung von Finanzberichten."
+      },
+      "legalManagement": {
+        "title": "Rechtliche Verwaltung",
+        "description": "Verfolgung und Verwaltung rechtlicher Prozesse, Einziehung von Beitragsschulden."
+      },
+      "technicalManagement": {
+        "title": "Technische Verwaltung",
+        "description": "Wartung und Verwaltung technischer Systeme wie Aufzüge, Generatoren und Wassertanks."
+      },
+      "securityManagement": {
+        "title": "Sicherheitsverwaltung",
+        "description": "24/7 Sicherheitsdienste, Kamerasysteme und Notfallmanagement."
+      }
+    }
+  },
+  "whyUs": {
+    "title": "Warum Uns Wählen",
+    "subtitle": "Entdecken Sie Unseren Unterschied",
+    "items": {
+      "experience": {
+        "title": "Erfahrung",
+        "description": "Wir bieten professionelle Lösungen mit über 10 Jahren Branchenerfahrung."
+      },
+      "technology": {
+        "title": "Technologie",
+        "description": "Mit unserer digitalen Infrastruktur können Sie alle Transaktionen von unserer Online-Plattform aus verfolgen."
+      },
+      "transparency": {
+        "title": "Transparenz",
+        "description": "Alle Einnahmen- und Ausgabenkonten werden regelmäßig gemeldet und geteilt."
+      },
+      "responsiveness": {
+        "title": "Schnelle Reaktion",
+        "description": "Wir bearbeiten und lösen Ihre Probleme so schnell wie möglich."
+      }
+    }
+  },
+  "references": {
+    "title": "Unsere Referenzen",
+    "subtitle": "Immobilien, die wir mit Stolz betreuen",
+    "more": "Alle Unsere Referenzen"
+  },
+  "contact": {
+    "title": "Kontakt",
+    "subtitle": "Nehmen Sie Kontakt mit uns auf",
+    "address": "Adresse",
+    "phone": "Telefon",
+    "email": "E-Mail",
+    "form": {
+      "name": "Ihr Name",
+      "email": "Ihre E-Mail-Adresse",
+      "phone": "Ihre Telefonnummer",
+      "subject": "Betreff",
+      "message": "Ihre Nachricht",
+      "submit": "Senden",
+      "required": "Dieses Feld ist erforderlich",
+      "invalidEmail": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+      "success": "Ihre Nachricht wurde erfolgreich gesendet. Wir werden uns so schnell wie möglich bei Ihnen melden."
+    }
+  },
+  "footer": {
+    "about": "Über Uns",
+    "services": "Unsere Dienstleistungen",
+    "contact": "Kontakt",
+    "followUs": "Folgen Sie Uns",
+    "copyright": "© 2023 Gürel Management. Alle Rechte vorbehalten.",
+    "privacyPolicy": "Datenschutzrichtlinie",
+    "termsOfService": "Nutzungsbedingungen"
+  },
+  "languages": {
+    "tr": "Türkçe",
+    "en": "English",
+    "de": "Deutsch"
+  },
+  "language": {
+    "select": "Sprache wählen",
+    "turkish": "Türkisch",
+    "english": "Englisch",
+    "german": "Deutsch"
+  }
+} 
