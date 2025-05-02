@@ -68,6 +68,7 @@
     flex-direction: column;
     border: 1px solid var(--border-color, #dee2e6);
     will-change: transform;
+    min-height: 450px; /* Minimum yükseklik tanımı ekledik */
 }
 
 .service-box:hover {
@@ -103,8 +104,8 @@
     left: 0;
     right: 0;
     bottom: 0;
-    height: 70%; /* Gradient yüksekliğini artırdık */
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    height: 80%; /* Gradient yüksekliğini artırdık */
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.4) 60%, transparent);
     z-index: 1;
 }
 
@@ -151,8 +152,9 @@
     z-index: 2;
     background-color: var(--white-color, #fff);
     color: var(--primary-color);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
     backdrop-filter: blur(5px);
+    border: 2px solid rgba(255, 255, 255, 0.9);
 }
 
 .service-box:hover .service-box-icon {
@@ -176,7 +178,7 @@
     display: flex;
     align-items: center;
     background-color: rgba(255, 255, 255, 0.9);
-    padding: 3px 8px;
+    padding: 5px 10px;
     border-radius: 20px;
     z-index: 2;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -185,6 +187,7 @@
 .service-box-logo img {
     height: 22px;
     width: auto;
+    margin-right: 2px;
 }
 
 .service-box-logo span {
@@ -201,9 +204,11 @@
 }
 
 .service-box-with-image .service-box-title {
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
     margin-bottom: 5px;
     font-size: 22px;
+    color: #ffffff;
+    font-weight: 700;
 }
 
 .service-box-body {
@@ -224,26 +229,30 @@
 
 .service-box-features {
     margin-bottom: 20px;
+    margin-top: 10px;
 }
 
 .service-feature {
     display: flex;
     align-items: flex-start;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
+    padding-left: 2px;
 }
 
 .service-feature i {
     color: var(--primary-color, #0d6efd);
-    margin-right: 10px;
+    margin-right: 12px;
     font-size: 16px;
     margin-top: 2px;
     flex-shrink: 0;
+    min-width: 16px;
 }
 
 .service-feature span {
     font-size: 14px;
     color: var(--text-color, #212529);
     line-height: 1.4;
+    text-align: left;
 }
 
 .service-box-badges {
@@ -453,6 +462,7 @@
 .services-grid .col-lg-4 {
     display: flex;
     margin-bottom: 24px;
+    height: 100%;
 }
 
 .services-grid .row {
