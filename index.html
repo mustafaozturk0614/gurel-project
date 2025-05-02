@@ -31,6 +31,8 @@
             .hero-buttons {flex-direction: column;}
             .fancy-hero-title {font-size: 2rem;}
         }
+        
+       
     </style>
     
     <!-- Preload kritik fontlar -->
@@ -267,8 +269,9 @@
                 </div>
                 
                 <div class="col-lg-6">
-                    <!-- Sadeleştirilmiş 3D kart -->
+                    <!-- Geliştirilmiş 3D kart -->
                     <div class="hero-3d-card" tabindex="0" role="region" aria-label="Uzmanlaştığımız alanlar">
+                        <div class="hero-3d-card-shine"></div>
                         <div class="card-3d-wrap">
                             <div class="card-3d-wrapper">
                                 <div class="card-front">
@@ -281,60 +284,96 @@
                                     <div class="nav-tabs-wrapper mb-4">
                                         <ul class="nav nav-tabs nav-tabs-improved" id="serviceTabList" role="tablist" aria-label="Hizmet alanları">
                                             <li class="nav-item" role="presentation">
-                                                <button class="nav-link active" id="site-tab" data-bs-toggle="tab" data-bs-target="#site" type="button" role="tab" aria-controls="site" aria-selected="true">
-                                                    <i class="fas fa-building"></i> Site Yönetimi
+                                                <button class="nav-link active" id="site-tab" data-bs-toggle="tab" data-bs-target="#site-services" type="button" role="tab" aria-controls="site-services" aria-selected="true">
+                                                    <i class="fas fa-building me-2"></i> Site Yönetimi
+                                                    <span class="tab-illustration">
+                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M7 21H4V10H1L12 3L23 10H20V21H13V14H11V21H7Z" fill="#555"/>
+                                                        </svg>
+                                                    </span>
                                                 </button>
                                             </li>
                                             <li class="nav-item" role="presentation">
-                                                <button class="nav-link" id="mulk-tab" data-bs-toggle="tab" data-bs-target="#mulk" type="button" role="tab" aria-controls="mulk" aria-selected="false">
-                                                    <i class="fas fa-home"></i> Mülk Yönetimi
+                                                <button class="nav-link fw-bold" id="property-tab" data-bs-toggle="tab" data-bs-target="#property-services" type="button" role="tab" aria-controls="property-services" aria-selected="false">
+                                                    <i class="fas fa-home me-2"></i> Mülk Yönetimi
+                                                    <span class="tab-illustration">
+                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M19 9.3V4H16V6.6L12 3L2 12H5V20H9V14H15V20H19V12H22L19 9.3Z" fill="#555"/>
+                                                        </svg>
+                                                    </span>
                                                 </button>
                                             </li>
                                         </ul>
                                     </div>
                                     
                                     <div class="tab-content tab-content-improved" id="serviceTabContent">
-                                        <!-- Site Yönetimi -->
-                                        <div class="tab-pane fade show active" id="site" role="tabpanel" aria-labelledby="site-tab">
-                                            <div class="service-card">
-                                                <div class="card-logo">
-                                                    <img src="assets/svg/brands/logo-sy-svg.svg" alt="Gürel Site Yönetimi Logo" class="service-logo" loading="lazy" style="width: 70px; height: auto;">
-                                                    <span class="logo-label" style="font-size: 1.2rem; font-weight: 700;">SY</span>
+                                        <!-- Site Yönetimi Tanıtım-->
+                                        <div class="tab-pane fade show active" id="site-services" role="tabpanel" aria-labelledby="site-tab">
+                                            <div class="row services-grid g-3 justify-content-center">
+                                                <div class="expertise-area-intro">
+                                                    <p class="expertise-highlight"><i class="fas fa-award me-2"></i>Apartman ve sitelerde profesyonel yönetim çözümleri sunuyoruz.</p>
+                                                    <div class="expertise-features">
+                                                        <div class="expertise-feature">
+                                                            <div class="feature-icon"><i class="fas fa-users"></i></div>
+                                                            <div class="feature-content">
+                                                                <h5>Profesyonel Ekip</h5>
+                                                                <p>Uzman kadromuzla site yönetim ihtiyaçlarınızı karşılıyoruz.</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="expertise-feature">
+                                                            <div class="feature-icon"><i class="fas fa-file-invoice"></i></div>
+                                                            <div class="feature-content">
+                                                                <h5>Şeffaf Raporlama</h5>
+                                                                <p>Aylık detaylı raporlar ile hesap şeffaflığı sağlıyoruz.</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="expertise-feature">
+                                                            <div class="feature-icon"><i class="fas fa-percent"></i></div>
+                                                            <div class="feature-content">
+                                                                <h5>Maliyet Tasarrufu</h5>
+                                                                <p>Toplu alım gücüyle %15'e varan tasarruf sağlıyoruz.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="expertise-cta mt-3">
+                                                        <a href="#services" class="btn btn-sm btn-outline-primary">Tüm Hizmetleri Keşfedin</a>
+                                                    </div>
                                                 </div>
-                                                <div class="service-icon">
-                                                    <i class="fas fa-building"></i>
-                                                </div>
-                                                <h4 class="service-title">Apartman ve Site Yönetimi</h4>
-                                                <p class="service-description">Aidat yönetimi, bakım ve onarım hizmetleri</p>
-                                                <div class="service-badges mb-2"> 
-                                                    <span class="badge bg-secondary me-1">Profesyonel</span>
-                                                    <span class="badge bg-info">Güvenilir</span>
-                                                </div>
-                                                <a href="#services" class="btn btn-sm btn-outline-light mt-2">
-                                                    <span>Detaylı Bilgi</span> <i class="fas fa-arrow-right ms-1"></i>
-                                                </a>
                                             </div>
                                         </div>
-                                        
-                                        <!-- Mülk Yönetimi -->
-                                        <div class="tab-pane fade" id="mulk" role="tabpanel" aria-labelledby="mulk-tab">
-                                            <div class="service-card">
-                                                <div class="card-logo">
-                                                    <img src="assets/svg/brands/logo-my-svg.svg" alt="Gürel Mülk Yönetimi Logo" class="service-logo" loading="lazy" style="width: 70px; height: auto;">
-                                                    <span class="logo-label" style="font-size: 1.2rem; font-weight: 700;">MY</span>
+                                                            
+                                        <!-- Mülk Yönetimi Tanıtım -->
+                                        <div class="tab-pane fade" id="property-services" role="tabpanel" aria-labelledby="property-tab">
+                                            <div class="row services-grid g-3 justify-content-center">
+                                                <div class="expertise-area-intro">
+                                                    <p class="expertise-highlight"><i class="fas fa-home me-2"></i>Bireysel ve ticari mülkleriniz için tam kapsamlı yönetim.</p>
+                                                    <div class="expertise-features">
+                                                        <div class="expertise-feature">
+                                                            <div class="feature-icon"><i class="fas fa-key"></i></div>
+                                                            <div class="feature-content">
+                                                                <h5>Kiralama Desteği</h5>
+                                                                <p>Kiracı bulma ve kiraya verme süreçlerini yönetiyoruz.</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="expertise-feature">
+                                                            <div class="feature-icon"><i class="fas fa-tools"></i></div>
+                                                            <div class="feature-content">
+                                                                <h5>Bakım Onarım</h5>
+                                                                <p>Mülkünüzün değerini koruyacak bakım hizmetleri.</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="expertise-feature">
+                                                            <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                                                            <div class="feature-content">
+                                                                <h5>Gelir Optimizasyonu</h5>
+                                                                <p>Mülkünüzden maksimum gelir elde etmenizi sağlıyoruz.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="expertise-cta mt-3">
+                                                        <a href="#services" class="btn btn-sm btn-outline-primary">Tüm Hizmetleri Keşfedin</a>
+                                                    </div>
                                                 </div>
-                                                <div class="service-icon">
-                                                    <i class="fas fa-home"></i>
-                                                </div>
-                                                <h4 class="service-title">Mülk Yönetimi</h4>
-                                                <p class="service-description">Gayrimenkul değerini koruyan kapsamlı hizmetler</p>
-                                                <div class="service-badges mb-2">
-                                                    <span class="badge bg-secondary me-1">Uzman</span>
-                                                    <span class="badge bg-info">Şeffaf</span>
-                                                </div>
-                                                <a href="#services" class="btn btn-sm btn-outline-light mt-2">
-                                                    <span>Detaylı Bilgi</span> <i class="fas fa-arrow-right ms-1"></i>
-                                                </a> 
                                             </div>
                                         </div>
                                     </div>
@@ -355,195 +394,13 @@
         const hero3dCard = document.querySelector('.hero-3d-card');
         const changingWord = document.getElementById('changingWord');
         const regionIndicators = document.querySelectorAll('.region-indicator');
+        const patreonHero = document.querySelector('.patreon-hero');
+        const statCounters = document.querySelectorAll('.hero-stat-counter');
         
-        // Performans için throttle fonksiyonu - gereksiz hesaplamaları önlemek için
-        function throttle(callback, delay) {
-            let isThrottled = false;
-            let lastArgs = null;
-            
-            function wrapper(...args) {
-                if (isThrottled) {
-                    lastArgs = args;
-                    return;
-                }
-                
-                isThrottled = true;
-                callback.apply(this, args);
-                
-                setTimeout(() => {
-                    isThrottled = false;
-                    if (lastArgs) {
-                        wrapper.apply(this, lastArgs);
-                        lastArgs = null;
-                    }
-                }, delay);
-            }
-            
-            return wrapper;
-        }
-        
-        // Mouse hareketi karşısında ince paralaks efekti (throttled)
-        function applyParallaxEffect(element, e, intensity = 1) {
-            if (!element) return;
-            
-            // requestAnimationFrame kullanarak işlemi bir sonraki kareye taşıma
-            requestAnimationFrame(() => {
-                const rect = element.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-                
-                // Çok hafif 3D dönüş efekti (doğal hissettirmek için minimum)
-                const tiltX = y / (rect.height / 2) * 1.5 * intensity; 
-                const tiltY = -x / (rect.width / 2) * 1.5 * intensity;
-                
-                element.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateY(-2px)`;
-            });
-        }
-        
-        // Işık efekti oluşturma - DOM elementleri için bellek yönetimi
-        const lightEffectPool = []; // Element havuzu
-        const MAX_LIGHT_EFFECTS = 5; // Maksimum efekt sayısı
-        
-        // İlk başlatmada havuzu doldur
-        function initLightEffectPool() {
-            for (let i = 0; i < MAX_LIGHT_EFFECTS; i++) {
-                const lightEffect = document.createElement('div');
-                lightEffect.classList.add('hero-light-effect');
-                lightEffect.style.opacity = '0';
-                lightEffect.style.display = 'none';
-                lightEffectPool.push(lightEffect);
-                
-                // Parent atamadan önce elemente ekle - sadece bir kez DOM'a ekleriz
-                if (heroContent) {
-                    heroContent.appendChild(lightEffect);
-                }
-            }
-        }
-        
-        // Havuzdan efekt al
-        function getLightEffect() {
-            for (let i = 0; i < lightEffectPool.length; i++) {
-                if (lightEffectPool[i].style.display === 'none') {
-                    return lightEffectPool[i];
-                }
-            }
-            return null; // Tüm efektler kullanılıyorsa null dön
-        }
-        
-        // Işık efektini göster
-        function createLightEffect(element, e) {
-            if (!element) return;
-            
-            const lightEffect = getLightEffect();
-            if (!lightEffect) return; // Efekt yoksa atla
-            
-            requestAnimationFrame(() => {
-                const rect = element.getBoundingClientRect();
-                lightEffect.style.left = (e.clientX - rect.left) + 'px';
-                lightEffect.style.top = (e.clientY - rect.top) + 'px';
-                lightEffect.style.display = 'block';
-                lightEffect.style.opacity = '1';
-                
-                // Animasyon tamamlandığında havuza geri gönder
-                setTimeout(() => {
-                    lightEffect.style.opacity = '0';
-                    setTimeout(() => {
-                        lightEffect.style.display = 'none';
-                    }, 100);
-                }, 1400);
-            });
-        }
-        
-        // Havuzu başlat
-        initLightEffectPool();
-        
-        // Hero content mouse efektleri - throttled
-        if (heroContent) {
-            const throttledParallax = throttle((e) => {
-                applyParallaxEffect(heroContent, e, 0.5);
-            }, 16); // ~60fps
-            
-            heroContent.addEventListener('mousemove', throttledParallax);
-            
-            heroContent.addEventListener('mouseleave', function() {
-                requestAnimationFrame(() => {
-                    this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
-                });
-            });
-            
-            heroContent.addEventListener('click', function(e) {
-                createLightEffect(this, e);
-            });
-        }
-        
-        // 3D Card mouse efektleri - throttled
-        if (hero3dCard) {
-            const throttledParallax = throttle((e) => {
-                applyParallaxEffect(hero3dCard, e, 0.4);
-            }, 16); // ~60fps
-            
-            hero3dCard.addEventListener('mousemove', throttledParallax);
-            
-            hero3dCard.addEventListener('mouseleave', function() {
-                requestAnimationFrame(() => {
-                    this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
-                });
-            });
-            
-            hero3dCard.addEventListener('click', function(e) {
-                createLightEffect(this, e);
-            });
-        }
-        
-        // Accent text animasyonu - başlık içindeki değişen kelimeler
-        if (changingWord) {
-            const words = ['ekonomik', 'verimli', 'değer katan', 'sürdürülebilir', '%15 tasarruflu', 'teknolojik'];
-            const colors = ['rgba(0, 82, 204, 0.2)', 'rgba(6, 214, 160, 0.2)', 'rgba(239, 71, 111, 0.2)', 'rgba(255, 209, 102, 0.2)', 'rgba(120, 80, 190, 0.2)', 'rgba(0, 175, 185, 0.2)'];
-            const textColors = ['rgba(255, 255, 255, 0.95)', 'rgba(255, 255, 255, 0.95)', 'rgba(255, 255, 255, 0.95)', 'rgba(255, 255, 255, 0.95)', 'rgba(255, 255, 255, 0.95)', 'rgba(255, 255, 255, 0.95)'];
-            
-            let currentIndex = 0;
-            let changingWordAnimation = null;
-            
-            function changeWord() {
-                // Çıkış animasyonu
-                changingWord.style.opacity = '0';
-                changingWord.style.transform = 'translateY(5px)';
-                
-                // Animasyonlar için aynı zamanlayıcıyı kullan
-                clearTimeout(changingWordAnimation);
-                
-                changingWordAnimation = setTimeout(function() {
-                    // Metni değiştir
-                    currentIndex = (currentIndex + 1) % words.length;
-                    
-                    // DOM'u bir kerede güncellemek için requestAnimationFrame kullan
-                    requestAnimationFrame(() => {
-                        changingWord.textContent = words[currentIndex];
-                        changingWord.style.backgroundColor = colors[currentIndex];
-                        changingWord.style.color = textColors[currentIndex];
-                        
-                        // Giriş animasyonu
-                        changingWord.style.opacity = '1';
-                        changingWord.style.transform = 'translateY(0)';
-                    });
-                }, 300);
-            }
-            
-            // İlk kelimeyi ayarla
-            requestAnimationFrame(() => {
-                changingWord.textContent = words[0];
-                changingWord.style.backgroundColor = colors[0];
-                changingWord.style.color = textColors[0];
-                changingWord.style.opacity = '1';
-            });
-            
-            // Kelime değişimini başlat
-            setInterval(changeWord, 3000);
-        }
-        
-        // IntersectionObserver ile görünürlüğe bağlı sayaç başlatma
-        if (regionIndicators.length > 0) {
-            const counterObserver = new IntersectionObserver((entries) => {
+        // İstatistik sayaçları animasyonu
+        function animateCounters() {
+            // IntersectionObserver ile görünür olduğunda animasyonu başlat
+            const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         const indicator = entry.target;
@@ -595,6 +452,9 @@
                 counterObserver.observe(indicator);
             });
         }
+        
+        // Sayaç animasyonunu başlat
+        animateCounters();
     });
     </script>
 
@@ -1096,11 +956,21 @@
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active fw-bold" id="site-tab" data-bs-toggle="tab" data-bs-target="#site-services" type="button" role="tab" aria-controls="site-services" aria-selected="true">
                             <i class="fas fa-building me-2"></i> Site Yönetimi
+                            <span class="tab-illustration">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M7 21H4V10H1L12 3L23 10H20V21H13V14H11V21H7Z" fill="#555"/>
+                                </svg>
+                            </span>
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link fw-bold" id="property-tab" data-bs-toggle="tab" data-bs-target="#property-services" type="button" role="tab" aria-controls="property-services" aria-selected="false">
                             <i class="fas fa-home me-2"></i> Mülk Yönetimi
+                            <span class="tab-illustration">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M19 9.3V4H16V6.6L12 3L2 12H5V20H9V14H15V20H19V12H22L19 9.3Z" fill="#555"/>
+                                </svg>
+                            </span>
                         </button>
                     </li>
                 </ul>
@@ -1110,282 +980,190 @@
                 <!-- Site Yönetimi Hizmetleri -->
                 <div class="tab-pane fade show active" id="site-services" role="tabpanel" aria-labelledby="site-tab">
                     <div class="row services-grid g-3 justify-content-center">
-                        <!-- Hizmet 1: Finansal Yönetim -->
+                        <!-- Hizmet 1: Muhasebe ve Aidat Hizmetleri -->
                         <div class="col-md-6 col-lg-4">
-                            <div class="service-box service-box-with-image">
+                            <div class="service-box">
+                                <!-- Görsel Alanı -->
                                 <div class="service-box-image">
-                                    <img src="assets/images/img/muhasebe/muhasebe7.png" alt="Finansal Yönetim Hizmeti">
-                                </div>
-                                <div class="service-box-header">
+                                    <img src="assets/images/img/muhasebe/muhasebe2.jpeg" alt="Muhasebe ve Aidat Hizmetleri" loading="lazy">
                                     <div class="service-box-logo">
                                         <img src="assets/svg/brands/logo-sy-svg.svg" alt="Gürel Site Yönetimi Logo">
                                         <span>SY</span>
-                                    </div>
-                                    <div class="service-box-icon">
-                                        <i class="fas fa-chart-line"></i>
-                                    </div>
-                                    <h3 class="service-box-title">Finansal Yönetim</h3>
                                 </div>
-                                <div class="service-box-body">
+                                    <div class="service-box-icon">
+                                        <i class="fas fa-calculator service-icon-animate"></i>
+                                    </div>
+                                    <h3 class="service-box-title">Muhasebe ve Aidat Hizmetleri</h3>
+                            </div>
+                            
+                                <!-- İçerik Alanı -->
+                                <div class="service-box-content">
                                     <p class="service-box-description">
-                                        Site ve apartmanınızın tüm finansal süreçlerini profesyonel ve şeffaf bir şekilde yönetiyoruz.
+                                        Apartman ve sitelerde aidat toplama, bütçe yönetimi, gelir-gider kaydı gibi tüm muhasebe işlemlerini şeffaf ve güvenilir bir şekilde yürütüyoruz.
                                     </p>
-                                    <div class="service-box-features">
-                                        <div class="service-feature">
+                                    
+                                    <ul class="service-box-features">
+                                        <li class="service-feature">
                                             <i class="fas fa-check-circle"></i>
                                             <span>Aidat takibi ve tahsilatı</span>
-                                        </div>
-                                        <div class="service-feature">
+                                        </li>
+                                        <li class="service-feature">
                                             <i class="fas fa-check-circle"></i>
-                                            <span>Bütçe planlaması</span>
-                                        </div>
-                                        <div class="service-feature">
+                                            <span>Şeffaf raporlama ve bütçe yönetimi</span>
+                                        </li>
+                                        <li class="service-feature">
                                             <i class="fas fa-check-circle"></i>
-                                            <span>Düzenli finansal raporlama</span>
-                                        </div>
-                                    </div>
+                                            <span>Gelir-gider takibi ve dokümantasyon</span>
+                                        </li>
+                                    </ul>
+                                    
                                     <div class="service-box-badges">
-                                        <span class="service-badge">Şeffaf</span>
-                                        <span class="service-badge alt">Güvenilir</span>
-                                    </div>
+                                        <span class="service-badge">Profesyonel</span>
+                                        <span class="service-badge alt">Aidat Takibi</span>
                                 </div>
-                                <div class="service-box-footer">
-                                    <a href="#contact" class="service-box-btn">
+                                    
+                                    <a href="services/muhasebe-aidat.html" class="service-box-btn">
                                         Detaylı Bilgi <i class="fas fa-arrow-right"></i>
                                     </a>
                                 </div>
-                            </div>
-                        </div>
-                            
-                        <!-- Hizmet 2: Teknik Hizmetler -->
-                        <div class="col-md-6 col-lg-4">
-                            <div class="service-box service-box-with-image">
-                                <div class="service-box-image">
-                                    <img src="assets/images/img/bakım/bakım13.png" alt="Teknik Hizmetler">
                                 </div>
-                                <div class="service-box-header">
+                            </div>
+                            
+                        <!-- Hizmet 2: Temizlik Hizmetleri -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="service-box">
+                                <div class="service-box-image">
+                                    <img src="assets/images/img/temizlik/temizlik_ana_gorsel.jpeg" alt="Temizlik Hizmetleri" loading="lazy">
                                     <div class="service-box-logo">
                                         <img src="assets/svg/brands/logo-sy-svg.svg" alt="Gürel Site Yönetimi Logo">
                                         <span>SY</span>
-                                    </div>
+                                </div>
                                     <div class="service-box-icon">
-                                        <i class="fas fa-tools"></i>
-                                    </div>
-                                    <h3 class="service-box-title">Teknik Hizmetler</h3>
-                                </div>
-                                <div class="service-box-body">
-                                    <p class="service-box-description">
-                                        Site ve apartmanınızın tüm teknik bakım ve onarım ihtiyaçlarını profesyonel ekibimizle karşılıyoruz.
-                                    </p>
-                                    <div class="service-box-features">
-                                        <div class="service-feature">
-                                            <i class="fas fa-check-circle"></i>
-                                            <span>7/24 acil durum desteği</span>
-                                        </div>
-                                        <div class="service-feature">
-                                            <i class="fas fa-check-circle"></i>
-                                            <span>Periyodik bakım hizmetleri</span>
-                                        </div>
-                                        <div class="service-feature">
-                                            <i class="fas fa-check-circle"></i>
-                                            <span>Taşeron yönetimi</span>
-                                        </div>
-                                    </div>
-                                    <div class="service-box-badges">
-                                        <span class="service-badge">Hızlı</span>
-                                        <span class="service-badge alt">Profesyonel</span>
-                                    </div>
-                                </div>
-                                <div class="service-box-footer">
-                                    <a href="#contact" class="service-box-btn">
-                                        Detaylı Bilgi <i class="fas fa-arrow-right"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                            
-                        <!-- Hizmet 3: Temizlik Hizmetleri -->
-                        <div class="col-md-6 col-lg-4">
-                            <div class="service-box service-box-with-image">
-                                <div class="service-box-image">
-                                    <img src="assets/images/img/temizlik/temizlik11.png" alt="Temizlik Hizmetleri">
-                                </div>
-                                <div class="service-box-header">
-                                    <div class="service-box-logo">
-                                        <img src="assets/svg/brands/logo-sy-svg.svg" alt="Gürel Site Yönetimi Logo">
-                                        <span>SY</span>
-                                    </div>
-                                    <div class="service-box-icon">
-                                        <i class="fas fa-broom"></i>
+                                        <i class="fas fa-broom service-icon-animate"></i>
                                     </div>
                                     <h3 class="service-box-title">Temizlik Hizmetleri</h3>
-                                </div>
-                                <div class="service-box-body">
+                            </div>
+                            
+                                <div class="service-box-content">
                                     <p class="service-box-description">
-                                        Ortak alanların düzenli temizliği ve hijyeni için kapsamlı temizlik hizmetleri sunuyoruz.
+                                        Ortak alanların periyodik temizliği, özel temizlik hizmetleri ile sitenizin her zaman tertemiz kalmasını sağlıyoruz.
                                     </p>
-                                    <div class="service-box-features">
-                                        <div class="service-feature">
+                                    
+                                    <ul class="service-box-features">
+                                        <li class="service-feature">
                                             <i class="fas fa-check-circle"></i>
-                                            <span>Günlük temizlik programı</span>
-                                        </div>
-                                        <div class="service-feature">
+                                            <span>Ortak alan temizliği</span>
+                                        </li>
+                                        <li class="service-feature">
                                             <i class="fas fa-check-circle"></i>
-                                            <span>Periyodik detaylı temizlik</span>
-                                        </div>
-                                        <div class="service-feature">
+                                            <span>Dış cephe ve cam temizliği</span>
+                                        </li>
+                                        <li class="service-feature">
                                             <i class="fas fa-check-circle"></i>
-                                            <span>Denetimli temizlik kontrolü</span>
-                                        </div>
-                                    </div>
+                                            <span>Özel zemin ve merdiven bakımı</span>
+                                        </li>
+                                    </ul>
+                                    
                                     <div class="service-box-badges">
-                                        <span class="service-badge">Hijyenik</span>
-                                        <span class="service-badge alt">Düzenli</span>
-                                    </div>
+                                        <span class="service-badge">Düzenli</span>
+                                        <span class="service-badge alt">Hijyenik</span>
                                 </div>
-                                <div class="service-box-footer">
-                                    <a href="#contact" class="service-box-btn">
+                                    
+                                    <a href="services/temizlik.html" class="service-box-btn">
                                         Detaylı Bilgi <i class="fas fa-arrow-right"></i>
                                     </a>
                                 </div>
-                            </div>
-                        </div>
-                            
-                        <!-- Hizmet 4: Güvenlik Hizmetleri -->
-                        <div class="col-md-6 col-lg-4">
-                            <div class="service-box service-box-with-image">
-                                <div class="service-box-image">
-                                    <img src="assets/images/img/güvenlik/guvenlik10.png" alt="Güvenlik Hizmetleri">
                                 </div>
-                                <div class="service-box-header">
+                            </div>
+                            
+                        <!-- Hizmet 3: Hukuk Hizmetleri -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="service-box">
+                                <div class="service-box-image">
+                                    <img src="assets/images/img/hukuk/hukuk_ana_gorsel.jpeg" alt="Hukuk Hizmetleri" loading="lazy">
                                     <div class="service-box-logo">
                                         <img src="assets/svg/brands/logo-sy-svg.svg" alt="Gürel Site Yönetimi Logo">
                                         <span>SY</span>
-                                    </div>
+                                </div>
                                     <div class="service-box-icon">
-                                        <i class="fas fa-shield-alt"></i>
+                                        <i class="fas fa-balance-scale service-icon-animate"></i>
                                     </div>
-                                    <h3 class="service-box-title">Güvenlik Hizmetleri</h3>
-                                </div>
-                                <div class="service-box-body">
+                                    <h3 class="service-box-title">Hukuk Hizmetleri</h3>
+                                    </div>
+                                
+                                <div class="service-box-content">
                                     <p class="service-box-description">
-                                        Site ve apartmanınızın güvenliğini profesyonel çözümlerle sağlıyoruz.
+                                        Kat Mülkiyeti Kanunu ile ilgili hukuki danışmanlık, aidat tahsilatı ve diğer yasal süreçlerde destek.
                                     </p>
-                                    <div class="service-box-features">
-                                        <div class="service-feature">
+                                    
+                                    <ul class="service-box-features">
+                                        <li class="service-feature">
                                             <i class="fas fa-check-circle"></i>
-                                            <span>Güvenlik personeli yönetimi</span>
-                                        </div>
-                                        <div class="service-feature">
+                                            <span>Kat Mülkiyeti Kanunu danışmanlığı</span>
+                                        </li>
+                                        <li class="service-feature">
                                             <i class="fas fa-check-circle"></i>
-                                            <span>Kamera ve güvenlik sistemleri</span>
-                                        </div>
-                                        <div class="service-feature">
+                                            <span>Aidat ve borç tahsilat takibi</span>
+                                        </li>
+                                        <li class="service-feature">
                                             <i class="fas fa-check-circle"></i>
-                                            <span>Ziyaretçi giriş-çıkış kontrolü</span>
-                                        </div>
-                                    </div>
+                                            <span>Yönetim planı ve sözleşme hazırlama</span>
+                                        </li>
+                                    </ul>
+                                    
                                     <div class="service-box-badges">
-                                        <span class="service-badge">Güvenli</span>
-                                        <span class="service-badge alt">7/24 Kontrol</span>
+                                        <span class="service-badge">Güvenilir</span>
+                                        <span class="service-badge alt">Uzman</span>
                                     </div>
-                                </div>
-                                <div class="service-box-footer">
-                                    <a href="#contact" class="service-box-btn">
+                                    
+                                    <a href="#" class="service-box-btn">
                                         Detaylı Bilgi <i class="fas fa-arrow-right"></i>
                                     </a>
                                 </div>
-                            </div>
-                        </div>
-                            
-                        <!-- Hizmet 5: Peyzaj ve Bahçe Bakımı -->
-                        <div class="col-md-6 col-lg-4">
-                            <div class="service-box service-box-with-image">
-                                <div class="service-box-image">
-                                    <img src="assets/images/img/bahce/bahçe5.png" alt="Peyzaj ve Bahçe Bakımı">
                                 </div>
-                                <div class="service-box-header">
+                            </div>
+                            
+                        <!-- Hizmet 4: Bakım ve Onarım Hizmetleri -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="service-box">
+                                <div class="service-box-image">
+                                    <img src="assets/images/img/bakim/bakim_ana_gorsel.jpeg" alt="Bakım ve Onarım Hizmetleri" loading="lazy">
                                     <div class="service-box-logo">
                                         <img src="assets/svg/brands/logo-sy-svg.svg" alt="Gürel Site Yönetimi Logo">
                                         <span>SY</span>
-                                    </div>
+                                </div>
                                     <div class="service-box-icon">
-                                        <i class="fas fa-leaf"></i>
+                                        <i class="fas fa-tools service-icon-animate"></i>
                                     </div>
-                                    <h3 class="service-box-title">Peyzaj ve Bahçe Bakımı</h3>
-                                </div>
-                                <div class="service-box-body">
+                                    <h3 class="service-box-title">Bakım ve Onarım Hizmetleri</h3>
+                                    </div>
+                                
+                                <div class="service-box-content">
                                     <p class="service-box-description">
-                                        Yeşil alanların bakımı ve düzenlenmesi için profesyonel peyzaj hizmetleri sunuyoruz.
+                                        Sitenin ortak kullanım alanlarındaki tüm sistemlerin düzenli bakım ve onarımı.
                                     </p>
-                                    <div class="service-box-features">
-                                        <div class="service-feature">
+                                    
+                                    <ul class="service-box-features">
+                                        <li class="service-feature">
                                             <i class="fas fa-check-circle"></i>
-                                            <span>Mevsimlik bitki bakımı</span>
-                                        </div>
-                                        <div class="service-feature">
+                                            <span>Elektrik, su ve sıhhi tesisat bakımı</span>
+                                        </li>
+                                        <li class="service-feature">
                                             <i class="fas fa-check-circle"></i>
-                                            <span>Sulama sistemleri kontrolü</span>
-                                        </div>
-                                        <div class="service-feature">
+                                            <span>Asansör bakım ve kontrolleri</span>
+                                        </li>
+                                        <li class="service-feature">
                                             <i class="fas fa-check-circle"></i>
-                                            <span>Peyzaj düzenlemeleri</span>
-                                        </div>
-                                    </div>
+                                            <span>Acil durum tamirat müdahaleleri</span>
+                                        </li>
+                                    </ul>
+                                    
                                     <div class="service-box-badges">
-                                        <span class="service-badge">Estetik</span>
-                                        <span class="service-badge alt">Yeşil Alan</span>
+                                        <span class="service-badge">Hızlı</span>
+                                        <span class="service-badge alt">7/24 Destek</span>
                                     </div>
-                                </div>
-                                <div class="service-box-footer">
-                                    <a href="#contact" class="service-box-btn">
-                                        Detaylı Bilgi <i class="fas fa-arrow-right"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                            
-                        <!-- Hizmet 6: Hukuki Danışmanlık -->
-                        <div class="col-md-6 col-lg-4">
-                            <div class="service-box service-box-with-image">
-                                <div class="service-box-image">
-                                    <img src="assets/images/img/hukuk/hukuk9.png" alt="Hukuki Danışmanlık">
-                                </div>
-                                <div class="service-box-header">
-                                    <div class="service-box-logo">
-                                        <img src="assets/svg/brands/logo-sy-svg.svg" alt="Gürel Site Yönetimi Logo">
-                                        <span>SY</span>
-                                    </div>
-                                    <div class="service-box-icon">
-                                        <i class="fas fa-gavel"></i>
-                                    </div>
-                                    <h3 class="service-box-title">Hukuki Danışmanlık</h3>
-                                </div>
-                                <div class="service-box-body">
-                                    <p class="service-box-description">
-                                        Site ve apartman yönetimiyle ilgili tüm hukuki süreçlerde uzman danışmanlık hizmeti veriyoruz.
-                                    </p>
-                                    <div class="service-box-features">
-                                        <div class="service-feature">
-                                            <i class="fas fa-check-circle"></i>
-                                            <span>Kat mülkiyeti mevzuatı</span>
-                                        </div>
-                                        <div class="service-feature">
-                                            <i class="fas fa-check-circle"></i>
-                                            <span>Yönetim planı danışmanlığı</span>
-                                        </div>
-                                        <div class="service-feature">
-                                            <i class="fas fa-check-circle"></i>
-                                            <span>Borç takibi ve tahsilatı</span>
-                                        </div>
-                                    </div>
-                                    <div class="service-box-badges">
-                                        <span class="service-badge">Uzman</span>
-                                        <span class="service-badge alt">Güvenilir</span>
-                                    </div>
-                                </div>
-                                <div class="service-box-footer">
-                                    <a href="#contact" class="service-box-btn">
+                                    
+                                    <a href="#" class="service-box-btn">
                                         Detaylı Bilgi <i class="fas fa-arrow-right"></i>
                                     </a>
                                 </div>
@@ -1397,188 +1175,188 @@
                 <!-- Mülk Yönetimi Hizmetleri -->
                 <div class="tab-pane fade" id="property-services" role="tabpanel" aria-labelledby="property-tab">
                     <div class="row services-grid g-3 justify-content-center">
-                        <!-- Mülk Hizmet 1: Kira Yönetimi -->
+                        <!-- Hizmet 5: Bahçe Bakımı -->
                         <div class="col-md-6 col-lg-4">
-                            <div class="service-box service-box-with-image">
+                            <div class="service-box">
                                 <div class="service-box-image">
-                                    <img src="assets/images/img/muhasebe/muhasebe2.jpeg" alt="Kira Yönetimi">
-                                </div>
-                                <div class="service-box-header">
+                                    <img src="assets/images/img/bahce/bahce_ana_gorsel.jpeg" alt="Bahçe Bakımı" loading="lazy">
                                     <div class="service-box-logo">
-                                        <img src="assets/svg/brands/logo-my-svg.svg" alt="Gürel Mülk Yönetimi Logo">
-                                        <span>MY</span>
-                                    </div>
+                                        <img src="assets/svg/brands/logo-sy-svg.svg" alt="Gürel Site Yönetimi Logo">
+                                        <span>SY</span>
+                                </div>
                                     <div class="service-box-icon">
-                                        <i class="fas fa-home"></i>
+                                        <i class="fas fa-leaf service-icon-animate"></i>
                                     </div>
-                                    <h3 class="service-box-title">Kira Yönetimi</h3>
-                                </div>
-                                <div class="service-box-body">
+                                    <h3 class="service-box-title">Bahçe Bakımı</h3>
+                                        </div>
+                                
+                                <div class="service-box-content">
                                     <p class="service-box-description">
-                                        Mülkünüzün kira süreçlerini profesyonel olarak yönetiyoruz ve takip ediyoruz.
+                                        Sitenizin bahçe ve peyzaj düzenlemesi, mevsimsel bakım ve ilaçlama hizmetleri.
                                     </p>
-                                    <div class="service-box-features">
-                                        <div class="service-feature">
+                                    
+                                    <ul class="service-box-features">
+                                        <li class="service-feature">
                                             <i class="fas fa-check-circle"></i>
-                                            <span>Kiracı bulma ve seçme</span>
-                                        </div>
-                                        <div class="service-feature">
+                                            <span>Peyzaj tasarım ve uygulama</span>
+                                        </li>
+                                        <li class="service-feature">
                                             <i class="fas fa-check-circle"></i>
-                                            <span>Kira sözleşme yönetimi</span>
-                                        </div>
-                                        <div class="service-feature">
+                                            <span>Mevsimsel bakım ve budama</span>
+                                        </li>
+                                        <li class="service-feature">
                                             <i class="fas fa-check-circle"></i>
-                                            <span>Düzenli kira tahsilatı</span>
-                                        </div>
-                                    </div>
+                                            <span>Çim ve sulama sistemleri bakımı</span>
+                                        </li>
+                                    </ul>
+                                    
                                     <div class="service-box-badges">
-                                        <span class="service-badge">Güvenilir</span>
-                                        <span class="service-badge alt">Düzenli</span>
+                                        <span class="service-badge">Estetik</span>
+                                        <span class="service-badge alt">Periyodik</span>
                                     </div>
-                                </div>
-                                <div class="service-box-footer">
-                                    <a href="#contact" class="service-box-btn">
+                                    
+                                    <a href="#" class="service-box-btn">
                                         Detaylı Bilgi <i class="fas fa-arrow-right"></i>
                                     </a>
                                 </div>
                             </div>
                         </div>
                         
-                        <!-- Mülk Hizmet 2: Mülk Bakım Hizmetleri -->
+                        <!-- Hizmet 6: Güvenlik Hizmetleri -->
                         <div class="col-md-6 col-lg-4">
-                            <div class="service-box service-box-with-image">
+                            <div class="service-box">
                                 <div class="service-box-image">
-                                    <img src="assets/images/img/bakım/bakım7.jpeg" alt="Mülk Bakım Hizmetleri">
-                                </div>
-                                <div class="service-box-header">
+                                    <img src="assets/images/img/guvenlik/guvenlik_ana_gorsel.jpeg" alt="Güvenlik Hizmetleri" loading="lazy">
                                     <div class="service-box-logo">
-                                        <img src="assets/svg/brands/logo-my-svg.svg" alt="Gürel Mülk Yönetimi Logo">
-                                        <span>MY</span>
-                                    </div>
+                                        <img src="assets/svg/brands/logo-sy-svg.svg" alt="Gürel Site Yönetimi Logo">
+                                        <span>SY</span>
+                                </div>
                                     <div class="service-box-icon">
-                                        <i class="fas fa-clipboard-check"></i>
+                                        <i class="fas fa-shield-alt service-icon-animate"></i>
                                     </div>
-                                    <h3 class="service-box-title">Mülk Bakım Hizmetleri</h3>
-                                </div>
-                                <div class="service-box-body">
+                                    <h3 class="service-box-title">Güvenlik Hizmetleri</h3>
+                                        </div>
+                                
+                                <div class="service-box-content">
                                     <p class="service-box-description">
-                                        Mülkünüzün değerini korumak için düzenli bakım ve onarım hizmetleri sunuyoruz.
+                                        Site güvenliği için özel güvenlik personeli, kamera sistemleri ve güvenlik danışmanlığı.
                                     </p>
-                                    <div class="service-box-features">
-                                        <div class="service-feature">
+                                    
+                                    <ul class="service-box-features">
+                                        <li class="service-feature">
                                             <i class="fas fa-check-circle"></i>
-                                            <span>Periyodik denetimler</span>
-                                        </div>
-                                        <div class="service-feature">
+                                            <span>Profesyonel güvenlik personeli</span>
+                                        </li>
+                                        <li class="service-feature">
                                             <i class="fas fa-check-circle"></i>
-                                            <span>Önleyici bakım planları</span>
-                                        </div>
-                                        <div class="service-feature">
+                                            <span>CCTV ve kamera sistemleri</span>
+                                        </li>
+                                        <li class="service-feature">
                                             <i class="fas fa-check-circle"></i>
-                                            <span>Acil müdahale hizmetleri</span>
-                                        </div>
-                                    </div>
+                                            <span>Ziyaretçi ve araç giriş kontrolü</span>
+                                        </li>
+                                    </ul>
+                                    
                                     <div class="service-box-badges">
-                                        <span class="service-badge">Profesyonel</span>
-                                        <span class="service-badge alt">Hızlı</span>
-                                    </div>
-                                </div>
-                                <div class="service-box-footer">
-                                    <a href="#contact" class="service-box-btn">
-                                        Detaylı Bilgi <i class="fas fa-arrow-right"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Mülk Hizmet 3: Finansal Raporlama -->
-                        <div class="col-md-6 col-lg-4">
-                            <div class="service-box service-box-with-image">
-                                <div class="service-box-image">
-                                    <img src="assets/images/img/muhasebe/muhasebe4.png" alt="Finansal Raporlama">
-                                </div>
-                                <div class="service-box-header">
-                                    <div class="service-box-logo">
-                                        <img src="assets/svg/brands/logo-my-svg.svg" alt="Gürel Mülk Yönetimi Logo">
-                                        <span>MY</span>
-                                    </div>
-                                    <div class="service-box-icon">
-                                        <i class="fas fa-chart-bar"></i>
-                                    </div>
-                                    <h3 class="service-box-title">Finansal Raporlama</h3>
-                                </div>
-                                <div class="service-box-body">
-                                    <p class="service-box-description">
-                                        Mülkünüzle ilgili tüm finansal süreçleri takip eder ve düzenli raporlar sunarız.
-                                    </p>
-                                    <div class="service-box-features">
-                                        <div class="service-feature">
-                                            <i class="fas fa-check-circle"></i>
-                                            <span>Gelir-gider takibi</span>
-                                        </div>
-                                        <div class="service-feature">
-                                            <i class="fas fa-check-circle"></i>
-                                            <span>Aylık finansal raporlar</span>
-                                        </div>
-                                        <div class="service-feature">
-                                            <i class="fas fa-check-circle"></i>
-                                            <span>Vergi yönetimi desteği</span>
-                                        </div>
-                                    </div>
-                                    <div class="service-box-badges">
-                                        <span class="service-badge">Şeffaf</span>
-                                        <span class="service-badge alt">Detaylı</span>
-                                    </div>
-                                </div>
-                                <div class="service-box-footer">
-                                    <a href="#contact" class="service-box-btn">
-                                        Detaylı Bilgi <i class="fas fa-arrow-right"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Mülk Hizmet 4: Hukuki Danışmanlık -->
-                        <div class="col-md-6 col-lg-4">
-                            <div class="service-box service-box-with-image">
-                                <div class="service-box-image">
-                                    <img src="assets/images/img/hukuk/hukuk10.png" alt="Hukuki Danışmanlık">
-                                </div>
-                                <div class="service-box-header">
-                                    <div class="service-box-logo">
-                                        <img src="assets/svg/brands/logo-my-svg.svg" alt="Gürel Mülk Yönetimi Logo">
-                                        <span>MY</span>
-                                    </div>
-                                    <div class="service-box-icon">
-                                        <i class="fas fa-gavel"></i>
-                                    </div>
-                                    <h3 class="service-box-title">Hukuki Danışmanlık</h3>
-                                </div>
-                                <div class="service-box-body">
-                                    <p class="service-box-description">
-                                        Gayrimenkul hukuku konusunda uzman danışmanlık hizmetleri sunuyoruz.
-                                    </p>
-                                    <div class="service-box-features">
-                                        <div class="service-feature">
-                                            <i class="fas fa-check-circle"></i>
-                                            <span>Kira sözleşme hazırlama</span>
-                                        </div>
-                                        <div class="service-feature">
-                                            <i class="fas fa-check-circle"></i>
-                                            <span>Yasal süreç takibi</span>
-                                        </div>
-                                        <div class="service-feature">
-                                            <i class="fas fa-check-circle"></i>
-                                            <span>Müstakbel anlaşmazlık çözümü</span>
-                                        </div>
-                                    </div>
-                                    <div class="service-box-badges">
-                                        <span class="service-badge">Uzman</span>
+                                        <span class="service-badge">7/24</span>
                                         <span class="service-badge alt">Güvenilir</span>
                                     </div>
+                                    
+                                    <a href="#" class="service-box-btn">
+                                        Detaylı Bilgi <i class="fas fa-arrow-right"></i>
+                                    </a>
                                 </div>
-                                <div class="service-box-footer">
-                                    <a href="#contact" class="service-box-btn">
+                            </div>
+                        </div>
+                        
+                        <!-- Hizmet 7: Kalorifer ve Baca Bakımı -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="service-box">
+                                <div class="service-box-image">
+                                    <img src="assets/images/img/kalorifer/kalorifer_ana_gorsel.jpeg" alt="Kalorifer ve Baca Bakımı" loading="lazy">
+                                    <div class="service-box-logo">
+                                        <img src="assets/svg/brands/logo-sy-svg.svg" alt="Gürel Site Yönetimi Logo">
+                                        <span>SY</span>
+                                </div>
+                                    <div class="service-box-icon">
+                                        <i class="fas fa-temperature-high service-icon-animate"></i>
+                                    </div>
+                                    <h3 class="service-box-title">Kalorifer ve Baca Bakımı</h3>
+                                        </div>
+                                
+                                <div class="service-box-content">
+                                    <p class="service-box-description">
+                                        Merkezi sistem kalorifer, doğalgaz tesisatı ve baca temizliği için periyodik bakım hizmetleri.
+                                    </p>
+                                    
+                                    <ul class="service-box-features">
+                                        <li class="service-feature">
+                                            <i class="fas fa-check-circle"></i>
+                                            <span>Kazan ve kalorifer tesisatı bakımı</span>
+                                        </li>
+                                        <li class="service-feature">
+                                            <i class="fas fa-check-circle"></i>
+                                            <span>Doğalgaz tesisatı kontrolleri</span>
+                                        </li>
+                                        <li class="service-feature">
+                                            <i class="fas fa-check-circle"></i>
+                                            <span>Baca temizliği ve kontrolü</span>
+                                        </li>
+                                    </ul>
+                                    
+                                    <div class="service-box-badges">
+                                        <span class="service-badge">Güvenli</span>
+                                        <span class="service-badge alt">Periyodik</span>
+                                    </div>
+                                    
+                                    <a href="#" class="service-box-btn">
+                                        Detaylı Bilgi <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Hizmet 8: Havuz Bakımı -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="service-box">
+                                <div class="service-box-image">
+                                    <img src="assets/images/img/havuz/havuz_ana_gorsel.jpeg" alt="Havuz Bakımı" loading="lazy">
+                                    <div class="service-box-logo">
+                                        <img src="assets/svg/brands/logo-sy-svg.svg" alt="Gürel Site Yönetimi Logo">
+                                        <span>SY</span>
+                                </div>
+                                    <div class="service-box-icon">
+                                        <i class="fas fa-swimming-pool service-icon-animate"></i>
+                                    </div>
+                                    <h3 class="service-box-title">Havuz Bakımı</h3>
+                                </div>
+                                
+                                <div class="service-box-content">
+                                    <p class="service-box-description">
+                                        Havuz kimyasalları, filtrasyon sistemleri ve periyodik bakım ile havuzunuzu dört mevsim hijyenik tutuyoruz.
+                                    </p>
+                                    
+                                    <ul class="service-box-features">
+                                        <li class="service-feature">
+                                            <i class="fas fa-check-circle"></i>
+                                            <span>Su kimyası ve filtrasyon kontrolü</span>
+                                        </li>
+                                        <li class="service-feature">
+                                            <i class="fas fa-check-circle"></i>
+                                            <span>Havuz temizliği ve dezenfeksiyonu</span>
+                                        </li>
+                                        <li class="service-feature">
+                                            <i class="fas fa-check-circle"></i>
+                                            <span>Ekipman bakım ve kontrolleri</span>
+                                        </li>
+                                    </ul>
+                                    
+                                    <div class="service-box-badges">
+                                        <span class="service-badge">Hijyenik</span>
+                                        <span class="service-badge alt">Düzenli</span>
+                                    </div>
+                                    
+                                    <a href="#" class="service-box-btn">
                                         Detaylı Bilgi <i class="fas fa-arrow-right"></i>
                                     </a>
                                 </div>
@@ -1649,6 +1427,7 @@
     <section id="contact" class="contact-section" data-aos="fade-in">
         <div class="contact-overlay-gradient"></div>
         
+        <!-- Süsleme parçacıkları -->
         <div class="contact-particle-container">
             <div class="contact-particle particle-1 float-element" data-aos="fade-down" data-aos-delay="100"></div>
             <div class="contact-particle particle-2 float-element" data-aos="fade-up" data-aos-delay="200"></div>
@@ -1657,9 +1436,10 @@
             <div class="contact-particle particle-5 float-element" data-aos="zoom-in" data-aos-delay="500"></div>
         </div>
                             
+        <!-- Üst şekil dekorasyonu -->
         <div class="contact-shape-top">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100">
-                <path d="M0,64L60,58.7C120,53,240,43,360,48C480,53,600,75,720,80C840,85,960,75,1080,64C1200,53,1320,43,1380,37.3L1440,32L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+                <path fill="var(--light-background)" fill-opacity="1" d="M0,64L60,58.7C120,53,240,43,360,48C480,53,600,75,720,80C840,85,960,75,1080,64C1200,53,1320,43,1380,37.3L1440,32L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
         </svg>
                                 </div>
                                 
@@ -1678,9 +1458,11 @@
             </div>
                                 
             <div class="row">
+                <!-- İletişim Bilgileri Bölümü -->
                 <div class="col-lg-5">
                     <div class="contact-info-container" data-aos="fade-right" data-aos-duration="1000" data-aos-offset="100">
-                        <div class="contact-info-card">
+                        <div class="contact-info-card card-hover-effect">
+                            <div class="card-glow"></div>
                             <div class="contact-card-header">
                                 <div class="contact-header-icon floating-3d float-element" data-aos="zoom-in" data-aos-delay="100">
                                     <i class="fas fa-headset"></i>
@@ -1689,20 +1471,22 @@
                             </div>
                     
                             <div class="contact-info-items">
-                                <div class="contact-info-item" data-aos="fade-up" data-aos-delay="100">
+                                <!-- Adres Bilgisi -->
+                                <div class="contact-info-item interact-item" data-aos="fade-up" data-aos-delay="100">
                                     <div class="contact-icon pulse-element">
                                         <i class="fas fa-map-marked-alt"></i>
                                     </div>
                                     <div class="contact-text slide-up">
                                         <h5>Ofis Adresimiz</h5>
                                         <p>Soğanyemez, 513. Sk. No:6/19, 10300 Edremit/Balıkesir</p>
-                                        <a href="https://www.google.com/maps/dir/?api=1&destination=39.59245070539585,27.01689447544059&travelmode=driving" target="_blank" class="contact-link">
+                                        <a href="https://www.google.com/maps/dir/?api=1&destination=39.59245070539585,27.01689447544059&travelmode=driving" target="_blank" class="contact-link ripple-effect">
                                             <i class="fas fa-directions"></i> Yol Tarifi
                                         </a>
                                     </div>
                                 </div>
             
-                                <div class="contact-info-item" data-aos="fade-up" data-aos-delay="200">
+                                <!-- Telefon Bilgisi -->
+                                <div class="contact-info-item interact-item" data-aos="fade-up" data-aos-delay="200">
                                     <div class="contact-icon pulse-element">
                                         <i class="fas fa-phone-alt"></i>
                                     </div>
@@ -1713,18 +1497,20 @@
                                     </div>
                                 </div>
                                     
-                                <div class="contact-info-item" data-aos="fade-up" data-aos-delay="300">
+                                <!-- E-posta Bilgisi -->
+                                <div class="contact-info-item interact-item" data-aos="fade-up" data-aos-delay="300">
                                     <div class="contact-icon pulse-element">
                                         <i class="fas fa-envelope"></i>
                                     </div>
                                     <div class="contact-text slide-up">
                                         <h5>E-posta Gönder</h5>
-                                        <p><a href="mailto:gurelyonetim@gmail.com">gurelyonetim@gmail.com</a></p>
+                                        <p><a href="mailto:gurelyonetim@gmail.com" class="email-link">gurelyonetim@gmail.com</a></p>
                                         <span class="response-time">24 saat içinde yanıt</span>
                                     </div>
                                 </div>
                                     
-                                <div class="contact-info-item" data-aos="fade-up" data-aos-delay="400">
+                                <!-- Çalışma Saatleri -->
+                                <div class="contact-info-item interact-item" data-aos="fade-up" data-aos-delay="400">
                                     <div class="contact-icon pulse-element">
                                         <i class="fas fa-clock"></i>
                                     </div>
@@ -1750,9 +1536,12 @@
                         </div>
                     </div>
                 </div>
+                
+                <!-- İletişim Formu Bölümü -->
                 <div class="col-lg-7">
                     <div class="contact-form-container" data-aos="fade-up" data-aos-duration="1000">
-                        <div class="contact-form-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="contact-form-card card-hover-effect" data-aos="fade-up" data-aos-delay="200">
+                            <div class="card-glow"></div>
                             <div class="form-card-header">
                                 <div class="form-icon-container float-element">
                                     <div class="form-icon">
@@ -1764,26 +1553,30 @@
                             </div>
                             
                             <form id="contactForm" class="contact-form">
+                                <!-- Ad Soyad Alanı -->
                                 <div class="form-floating mb-4 fade-in">
-                                    <input type="text" class="form-control focus-ring" id="nameInput" name="name" placeholder="Ad Soyad" data-aos="fade-right" data-aos-delay="100" data-aos-duration="800">
+                                    <input type="text" class="form-control focus-ring input-animate" id="nameInput" name="name" placeholder="Ad Soyad" data-aos="fade-right" data-aos-delay="100" data-aos-duration="800">
                                     <label for="nameInput"><i class="fas fa-user me-2"></i>Ad Soyad</label>
                                     <div class="error-message fade-in" data-field="name"></div>
                                 </div>
                                 
+                                <!-- E-posta Alanı -->
                                 <div class="form-floating mb-4 fade-in" style="animation-delay: 0.1s;">
-                                    <input type="email" class="form-control focus-ring" id="emailInput" name="email" placeholder="E-posta Adresi" data-aos="fade-right" data-aos-delay="200" data-aos-duration="800">
+                                    <input type="email" class="form-control focus-ring input-animate" id="emailInput" name="email" placeholder="E-posta Adresi" data-aos="fade-right" data-aos-delay="200" data-aos-duration="800">
                                     <label for="emailInput"><i class="fas fa-envelope me-2"></i>E-posta Adresi</label>
                                     <div class="error-message fade-in" data-field="email"></div>
                                 </div>
             
+                                <!-- Telefon Alanı -->
                                 <div class="form-floating mb-4 fade-in" style="animation-delay: 0.2s;">
-                                    <input type="tel" class="form-control focus-ring" id="phoneInput" name="phone" placeholder="Telefon Numarası" data-aos="fade-right" data-aos-delay="300" data-aos-duration="800">
+                                    <input type="tel" class="form-control focus-ring input-animate" id="phoneInput" name="phone" placeholder="Telefon Numarası" data-aos="fade-right" data-aos-delay="300" data-aos-duration="800">
                                     <label for="phoneInput"><i class="fas fa-phone me-2"></i>Telefon Numarası</label>
                                     <div class="error-message fade-in" data-field="phone"></div>
                                 </div>
                                 
+                                <!-- Hizmet Seçimi -->
                                 <div class="form-floating mb-4 fade-in" style="animation-delay: 0.3s;">
-                                    <select class="form-select focus-ring" id="serviceSelect" name="service" data-aos="fade-right" data-aos-delay="400" data-aos-duration="800">
+                                    <select class="form-select focus-ring input-animate" id="serviceSelect" name="service" data-aos="fade-right" data-aos-delay="400" data-aos-duration="800">
                                         <option value="">Seçiniz</option>
                                         <option value="site">Apartman ve Site Yönetimi</option>
                                         <option value="property">Mülk Yönetimi</option>
@@ -1794,18 +1587,21 @@
                                     <div class="error-message fade-in" data-field="service"></div>
                                 </div>
         
+                                <!-- Mesaj Alanı -->
                                 <div class="form-floating mb-4 fade-in" style="animation-delay: 0.4s;">
-                                    <textarea class="form-control focus-ring" id="messageInput" name="message" placeholder="Mesajınız" style="height: 150px" data-aos="fade-right" data-aos-delay="500" data-aos-duration="800"></textarea>
+                                    <textarea class="form-control focus-ring input-animate" id="messageInput" name="message" placeholder="Mesajınız" style="height: 150px" data-aos="fade-right" data-aos-delay="500" data-aos-duration="800"></textarea>
                                     <label for="messageInput"><i class="fas fa-comment me-2"></i>Mesajınız</label>
                                     <div class="error-message fade-in" data-field="message"></div>
                                 </div>
                                 
+                                <!-- Gönder Butonu -->
                                 <div class="form-actions">
-                                    <button type="submit" class="btn-send slide-up" style="animation-delay: 0.5s;" data-aos="zoom-in" data-aos-delay="600" data-aos-duration="800">
+                                    <button type="submit" class="btn-send slide-up ripple-button" style="animation-delay: 0.5s;" data-aos="zoom-in" data-aos-delay="600" data-aos-duration="800">
                                         <span class="btn-text">Mesaj Gönder</span>
                                         <span class="btn-icon">
                                             <i class="fas fa-paper-plane"></i>
                                         </span>
+                                        <span class="ripple-effect"></span>
                                     </button>
                                 </div>
                             </form>
@@ -1814,6 +1610,7 @@
                             </div>
                                 </div>
             
+            <!-- SSS Bölümü -->
             <div class="contact-faq" data-aos="fade-up" data-aos-duration="1000" data-aos-offset="150">
                 <div class="contact-faq-header text-center">
                     <h3 class="faq-title fade-in" data-aos="fade-up" data-aos-delay="100">Sık Sorulan Sorular</h3>
@@ -1871,17 +1668,12 @@
                 </div>
                 
                 <div class="faq-cta text-center mt-4 float-element">
-                    <a href="#contact" class="btn btn-outline-primary">
+                    <a href="#contact" class="btn btn-outline-primary ripple-button">
                         <i class="fas fa-question-circle me-2"></i> Başka Sorunuz Mu Var?
+                        <span class="ripple-effect"></span>
                     </a>
                 </div>
             </div>
-        </div>
-        
-        <div class="contact-shape-bottom">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100">
-                <path d="M0,32L60,37.3C120,43,240,53,360,64C480,75,600,85,720,80C840,75,960,53,1080,48C1200,43,1320,53,1380,58.7L1440,64L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path>
-            </svg>
         </div>
     </section>
 
@@ -2455,5 +2247,10 @@
         });
     });
     </script>
+
+ 
+    
+    </section>
+
 </body>
 </html>
