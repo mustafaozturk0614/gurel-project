@@ -1792,3 +1792,920 @@ function initMobileMenu() {
 document.addEventListener('DOMContentLoaded', () => {
   initMobileMenu();
 });
+
+// Tab geçişini animasyonlu hale getirme
+document.addEventListener('DOMContentLoaded', function() {
+    const tabs = document.querySelectorAll('.service-category-tabs .nav-link');
+    
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function(e) {
+            // Aktif tab'ın altındaki çizginin animasyonu için
+            let indicatorPosition = e.target.offsetLeft;
+            let indicatorWidth = e.target.offsetWidth;
+            
+            // İstersek JavaScript ile de animasyon ekleyebiliriz
+            // Ancak CSS :before ile zaten hallediliyor
+        });
+    });
+    
+    // Sayfa yüklendiğinde aktif tab'a animasyon uygula
+    const activeTab = document.querySelector('.service-category-tabs .nav-link.active');
+    if (activeTab) {
+        // İlk animasyonu tetikle
+        activeTab.classList.add('animated');
+        setTimeout(() => {
+            activeTab.classList.remove('animated');
+        }, 300);
+    }
+});
+
+// Tab ilüstrasyon animasyonları
+document.addEventListener('DOMContentLoaded', function() {
+    const tabs = document.querySelectorAll('.service-category-tabs .nav-link');
+    
+    tabs.forEach(tab => {
+        tab.addEventListener('mouseenter', function() {
+            const illustration = this.querySelector('.tab-illustration');
+            if (illustration) {
+                illustration.style.transform = 'translateY(-50%) rotate(10deg) scale(1.2)';
+                setTimeout(() => {
+                    illustration.style.transform = 'translateY(-50%) scale(1.1)';
+                }, 200);
+            }
+        });
+    });
+});
+
+// Hizmet kartları mikro animasyonları
+document.addEventListener('DOMContentLoaded', function() {
+    // Tüm hizmet kutularını seç
+    const serviceBoxes = document.querySelectorAll('.service-box');
+    
+    serviceBoxes.forEach(box => {
+        // 3D perspektif efekti için mouseMove olayı
+        box.addEventListener('mousemove', function(e) {
+            const boxRect = box.getBoundingClientRect();
+            const boxCenterX = boxRect.left + boxRect.width / 2;
+            const boxCenterY = boxRect.top + boxRect.height / 2;
+            
+            // Fare pozisyonunu hesapla (-20 ile 20 arası)
+            const mouseX = (e.clientX - boxCenterX) / (boxRect.width / 2) * 5;
+            const mouseY = (e.clientY - boxCenterY) / (boxRect.height / 2) * 5;
+            
+            // 3D dönüşüm uygula
+            box.style.transform = `translateY(-10px) rotateX(${-mouseY}deg) rotateY(${mouseX}deg)`;
+            
+            // İkon ve diğer elementlere özel efektler
+            const icon = box.querySelector('.service-box-icon');
+            if (icon) {
+                icon.style.transform = `translateZ(25px) scale(1.15) translateX(${mouseX * 0.5}px) translateY(${mouseY * 0.5}px)`;
+            }
+            
+            const title = box.querySelector('.service-box-title');
+            if (title) {
+                title.style.transform = `translateY(-5px) translateX(${mouseX * 0.2}px)`;
+            }
+            
+            const logo = box.querySelector('.service-box-logo');
+            if (logo) {
+                logo.style.transform = `translateZ(15px) translateX(${-mouseX * 0.3}px) translateY(${-mouseY * 0.3}px)`;
+            }
+            
+            // Özel ikon animasyonları
+            const iconElement = box.querySelector('.service-box-icon i');
+            if (iconElement) {
+                // Hesap makinesi ikonu için animasyon (muhasebe için)
+                if (iconElement.classList.contains('fa-calculator')) {
+                    iconElement.classList.add('animate-calculator');
+                }
+                // Süpürge ikonu için animasyon (temizlik için)
+                else if (iconElement.classList.contains('fa-broom')) {
+                    iconElement.classList.add('animate-sweep');
+                }
+                // Diğer ikonlar için...
+            }
+        });
+        
+        // Mouse çıkınca default pozisyona dön
+        box.addEventListener('mouseleave', function() {
+            box.style.transform = 'translateY(-10px) rotateX(2deg) rotateY(2deg)';
+            
+            const icon = box.querySelector('.service-box-icon');
+            if (icon) {
+                icon.style.transform = 'scale(1.15) translateZ(25px) rotate(10deg)';
+            }
+            
+            const title = box.querySelector('.service-box-title');
+            if (title) {
+                title.style.transform = 'translateY(-5px)';
+            }
+            
+            const logo = box.querySelector('.service-box-logo');
+            if (logo) {
+                logo.style.transform = 'translateZ(15px)';
+            }
+            
+            // Ikon animasyonlarını durdur
+            const iconElement = box.querySelector('.service-box-icon i');
+            if (iconElement) {
+                iconElement.classList.remove('animate-calculator', 'animate-sweep');
+            }
+        });
+        
+        // Işık efektini tetikle
+        box.addEventListener('mouseenter', function() {
+            setTimeout(() => {
+                // Işık efekti animasyonunu yeniden çalıştır
+                box.classList.add('light-effect-animation');
+                setTimeout(() => {
+                    box.classList.remove('light-effect-animation');
+                }, 1000);
+            }, 100);
+        });
+
+        // Tıklama geri bildirimleri
+        box.addEventListener('click', function(e) {
+            // Tıklama dalgası (ripple) efekti oluştur
+            const ripple = document.createElement('div');
+            ripple.classList.add('click-ripple');
+            
+            // Tıklama pozisyonunu ayarla
+            const rect = box.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            ripple.style.left = `${x}px`;
+            ripple.style.top = `${y}px`;
+            
+            // Tıklama dalgasını ekle
+            box.appendChild(ripple);
+            
+            // Hafif titreşim efekti
+            box.classList.add('pulse-effect');
+            
+            // Efektleri temizle
+            setTimeout(() => {
+                ripple.remove();
+                box.classList.remove('pulse-effect');
+            }, 600);
+        });
+
+        // Detay açılır panel işlevselliği
+        const detailsBtn = box.querySelector('.service-box-btn');
+        if (detailsBtn) {
+            detailsBtn.addEventListener('click', function(e) {
+                // Tam sayfa yönlendirmesi yerine dropdown açılması için olay engelleme
+                const isDetailsToggle = this.classList.contains('details-toggle');
+                if (isDetailsToggle) {
+                    e.preventDefault();
+                    
+                    // Paneli aç/kapat
+                    const panel = box.querySelector('.service-details-panel');
+                    if (panel) {
+                        const isOpen = panel.classList.contains('open');
+                        
+                        if (isOpen) {
+                            panel.classList.remove('open');
+                            panel.style.maxHeight = '0';
+                            this.innerHTML = 'Detaylı Bilgi <i class="fas fa-arrow-right"></i>';
+                        } else {
+                            panel.classList.add('open');
+                            panel.style.maxHeight = panel.scrollHeight + 'px';
+                            this.innerHTML = 'Kapat <i class="fas fa-arrow-up"></i>';
+                        }
+                    }
+                }
+            });
+        }
+    });
+
+    // Scroll animasyonları - IntersectionObserver ile
+    const scrollObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            // Elementin görünürlüğünü kontrol et
+            if (entry.isIntersecting) {
+                // Görünür olan elementlere animasyon sınıfı ekle
+                entry.target.classList.add('scrolled-in');
+                
+                // Göründükten sonra gözlemlemeyi durdur
+                scrollObserver.unobserve(entry.target);
+            }
+        });
+    }, {
+        root: null, // viewport baz alınır
+        threshold: 0.15, // elementin %15'i göründüğünde tetiklenir
+        rootMargin: '0px 0px -50px 0px' // viewport alt kısmına yaklaştığında tetiklenecek
+    });
+
+    // Tüm servis kartlarını gözlemle
+    serviceBoxes.forEach(box => {
+        scrollObserver.observe(box);
+    });
+});
+
+// Tematik Renk Kodlaması - Her hizmet türü için ayrı renk
+document.addEventListener('DOMContentLoaded', function() {
+    // Hizmet türleri için renk kodları
+    const serviceColors = {
+        'muhasebe': {
+            primary: '#0052cc',
+            secondary: 'rgba(0, 82, 204, 0.15)'
+        },
+        'temizlik': {
+            primary: '#2196F3',
+            secondary: 'rgba(33, 150, 243, 0.15)'
+        },
+        'hukuk': {
+            primary: '#673AB7',
+            secondary: 'rgba(103, 58, 183, 0.15)'
+        },
+        'bakım': {
+            primary: '#4CAF50',
+            secondary: 'rgba(76, 175, 80, 0.15)'
+        },
+        'bahçe': {
+            primary: '#8BC34A',
+            secondary: 'rgba(139, 195, 74, 0.15)'
+        },
+        'güvenlik': {
+            primary: '#F44336',
+            secondary: 'rgba(244, 67, 54, 0.15)'
+        },
+        'kalorifer': {
+            primary: '#FF9800',
+            secondary: 'rgba(255, 152, 0, 0.15)'
+        },
+        'havuz': {
+            primary: '#00BCD4',
+            secondary: 'rgba(0, 188, 212, 0.15)'
+        }
+    };
+
+    // Hizmet kartlarına tematik renkler uygula
+    const serviceBoxes = document.querySelectorAll('.service-box');
+    
+    serviceBoxes.forEach(box => {
+        // Hizmet kategorisini belirle
+        const title = box.querySelector('.service-box-title');
+        if (!title) return;
+        
+        const titleText = title.textContent.toLowerCase();
+        let serviceType = null;
+        
+        // Başlık içinde hizmet türünü ara
+        Object.keys(serviceColors).forEach(type => {
+            if (titleText.includes(type)) {
+                serviceType = type;
+            }
+        });
+        
+        // Eğer eşleşen hizmet türü bulunduysa renkleri uygula
+        if (serviceType && serviceColors[serviceType]) {
+            const colors = serviceColors[serviceType];
+            
+            // Renk varyasyonlarını uygula
+            const icon = box.querySelector('.service-box-icon');
+            if (icon) {
+                icon.style.color = colors.primary;
+                icon.style.backgroundColor = colors.secondary;
+            }
+            
+            // Buton rengini ayarla
+            const btn = box.querySelector('.service-box-btn');
+            if (btn) {
+                btn.style.background = `linear-gradient(120deg, ${colors.primary}, ${colors.primary}CC)`;
+            }
+            
+            // Rozet rengini ayarla
+            const badges = box.querySelectorAll('.service-badge');
+            if (badges.length) {
+                badges.forEach(badge => {
+                    if (!badge.classList.contains('alt')) {
+                        badge.style.backgroundColor = colors.secondary;
+                        badge.style.color = colors.primary;
+                    }
+                });
+            }
+            
+            // Feature ikonlarının rengini ayarla
+            const featureIcons = box.querySelectorAll('.service-feature i');
+            if (featureIcons.length) {
+                featureIcons.forEach(icon => {
+                    icon.style.color = colors.primary;
+                });
+            }
+        }
+    });
+});
+
+// Tipografi ve Okunabilirlik İyileştirmesi
+document.addEventListener('DOMContentLoaded', function() {
+    // Başlıklar için vurgu
+    const serviceTitles = document.querySelectorAll('.service-box-title');
+    serviceTitles.forEach(title => {
+        title.style.textShadow = '0 2px 10px rgba(0, 0, 0, 0.8)';
+    });
+    
+    // İçerik hiyerarşisi için metin büyüklükleri
+    const serviceDescriptions = document.querySelectorAll('.service-box-description');
+    serviceDescriptions.forEach(desc => {
+        desc.style.fontSize = '15px';
+        desc.style.lineHeight = '1.6';
+    });
+    
+    // Özellik metinleri
+    const featureTexts = document.querySelectorAll('.service-feature span');
+    featureTexts.forEach(text => {
+        text.style.fontSize = '14px';
+        text.style.fontWeight = '500';
+    });
+    
+    // Metin-arka plan kontrastını artır
+    const serviceBoxContents = document.querySelectorAll('.service-box-content');
+    serviceBoxContents.forEach(content => {
+        content.style.backgroundColor = '#ffffff';
+        content.style.color = '#333333';
+    });
+});
+
+// Detay açılır panel oluşturma fonksiyonu
+function createDetailPanels() {
+    const serviceBoxes = document.querySelectorAll('.service-box');
+    
+    serviceBoxes.forEach(box => {
+        // Mevcut butonu güncelle
+        const btn = box.querySelector('.service-box-btn');
+        if (btn && !btn.getAttribute('data-has-panel')) {
+            // Butona toggle özelliğini ekle
+            btn.classList.add('details-toggle');
+            btn.setAttribute('data-has-panel', 'true');
+            
+            // Servis içeriğini al
+            const title = box.querySelector('.service-box-title').textContent;
+            const features = Array.from(box.querySelectorAll('.service-feature span')).map(span => span.textContent);
+            
+            // Panel içeriği oluştur
+            const panelContent = `
+                <div class="service-details-panel">
+                    <div class="panel-section">
+                        <h4 class="panel-title">${title} Detayları</h4>
+                        <p class="panel-desc">Bu hizmetimiz kapsamında sunduğumuz çözümler:</p>
+                    </div>
+                    
+                    <div class="panel-section">
+                        <h5 class="panel-subtitle">Sunduğumuz Avantajlar</h5>
+                        <ul class="panel-list">
+                            ${features.map(feature => `<li>${feature}</li>`).join('')}
+                            <li>7/24 hizmet desteği</li>
+                            <li>Deneyimli personel</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="panel-section">
+                        <h5 class="panel-subtitle">Fiyat Bilgisi</h5>
+                        <p>Detaylı fiyat bilgisi için lütfen iletişime geçin.</p>
+                        <a href="#contact" class="panel-link">İletişim Formu</a>
+                    </div>
+                </div>
+            `;
+            
+            // Paneli ekle
+            const content = box.querySelector('.service-box-content');
+            if (content) {
+                // Mevcut içeriğin sonuna panel ekle
+                content.insertAdjacentHTML('beforeend', panelContent);
+            }
+        }
+    });
+}
+
+// Sayfa yüklendikten sonra detay panellerini oluştur
+document.addEventListener('DOMContentLoaded', function() {
+    // Detay panelleri oluştur
+    createDetailPanels();
+});
+
+// Hizmet kartları için tıklama geri bildirimleri
+function initServiceCardInteractions() {
+    const serviceBoxes = document.querySelectorAll('.service-box');
+    const detailButtons = document.querySelectorAll('.service-btn');
+    
+    // Detay açılır panel için tıklama fonksiyonu
+    detailButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            // Detay sayfasına gitme linki varsa, normal çalışsın
+            if (this.getAttribute('href') && this.getAttribute('href') !== '#') return;
+            
+            // Link yoksa veya # ise panel açılımını yönet
+            e.preventDefault();
+            const card = this.closest('.service-box');
+            const panel = card.querySelector('.service-details-panel');
+            
+            // Panel yoksa işlem yapma
+            if (!panel) return;
+            
+            if (panel.classList.contains('open')) {
+                panel.classList.remove('open');
+                this.innerHTML = 'Detaylı Bilgi <i class="fas fa-arrow-right"></i>';
+            } else {
+                // Diğer tüm açık panelleri kapat
+                document.querySelectorAll('.service-details-panel.open').forEach(p => {
+                    if (p !== panel) {
+                        p.classList.remove('open');
+                        const btn = p.closest('.service-box').querySelector('.service-btn');
+                        btn.innerHTML = 'Detaylı Bilgi <i class="fas fa-arrow-right"></i>';
+                    }
+                });
+                
+                panel.classList.add('open');
+                this.innerHTML = 'Kapat <i class="fas fa-times"></i>';
+            }
+        });
+    });
+    
+    // 3D etkisi için kartlar üzerinde mouse hareketi
+    serviceBoxes.forEach(box => {
+        box.addEventListener('mousemove', function(e) {
+            const boxRect = box.getBoundingClientRect();
+            const boxCenterX = boxRect.left + boxRect.width / 2;
+            const boxCenterY = boxRect.top + boxRect.height / 2;
+            
+            // -5 ile 5 arasında değer hesaplama
+            const angleX = ((e.clientY - boxCenterY) / 20) * -1;
+            const angleY = (e.clientX - boxCenterX) / 20;
+            
+            // 3D dönüş efekti
+            box.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg) scale3d(1.01, 1.01, 1.01)`;
+        });
+        
+        // Mouse ayrıldığında orijinal haline dönme
+        box.addEventListener('mouseleave', function() {
+            box.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+        });
+        
+        // Tıklama efekti
+        box.addEventListener('mousedown', function() {
+            box.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(0.98, 0.98, 0.98)';
+            box.style.transition = 'transform 0.1s';
+        });
+        
+        box.addEventListener('mouseup', function() {
+            box.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+        });
+    });
+}
+
+// Scroll animasyonları için gözlemci
+function initScrollAnimations() {
+    const animateCards = document.querySelectorAll('.animate-card');
+    
+    // Intersection Observer kurulumu
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const card = entry.target;
+                const animation = card.dataset.animation || 'fade-up';
+                card.classList.add(animation);
+                observer.unobserve(card);
+            }
+        });
+    }, {
+        root: null,
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
+    
+    // Her kart için gözlemci ekleme
+    animateCards.forEach(card => {
+        observer.observe(card);
+    });
+}
+
+// Sayfa yüklendiğinde tüm interaktif özellikleri başlat
+document.addEventListener('DOMContentLoaded', function() {
+    // Diğer başlatma fonksiyonları...
+    initMobileMenu();
+    initServiceCardInteractions();
+    initScrollAnimations();
+    
+    // Tab değişim animasyonunu başlat
+    const tabs = document.querySelectorAll('.service-category-tabs .nav-link');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            // Tab animasyonları
+        });
+    });
+    
+    // İkon animasyonları için interval ayarla
+    setInterval(() => {
+        const icons = document.querySelectorAll('.service-icon-animate');
+        icons.forEach(icon => {
+            // Rastgele bir ikona animasyon uygula
+            if (Math.random() > 0.8) {
+                icon.classList.add('pulse-animation');
+                setTimeout(() => {
+                    icon.classList.remove('pulse-animation');
+                }, 1000);
+            }
+        });
+    }, 3000);
+    
+    // Featured hizmetlere özel vurgulama
+    const featuredServices = document.querySelectorAll('.service-box.featured');
+    featuredServices.forEach(service => {
+        // Vurgulu hizmet kartları için özel efekt
+        service.classList.add('highlight-pulse');
+    });
+});
+
+// İletişim Bölümü İçin Efektler
+document.addEventListener('DOMContentLoaded', function() {
+    // İletişim formundaki giriş animasyonları
+    const formInputs = document.querySelectorAll('.input-animate');
+    
+    formInputs.forEach(input => {
+        // Form elemanlarına animasyon ekle
+        input.addEventListener('focus', function() {
+            this.parentElement.classList.add('input-focused');
+        });
+        
+        input.addEventListener('blur', function() {
+            if (this.value === '') {
+                this.parentElement.classList.remove('input-focused');
+            }
+        });
+        
+        // Başlangıçta değeri olanlar için sınıf ekle
+        if (input.value !== '') {
+            input.parentElement.classList.add('input-focused');
+        }
+    });
+    
+    // Ripple efekti (dalga) eklemek için
+    const rippleButtons = document.querySelectorAll('.ripple-button, .ripple-effect');
+    
+    rippleButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            const ripple = document.createElement('span');
+            const rect = this.getBoundingClientRect();
+            
+            const diameter = Math.max(rect.width, rect.height);
+            const radius = diameter / 2;
+            
+            ripple.style.width = ripple.style.height = `${diameter}px`;
+            ripple.style.left = `${e.clientX - rect.left - radius}px`;
+            ripple.style.top = `${e.clientY - rect.top - radius}px`;
+            ripple.classList.add('ripple');
+            
+            const rippleContainer = this.querySelector('.ripple-effect') || this;
+            
+            // Önceki ripple efektlerini temizle
+            const existingRipple = rippleContainer.querySelector('.ripple');
+            if (existingRipple) {
+                existingRipple.remove();
+            }
+            
+            rippleContainer.appendChild(ripple);
+            
+            // Animasyon tamamlandıktan sonra kaldır
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
+    });
+    
+    // Kartlara hover efekti ekle (3D dönüş)
+    const cardItems = document.querySelectorAll('.card-hover-effect');
+    
+    cardItems.forEach(card => {
+        card.addEventListener('mousemove', function(e) {
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            // Kartın ortası
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            // X ve Y eksenleri için dönüş derecesi hesapla (-10 ile 10 derece arası)
+            const rotateY = ((x - centerX) / centerX) * 3;
+            const rotateX = -((y - centerY) / centerY) * 3;
+            
+            // Kart glow efekti için hesapla
+            const glow = this.querySelector('.card-glow');
+            if (glow) {
+                glow.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255, 255, 255, 0.3), transparent 50%)`;
+            }
+            
+            // Dönüş efektini uygula
+            this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+            this.style.transition = 'transform 0.1s ease';
+        });
+        
+        // Mouse karttan çıktığında efekti sıfırla
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+            this.style.transition = 'transform 0.3s ease';
+            
+            const glow = this.querySelector('.card-glow');
+            if (glow) {
+                glow.style.background = 'none';
+            }
+        });
+    });
+    
+    // İletişim bilgi öğeleri için efekt ekle
+    const interactItems = document.querySelectorAll('.interact-item');
+    
+    interactItems.forEach(item => {
+        item.addEventListener('mouseenter', function() {
+            const icon = this.querySelector('.contact-icon');
+            if (icon) {
+                icon.classList.add('animated');
+                
+                // İkona titreşim efekti ekle
+                icon.style.animation = 'iconShake 0.5s ease-in-out';
+                
+                setTimeout(() => {
+                    icon.style.animation = '';
+                }, 500);
+            }
+        });
+    });
+    
+    // SSS Toggle İşlevi
+    const faqItems = document.querySelectorAll('.faq-item');
+    
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        const answer = item.querySelector('.faq-answer');
+        
+        question.addEventListener('click', function() {
+            const isActive = item.classList.contains('active');
+            
+            // Tüm diğer açık SSS öğelerini kapat
+            faqItems.forEach(otherItem => {
+                if (otherItem !== item && otherItem.classList.contains('active')) {
+                    otherItem.classList.remove('active');
+                    const otherAnswer = otherItem.querySelector('.faq-answer');
+                    otherAnswer.style.maxHeight = null;
+                }
+            });
+            
+            // Tıklanan öğeyi aç/kapat
+            if (!isActive) {
+                item.classList.add('active');
+                answer.style.maxHeight = answer.scrollHeight + 'px';
+            } else {
+                item.classList.remove('active');
+                answer.style.maxHeight = null;
+            }
+        });
+    });
+});
+
+// İletişim Bölümü Etkileşim Efektleri
+function initContactInteractions() {
+  // Kart 3D efekti
+  const cards = document.querySelectorAll('.card-hover-effect');
+  
+  cards.forEach(card => {
+    const glow = card.querySelector('.card-glow');
+    
+    // Mouse hareketi ile 3D efekt
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left; 
+      const y = e.clientY - rect.top;
+      
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      
+      const angleX = (y - centerY) / 20;
+      const angleY = (centerX - x) / 20;
+      
+      card.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg) scale3d(1, 1, 1)`;
+      
+      if (glow) {
+        // Parlama efekti takip etsin
+        glow.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255, 255, 255, 0.2) 0%, transparent 80%)`;
+      }
+    });
+    
+    // Mouse ayrıldığında efekti sıfırla
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+      if (glow) {
+        glow.style.background = 'none';
+      }
+    });
+  });
+  
+  // Ripple efekti
+  const rippleButtons = document.querySelectorAll('.ripple-button, .ripple-effect');
+  
+  rippleButtons.forEach(button => {
+    button.addEventListener('click', function(e) {
+      const x = e.clientX - e.target.getBoundingClientRect().left;
+      const y = e.clientY - e.target.getBoundingClientRect().top;
+      
+      const ripple = document.createElement('span');
+      ripple.classList.add('ripple');
+      ripple.style.left = `${x}px`;
+      ripple.style.top = `${y}px`;
+      
+      this.appendChild(ripple);
+      
+      setTimeout(() => {
+        ripple.remove();
+      }, 600);
+    });
+  });
+  
+  // Sık Sorulan Sorular akordiyon
+  const faqItems = document.querySelectorAll('.faq-item');
+  
+  faqItems.forEach(item => {
+    const question = item.querySelector('.faq-question');
+    const answer = item.querySelector('.faq-answer');
+    
+    question.addEventListener('click', () => {
+      const isActive = item.classList.contains('active');
+      
+      // Diğer açık olanları kapat
+      document.querySelectorAll('.faq-item.active').forEach(activeItem => {
+        if (activeItem !== item) {
+          activeItem.classList.remove('active');
+        }
+      });
+      
+      // Tıklanan öğenin durumunu değiştir
+      if (isActive) {
+        item.classList.remove('active');
+      } else {
+        item.classList.add('active');
+      }
+    });
+  });
+  
+  // Form etkileşimleri
+  const formInputs = document.querySelectorAll('.input-animate');
+  
+  formInputs.forEach(input => {
+    // Input focus stillerini yönet
+    input.addEventListener('focus', function() {
+      this.parentElement.classList.add('input-focused');
+    });
+    
+    input.addEventListener('blur', function() {
+      if (this.value === '') {
+        this.parentElement.classList.remove('input-focused');
+      }
+    });
+    
+    // Daha önceden değer varsa stil ekle
+    if (input.value !== '') {
+      input.parentElement.classList.add('input-focused');
+    }
+  });
+  
+  // Form gönderimi
+  const contactForm = document.getElementById('contactForm');
+  if (contactForm) {
+    contactForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      // Basit form doğrulaması
+      const isValid = validateContactForm();
+      
+      if (isValid) {
+        // Form gönderme animasyonu
+        const submitBtn = this.querySelector('.btn-send');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Gönderiliyor...`;
+        
+        try {
+          // Gerçek hayatta burada bir API'ye istek gönderilir
+          await simulateFormSubmission();
+          
+          // Başarılı yanıt
+          showFormResponse('success', 'Mesajınız başarıyla gönderildi! En kısa sürede size dönüş yapacağız.');
+          this.reset();
+          
+          // Input stillerini sıfırla
+          formInputs.forEach(input => {
+            input.parentElement.classList.remove('input-focused');
+          });
+          
+        } catch (error) {
+          // Hata durumu
+          showFormResponse('error', 'Mesajınız gönderilirken bir hata oluştu. Lütfen tekrar deneyiniz.');
+          console.error('Form submission error:', error);
+        } finally {
+          // Butonu eski haline getir
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = `Mesajı Gönder <span class="btn-icon"><i class="fas fa-paper-plane"></i></span>`;
+        }
+      }
+    });
+  }
+  
+  // Form yanıt mesajını göster
+  function showFormResponse(type, message) {
+    const responseEl = document.getElementById('formResponse');
+    if (responseEl) {
+      responseEl.className = 'form-response';
+      responseEl.classList.add(type, 'show');
+      responseEl.innerHTML = message;
+      
+      // 5 saniye sonra mesajı gizle
+      setTimeout(() => {
+        responseEl.classList.remove('show');
+      }, 5000);
+    }
+  }
+  
+  // Basit form doğrulaması
+  function validateContactForm() {
+    const name = document.getElementById('name');
+    const email = document.getElementById('email');
+    const message = document.getElementById('message');
+    const consent = document.getElementById('consent');
+    let isValid = true;
+    
+    // İsim kontrolü
+    if (!name.value.trim()) {
+      showInputError(name);
+      isValid = false;
+    } else {
+      hideInputError(name);
+    }
+    
+    // E-posta kontrolü
+    if (!email.value.trim() || !isValidEmail(email.value)) {
+      showInputError(email);
+      isValid = false;
+    } else {
+      hideInputError(email);
+    }
+    
+    // Mesaj kontrolü
+    if (!message.value.trim()) {
+      showInputError(message);
+      isValid = false;
+    } else {
+      hideInputError(message);
+    }
+    
+    // Onay kontrolü
+    if (!consent.checked) {
+      showInputError(consent);
+      isValid = false;
+    } else {
+      hideInputError(consent);
+    }
+    
+    return isValid;
+  }
+  
+  // Input hata gösterimi
+  function showInputError(input) {
+    input.classList.add('is-invalid');
+    const errorMessage = input.parentElement.querySelector('.error-message');
+    if (errorMessage) {
+      errorMessage.style.display = 'block';
+    }
+  }
+  
+  // Input hata gizleme
+  function hideInputError(input) {
+    input.classList.remove('is-invalid');
+    const errorMessage = input.parentElement.querySelector('.error-message');
+    if (errorMessage) {
+      errorMessage.style.display = 'none';
+    }
+  }
+  
+  // E-posta geçerliliğini kontrol et
+  function isValidEmail(email) {
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  }
+  
+  // Form gönderimini simüle et
+  function simulateFormSubmission() {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({ success: true });
+      }, 1500);
+    });
+  }
+}
+
+// Sayfa yüklendiğinde etkileşimleri başlat
+document.addEventListener('DOMContentLoaded', function() {
+  // ... existing code ...
+  
+  // İletişim etkileşimlerini başlat
+  initContactInteractions();
+});

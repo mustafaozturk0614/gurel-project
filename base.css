@@ -8,6 +8,7 @@ body {
   overflow-x: hidden;
   scrollbar-width: thin;
   scrollbar-color: var(--secondary-color) var(--light-gray);
+  font-size: var(--font-size-base);
 }
 :root {
   /* 
@@ -218,13 +219,47 @@ body {
   --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-medium: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Renkler - renk adları yerine amaca göre isimlendirme */
+  --color-background: #ffffff;
+  --color-text-primary: #333333;
+  --color-text-secondary: #777777;
+  --color-accent: #3f51b5;
+  --color-accent-light: #757de8;
+  
+  /* Yazı tipleri - tutarlı isimlendirme */
+  --font-primary: 'Roboto', sans-serif;
+  --font-secondary: 'Open Sans', sans-serif;
+  
+  /* Yazı boyutları - ölçek sistemi */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-md: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 2rem;
+  --text-3xl: 2.5rem;
+  
+  /* Boşluklar - tutarlı ölçek */
+  --space-xs: 0.25rem;  
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  
+  /* Kenar yuvarlaklığı */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 1rem;
+  --radius-full: 9999px;
 }
 /* Font Boyutları - Dinamik ve Duyarlı */
 :root {
   /* Dinamik Font Boyutları - Viewport'a Göre Ölçeklenir */
   --font-size-xs: clamp(0.7rem, 0.6rem + 0.5vw, 0.8rem);
   --font-size-sm: clamp(0.8rem, 0.7rem + 0.5vw, 0.9rem);
-  --font-size-base: clamp(0.9rem, 0.85rem + 0.5vw, 1.1rem);
+  --font-size-base: clamp(1rem, 0.8rem + 0.5vw, 1.25rem);
   --font-size-md: clamp(1rem, 0.9rem + 0.7vw, 1.25rem);
   --font-size-lg: clamp(1.2rem, 1.1rem + 0.8vw, 1.5rem);
   --font-size-xl: clamp(1.4rem, 1.3rem + 1vw, 1.8rem);
@@ -237,6 +272,10 @@ body {
   --icon-size-md: clamp(1.2rem, 1rem + 0.5vw, 1.6rem);
   --icon-size-lg: clamp(1.6rem, 1.4rem + 0.6vw, 2rem);
   --icon-size-xl: clamp(2rem, 1.8rem + 0.8vw, 2.5rem);
+
+  /* Ekran boyutuna göre otomatik ölçeklenen yazı boyutları */
+  --font-size-base: clamp(1rem, 0.8rem + 0.5vw, 1.25rem);
+  --font-size-heading: clamp(1.5rem, 1rem + 2vw, 3rem);
 }
 
 /* Animasyon Eğrileri */
@@ -1420,7 +1459,7 @@ body {
   
   --font-size-xs: clamp(0.7rem, 0.6rem + 0.5vw, 0.8rem);
   --font-size-sm: clamp(0.8rem, 0.7rem + 0.5vw, 0.9rem);
-  --font-size-base: clamp(0.9rem, 0.85rem + 0.5vw, 1.1rem);
+  --font-size-base: clamp(1rem, 0.8rem + 0.5vw, 1.25rem);
   --font-size-md: clamp(1rem, 0.9rem + 0.7vw, 1.25rem);
   --font-size-lg: clamp(1.2rem, 1.1rem + 0.8vw, 1.5rem);
   --font-size-xl: clamp(1.4rem, 1.3rem + 1vw, 1.8rem);
@@ -1445,6 +1484,10 @@ body {
   --facebook-color: #3b5998;
   --twitter-color: #1DA1F2;
   --email-color: var(--gray-color);
+
+  /* Ekran boyutuna göre otomatik ölçeklenen yazı boyutları */
+  --font-size-base: clamp(1rem, 0.8rem + 0.5vw, 1.25rem);
+  --font-size-heading: clamp(1.5rem, 1rem + 2vw, 3rem);
 }
 
 /* Tema Değiştirici UI */
@@ -1828,3 +1871,214 @@ a:focus, button:focus, .nav-link:focus, input:focus, textarea:focus, select:focu
         clip: rect(0,0,0,0);
         white-space: nowrap;
     }
+
+/* px yerine rem ve em kullanımı */
+.element {
+  font-size: 1rem; /* 16px baz alınarak */
+  padding: 1.25em; /* element'in kendi font-size'ının 1.25 katı */
+  margin-bottom: 1.5rem; /* 24px */
+  
+  /* Minimum ve maksimum değerler */
+  width: clamp(300px, 80%, 1200px);
+}
+
+body { font-size: var(--font-size-base); }
+h1 { font-size: var(--font-size-heading); }
+
+/* Block Element Modifier metodolojisi */
+
+/* Block */
+.card {
+  background: var(--color-background);
+  border-radius: var(--radius-md);
+}
+
+/* Element */
+.card__title {
+  font-size: var(--text-xl);
+  color: var(--color-text-primary);
+}
+
+.card__content {
+  padding: var(--space-md);
+}
+
+/* Modifier */
+.card--featured {
+  border: 2px solid var(--color-accent);
+}
+
+.card--dark {
+  background: var(--color-text-primary);
+  color: var(--color-background);
+}
+
+/* Servis Genel Bakış Stili */
+.service-overview {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius-lg);
+  padding: 3rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.service-overview:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(var(--primary-rgb), 0.15);
+}
+
+.service-overview__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: var(--radius-circle);
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: #fff;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 10px 20px rgba(var(--primary-rgb), 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.service-overview__icon::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.3) 0%,
+    transparent 70%
+  );
+  opacity: 0;
+  transform: scale(0.5);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.service-overview:hover .service-overview__icon::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.service-overview__title {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: var(--heading-color);
+  position: relative;
+  display: inline-block;
+}
+
+.service-overview__title::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -10px;
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(to right, var(--primary-color), transparent);
+  transform: translateX(-50%);
+  border-radius: 3px;
+}
+
+.service-overview__text {
+  font-size: var(--text-md);
+  line-height: 1.7;
+  color: var(--text-color);
+  margin-bottom: 1.25rem;
+}
+
+.service-overview__button {
+  padding: 0.85rem 2.5rem;
+  font-size: var(--text-md);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  margin-top: 1rem;
+}
+
+.service-overview__button::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.5s ease-out;
+  z-index: -1;
+}
+
+.service-overview__button:hover::after {
+  transform: translate(-50%, -50%) scale(15);
+}
+
+@media (max-width: 992px) {
+  .service-overview {
+    padding: 2.5rem;
+  }
+  
+  .service-overview__icon {
+    width: 70px;
+    height: 70px;
+    font-size: 1.75rem;
+  }
+  
+  .service-overview__title {
+    font-size: var(--text-xl);
+  }
+}
+
+@media (max-width: 768px) {
+  .service-overview {
+    padding: 2rem;
+  }
+  
+  .service-overview__icon {
+    width: 60px;
+    height: 60px;
+    font-size: 1.5rem;
+  }
+  
+  .service-overview__text {
+    font-size: var(--text-sm);
+  }
+}
+
+@media (max-width: 576px) {
+  .service-overview {
+    padding: 1.5rem;
+  }
+  
+  .service-overview__title {
+    font-size: var(--text-lg);
+  }
+  
+  .service-overview__button {
+    padding: 0.75rem 1.5rem;
+    font-size: var(--text-sm);
+  }
+}
+
+/* Animasyon Doğrulama */
+@media (prefers-reduced-motion: reduce) {
+  .service-overview,
+  .service-overview__icon,
+  .service-overview__button::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+

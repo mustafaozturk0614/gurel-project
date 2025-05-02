@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frecuencia Kirlian</title>
+    <style>
+        :root {
+            --primary-color: #FF5FAD;
+            --black: #000;
+            --white: #fff;
+            --grey: #7a7a7a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+            cursor: none; /* Özel fare imleci için standart imleci gizle */
+        }
+
+        /* Yükleme Ekranı */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--black);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader__logo {
+            width: 200px;
+            height: 100px;
+            background-image: url('https://kirlian.xyz/logos/logo_eng.png');
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin-bottom: 30px;
+        }
+
+        .loader__count {
+            font-size: 48px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .loader__text {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        /* Özel Fare İmleci */
+        .cursor {
+            position: fixed;
+            pointer-events: none;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 9998;
+        }
+
+        .cursor__blur {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            transform: translate(-50%, -50%);
+            transition: transform 0.2s ease;
+        }
+        
+        .cursor__pointer {
+            position: absolute;
+            width: 13px;
+            height: 12px;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease;
+        }
+
+        .svg__line {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 9997;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            padding: 20px 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            justify-content: center;
+        }
+
+        nav li {
+            margin: 0 15px;
+            position: relative;
+        }
+
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Dil Seçimi */
+        .language-toggle {
+            display: flex;
+            align-items: center;
+            position: absolute;
+            right: 20px;
+            top: 20px;
+        }
+
+        .language-toggle span {
+            color: var(--white);
+            opacity: 0.5;
+            font-size: 14px;
+            margin: 0 5px;
+            cursor: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .language-toggle span.active {
+            opacity: 1;
+            color: var(--primary-color);
+        }
+
+        /* Ses Kontrolü */
+        .sound-control {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            color: var(--white);
+            font-size: 14px;
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+        }
+
+        .sound-control:hover {
+            opacity: 1;
+        }
+
+        .sound-control__icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+            position: relative;
+        }
+
+        .sound-control__line {
+            position: absolute;
+            width: 2px;
+            height: 24px;
+            background-color: var(--white);
+            transform: rotate(45deg);
+            left: 12px;
+            top: 0;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .sound-control.off .sound-control__line {
+            opacity: 1;
+        }
+
+        .sound-control.off {
+            color: var(--grey);
+        }
+
+        .invest-button {
+            background: transparent;
+            border: none;
+            color: var(--white);
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: none; /* Özel imleci korumak için */
+            position: relative;
+            padding: 10px 20px;
+            overflow: hidden;
+            transform: rotate(-2deg);
+        }
+
+        .invest-button::after {
+            content: "YATIRIM YAP";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .invest-button:hover::after {
+            opacity: 1;
+        }
+
+        /* Hero Bölümü */
+        .hero {
+            height: 100vh;
+            width: 100%;
+            background-color: var(--black);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bgSky {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, #000, #0a0a1a);
+            z-index: -2;
+        }
+
+        .hero-logo {
+            position: relative;
+            width: 40rem;
+            height: 25rem;
+            margin-top: 100px;
+            z-index: 1;
+            margin-bottom: 40px;
+        }
+
+        .img-logo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            background-image: url('https://kirlian.xyz/logos/logo_eng.png');
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .hero-title {
+            font-size: 30px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            text-align: center;
+            max-width: 80vw;
+            line-height: 1.2;
+            z-index: 1;
+        }
+
+        .comet {
+            position: absolute;
+            top: 30%;
+            right: 10%;
+            width: 120px;
+            height: 140px;
+            z-index: -1;
+            opacity: 0;
+            animation: fadeIn 2s forwards 1s;
+        }
+
+        .comet img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .luna {
+            position: absolute;
+            top: 30%;
+            left: 5%;
+            width: 470px;
+            height: 470px;
+            z-index: -1;
+            animation: floatMoon 20s infinite ease-in-out;
+        }
+
+        .luna img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .cable {
+            position: absolute;
+            top: 15%;
+            right: 12%;
+            width: 485px;
+            height: 425px;
+            z-index: 1;
+            transform: scale(1.5);
+        }
+
+        .cable img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .trees {
+            position: absolute;
+            bottom: -40%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image: url('https://kirlian.xyz/hero/trees.png');
+            background-size: cover;
+            background-position: bottom;
+            animation: moveTrees 15s infinite ease-in-out;
+        }
+
+        .scroll-indicator {
+            position: relative;
+            z-index: 3;
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 86px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,1) 30%, rgba(255,255,255,1) 70%, rgba(255,255,255,0));
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .scroll-cross {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 15px;
+            height: 15px;
+            animation: moveDown 1.5s infinite ease-in-out;
+        }
+
+        .scroll-text {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .scene-section {
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 40px;
+            margin-bottom: 50px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .card-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .card {
+            background-color: rgba(20, 20, 30, 0.5);
+            border: 1px solid rgba(255, 95, 173, 0.1);
+            border-radius: 10px;
+            padding: 30px;
+            width: 300px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .card p {
+            color: var(--grey);
+            line-height: 1.6;
+        }
+
+        .episode {
+            display: flex;
+            margin-bottom: 30px;
+            background-color: rgba(20, 20, 30, 0.5);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .episode:hover {
+            transform: translateY(-5px);
+        }
+
+        .episode-img {
+            width: 150px;
+            height: 100px;
+            object-fit: cover;
+        }
+
+        .episode-content {
+            padding: 20px;
+            text-align: left;
+        }
+
+        .episode-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .episode-desc {
+            font-size: 14px;
+            color: var(--grey);
+            margin-bottom: 10px;
+        }
+
+        .episode-duration {
+            font-size: 12px;
+            color: var(--grey);
+            opacity: 0.7;
+        }
+
+        .faq-section {
+            padding: 100px 0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 95, 173, 0.2);
+            cursor: pointer;
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        .faq-question:hover {
+            color: var(--primary-color);
+        }
+
+        .faq-answer {
+            padding: 0 0 20px;
+            color: var(--grey);
+            line-height: 1.6;
+            display: none;
+        }
+
+        .faq-question::after {
+            content: '+';
+            font-size: 24px;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-question::after {
+            transform: rotate(45deg);
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 50px 0;
+        }
+
+        .form-control {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .form-control input,
+        .form-control textarea {
+            width: 100%;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 95, 173, 0.2);
+            border-radius: 5px;
+            color: var(--white);
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control input:focus,
+        .form-control textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: none; /* Özel imleci korumak için */
+            transition: background-color 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: #ff4099;
+        }
+
+        footer {
+            padding: 50px 0;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .social-links a {
+            display: inline-block;
+            margin: 0 10px;
+            color: var(--white);
+            font-size: 24px;
+            transition: color 0.3s ease;
+            cursor: none; /* Özel imleci korumak için */
+        }
+
+        .social-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .footer-text {
+            color: var(--grey);
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 24px;
+            }
+            .section-title {
+                font-size: 30px;
+            }
+            .card-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            nav li {
+                margin: 10px 0;
+            }
+            .hero-logo {
+                width: 25rem;
+                height: 15rem;
+            }
+            .luna, .cable, .comet {
+                display: none;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes floatMoon {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-30px); }
+            100% { transform: translateY(0); }
+        }
+
+        @keyframes moveTrees {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0); }
+        }
+
+        @keyframes moveDown {
+            0% { transform: translate(-50%, -80%); }
+            50% { transform: translate(-50%, -20%); }
+            100% { transform: translate(-50%, -80%); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Yükleme Ekranı -->
+    <div class="loader">
+        <div class="loader__logo"></div>
+        <div class="loader__count">0</div>
+        <div class="loader__text">Yükleniyor</div>
+    </div>
+
+    <header>
+        <div class="container">
+            <nav>
+                <ul>
+                    <li><a href="#home">Başlangıç</a></li>
+                    <li><a href="#bluebits">Bluebits</a></li>
+                    <li><a href="#archive">Arşiv</a></li>
+                    <li><a href="#series">Dizi</a></li>
+                    <li><a href="#movie">Film</a></li>
+                    <li><a href="#faq">SSS</a></li>
+                </ul>
+                <div class="language-toggle">
+                    <span class="lang-option" data-lang="tr">TR</span>
+                    <span class="lang-option active" data-lang="en">EN</span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Ses Kontrolü -->
+    <div class="sound-control">
+        <div class="sound-control__icon">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M16 9C16.5 9.5 17 10.5 17 12C17 13.5 16.5 14.5 16 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M19 7C20.48 8.48052 21 10.5 21 12C21 13.5 20.48 15.5195 19 17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M3 10V14C3 14.5523 3.44772 15 4 15H7L11 18.5V5.5L7 9H4C3.44772 9 3 9.44772 3 10Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class="sound-control__line"></div>
+        </div>
+        <span>SES</span>
+    </div>
+
+    <!-- Özel Fare İmleci -->
+    <div class="cursor">
+        <div class="cursor__blur">
+            <img src="https://kirlian.xyz/cursor/blur.png" alt="Fare Efekti">
+        </div>
+        <svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg" class="cursor__pointer">
+            <path d="M6 0L0 7C2.7769 9.45237 4.36351 12.0799 8 10L12 12L11 4H13L6 0Z" fill="#FF5EAE"></path>
+        </svg>
+    </div>
+    <svg class="svg__line">
+        <path id="path" fill="none" stroke="#7F6D9F" stroke-width="0" data-draw-one=""></path>
+        <path id="path2" fill="none" stroke="#7F6D9F" stroke-linejoin="round" stroke-linecap="round" data-draw-two=""></path>
+    </svg>
+
+    <section id="home" class="hero">
+        <div class="bgSky"></div>
+        
+        <!-- Hero İçeriği -->
+        <div class="hero-logo">
+            <div class="img-logo"></div>
+        </div>
+
+        <!-- Arkaplan Öğeleri -->
+        <div class="comet">
+            <img src="https://kirlian.xyz/hero/comet.png" alt="Kuyruklu Yıldız">
+        </div>
+        <div class="luna">
+            <img src="https://kirlian.xyz/hero/luna2.png" alt="Ay">
+        </div>
+        <div class="cable">
+            <img src="https://kirlian.xyz/hero/cable2.png" alt="Kablo">
+        </div>
+        <div class="trees"></div>
+        
+        <h1 class="hero-title">
+            <span>topluluğu tarafından finanse edilen</span>
+            <span>ilk film</span>
+        </h1>
+
+        <div>
+            <img src="https://kirlian.xyz/logos/bluebit.png" alt="Bluebit Logo" style="width: 200px; margin: 20px 0;">
+        </div>
+
+        <button class="invest-button">YATIRIM YAP</button>
+
+        <div class="scroll-indicator">
+            <div class="scroll-line">
+                <img src="https://kirlian.xyz/pinkcross.png" alt="Aşağı kaydır" class="scroll-cross">
+            </div>
+            <p class="scroll-text">Daha Fazla Gör</p>
+        </div>
+    </section>
+
+    <section id="bluebits" class="scene-section">
+        <div class="container">
+            <h2 class="section-title">Bluebits ile Destek Ol</h2>
+            <p style="max-width: 600px; margin: 0 auto 50px auto; color: var(--grey);">
+                Bluebits ile filmin yapımını destekleyebilir, benzersiz bir koleksiyon edinebilir 
+                ve karları şeffaf bir şekilde alabilirsiniz.
+            </p>
+            <div class="card-container">
+                <div class="card">
+                    <h3>Yatırım Yap</h3>
+                    <p>Filmin yapımını doğrudan destekleyin ve projenin bir parçası olun. Her Bluebit, film gelirlerinin %0.3125'ini temsil eder.</p>
+                </div>
+                <div class="card">
+                    <h3>Koleksiyon Edin</h3>
+                    <p>Benzersiz bir dijital koleksiyon parçasına sahip olun ve özel içeriklere erişim kazanın.</p>
+                </div>
+                <div class="card">
+                    <h3>Kar Elde Et</h3>
+                    <p>Film gelirlerinden şeffaf bir şekilde pay alın ve yatırımınızın karşılığını görün.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="archive" class="scene-section" style="background-color: #0a0a1a;">
+        <div class="container">
+            <h2 class="section-title">Kirlian Radyofonik Enstitüsü ve Arşivi</h2>
+            <p style="max-width: 800px; margin: 0 auto 50px auto; color: var(--grey); line-height: 1.8;">
+                Kirlian Radyofonik Enstitüsü ve Arşivi onlarca yıldır olağanüstü doğada bir arşivi kurtarmak ve korumak için 
+                yorulmadan çalışıyor: Buenos Aires, Arjantin'in bir kasabası olan Ingeniero Kirlian'ın yerel istasyonunun 
+                geç saatler kuşağında yayınlanan KIRLIAN FREKANSI adlı bir radyo programının son yayınlarını içeren bir dizi 
+                kaset. Bugün bu yer resmi haritalarda görünmüyor ve bu kasetler, söz konusu kasabanın varlığının tek kanıtını temsil ediyor.
+            </p>
+            <p style="max-width: 800px; margin: 0 auto 50px auto; color: var(--grey); line-height: 1.8;">
+                Kayıp kasabaya adalet sağlamanın tek bir yolu var: bu araştırmayı takip eden kişilerin ve olağanüstü bir olayın parçası olmak isteyenlerin doğrudan desteği. Yalnızca sizin katkınızla bu bilmecenin temel sorularını yanıtlayabiliriz. 30 Nisan 1987 gecesi Ingeniero Kirlian'da ne oldu? Neden bu geceye "Kuyruklu Yıldız Gecesi" deniyor? BİRLİKTE bu gizemi çözelim.
+            </p>
+            <div style="text-align: center;">
+                <a href="#" class="btn">Arşive Göz At</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Eleştiriler Bölümü -->
+    <section class="scene-section" style="background-color: #000;">
+        <div class="container">
+            <h2 class="section-title">Netflix ve Press Reader'ın En Çok Beğenilen Gizli Mücevheri</h2>
+            
+            <div class="reviews-container" style="max-width: 900px; margin: 40px auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px;">
+                <div class="review-card" style="padding: 25px; background-color: rgba(20, 20, 30, 0.5); border-radius: 10px; border: 1px solid rgba(255, 95, 173, 0.1);">
+                    <p style="color: var(--grey); line-height: 1.6; font-style: italic; margin-bottom: 20px;">
+                        "The Kirlian Frequency, şaşırtıcı derecede etkileyici, ısırık boyutunda bir korku antolojisidir ve sonunda jenerik akarken daha fazlasını istemenizi sağlayacaktır."
+                    </p>
+                    <div style="display: flex; align-items: center;">
+                        <span style="color: var(--primary-color); font-weight: bold; margin-right: 10px;">The Review Geek</span>
+                    </div>
+                </div>
+                
+                <div class="review-card" style="padding: 25px; background-color: rgba(20, 20, 30, 0.5); border-radius: 10px; border: 1px solid rgba(255, 95, 173, 0.1);">
+                    <p style="color: var(--grey); line-height: 1.6; font-style: italic; margin-bottom: 20px;">
+                        "Bu Arjantin animasyonlu web serisi, fantastik korku hayranları için çok lezzetli bir alternatif sunuyor."
+                    </p>
+                    <div style="display: flex; align-items: center;">
+                        <span style="color: var(--primary-color); font-weight: bold; margin-right: 10px;">Cuatrobastardos</span>
+                    </div>
+                </div>
+                
+                <div class="review-card" style="padding: 25px; background-color: rgba(20, 20, 30, 0.5); border-radius: 10px; border: 1px solid rgba(255, 95, 173, 0.1);">
+                    <p style="color: var(--grey); line-height: 1.6; font-style: italic; margin-bottom: 20px;">
+                        "Bu Arjantin animasyonlu korku antoloji dizisi, ürpertici hikâyelerin bolluğunu sunuyor."
+                    </p>
+                    <div style="display: flex; align-items: center;">
+                        <span style="color: var(--primary-color); font-weight: bold; margin-right: 10px;">studybreaks</span>
+                    </div>
+                </div>
+                
+                <div class="review-card" style="padding: 25px; background-color: rgba(20, 20, 30, 0.5); border-radius: 10px; border: 1px solid rgba(255, 95, 173, 0.1);">
+                    <p style="color: var(--grey); line-height: 1.6; font-style: italic; margin-bottom: 20px;">
+                        "Dizinin ana cazibesi -ve Ponce ve ekibinin yeteneği- her bölümün kendine özgü bir dönüşe, taze bir olay örgüsü dönüşüne sahip olmasıdır; bu da tanıdık bir arazide tazelik ve sıklıkla sürprizlerle yolculuk yapmamızı sağlar."
+                    </p>
+                    <div style="display: flex; align-items: center;">
+                        <span style="color: var(--primary-color); font-weight: bold; margin-right: 10px;">La Diaria Cultura</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="series" class="scene-section">
+        <div class="container">
+            <h2 class="section-title">Dizi</h2>
+            <div style="max-width: 800px; margin: 0 auto;">
+                <div class="episode">
+                    <img src="https://via.placeholder.com/150x100/0a0a1a/ff5fad" alt="Bölüm 1" class="episode-img">
+                    <div class="episode-content">
+                        <h3 class="episode-title">S01E01 - Nisan'ın Ülkesi</h3>
+                        <p class="episode-desc">Bir şantajcı, bir radyo sunucusunu Kirlian'ın nerede olduğunu açıklamakla tehdit eder. Ancak ziyaretçinin de sırları vardır.</p>
+                        <p class="episode-duration">9:02 dk</p>
+                    </div>
+                </div>
+                <div class="episode">
+                    <img src="https://via.placeholder.com/150x100/0a0a1a/ff5fad" alt="Bölüm 2" class="episode-img">
+                    <div class="episode-content">
+                        <h3 class="episode-title">S01E02 - Gecenin Efendileri</h3>
+                        <p class="episode-desc">Arabası bozulduktan sonra, bir kadın Kirlian'da bir gece mahsur kalır ve savaşmaya devam etme veya karanlık güçlere teslim olma arasında seçim yapmak zorundadır.</p>
+                        <p class="episode-duration">9:57 dk</p>
+                    </div>
+                </div>
+                <div class="episode">
+                    <img src="https://via.placeholder.com/150x100/0a0a1a/ff5fad" alt="Bölüm 3" class="episode-img">
+                    <div class="episode-content">
+                        <h3 class="episode-title">S01E03 - Yeni Bir Renk</h3>
+                        <p class="episode-desc">Vandalizm, çatışmanın alevlerini körükler. Kirlian radyo sunucusu aramaları yanıtlar ve geleceği düşünür.</p>
+                        <p class="episode-duration">8:42 dk</p>
+                    </div>
+                </div>
+                <div class="episode">
+                    <img src="https://via.placeholder.com/150x100/0a0a1a/ff5fad" alt="Bölüm 4" class="episode-img">
+                    <div class="episode-content">
+                        <h3 class="episode-title">S01E04 - Noel Kralı</h3>
+                        <p class="episode-desc">Radyo sunucusu Nisan ayında sessiz bir Noel kutlamak istiyor. Ancak beklenmedik bir çağrı planlarını mahvediyor.</p>
+                        <p class="episode-duration">8:19 dk</p>
+                    </div>
+                </div>
+                <div class="episode">
+                    <img src="https://via.placeholder.com/150x100/0a0a1a/ff5fad" alt="Bölüm 5" class="episode-img">
+                    <div class="episode-content">
+                        <h3 class="episode-title">S01E05 - Yaşlı Adam ve Köpeği</h3>
+                        <p class="episode-desc">İyi bir Samaritan yaşlı bir komşunun gürültülü bir köpeği öldürmesine yardım etmeye çalışır. Ancak köpeği havlatmaya teşvik eden bir şey var.</p>
+                        <p class="episode-duration">9:59 dk</p>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="#" class="btn">Tüm Bölümleri İzle</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Yaratıcı Profili Bölümü -->
+    <section class="scene-section" style="background-color: #0a0a1a;">
+        <div class="container">
+            <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; max-width: 1000px; margin: 0 auto;">
+                <div style="flex: 1; min-width: 300px; padding: 20px;">
+                    <h2 style="font-size: 24px; margin-bottom: 15px; color: var(--primary-color);">Cristian Ponce</h2>
+                    <h3 style="font-size: 16px; margin-bottom: 20px; color: var(--grey);">Kirlian Frequency Yaratıcısı</h3>
+                    
+                    <p style="color: var(--grey); line-height: 1.8; margin-bottom: 20px;">
+                        Cristian Ponce, Görsel-İşitsel Prodüksiyon alanında lisans derecesine sahip ve bu alanda Profesördür. 2008 yılında diğer meslektaşlarıyla birlikte "Tangram Cine" prodüksiyon şirketini kurduğu La Plata şehrinde yaşamaktadır.
+                    </p>
+                    
+                    <p style="color: var(--grey); line-height: 1.8; margin-bottom: 20px;">
+                        Şirket bünyesinde "Televizyonsuz Bir Yıl", "Motorlu Polis Yoldaşları", "Bağlantısız" ve "Hayatımın İşi" gibi web dizilerinin; "Gezegen Üzerine Kısa Tarih" ve "Hesperidina Express" gibi kısa filmlerin; ve "Kayıp Bebeğin Peşinde" gibi uzun metrajlı filmlerin yazarlığını ve/veya yönetmenliğini yapmıştır. 2017 yılında, yapımı neredeyse 10 yıl süren "Kirlian Frekansı"nı yayınladı.
+                    </p>
+                    
+                    <p style="color: var(--grey); line-height: 1.8; margin-bottom: 30px;">
+                        2019 yılında "Kirlian Frekansı", Netflix'te dünya çapında özel içerik olarak yeniden yayınlandı. 2020 yılında Cristian, yönetmen olarak ilk uzun metrajlı filmi olan "Okkült Tarihi"ni vizyona soktu. Film, çeşitli streaming platformlarında dünya çapında yayınlanmadan önce, festival gösterimi sırasında büyük bir izleyici ve eleştiri beğenisi topladı. Şu anda ikinci uzun metrajlı filmi "Abraço de Mãe"yi çekiyor ve "Kirlian Frekansı"nın film versiyonunu hazırlıyor.
+                    </p>
+                    
+                    <div style="display: flex; align-items: center;">
+                        <span style="color: var(--primary-color); margin-right: 10px;">@cristangram</span>
+                    </div>
+                </div>
+                
+                <div style="flex: 1; min-width: 300px; padding: 20px; display: flex; justify-content: center;">
+                    <div style="width: 300px; height: 300px; background-color: #0a0a1a; border-radius: 10px; overflow: hidden; position: relative;">
+                        <img src="https://via.placeholder.com/300x300/0a0a1a/ff5fad" alt="Cristian Ponce" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="movie" class="scene-section" style="background-color: #0a0a1a;">
+        <div class="container">
+            <h2 class="section-title">Film</h2>
+            <p style="text-align: center; color: var(--primary-color); margin-bottom: 30px;">Son yaklaşıyor</p>
+            <div style="max-width: 800px; margin: 0 auto; background-color: rgba(0,0,0,0.5); border-radius: 10px; height: 400px; display: flex; align-items: center; justify-content: center; margin-bottom: 50px; position: relative; overflow: hidden;">
+                <div style="position: absolute; width: 100%; height: 100%; background: url('https://via.placeholder.com/800x400/0a0a1a/ff5fad') center/cover;"></div>
+                <button class="btn" style="position: relative; z-index: 2;">Fragmanı İzle</button>
+            </div>
+            <div style="text-align: center;">
+                <a href="#" class="btn">Projeyi Destekle</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="faq-section">
+        <h2 class="section-title" style="text-align: center;">Sıkça Sorulan Sorular</h2>
+        <div class="faq-item">
+            <div class="faq-question">Bluebit nedir?</div>
+            <div class="faq-answer">
+                Bluebit'ler, onları veren şirket üzerinde ekonomik haklar sağlayan tokenize edilmiş menkul kıymetlerdir. Bunlara sahip olmak, gelir elde etmenizi ve özel içeriğe erişim, projelerin yaratıcılarıyla doğrudan bağlantı, Dijital Koleksiyon düşüşleri ve Bluebit'ler aracılığıyla finanse edilen yeni projelere yatırımda öncelik gibi bir dizi fayda elde etmenizi sağlar.
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Bluebit düzenlenmiş midir?</div>
+            <div class="faq-answer">
+                Evet. Bluebit'ler, CNMV ("İspanya Ulusal Para ve Menkul Kıymetler Komisyonu") nezdinde kayıtlı bir ESI (borsa şirketi) tarafından onaylanmış halka arz niteliğindedir. Bu nedenle, bu dijital güvenlik varlıklarının sağladığı ekonomik haklar somut bir şeyle desteklenir: karlar, nakit akışları veya varlıklar.
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Bluebit'lerin fiyatı nedir?</div>
+            <div class="faq-answer">
+                Her Bluebit'in fiyatı 1000 Euro'dur. Instituto y Archivo Radiofónico Kirlian SL'den Bluebit satın alımı, satış lansmanı gününde geçerli ETH/EUR döviz kuruna göre ETH cinsinden yapılacaktır.
+            </div>
+        </div>
+    </section>
+
+    <section class="contact-form">
+        <h2 class="section-title" style="text-align: center;">Bize Ulaşın</h2>
+        <form>
+            <div class="form-control">
+                <input type="email" placeholder="E-posta adresinizi bırakın ve gelişmelerden haberdar olun">
+            </div>
+            <div style="text-align: center;">
+                <button type="submit" class="btn">Bize Ulaşın</button>
+            </div>
+        </form>
+        <p style="text-align: center; margin-top: 20px; color: var(--grey);">Yakında haberler alacaksınız!</p>
+    </section>
+
+    <footer>
+        <div class="social-links">
+            <a href="#">F</a>
+            <a href="#">T</a>
+            <a href="#">I</a>
+        </div>
+        <p class="footer-text">© 2023 Frecuencia Kirlian. Tüm hakları saklıdır.</p>
+    </footer>
+
+    <script>
+        // Yükleme Ekranı
+        document.addEventListener('DOMContentLoaded', function() {
+            const loader = document.querySelector('.loader');
+            const loaderCount = document.querySelector('.loader__count');
+            let count = 0;
+            
+            // Yükleme sayacı
+            const countInterval = setInterval(() => {
+                if (count < 100) {
+                    count++;
+                    loaderCount.textContent = count;
+                } else {
+                    clearInterval(countInterval);
+                    setTimeout(() => {
+                        loader.classList.add('hidden');
+                    }, 500);
+                }
+            }, 20);
+            
+            // Sayfa tamamen yüklendiğinde
+            window.addEventListener('load', function() {
+                count = 99; // Sayacı hızlandır
+            });
+        });
+
+        // Dil Değiştirme
+        const langOptions = document.querySelectorAll('.lang-option');
+        langOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                langOptions.forEach(opt => opt.classList.remove('active'));
+                this.classList.add('active');
+                const lang = this.getAttribute('data-lang');
+                // Burada dil değiştirme işlemi yapılabilir
+                console.log(`Dil değiştirildi: ${lang}`);
+            });
+        });
+
+        // Ses Kontrolü
+        const soundControl = document.querySelector('.sound-control');
+        let isSoundOn = true; // Başlangıçta ses açık
+        
+        soundControl.addEventListener('click', function() {
+            isSoundOn = !isSoundOn;
+            if (isSoundOn) {
+                soundControl.classList.remove('off');
+                console.log('Ses açıldı');
+                // Burada ses açma işlemi yapılabilir
+            } else {
+                soundControl.classList.add('off');
+                console.log('Ses kapatıldı');
+                // Burada ses kapatma işlemi yapılabilir
+            }
+        });
+
+        // Özel Fare İmleci
+        document.addEventListener('DOMContentLoaded', function() {
+            const cursor = document.querySelector('.cursor__pointer');
+            const cursorBlur = document.querySelector('.cursor__blur');
+            
+            document.addEventListener('mousemove', function(e) {
+                // İmleci hareket ettir
+                cursor.style.transform = `translate3d(calc(-50% + ${e.clientX}px), calc(-50% + ${e.clientY}px), 0)`;
+                // Bulanık efekti hareket ettir (hafif gecikme ile)
+                setTimeout(() => {
+                    cursorBlur.style.transform = `translate3d(calc(-50% + ${e.clientX}px), calc(-50% + ${e.clientY}px), 0)`;
+                }, 50);
+            });
+
+            // Tıklama animasyonu
+            document.addEventListener('mousedown', function(e) {
+                cursor.style.transform = `translate3d(calc(-50% + ${e.clientX}px), calc(-50% + ${e.clientY}px), 0) scale(0.8)`;
+            });
+            
+            document.addEventListener('mouseup', function(e) {
+                cursor.style.transform = `translate3d(calc(-50% + ${e.clientX}px), calc(-50% + ${e.clientY}px), 0) scale(1)`;
+            });
+
+            // Bağlantılar ve butonlar üzerinde hover efekti
+            const hoverElements = document.querySelectorAll('a, button, .card, .language-toggle span, .sound-control');
+            hoverElements.forEach(element => {
+                element.addEventListener('mouseenter', function() {
+                    cursorBlur.style.width = '70px';
+                    cursorBlur.style.height = '70px';
+                });
+                
+                element.addEventListener('mouseleave', function() {
+                    cursorBlur.style.width = '50px';
+                    cursorBlur.style.height = '50px';
+                });
+            });
+        });
+
+        // SSS açılır kapanır
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            item.addEventListener('click', () => {
+                item.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>
