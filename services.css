@@ -53,6 +53,7 @@
 .services-grid {
     position: relative;
     z-index: 1;
+    margin-top: 1.5rem;
 }
 
 .service-box {
@@ -74,12 +75,55 @@
     border-color: rgba(var(--primary-rgb), 0.2);
 }
 
+/* Hizmet Kutusu Görsel Alanı */
+.service-box-image {
+    position: relative;
+    width: 100%;
+    height: 200px; /* Sabit yükseklik veriyoruz */
+    overflow: hidden;
+    background-color: #f8f9fa; /* Varsayılan arkaplan rengi */
+}
+
+.service-box-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.service-box:hover .service-box-image img {
+    transform: scale(1.05);
+}
+
+.service-box-image::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 60%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+    z-index: 1;
+}
+
 .service-box-header {
     position: relative;
     padding: 25px;
-    background: linear-gradient(120deg, var(--primary-color), var(--tertiary-color));
-    color: var(--white-color, #fff);
     text-align: center;
+    background: var(--primary-color);
+    color: var(--white-color, #fff);
+}
+
+/* Görsel üzerindeki header stili */
+.service-box-with-image .service-box-header {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    background: transparent;
+    padding: 20px;
+    text-align: left;
 }
 
 .service-box-icon {
@@ -95,6 +139,20 @@
     transition: transform 0.3s ease;
 }
 
+.service-box-with-image .service-box-icon {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 50px;
+    height: 50px;
+    margin: 0;
+    z-index: 2;
+    background-color: var(--white-color, #fff);
+    color: var(--primary-color);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
+}
+
 .service-box:hover .service-box-icon {
     transform: rotateY(180deg);
 }
@@ -104,15 +162,22 @@
     color: var(--white-color, #fff);
 }
 
+.service-box-with-image .service-box-icon i {
+    font-size: 20px;
+    color: var(--primary-color);
+}
+
 .service-box-logo {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 15px;
+    left: 15px;
     display: flex;
     align-items: center;
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.8);
     padding: 3px 8px;
     border-radius: 20px;
+    z-index: 2;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .service-box-logo img {
@@ -124,13 +189,19 @@
     font-size: 12px;
     font-weight: 700;
     margin-left: 5px;
-    color: var(--white-color, #fff);
+    color: var(--primary-color);
 }
 
 .service-box-title {
     font-size: 20px;
     font-weight: 700;
     margin-bottom: 10px;
+}
+
+.service-box-with-image .service-box-title {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    margin-bottom: 5px;
+    font-size: 22px;
 }
 
 .service-box-body {
@@ -144,6 +215,8 @@
     color: var(--text-muted, #6c757d);
     margin-bottom: 20px;
     flex-grow: 1;
+    font-size: 14px;
+    line-height: 1.6;
 }
 
 .service-box-features {
@@ -152,7 +225,7 @@
 
 .service-feature {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     margin-bottom: 10px;
 }
 
@@ -160,11 +233,13 @@
     color: var(--primary-color, #0d6efd);
     margin-right: 10px;
     font-size: 16px;
+    margin-top: 2px;
 }
 
 .service-feature span {
     font-size: 14px;
     color: var(--text-color, #212529);
+    line-height: 1.4;
 }
 
 .service-box-badges {
@@ -309,6 +384,10 @@
     .services-grid [class*="col-"] {
         margin-bottom: 30px;
     }
+    
+    .service-box-image {
+        height: 180px;
+    }
 }
 
 @media (max-width: 767px) {
@@ -337,6 +416,10 @@
     .service-box-title {
         font-size: 18px;
     }
+    
+    .service-box-image {
+        height: 160px;
+    }
 }
 
 /* Erişilebilirlik */
@@ -345,7 +428,8 @@
     .service-box-icon, 
     .service-box-btn, 
     .service-box-btn:before,
-    .service-box-btn i {
+    .service-box-btn i,
+    .service-box-image img {
         transition: none !important;
     }
     
@@ -353,4 +437,26 @@
         animation: none !important;
         opacity: 1 !important;
     }
+}
+
+/* Yeni eklenen hover efektleri */
+.service-box-with-image:hover .service-box-title {
+    transform: translateY(-2px);
+}
+
+/* Aynı yükseklikte kartlar elde etmek için özel sınıf */
+.services-grid .col-md-6,
+.services-grid .col-lg-4 {
+    display: flex;
+    margin-bottom: 24px;
+}
+
+.services-grid .row {
+    margin-left: -12px;
+    margin-right: -12px;
+}
+
+.services-grid [class*="col-"] {
+    padding-left: 12px;
+    padding-right: 12px;
 }
