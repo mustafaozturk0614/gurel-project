@@ -17,35 +17,40 @@ body {
   */
   
   /* Ana Renk (Primary) - Koyu Mavi */
-  --primary-color: #0052cc; /* Daha koyu mavi */
-  --primary-15-color: rgba(11, 61, 145, 0.15);
-  --primary-25-color: rgba(11, 61, 145, 0.25);
-  --primary-50-color: rgba(11, 61, 145, 0.50);
-  --primary-75-color: rgba(11, 61, 145, 0.75);
+  --primary-color: #0052cc;
+  --primary-rgb: 0, 82, 204;
+  --primary-15-color: rgba(var(--primary-rgb), 0.15);
+  --primary-25-color: rgba(var(--primary-rgb), 0.25);
+  --primary-35-color: rgba(var(--primary-rgb), 0.35);
+  --primary-50-color: rgba(var(--primary-rgb), 0.50);
+  --primary-75-color: rgba(var(--primary-rgb), 0.75);
   
   /* İkincil Renk (Secondary) - Yeşilimsi Mavi (Teal) */
   --secondary-color: #1E847F; 
-  --secondary-15-color: rgba(30, 132, 127, 0.15);
-  --secondary-25-color: rgba(30, 132, 127, 0.25);
-  --secondary-50-color: rgba(30, 132, 127, 0.50);
-  --secondary-75-color: rgba(30, 132, 127, 0.75);
+  --secondary-rgb: 30, 132, 127;
+  --secondary-15-color: rgba(var(--secondary-rgb), 0.15);
+  --secondary-25-color: rgba(var(--secondary-rgb), 0.25);
+  --secondary-50-color: rgba(var(--secondary-rgb), 0.50);
+  --secondary-75-color: rgba(var(--secondary-rgb), 0.75);
   
   /* Üçüncül Renk (Tertiary) - Canlı Açık Mavi */
   --tertiary-color: #4A90E2; 
-  --tertiary-15-color: rgba(74, 144, 226, 0.15);
-  --tertiary-25-color: rgba(74, 144, 226, 0.25);
-  --tertiary-50-color: rgba(74, 144, 226, 0.50);
-  --tertiary-75-color: rgba(74, 144, 226, 0.75);
+  --tertiary-rgb: 74, 144, 226;
+  --tertiary-15-color: rgba(var(--tertiary-rgb), 0.15);
+  --tertiary-25-color: rgba(var(--tertiary-rgb), 0.25);
+  --tertiary-50-color: rgba(var(--tertiary-rgb), 0.50);
+  --tertiary-75-color: rgba(var(--tertiary-rgb), 0.75);
   
   /* Vurgu Rengi (Accent) - Sıcak Turuncu/Altın */
-  --accent-color: #F5A623;          
-  --accent-15-color: rgba(245, 166, 35, 0.15);
-  --accent-25-color: rgba(245, 166, 35, 0.25);
-  --accent-35-color: rgba(245, 166, 35, 0.35);
-  --accent-50-color: rgba(245, 166, 35, 0.50);
-  --accent-65-color: rgba(245, 166, 35, 0.65);
-  --accent-75-color: rgba(245, 166, 35, 0.75);
-  --accent-85-color: rgba(245, 166, 35, 0.85);
+  --accent-color: #F5A623;
+  --accent-rgb: 245, 166, 35;
+  --accent-15-color: rgba(var(--accent-rgb), 0.15);
+  --accent-25-color: rgba(var(--accent-rgb), 0.25);
+  --accent-35-color: rgba(var(--accent-rgb), 0.35);
+  --accent-50-color: rgba(var(--accent-rgb), 0.50);
+  --accent-65-color: rgba(var(--accent-rgb), 0.65);
+  --accent-75-color: rgba(var(--accent-rgb), 0.75);
+  --accent-85-color: rgba(var(--accent-rgb), 0.85);
   
   /* Semantik Durum Renkleri - Standart */
   --success-color: #28A745;       /* Yeşil */
@@ -62,11 +67,11 @@ body {
   --brand-gradient: linear-gradient(135deg, var(--primary-color), var(--tertiary-color)); /* Koyu Mavi -> Açık Mavi (Daha Yumuşak) */
   
   /* Yeni Özel Gradyanlar - Yumuşatılmış */
-  --hero-overlay: linear-gradient(90deg, rgba(11, 61, 145, 0.8), rgba(30, 132, 127, 0.5)); /* Koyu Mavi -> Teal (Daha Yumuşak) */
+  --hero-overlay: linear-gradient(90deg, rgba(var(--primary-rgb), 0.8), rgba(var(--secondary-rgb), 0.5)); /* Koyu Mavi -> Teal (Daha Yumuşak) */
   --cta-gradient: linear-gradient(135deg, var(--accent-color), var(--warning-color)); /* Turuncu -> Sarı (Daha Sıcak ve Yumuşak) */
   --tab-gradient: linear-gradient(135deg, var(--accent-color), var(--warning-color)); /* Turuncu -> Sarı */
-  --card-hover-shadow: 0 10px 25px rgba(74, 144, 226, 0.2); /* Açık mavi tabanlı - Daha yumuşak */
-  --button-hover-shadow: 0 8px 20px rgba(11, 61, 145, 0.25); /* Koyu mavi tabanlı - Daha yumuşak */
+  --card-hover-shadow: 0 10px 25px rgba(var(--tertiary-rgb), 0.2); /* Açık mavi tabanlı - Daha yumuşak */
+  --button-hover-shadow: 0 8px 20px rgba(var(--primary-rgb), 0.25); /* Koyu mavi tabanlı - Daha yumuşak */
   
   /* Modern Gradyanlar - Yumuşatılmış */
   --modern-gradient-1: linear-gradient(120deg, var(--secondary-color), var(--accent-color)); /* Teal -> Turuncu */
@@ -75,30 +80,33 @@ body {
   
   /* Beyaz */
   --white-color: #ffffffe8;
-  --white-10-color: rgba(255, 255, 255, 0.1);
-  --white-25-color: rgba(255, 255, 255, 0.25);
-  --white-50-color: rgba(255, 255, 255, 0.50);
-  --white-65-color: rgba(255, 255, 255, 0.65);
-  --white-75-color: rgba(255, 255, 255, 0.75);
-  --white-85-color: rgba(255, 255, 255, 0.85);
+  --white-rgb: 255, 255, 255;
+  --white-10-color: rgba(var(--white-rgb), 0.1);
+  --white-25-color: rgba(var(--white-rgb), 0.25);
+  --white-50-color: rgba(var(--white-rgb), 0.50);
+  --white-65-color: rgba(var(--white-rgb), 0.65);
+  --white-75-color: rgba(var(--white-rgb), 0.75);
+  --white-85-color: rgba(var(--white-rgb), 0.85);
   
   /* Gri - Nötr */
   --gray-color: #6C757D;         /* Orta Gri */
-  --gray-10-color: rgba(108, 117, 125, 0.1);
-  --gray-25-color: rgba(108, 117, 125, 0.25);
-  --gray-50-color: rgba(108, 117, 125, 0.50);
-  --gray-65-color: rgba(108, 117, 125, 0.65);
-  --gray-75-color: rgba(108, 117, 125, 0.75);
-  --gray-85-color: rgba(108, 117, 125, 0.85);
+  --gray-rgb: 108, 117, 125;
+  --gray-10-color: rgba(var(--gray-rgb), 0.1);
+  --gray-25-color: rgba(var(--gray-rgb), 0.25);
+  --gray-50-color: rgba(var(--gray-rgb), 0.50);
+  --gray-65-color: rgba(var(--gray-rgb), 0.65);
+  --gray-75-color: rgba(var(--gray-rgb), 0.75);
+  --gray-85-color: rgba(var(--gray-rgb), 0.85);
   
   /* Siyah - Koyu Nötr */
   --black-color: #343A40;         /* Koyu Gri/Siyah */
-  --black-10-color: rgba(52, 58, 64, 0.1);
-  --black-25-color: rgba(52, 58, 64, 0.25);
-  --black-50-color: rgba(52, 58, 64, 0.50);
-  --black-65-color: rgba(52, 58, 64, 0.65);
-  --black-75-color: rgba(52, 58, 64, 0.75);
-  --black-85-color: rgba(52, 58, 64, 0.85);
+  --black-rgb: 52, 58, 64;
+  --black-10-color: rgba(var(--black-rgb), 0.1);
+  --black-25-color: rgba(var(--black-rgb), 0.25);
+  --black-50-color: rgba(var(--black-rgb), 0.50);
+  --black-65-color: rgba(var(--black-rgb), 0.65);
+  --black-75-color: rgba(var(--black-rgb), 0.75);
+  --black-85-color: rgba(var(--black-rgb), 0.85);
   
   /* Bileşen Özel Renkleri */
   --text-color: var(--black-color);       /* Koyu Gri/Siyah */
@@ -106,22 +114,22 @@ body {
   --subheading-color: var(--secondary-color); /* Teal - alt başlıklar için */
   --link-color: var(--primary-color);       /* Koyu Mavi */
   --link-hover-color: var(--accent-color);    /* Turuncu */
-  --border-color: rgba(108, 117, 125, 0.15); /* Orta Gri tabanlı border - Daha yumuşak */
+  --border-color: rgba(var(--gray-rgb), 0.15); /* Orta Gri tabanlı border - Daha yumuşak */
   --heading-color: var(--black-color);       /* Koyu Gri/Siyah */
   --background-color: var(--white-color);   /* Beyaz */
   --light-background: #F8F9FA;             /* Çok Açık Gri */
   
   /* Gölge Renkleri - Nötr Tabanlı (Daha Yumuşak) */
-  --shadow-light: rgba(52, 58, 64, 0.05); /* Koyu Gri Tabanlı */
-  --shadow-medium: rgba(52, 58, 64, 0.08); /* Koyu Gri Tabanlı */
-  --shadow-dark: rgba(52, 58, 64, 0.12); /* Koyu Gri Tabanlı */
+  --shadow-light: rgba(var(--black-rgb), 0.05); /* Koyu Gri Tabanlı */
+  --shadow-medium: rgba(var(--black-rgb), 0.08); /* Koyu Gri Tabanlı */
+  --shadow-dark: rgba(var(--black-rgb), 0.12); /* Koyu Gri Tabanlı */
   
   /* Modern Gölge Stilleri - Nötr Tabanlı */
   --box-shadow-sm: 0 2px 8px var(--shadow-light);
   --box-shadow-md: 0 6px 18px var(--shadow-medium), 0 2px 6px var(--shadow-light);
   --box-shadow-lg: 0 12px 28px var(--shadow-dark), 0 5px 12px var(--shadow-medium);
-  --box-shadow-xl: 0 25px 50px rgba(52, 58, 64, 0.15), 0 12px 24px rgba(52, 58, 64, 0.1); /* Özel ayar */
-  --box-shadow-2xl: 0 35px 70px rgba(52, 58, 64, 0.18); /* Özel ayar */
+  --box-shadow-xl: 0 25px 50px rgba(var(--black-rgb), 0.15), 0 12px 24px rgba(var(--black-rgb), 0.1); /* Özel ayar */
+  --box-shadow-2xl: 0 35px 70px rgba(var(--black-rgb), 0.18); /* Özel ayar */
   
   /* Neomorphic Gölge Varyantları - Nötr Tabanlı */
   --neumorphic-light: 8px 8px 16px var(--shadow-medium), -8px -8px 16px rgba(255, 255, 255, 0.7); 
@@ -143,9 +151,9 @@ body {
   
   /* Yeni Glassmorphism Varyantları - Güncellendi */
   --glass-light: rgba(255, 255, 255, 0.65);
-  --glass-dark: rgba(52, 58, 64, 0.6); /* Koyu Gri Tabanlı */
-  --glass-blue: rgba(11, 61, 145, 0.35); /* Koyu Mavi Tabanlı */
-  --glass-teal: rgba(30, 132, 127, 0.5); /* Teal Tabanlı */
+  --glass-dark: rgba(var(--black-rgb), 0.6); /* Koyu Gri Tabanlı */
+  --glass-blue: rgba(var(--primary-rgb), 0.35); /* Koyu Mavi Tabanlı */
+  --glass-teal: rgba(var(--secondary-rgb), 0.5); /* Teal Tabanlı */
   
   /* Geliştirilmiş Geçişler (Aynı kaldı) */
   --transition-fast: 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -1288,28 +1296,63 @@ body {
 /* Koyu Tema Değişkenleri */
 [data-theme="dark"] {
   --primary-color: #1a56db;
-  --primary-15-color: rgba(26, 86, 219, 0.15);
-  --primary-25-color: rgba(26, 86, 219, 0.25);
-  --primary-50-color: rgba(26, 86, 219, 0.50);
-  --primary-75-color: rgba(26, 86, 219, 0.75);
+  --primary-rgb: 26, 86, 219;
+  --primary-15-color: rgba(var(--primary-rgb), 0.15);
+  --primary-25-color: rgba(var(--primary-rgb), 0.25);
+  --primary-35-color: rgba(var(--primary-rgb), 0.35);
+  --primary-50-color: rgba(var(--primary-rgb), 0.50);
+  --primary-75-color: rgba(var(--primary-rgb), 0.75);
   
   --secondary-color: #0e9f6e;
-  --secondary-15-color: rgba(14, 159, 110, 0.15);
-  --secondary-25-color: rgba(14, 159, 110, 0.25);
-  --secondary-50-color: rgba(14, 159, 110, 0.50);
-  --secondary-75-color: rgba(14, 159, 110, 0.75);
+  --secondary-rgb: 14, 159, 110;
+  --secondary-15-color: rgba(var(--secondary-rgb), 0.15);
+  --secondary-25-color: rgba(var(--secondary-rgb), 0.25);
+  --secondary-50-color: rgba(var(--secondary-rgb), 0.50);
+  --secondary-75-color: rgba(var(--secondary-rgb), 0.75);
   
   --tertiary-color: #3f83f8;
-  --tertiary-15-color: rgba(63, 131, 248, 0.15);
-  --tertiary-25-color: rgba(63, 131, 248, 0.25);
-  --tertiary-50-color: rgba(63, 131, 248, 0.50);
-  --tertiary-75-color: rgba(63, 131, 248, 0.75);
+  --tertiary-rgb: 63, 131, 248;
+  --tertiary-15-color: rgba(var(--tertiary-rgb), 0.15);
+  --tertiary-25-color: rgba(var(--tertiary-rgb), 0.25);
+  --tertiary-50-color: rgba(var(--tertiary-rgb), 0.50);
+  --tertiary-75-color: rgba(var(--tertiary-rgb), 0.75);
   
   --accent-color: #ff8a4c;
+  --accent-rgb: 245, 166, 35;
+  --accent-15-color: rgba(var(--accent-rgb), 0.15);
+  --accent-25-color: rgba(var(--accent-rgb), 0.25);
+  --accent-35-color: rgba(var(--accent-rgb), 0.35);
+  --accent-50-color: rgba(var(--accent-rgb), 0.50);
+  --accent-65-color: rgba(var(--accent-rgb), 0.65);
+  --accent-75-color: rgba(var(--accent-rgb), 0.75);
+  --accent-85-color: rgba(var(--accent-rgb), 0.85);
   
   --white-color: #ffffff;
-  --black-color: #111827;
+  --white-rgb: 255, 255, 255;
+  --white-10-color: rgba(var(--white-rgb), 0.1);
+  --white-25-color: rgba(var(--white-rgb), 0.25);
+  --white-50-color: rgba(var(--white-rgb), 0.50);
+  --white-65-color: rgba(var(--white-rgb), 0.65);
+  --white-75-color: rgba(var(--white-rgb), 0.75);
+  --white-85-color: rgba(var(--white-rgb), 0.85);
+  
   --gray-color: #9ca3af;
+  --gray-rgb: 156, 163, 175;
+  --gray-10-color: rgba(var(--gray-rgb), 0.1);
+  --gray-25-color: rgba(var(--gray-rgb), 0.25);
+  --gray-50-color: rgba(var(--gray-rgb), 0.50);
+  --gray-65-color: rgba(var(--gray-rgb), 0.65);
+  --gray-75-color: rgba(var(--gray-rgb), 0.75);
+  --gray-85-color: rgba(var(--gray-rgb), 0.85);
+  
+  --black-color: #111827;
+  --black-rgb: 17, 24, 39;
+  --black-10-color: rgba(var(--black-rgb), 0.1);
+  --black-25-color: rgba(var(--black-rgb), 0.25);
+  --black-50-color: rgba(var(--black-rgb), 0.50);
+  --black-65-color: rgba(var(--black-rgb), 0.65);
+  --black-75-color: rgba(var(--black-rgb), 0.75);
+  --black-85-color: rgba(var(--black-rgb), 0.85);
   
   --text-color: #e5e7eb;
   --text-muted: #9ca3af;
@@ -1326,6 +1369,82 @@ body {
   --glass-white: rgba(31, 41, 55, 0.75);
   --glass-light: rgba(31, 41, 55, 0.65);
   --glass-dark: rgba(17, 24, 39, 0.8);
+  --glass-blue: rgba(var(--primary-rgb), 0.35);
+  --glass-teal: rgba(var(--secondary-rgb), 0.5);
+  
+  --card-hover-shadow: 0 10px 25px rgba(var(--tertiary-rgb), 0.2);
+  --button-hover-shadow: 0 8px 20px rgba(var(--primary-rgb), 0.25);
+  
+  --neumorphic-light: 8px 8px 16px var(--shadow-medium), -8px -8px 16px rgba(255, 255, 255, 0.7);
+  --neumorphic-pressed: inset 2px 2px 5px var(--shadow-medium), inset -3px -3px 7px rgba(255, 255, 255, 0.7);
+  
+  --glass-backdrop: blur(16px) saturate(180%);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.3);
+  --glass-shadow: 0 15px 35px var(--shadow-dark);
+  --glass-light: rgba(255, 255, 255, 0.65);
+  --glass-dark: rgba(var(--black-rgb), 0.6);
+  --glass-blue: rgba(var(--primary-rgb), 0.35);
+  --glass-teal: rgba(var(--secondary-rgb), 0.5);
+  
+  --transition-fast: 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --transition-normal: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --transition-slow: 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --transition-bounce: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-elastic: 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+  
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  
+  --space-unit: 0.25rem;
+  --space-xs: calc(1 * var(--space-unit));   /* 0.25rem - 4px */
+  --space-sm: calc(2 * var(--space-unit));   /* 0.5rem - 8px */
+  --space-md: calc(4 * var(--space-unit));   /* 1rem - 16px */
+  --space-lg: calc(6 * var(--space-unit));   /* 1.5rem - 24px */
+  --space-xl: calc(10 * var(--space-unit));  /* 2.5rem - 40px */
+  --space-2xl: calc(16 * var(--space-unit)); /* 4rem - 64px */
+  
+  --border-radius-sm: 0.25rem;
+  --border-radius-md: 0.5rem;
+  --border-radius-lg: 1rem;
+  --border-radius-xl: 1.5rem;
+  --border-radius-pill: 50px;
+  --border-radius-circle: 50%;
+  
+  --breakpoint-xs: 0;      /* Extra small devices (< 576px) */
+  --breakpoint-sm: 576px;  /* Small devices (≥ 576px) */
+  --breakpoint-md: 768px;  /* Medium devices (≥ 768px) */
+  --breakpoint-lg: 992px;  /* Large devices (≥ 992px) */
+  --breakpoint-xl: 1200px; /* Extra large devices (≥ 1200px) */
+  --breakpoint-xxl: 1400px;/* Extra extra large devices (≥ 1400px) */
+  
+  --font-size-xs: clamp(0.7rem, 0.6rem + 0.5vw, 0.8rem);
+  --font-size-sm: clamp(0.8rem, 0.7rem + 0.5vw, 0.9rem);
+  --font-size-base: clamp(0.9rem, 0.85rem + 0.5vw, 1.1rem);
+  --font-size-md: clamp(1rem, 0.9rem + 0.7vw, 1.25rem);
+  --font-size-lg: clamp(1.2rem, 1.1rem + 0.8vw, 1.5rem);
+  --font-size-xl: clamp(1.4rem, 1.3rem + 1vw, 1.8rem);
+  --font-size-2xl: clamp(1.7rem, 1.5rem + 1.2vw, 2.2rem);
+  --font-size-3xl: clamp(2rem, 1.8rem + 1.5vw, 2.8rem);
+  --font-size-4xl: clamp(2.4rem, 2.2rem + 1.8vw, 3.2rem);
+  
+  --icon-size-sm: clamp(1rem, 0.95rem + 0.3vw, 1.2rem);
+  --icon-size-md: clamp(1.2rem, 1rem + 0.5vw, 1.6rem);
+  --icon-size-lg: clamp(1.6rem, 1.4rem + 0.6vw, 2rem);
+  --icon-size-xl: clamp(2rem, 1.8rem + 0.8vw, 2.5rem);
+  
+  --neuro-background: #e6e7ee;
+  --neuro-shadow-dark: rgba(163, 177, 198, 0.5);
+  --neuro-shadow-light: rgba(255, 255, 255, 0.9);
+  --neuro-border: rgba(255, 255, 255, 0.2);
+  --neuro-text: #44476a;
+  
+  --linkedin-color: #0077B5;
+  --whatsapp-color: #25D366;
+  --instagram-color: #E1306C;
+  --facebook-color: #3b5998;
+  --twitter-color: #1DA1F2;
+  --email-color: var(--gray-color);
 }
 
 /* Tema Değiştirici UI */
@@ -1449,24 +1568,7 @@ body {
 
 
 
-/* Dark tema uyumluluğu */
-[data-theme="dark"] .language-dropdown {
-  background-color: var(--light-background);
-  border: 1px solid var(--border-color);
-}
 
-[data-theme="dark"] .language-dropdown-header {
-  background-color: var(--background-color);
-  border-bottom: 1px solid var(--border-color);
-}
-
-[data-theme="dark"] .language-item:hover {
-  background-color: rgba(255, 255, 255, 0.05);
-}
-
-[data-theme="dark"] .language-item.active {
-  background-color: rgba(255, 255, 255, 0.1);
-}
 
 /* Öncesi */
 .floating-shapes .shape {
@@ -1516,10 +1618,7 @@ body {
         background-color: var(--primary-10-color);
     }
     
-    /* Dokunulabilir yüzeyleri büyüt */
-    .nav-link, .btn, .language-item {
-        padding: 12px 16px;
-    }
+
 }
 
 /* Loading durumları için stiller */
@@ -1647,7 +1746,7 @@ body.dark-theme {
     /* Dokunma hedeflerini büyüt */
     .nav-link, 
     .btn,
-    .language-item,
+  
     .principle-card,
     .region-tag-item {
         min-height: 44px; /* Apple'ın önerdiği minimum */
@@ -1656,8 +1755,7 @@ body.dark-theme {
     
     /* Dokunma hedefleri arasında yeterli boşluk */
     .navbar-nav .nav-item,
-    .hero-buttons .btn,
-    .language-dropdown-list .language-item {
+    .hero-buttons .btn {
         margin-bottom: 8px;
     }
 }
