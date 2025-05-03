@@ -350,7 +350,7 @@ function initJQueryEffects() {
 function initApp() {
   console.log("initApp fonksiyonu çağrıldı");
   
-  // Ana init fonksiyonları
+      // Ana init fonksiyonları
   // Yükleme ekranını hemen kaldırmayı dene
   try {
     removeLoader();
@@ -361,32 +361,32 @@ function initApp() {
   console.log("initSettingsPanel fonksiyonu çağrılacak");
   initSettingsPanel(); // Settings paneli fonksiyonunu ilk sırada çağır
   
-  initHeaderSystem();
-  initTabSystem();
-  initModernHero();
-  initParallaxEffects();
-  initTiltEffects();
-  initCounters();
-  initFormValidation();
-  initMapFeatures();
-  initScrollEvents();
-  updateCopyrightYear();
-  initThemeSystem();
+    initHeaderSystem();
+    initTabSystem();
+    initModernHero();
+    initParallaxEffects();
+    initTiltEffects();
+    initCounters();
+    initFormValidation();
+    initMapFeatures();
+    initScrollEvents();
+    updateCopyrightYear();
+    initThemeSystem();
   initMobileMenu();
-  initTeamAnimations();
-  initAddressChecker();
-  initLazyLoading();
+    initTeamAnimations();
+    initAddressChecker();
+    initLazyLoading();
   initServiceAnimations();
 
-  // AOS Kütüphanesi init
-  if (typeof AOS !== 'undefined') {
-    AOS.init({
-      duration: CONFIG.animation.duration,
-      easing: CONFIG.animation.easing,
-      once: CONFIG.animation.once,
-      mirror: CONFIG.animation.mirror,
-      offset: CONFIG.animation.offset
-    });
+    // AOS Kütüphanesi init
+    if (typeof AOS !== 'undefined') {
+  AOS.init({
+        duration: CONFIG.animation.duration,
+        easing: CONFIG.animation.easing,
+        once: CONFIG.animation.once,
+        mirror: CONFIG.animation.mirror,
+        offset: CONFIG.animation.offset
+      });
   }
 }
 
@@ -2335,81 +2335,168 @@ function initAddressChecker() {
 }
 
 /**
- * Lazy Loading ve Performans Optimizasyonu
+ * Lazy Loading İşlevselliği
+ * Sayfa içindeki resim ve video öğelerinin lazily yüklenmesini sağlar
  */
 function initLazyLoading() {
-  const lazyImages = document.querySelectorAll('img.lazy');
-  const lazyVideos = document.querySelectorAll('video[data-src]');
-  const heroVideo = document.getElementById('hero-video');
-  
-  // Görüntü lazy loading
-  if (lazyImages.length > 0) {
-    Utils.createObserver(lazyImages, (img) => {
-      if (img.dataset.src) {
-        img.src = img.dataset.src;
-        img.classList.add('loaded');
-        img.classList.remove('lazy');
+  // Görüntüleme alanına giren öğeleri yüklemek için Intersection Observer kullan
+  const lazyLoadObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const element = entry.target;
+        
+        if (element.tagName.toLowerCase() === 'img') {
+          // Lazy load edilecek resim
+          if (element.dataset.src) {
+            element.src = element.dataset.src;
+            element.removeAttribute('data-src');
+          }
+          
+          if (element.dataset.srcset) {
+            element.srcset = element.dataset.srcset;
+            element.removeAttribute('data-srcset');
+          }
+          
+          element.classList.add('loaded');
+        } 
+        else if (element.tagName.toLowerCase() === 'video') {
+          // Video için lazy loading
+          if (!element.getAttribute('src') && element.querySelector('source')) {
+            // Source öğeleri ile video
+            const sources = element.querySelectorAll('source');
+            sources.forEach(source => {
+              if (source.dataset.src) {
+                source.src = source.dataset.src;
+                source.removeAttribute('data-src');
+              }
+            });
+            
+            // Videoyu yükle
+            element.load();
+            
+            // Otomatik oynatma varsa başlat
+            if (element.hasAttribute('autoplay')) {
+              try {
+                element.play().catch(err => {
+                  console.warn('Video otomatik oynatılamadı:', err);
+                });
+              } catch (e) {
+                console.warn('Video oynatmada hata:', e);
+              }
+            }
+          } 
+          else if (element.dataset.src) {
+            // Doğrudan src özelliğine sahip video
+            element.src = element.dataset.src;
+            element.removeAttribute('data-src');
+            
+            // Videoyu yükle
+            element.load();
+            
+            // Otomatik oynatma varsa başlat
+            if (element.hasAttribute('autoplay')) {
+              try {
+                element.play().catch(err => {
+                  console.warn('Video otomatik oynatılamadı:', err);
+                });
+              } catch (e) {
+                console.warn('Video oynatmada hata:', e);
+              }
+            }
+          }
+          
+          element.classList.add('loaded');
+        } 
+        else if (element.classList.contains('lazy-background')) {
+          // Arka plan resmi için lazy loading
+          const src = element.dataset.src;
+          if (src) {
+            element.style.backgroundImage = `url(${src})`;
+            element.removeAttribute('data-src');
+            element.classList.add('loaded');
+          }
+        }
+        
+        // Gözlemlemeyi sonlandır
+        observer.unobserve(element);
       }
-    }, { rootMargin: '200px 0px' });
-  }
-  
-  // Video lazy loading - video varsa src'ye ata ve oynat
-  if (lazyVideos.length > 0) {
-    Utils.createObserver(lazyVideos, (video) => {
-      if (video.dataset.src) {
-        video.src = video.dataset.src;
-        
-        // Source alt öğelerine de src ata
-        const sources = video.querySelectorAll('source[data-src]');
-        sources.forEach(source => {
-          source.src = source.dataset.src;
-        });
-        
-        // Video yüklendiğinde veya hata oluştuğunda yakalamak için
-        video.addEventListener('loadeddata', function() {
-          video.classList.add('loaded');
-        }, { once: true });
-        
-        video.addEventListener('error', function() {
-          console.warn('Video yüklenemedi:', video.src);
-        }, { once: true });
-        
-        // Video yüklemesi başlat
-        video.load();
-      }
-    }, { rootMargin: '200px 0px' });
-  }
-  
-  // Hero video optimizasyonu
-  if (heroVideo) {
-    // Mobil cihazlarda video yüklemeyi geciktir
-    if (Utils.isMobile()) {
-      heroVideo.preload = 'metadata';
-    }
-    
-    heroVideo.addEventListener('loadedmetadata', function() {
-      // Metadata yüklendi, play() çağrılabilir
-      heroVideo.play().catch(err => {
-        console.warn('Otomatik oynatma başlatılamadı:', err);
-      });
-    }, { once: true });
-    
-    heroVideo.addEventListener('error', function(e) {
-      console.warn('Hero video yüklenirken hata oluştu:', e);
-      // Hata durumunda poster görüntüsünü göster
-      heroVideo.poster = 'assets/images/hero-bg.jpg';
-    }, { once: true });
-  }
-  
-  // Sayfa kapanırken bellek temizliği
-  window.addEventListener('beforeunload', function() {
-    // Video elemanlarını durdur ve kaynakları temizle
-    document.querySelectorAll('video').forEach(video => {
-      video.pause();
-      video.src = '';
-      video.load();
     });
-  }, { once: true });
+  }, {
+    rootMargin: '200px 0px', // Görüntüleme alanından 200px önce yüklemeye başla
+    threshold: 0.01 // Element görünür hale geldiği an yükleme başlasın
+  });
+  
+  // Lazy loading yapılacak tüm öğeleri belirle ve gözlemle
+  const lazyElements = document.querySelectorAll('img[data-src], video[data-src], video source[data-src], .lazy-background[data-src]');
+  lazyElements.forEach(element => {
+    lazyLoadObserver.observe(element);
+  });
+  
+  // Hero videosunu özel olarak işle
+  const heroVideo = document.getElementById('hero-video');
+  if (heroVideo) {
+    // Video kaynağını doğrudan ayarla
+    const videoSrc = heroVideo.getAttribute('src');
+    if (videoSrc) {
+      // Video zaten src özelliğine sahip, sadece yüklenmesini sağla
+      heroVideo.addEventListener('loadeddata', function() {
+        heroVideo.classList.add('loaded');
+        const videoParent = heroVideo.closest('.hero-video-background');
+        if (videoParent) {
+          videoParent.classList.add('video-loaded');
+        }
+      });
+      
+      // Mobil cihazda ise video yerine sadece poster göster
+      if (window.innerWidth < 768) {
+        heroVideo.setAttribute('preload', 'none');
+        heroVideo.removeAttribute('autoplay');
+      } else {
+        // Masaüstünde videoyu yükle
+        heroVideo.load();
+        
+        // Otomatik oynatma
+        if (heroVideo.hasAttribute('autoplay')) {
+          heroVideo.play().catch(e => {
+            console.warn('Hero video otomatik oynatılamadı:', e);
+          });
+        }
+      }
+    }
+  }
+  
+  // Sayfa kaydırma olayını dinle ve görünür olan lazy öğeleri kontrol et
+  window.addEventListener('scroll', debounce(() => {
+    lazyElements.forEach(element => {
+      if (isInViewport(element, 200) && !element.classList.contains('loaded')) {
+        lazyLoadObserver.observe(element);
+      }
+    });
+  }, 200));
+  
+  // Element görüntüleme alanında mı kontrolü
+  function isInViewport(element, offset = 0) {
+    const rect = element.getBoundingClientRect();
+    return (
+      rect.top <= (window.innerHeight + offset) &&
+      rect.left <= (window.innerWidth + offset) &&
+      rect.bottom >= (0 - offset) &&
+      rect.right >= (0 - offset)
+    );
+  }
+  
+  // Debounce fonksiyonu
+  function debounce(func, wait = 20) {
+    let timeout;
+    return function() {
+      const context = this;
+      const args = arguments;
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        func.apply(context, args);
+      }, wait);
+    };
+  }
 }
 
 // Hata yakalama mekanizması - konsol hatalarını temizler
@@ -2442,8 +2529,7 @@ function initLazyLoading() {
  * Settings Panel İşlevselliği
  */
 function initSettingsPanel() {
-  console.log("initSettingsPanel çağrıldı");
-  let settingsToggle = document.getElementById('settingsToggle');
+  const settingsToggle = document.getElementById('settingsToggle');
   const settingsPanel = document.getElementById('settingsPanel');
   const settingsClose = document.getElementById('settingsClose');
   const themeToggle = document.getElementById('themeToggle');
@@ -2453,38 +2539,33 @@ function initSettingsPanel() {
   const currentFontSize = document.getElementById('currentFontSize');
   const colorOptions = document.querySelectorAll('.color-option');
   
-  console.log("Elementler sorgulandı:", { 
-    settingsToggle: settingsToggle ? true : false, 
-    settingsPanel: settingsPanel ? true : false,
-    settingsClose: settingsClose ? true : false 
-  });
-  
-  // Önceden eklenen click event listener'ları temizle
-  if (settingsToggle) {
-    const newToggle = settingsToggle.cloneNode(true);
-    settingsToggle.parentNode.replaceChild(newToggle, settingsToggle);
-    settingsToggle = newToggle;
+  // Panel açma/kapama fonksiyonu
+  function toggleSettingsPanel(e) {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    
+    if (settingsPanel.classList.contains('active')) {
+      settingsPanel.classList.remove('active');
+      settingsToggle.classList.remove('active');
+    } else {
+      settingsPanel.classList.add('active');
+      settingsToggle.classList.add('active');
+    }
+    
+    return false;
   }
   
   // Panel açma/kapama
   if (settingsToggle && settingsPanel) {
-    console.log("Click event listener ekleniyor");
-    settingsToggle.addEventListener('click', function(e) {
-      console.log("Settings toggle tıklandı");
-      e.preventDefault();
-      e.stopPropagation();
-      
-      if (settingsPanel.classList.contains('active')) {
-        settingsPanel.classList.remove('active');
-        settingsToggle.classList.remove('active');
-        console.log("Panel kapatıldı");
-      } else {
-        settingsPanel.classList.add('active');
-        settingsToggle.classList.add('active');
-        console.log("Panel açıldı");
+    settingsToggle.addEventListener('click', toggleSettingsPanel);
+    
+    // Klavye erişilebilirliği için
+    settingsToggle.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        toggleSettingsPanel(e);
       }
-      
-      return false;
     });
   }
   
@@ -2500,23 +2581,55 @@ function initSettingsPanel() {
   
   // Tema değiştirme
   if (themeToggle) {
+    // Sayfa yüklendiğinde kaydedilmiş temayı kontrol et
     const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+    
+    // Toggle düğmesini kaydedilmiş duruma göre ayarla
     themeToggle.checked = savedDarkMode;
     
+    // Sayfanın tema sınıfını ayarla
+    document.body.classList.toggle('dark-mode', savedDarkMode);
+    
+    // Change olayını dinle ve tema değişikliğini uygula
     themeToggle.addEventListener('change', function() {
       const isDarkMode = this.checked;
       document.body.classList.toggle('dark-mode', isDarkMode);
       localStorage.setItem('darkMode', isDarkMode);
       
-      // Tema önizleme güncelleme
-      const themePreview = document.querySelector('.theme-preview');
-      if (themePreview) {
-        themePreview.classList.toggle('theme-preview-night', isDarkMode);
+      // Temaya uygun stil değişikliklerini yap
+      if (isDarkMode) {
+        document.querySelectorAll('.theme-preview-sun').forEach(el => {
+          el.style.right = '-30px';
+        });
+        document.querySelectorAll('.theme-preview-moon').forEach(el => {
+          el.style.right = '25px';
+        });
+      } else {
+        document.querySelectorAll('.theme-preview-sun').forEach(el => {
+          el.style.right = '25px';
+        });
+        document.querySelectorAll('.theme-preview-moon').forEach(el => {
+          el.style.right = '-30px';
+        });
       }
     });
     
-    // Sayfa yüklendiğinde tema ayarını uygula
-    document.body.classList.toggle('dark-mode', savedDarkMode);
+    // Sayfa yüklendiğinde tema önizlemesini ayarla
+    if (savedDarkMode) {
+      document.querySelectorAll('.theme-preview-sun').forEach(el => {
+        el.style.right = '-30px';
+      });
+      document.querySelectorAll('.theme-preview-moon').forEach(el => {
+        el.style.right = '25px';
+      });
+    } else {
+      document.querySelectorAll('.theme-preview-sun').forEach(el => {
+        el.style.right = '25px';
+      });
+      document.querySelectorAll('.theme-preview-moon').forEach(el => {
+        el.style.right = '-30px';
+      });
+    }
   }
   
   // Kontrast değiştirme
@@ -2572,55 +2685,46 @@ function initSettingsPanel() {
   updateFontSize(fontSizeValue);
   
   // Tema rengi değiştirme
-  if (colorOptions && colorOptions.length > 0) {
-    const savedThemeColor = localStorage.getItem('themeColor') || '#0055a4';
+  if (colorOptions && colorOptions.length) {
+    // Kaydedilmiş tema rengini al
+    const savedThemeColor = localStorage.getItem('themeColor') || 'blue';
+    let savedColorHex = '#0055a4'; // Varsayılan mavi
     
-    // Sayfa yüklendiğinde kaydedilmiş tema rengini uygula
-    document.documentElement.style.setProperty('--primary-color', savedThemeColor);
-    
-    // Aktif renk seçeneğini işaretle
+    // Renk seçeneklerini oluştur ve aktif olanı işaretle
     colorOptions.forEach(option => {
-      const optionColor = option.getAttribute('data-color');
-      if (optionColor === savedThemeColor) {
+      if (option.dataset.theme === savedThemeColor) {
         option.classList.add('active');
-      } else {
-        option.classList.remove('active');
+        savedColorHex = option.dataset.color;
       }
       
-      // Renk seçeneği tıklama olayı
       option.addEventListener('click', function() {
-        const color = this.getAttribute('data-color');
+        const color = this.dataset.color;
+        const theme = this.dataset.theme;
         
-        // Aktif seçeneği güncelle
-        colorOptions.forEach(opt => opt.classList.remove('active'));
-        this.classList.add('active');
-        
-        // Tema rengini uygula
+        // Tema rengini değiştir
         document.documentElement.style.setProperty('--primary-color', color);
-        localStorage.setItem('themeColor', color);
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('themeColor', theme);
+        
+        // Aktif sınıfını güncelle
+        colorOptions.forEach(opt => {
+          opt.classList.remove('active');
+        });
+        this.classList.add('active');
       });
     });
+    
+    // Sayfa yüklendiğinde tema rengini uygula
+    document.documentElement.style.setProperty('--primary-color', savedColorHex);
+    document.documentElement.setAttribute('data-theme', savedThemeColor);
   }
   
-  // ESC tuşu ile paneli kapatma
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && settingsPanel.classList.contains('active')) {
-      settingsPanel.classList.remove('active');
-      if (settingsToggle) {
-        settingsToggle.classList.remove('active');
-      }
-    }
-  });
-  
-  // Panel dışına tıklama ile kapatma
+  // Dışarıya tıklayınca paneli kapat
   document.addEventListener('click', function(e) {
     if (settingsPanel && settingsPanel.classList.contains('active')) {
-      // Panel içindeki bir elemana tıklanmadıysa ve toggle butonuna da tıklanmadıysa kapat
-      if (!settingsPanel.contains(e.target) && e.target !== settingsToggle) {
+      if (!settingsPanel.contains(e.target) && e.target !== settingsToggle && !settingsToggle.contains(e.target)) {
         settingsPanel.classList.remove('active');
-        if (settingsToggle) {
-          settingsToggle.classList.remove('active');
-        }
+        settingsToggle.classList.remove('active');
       }
     }
   });
