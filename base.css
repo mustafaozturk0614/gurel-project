@@ -253,7 +253,149 @@ body {
   --radius-md: 0.5rem;
   --radius-lg: 1rem;
   --radius-full: 9999px;
+
+  /* Modern Renk Paleti - 2024 */
+  --primary-100: #EBF4FF;
+  --primary-200: #C3DAFE;
+  --primary-300: #A3BFFA;
+  --primary-400: #7F9CF5;
+  --primary-500: #667EEA; /* Ana Marka Rengi */
+  --primary-600: #5A67D8;
+  --primary-700: #4C51BF;
+  --primary-800: #434190;
+  --primary-900: #3C366B;
+  
+  --accent-100: #FFFAF0;
+  --accent-200: #FEEBC8;
+  --accent-300: #FBD38D;
+  --accent-400: #F6AD55;
+  --accent-500: #ED8936; /* Ana Vurgu Rengi */
+  --accent-600: #DD6B20;
+  --accent-700: #C05621;
+  --accent-800: #9C4221;
+  --accent-900: #7B341E;
+  
+  --neutral-100: #F7FAFC;
+  --neutral-200: #EDF2F7;
+  --neutral-300: #E2E8F0;
+  --neutral-400: #CBD5E0;
+  --neutral-500: #A0AEC0;
+  --neutral-600: #718096;
+  --neutral-700: #4A5568;
+  --neutral-800: #2D3748;
+  --neutral-900: #1A202C;
+  
+  --success-100: #F0FFF4;
+  --success-500: #38A169;
+  --success-900: #22543D;
+  
+  --info-100: #EBF8FF;
+  --info-500: #3182CE;
+  --info-900: #2A4365;
+  
+  --warning-100: #FFFAF0;
+  --warning-500: #DD6B20;
+  --warning-900: #652B19;
+  
+  --danger-100: #FFF5F5;
+  --danger-500: #E53E3E;
+  --danger-900: #63171B;
+  
+  /* Arka plan ve metin renkleri */
+  --bg-primary: var(--neutral-100);
+  --bg-secondary: white;
+  --bg-tertiary: var(--primary-100);
+  
+  --text-primary: var(--neutral-900);
+  --text-secondary: var(--neutral-700);
+  --text-tertiary: var(--neutral-600);
+  --text-inverted: white;
+  
+  /* Kenar ve gölge renkleri */
+  --border-light: var(--neutral-200);
+  --border-medium: var(--neutral-300);
+  --border-dark: var(--neutral-400);
+  
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.05), 0 4px 6px rgba(0, 0, 0, 0.05);
+  
+  /* Gradyanlar */
+  --gradient-primary: linear-gradient(135deg, var(--primary-500), var(--primary-700));
+  --gradient-accent: linear-gradient(135deg, var(--accent-500), var(--accent-700));
+  --gradient-cta: linear-gradient(135deg, var(--accent-400), var(--accent-600));
+  --gradient-hero: linear-gradient(180deg, var(--primary-900), var(--primary-800));
+  
+  /* Diğer UI elementleri */
+  --card-bg: white;
+  --header-bg: rgba(255, 255, 255, 0.9);
+  --footer-bg: var(--neutral-800);
+  --input-bg: white;
+  --button-primary-bg: var(--primary-600);
+  --button-primary-text: white;
+  
+  /* Geçiş animasyonları için */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+/* Koyu Tema (Dark Mode) */
+[data-theme="dark"] {
+  /* Arka plan ve metin renkleri */
+  --bg-primary: var(--neutral-900);
+  --bg-secondary: var(--neutral-800);
+  --bg-tertiary: rgba(75, 85, 99, 0.2);
+  
+  --text-primary: var(--neutral-100);
+  --text-secondary: var(--neutral-300);
+  --text-tertiary: var(--neutral-500);
+  
+  /* Kenar ve gölge renkleri */
+  --border-light: var(--neutral-700);
+  --border-medium: var(--neutral-600);
+  --border-dark: var(--neutral-500);
+  
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3), 0 4px 6px rgba(0, 0, 0, 0.2);
+  
+  /* Diğer UI elementleri */
+  --card-bg: var(--neutral-800);
+  --header-bg: rgba(26, 32, 44, 0.8);
+  --footer-bg: var(--neutral-900);
+  --input-bg: var(--neutral-800);
+  --button-primary-bg: var(--primary-500);
+  
+  /* Gradyanlar */
+  --gradient-hero: linear-gradient(180deg, var(--neutral-900), var(--primary-900));
+}
+
+/* Tema değiştirici için örnek buton stili */
+.theme-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: var(--gradient-primary);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+  z-index: 1000;
+  transition: var(--transition-normal);
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+  box-shadow: var(--shadow-lg);
+}
+
 /* Font Boyutları - Dinamik ve Duyarlı */
 :root {
   /* Dinamik Font Boyutları - Viewport'a Göre Ölçeklenir */
@@ -2080,5 +2222,28 @@ h1 { font-size: var(--font-size-heading); }
     transition: none !important;
     animation: none !important;
   }
+}
+
+/* Okunabilirlik için renk kontrastı ayarlamaları */
+.text-dark {
+  color: rgba(0, 0, 0, 0.87) !important; /* Daha koyu siyah - yüksek kontrast */
+}
+
+.form-control.text-dark, 
+.form-select.text-dark,
+textarea.text-dark {
+  color: rgba(0, 0, 0, 0.87) !important;
+  font-weight: 500;
+}
+
+.form-floating label {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.compact-tag,
+.btn-outline-primary span.text-dark,
+.btn-outline-primary i.text-dark {
+  color: rgba(0, 0, 0, 0.87) !important;
+  font-weight: 500;
 }
 

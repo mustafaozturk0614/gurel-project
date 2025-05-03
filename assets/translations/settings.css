@@ -26,6 +26,8 @@
   opacity: 1;
   pointer-events: auto;
   visibility: visible;
+  box-shadow: -5px 0 25px rgba(0, 0, 0, 0.15);
+  z-index: 9999;
 }
 
 /* Settings Panel Header */

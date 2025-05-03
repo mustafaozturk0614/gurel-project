@@ -1,4 +1,67 @@
-/* Header ve Navbar stilleri - Düzenlenmiş ve optimize edilmiş */
+/* Header ve Navbar stilleri - Modern ve Optimize Edilmiş */
+
+/* ---------- GENEL DEĞIŞKENLER ---------- */
+:root {
+    --header-height: 80px;
+    --header-height-scrolled: 70px;
+    --header-height-mini: 50px;
+    --header-logo-height: 75px;
+    --header-logo-height-scrolled: 40px;
+    --header-logo-height-mini: 30px;
+    --header-transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    --glass-effect: rgba(255, 255, 255, 0.08);
+    --glass-background: rgba(24, 28, 47, 0.4);
+    --glass-background-scrolled: rgba(255, 255, 255, 0.92);
+    --glass-blur: 12px;
+    --primary-rgb: 0, 82, 204;
+    --dark-rgb: 26, 41, 66;
+    --white-color: #ffffff;
+    --white-75-color: rgba(255, 255, 255, 0.75);
+    --text-muted: rgba(255, 255, 255, 0.6);
+    --dark-color: #1a2942;
+    --transition-fast: 0.3s ease;
+    --transition-normal: 0.4s ease;
+    --neon-glow-primary: 0 0 5px rgba(var(--primary-rgb), 0.6), 0 0 10px rgba(var(--primary-rgb), 0.4), 0 0 15px rgba(var(--primary-rgb), 0.2);
+    --neon-glow-white: 0 0 5px rgba(255, 255, 255, 0.6), 0 0 10px rgba(255, 255, 255, 0.4), 0 0 15px rgba(255, 255, 255, 0.2);
+    
+    /* Adaptif Renk Sistemi için değişkenler */
+    --header-bg-light: rgba(255, 255, 255, 0.92);
+    --header-bg-dark: rgba(22, 28, 44, 0.85);
+    --header-text-light: rgba(26, 41, 66, 0.95);
+    --header-text-dark: rgba(255, 255, 255, 0.95);
+    --header-border-light: rgba(0, 0, 0, 0.04);
+    --header-border-dark: rgba(255, 255, 255, 0.05);
+    --svg-color-light: rgba(0, 82, 204, 0.05);
+    --svg-color-dark: rgba(79, 129, 232, 0.08);
+    --progress-bar-height: 3px;
+    --progress-bar-color: linear-gradient(to right, rgba(var(--primary-rgb), 0.8), rgba(var(--primary-rgb), 0.9));
+    --progress-bar-glow: 0 0 8px rgba(var(--primary-rgb), 0.6), 0 0 15px rgba(var(--primary-rgb), 0.4);
+}
+
+/* Dark Mode Desteği */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --glass-background-scrolled: var(--header-bg-dark);
+        --dark-color: var(--header-text-dark);
+    }
+    
+    .patreon-header.scrolled {
+        border-bottom-color: var(--header-border-dark);
+    }
+    
+    .patreon-header.scrolled .nav-link {
+        color: var(--header-text-dark);
+    }
+    
+    .patreon-header.scrolled .brand-name {
+        color: var(--header-text-dark);
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+    }
+    
+    .patreon-header.scrolled .brand-slogan {
+        color: rgba(255, 255, 255, 0.6);
+    }
+}
 
 /* ---------- HEADER TEMEL YAPI ---------- */
 .patreon-header {
@@ -7,17 +70,88 @@
     left: 0;
     width: 100%;
     z-index: 990;
-    will-change: transform, background-color, height;
-    -webkit-transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    -moz-transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    -o-transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, background-color, height, backdrop-filter;
+    transition: all var(--header-transition);
     background-color: transparent;
-    height: 80px;
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+    height: var(--header-height);
     display: flex;
     align-items: center;
-    -webkit-animation: headerFadeIn 0.6s ease-out forwards;
-    animation: headerFadeIn 0.6s ease-out forwards;
+    animation: headerFadeIn 0.8s ease-out forwards;
+    border: none;
+    /* Smart Sticky için yeni özellikler */
+    transform: translateY(0);
+}
+
+/* Scroll Progress Indicator */
+.scroll-progress-container {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: var(--progress-bar-height);
+    background-color: rgba(255, 255, 255, 0.1);
+    z-index: 1000;
+    overflow: hidden;
+}
+
+.scroll-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: var(--progress-bar-color);
+    transition: width 0.2s ease-out;
+    position: relative;
+    box-shadow: var(--progress-bar-glow);
+}
+
+.scroll-progress-bar.glow-effect {
+    box-shadow: 0 0 12px rgba(var(--primary-rgb), 0.8), 0 0 20px rgba(var(--primary-rgb), 0.6);
+    animation: progressPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes progressPulse {
+    0% { box-shadow: 0 0 12px rgba(var(--primary-rgb), 0.7), 0 0 20px rgba(var(--primary-rgb), 0.5); }
+    50% { box-shadow: 0 0 18px rgba(var(--primary-rgb), 0.9), 0 0 30px rgba(var(--primary-rgb), 0.7); }
+    100% { box-shadow: 0 0 12px rgba(var(--primary-rgb), 0.7), 0 0 20px rgba(var(--primary-rgb), 0.5); }
+}
+
+/* SVG Dekoratif Arka Plan */
+.header-decoration {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+
+.patreon-header.scrolled .header-decoration {
+    opacity: 0.7;
+}
+
+.header-waves {
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 12px;
+    fill: var(--svg-color-light);
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+.patreon-header.scrolled .header-waves {
+    opacity: 1;
+}
+
+@media (prefers-color-scheme: dark) {
+    .header-waves {
+        fill: var(--svg-color-dark);
+    }
 }
 
 .patreon-header .container {
@@ -30,81 +164,111 @@
     margin: 0 auto;
 }
 
+/* ---------- SMART STICKY DAVRANIŞI ---------- */
+/* Yukarı scroll - görünür */
+.patreon-header.scroll-up {
+    transform: translateY(0);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Aşağı scroll - gizli */
+.patreon-header.scroll-down {
+    transform: translateY(-100%);
+    box-shadow: none;
+}
+
+/* Hızlı scroll efekti */
+.patreon-header.fast-scroll {
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Yavaş scroll efekti */
+.patreon-header.slow-scroll {
+    transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 /* ---------- HEADER DURUMLARI ---------- */
 /* Transparent (Sayfa başındaki durum) */
 .patreon-header.transparent {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-    -webkit-box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    color: var(--white-color);
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5), 0 0 4px rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    -webkit-clip-path: inset(0 0 -100px 0);
-    clip-path: inset(0 0 -100px 0);
+    background: var(--glass-background);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 /* Scrolled (Sayfa kaydırıldığındaki durum) */
 .patreon-header.scrolled {
-    background-color: rgba(255, 255, 255, 0.95);
-    -webkit-backdrop-filter: blur(15px);
-    backdrop-filter: blur(15px);
-    -webkit-box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    background-color: var(--glass-background-scrolled);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+    height: var(--header-height-scrolled);
     z-index: 1000;
-    height: 70px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .patreon-header.scrolled .navbar-brand,
 .patreon-header.scrolled .nav-item,
 .patreon-header.scrolled .header-button {
-    -webkit-transform: scale(0.97);
-    -ms-transform: scale(0.97);
     transform: scale(0.97);
-    -webkit-transition: transform var(--transition-fast);
-    -moz-transition: transform var(--transition-fast);
-    -o-transition: transform var(--transition-fast);
     transition: transform var(--transition-fast);
 }
 
 .patreon-header.scrolled .header-logo {
-    height: var(--header-logo-height-scrolled, 40px);
-    -webkit-transition: height var(--transition-normal);
-    -moz-transition: height var(--transition-normal);
-    -o-transition: height var(--transition-normal);
+    height: var(--header-logo-height-scrolled);
     transition: height var(--transition-normal);
 }
 
 .patreon-header.scrolled .brand-text {
-    -webkit-transform: translateX(-4px) scale(0.95);
-    -ms-transform: translateX(-4px) scale(0.95);
     transform: translateX(-4px) scale(0.95);
 }
 
-/* Yeni: Header görünüm animasyonu */
-@-webkit-keyframes headerFadeIn {
-    0% {
-        opacity: 0;
-        -webkit-transform: translateY(-20px);
-        transform: translateY(-20px);
-    }
-    100% {
-        opacity: 1;
-        -webkit-transform: translateY(0);
-        transform: translateY(0);
-    }
+/* Yeni: Farklı scroll derinliklerine göre header davranışları */
+.patreon-header.scrolled-100 {
+    background-color: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(8px);
 }
+
+.patreon-header.scrolled-300 {
+    background-color: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(10px);
+}
+
+.patreon-header.scrolled-600 {
+    background-color: rgba(255, 255, 255, 0.98);
+}
+
+/* Mini Header (Büyük scroll durumu) */
+.patreon-header.mini-header {
+    height: var(--header-height-mini);
+}
+
+.patreon-header.mini-header .header-logo {
+    height: var(--header-logo-height-mini);
+}
+
+.patreon-header.mini-header .brand-text {
+    transform: translateX(-8px) scale(0.8);
+}
+
+.patreon-header.mini-header .nav-link {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.9rem;
+}
+
+.patreon-header.mini-header .nav-icon {
+    font-size: 0.9rem;
+}
+
+/* Yeni: Header görünüm animasyonu */
 @keyframes headerFadeIn {
     0% {
         opacity: 0;
-        -webkit-transform: translateY(-20px);
         transform: translateY(-20px);
     }
     100% {
         opacity: 1;
-        -webkit-transform: translateY(0);
         transform: translateY(0);
     }
 }
@@ -143,56 +307,88 @@
     margin-left: 1rem;
     display: flex;
     align-items: center;
-    -webkit-transition: transform 0.5s ease;
-    -moz-transition: transform 0.5s ease;
-    -o-transition: transform 0.5s ease;
-    transition: transform 0.5s ease;
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     position: relative;
-    -webkit-perspective: 1000px;
     perspective: 1000px;
 }
 
 .patreon-header .navbar-brand:hover {
-    -webkit-transform: scale(1.03);
-    -ms-transform: scale(1.03);
-    transform: scale(1.03);
+    transform: scale(1.04) translateY(-2px);
 }
 
-/* Yeni: Logo için 3D paralaks efekti */
+/* Yeni: Logo için 3D paralaks ve parıltı efekti */
 .patreon-header .navbar-brand::before {
+    content: '';
+    position: absolute;
+    top: var(--y-pos, 50%);
+    left: var(--x-pos, 50%);
+    width: 120%;
+    height: 120%;
+    background: radial-gradient(circle at var(--x-pos, center) var(--y-pos, center), 
+                                rgba(255, 255, 255, 0.7) 0%, 
+                                transparent 70%);
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.patreon-header .navbar-brand.logo-hover::before {
+    opacity: 0.8;
+    animation: logoGlow 2s infinite alternate;
+}
+
+/* Yeni: Logo aura efekti */
+.patreon-header .navbar-brand::after {
     content: '';
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.5) 0%, transparent 70%);
-    -webkit-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
+    width: 110%;
+    height: 110%;
+    border-radius: 50%;
+    background: radial-gradient(
+        ellipse at center,
+        rgba(var(--primary-rgb), 0.15) 0%,
+        rgba(var(--primary-rgb), 0.05) 40%,
+        transparent 80%
+    );
     transform: translate(-50%, -50%);
-    z-index: -1;
+    z-index: -2;
     opacity: 0;
-    -webkit-transition: opacity 0.4s ease;
-    -moz-transition: opacity 0.4s ease;
-    -o-transition: opacity 0.4s ease;
-    transition: opacity 0.4s ease;
+    transition: opacity 0.5s ease;
+    filter: blur(10px);
 }
 
-.patreon-header .navbar-brand:hover::before {
-    opacity: 0.8;
+.patreon-header .navbar-brand:hover::after {
+    opacity: 1;
+    animation: logoAura 4s infinite alternate;
+}
+
+@keyframes logoAura {
+    0% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+    50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
+    100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+}
+
+@keyframes logoGlow {
+    0% { opacity: 0.2; transform: translate(-50%, -50%) scale(0.9); }
+    100% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.1); }
 }
 
 .patreon-header .navbar-brand img,
 .patreon-header .header-logo {
     max-height: 75px;
-    height: var(--header-logo-height, 75px);
+    height: var(--header-logo-height);
     width: auto;
-    -webkit-transition: all 0.4s ease;
-    -moz-transition: all 0.4s ease;
-    -o-transition: all 0.4s ease;
-    transition: all 0.4s ease;
-    -webkit-filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4));
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4));
+}
+
+/* Yeni: Logo hover efekti */
+.patreon-header .navbar-brand:hover .header-logo {
+    filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 10px rgba(var(--primary-rgb), 0.3));
+    transform: translateZ(20px);
 }
 
 .patreon-header .brand-text {
@@ -202,9 +398,6 @@
     display: flex;
     flex-direction: column;
     position: relative;
-    -webkit-transition: all 0.3s ease;
-    -moz-transition: all 0.3s ease;
-    -o-transition: all 0.3s ease;
     transition: all 0.3s ease;
 }
 
@@ -224,9 +417,6 @@
     font-size: 0.7rem;
     font-weight: 500;
     opacity: 0.7;
-    -webkit-transition: all var(--transition-fast);
-    -moz-transition: all var(--transition-fast);
-    -o-transition: all var(--transition-fast);
     transition: all var(--transition-fast);
     color: var(--text-muted);
 }
@@ -260,12 +450,9 @@
     align-items: center;
     justify-content: center;
     padding: 0.7rem 1.2rem;
-    border-radius: 8px;
+    border-radius: 10px;
     background-color: transparent;
     border: 1px solid transparent;
-    -webkit-transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-    -moz-transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-    -o-transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     color: var(--white-color);
     font-weight: 700;
@@ -273,6 +460,21 @@
     position: relative;
     overflow: hidden;
     margin: 0 0.2rem;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+}
+
+/* Yeni: Neon glow effect için */
+.patreon-header .nav-link.neon-glow {
+    box-shadow: var(--neon-glow-primary);
+    color: white;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+}
+
+.patreon-header.scrolled .nav-link.neon-glow {
+    box-shadow: var(--neon-glow-primary);
+    color: rgba(var(--primary-rgb), 1);
+    text-shadow: 0 0 5px rgba(var(--primary-rgb), 0.7);
 }
 
 /* Yeni: Nav link için gelişmiş hover efekti */
@@ -283,12 +485,9 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.2) 0%, transparent 80%);
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.3) 0%, transparent 80%);
     opacity: 0;
     z-index: -1;
-    -webkit-transition: opacity 0.4s ease;
-    -moz-transition: opacity 0.4s ease;
-    -o-transition: opacity 0.4s ease;
     transition: opacity 0.4s ease;
 }
 
@@ -296,23 +495,19 @@
 .patreon-header .nav-link::after {
     content: '';
     position: absolute;
-    bottom: 8px;
+    bottom: 6px;
     left: 50%;
     width: 0;
     height: 2px;
-    background: rgba(255, 255, 255, 0.7);
-    -webkit-transform: translateX(-50%);
-    -ms-transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.8);
     transform: translateX(-50%);
-    -webkit-transition: width 0.3s ease;
-    -moz-transition: width 0.3s ease;
-    -o-transition: width 0.3s ease;
     transition: width 0.3s ease;
     border-radius: 2px;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
 }
 
 .patreon-header .nav-link:hover::after {
-    width: 60%;
+    width: 65%;
 }
 
 .patreon-header .nav-text {
@@ -327,16 +522,30 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    -webkit-transition: all 0.3s ease;
-    -moz-transition: all 0.3s ease;
-    -o-transition: all 0.3s ease;
-    transition: all 0.3s ease;
+    transition: all 0.4s ease;
 }
 
-/* Yeni: İkon için dönme animasyonu */
-.patreon-header .nav-link:hover .nav-icon {
-    -webkit-transform: rotateY(180deg);
-    transform: rotateY(180deg);
+/* Yeni: İkon morfolojisi ve parlama */
+.patreon-header .nav-icon.morphed {
+    transform: rotateY(180deg) scale(1.1);
+    color: rgba(255, 255, 255, 1);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+}
+
+.patreon-header.scrolled .nav-icon.morphed {
+    color: rgba(var(--primary-rgb), 1);
+    text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.7);
+}
+
+/* İkonların scroll durumuna göre değişimi */
+.patreon-header .nav-icon.icon-morphed {
+    animation: iconMorph 0.5s forwards;
+}
+
+@keyframes iconMorph {
+    0% { transform: rotate(0); }
+    50% { transform: rotate(180deg) scale(0.5); }
+    100% { transform: rotate(360deg) scale(1); }
 }
 
 /* Nav Link - Hover & Active States */
@@ -345,18 +554,16 @@
 }
 
 .patreon-header .nav-link:hover {
-    -webkit-transform: translateY(-2px);
-    -ms-transform: translateY(-2px);
-    transform: translateY(-2px);
-    -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transform: translateY(-3px) perspective(1000px) rotateX(4deg) rotateY(10deg) scale(1.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    background-color: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
 .patreon-header .nav-link.active {
-    background-color: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    -webkit-box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.5), rgba(var(--primary-rgb), 0.3));
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.2);
     color: var(--white-color);
     font-weight: 700;
 }
@@ -364,37 +571,249 @@
 /* Yeni: Aktif nav link için ek stillemeler */
 .patreon-header .nav-link.active::after {
     width: 70%;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.95);
     height: 3px;
     bottom: 7px;
-    -webkit-box-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
-    box-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
 }
 
 /* Nav Link - Transparent Header State */
 .patreon-header.transparent .nav-link {
     color: var(--white-color);
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    background-color: rgba(255, 255, 255, 0.05);
-    -webkit-backdrop-filter: blur(5px);
-    backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 .patreon-header.transparent .nav-link:hover {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
     border-color: rgba(255, 255, 255, 0.3);
     color: #fff;
-    -webkit-transform: translateY(-2px);
-    -ms-transform: translateY(-2px);
-    transform: translateY(-2px);
+    transform: translateY(-3px) perspective(1000px) rotateX(4deg) rotateY(10deg) scale(1.05);
 }
 
 .patreon-header.transparent .nav-link.active {
     color: #FFFFFF;
-    background: rgba(0, 0, 0, 0.4);
-    -webkit-box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2);
+    background: rgba(var(--primary-rgb), 0.5);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+}
+
+/* Nav menüsü - scrolled durumunda */
+.patreon-header.scrolled .nav-link {
+    color: var(--dark-color);
+    text-shadow: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+}
+
+/* Scrolled durumdaki hover efekti */
+.patreon-header.scrolled .nav-link:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+    color: rgba(var(--primary-rgb), 1);
+    transform: translateY(-2px) perspective(1000px) rotateX(4deg) rotateY(10deg) scale(1.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.04);
+}
+
+/* Scrolled durumda aktif menü */
+.patreon-header.scrolled .nav-link.active {
+    background: rgba(var(--primary-rgb), 0.08);
+    border-color: rgba(var(--primary-rgb), 0.2);
+    color: rgba(var(--primary-rgb), 1);
+    box-shadow: 0 5px 15px rgba(var(--primary-rgb), 0.1);
+}
+
+.patreon-header.scrolled .nav-link.active::after {
+    background: rgba(var(--primary-rgb), 0.8);
+    box-shadow: 0 0 5px rgba(var(--primary-rgb), 0.5);
+}
+
+/* Özel CTA butonu her zaman belirgin kalsın */
+.patreon-header .cta-button,
+.patreon-header .header-button {
+    background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.95), rgba(var(--primary-rgb), 0.85));
+    color: white !important;
+    font-weight: 700;
+    box-shadow: 0 4px 15px rgba(var(--primary-rgb), 0.3);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: none;
+    border-radius: 12px;
+    padding: 0.7rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    letter-spacing: 0.3px;
+}
+
+.patreon-header .cta-button::before,
+.patreon-header .header-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, 
+                rgba(255, 255, 255, 0.1) 0%, 
+                rgba(255, 255, 255, 0.2) 50%, 
+                rgba(255, 255, 255, 0) 100%);
+    transform: translateY(100%) rotate(10deg);
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    z-index: -1;
+}
+
+.patreon-header .cta-button:hover,
+.patreon-header .header-button:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 10px 25px rgba(var(--primary-rgb), 0.4), 0 0 15px rgba(var(--primary-rgb), 0.3);
+    background: linear-gradient(135deg, rgba(var(--primary-rgb), 1), rgba(var(--primary-rgb), 0.9));
+}
+
+.patreon-header .cta-button:hover::before,
+.patreon-header .header-button:hover::before {
+    transform: translateY(-20%) rotate(10deg);
+}
+
+.patreon-header .cta-button:active,
+.patreon-header .header-button:active {
+    transform: translateY(2px) scale(0.98);
+    box-shadow: 0 5px 15px rgba(var(--primary-rgb), 0.3);
+}
+
+.patreon-header.scrolled .cta-button,
+.patreon-header.scrolled .header-button {
+    background: linear-gradient(135deg, rgba(var(--primary-rgb), 1), rgba(var(--primary-rgb), 0.9));
+    box-shadow: 0 5px 15px rgba(var(--primary-rgb), 0.25);
+}
+
+/* Header Button - Pulse Animation */
+.patreon-header .header-button.pulse-animation {
+    animation: pulse-animation 2s infinite;
+    box-shadow: 0 0 0 0 rgba(var(--primary-rgb), 0.7), 0 4px 15px rgba(var(--primary-rgb), 0.3);
+}
+
+.patreon-header .header-button .btn-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    margin-right: 0.3rem;
+    transition: transform 0.4s ease;
+}
+
+.patreon-header .header-button:hover .btn-icon {
+    transform: translateY(-2px) scale(1.2);
+}
+
+.patreon-header .header-button .btn-text {
+    font-weight: 700;
+    position: relative;
+}
+
+.patreon-header .header-button .btn-text::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.8);
+    transition: width 0.3s ease;
+}
+
+.patreon-header .header-button:hover .btn-text::after {
+    width: 100%;
+}
+
+@keyframes pulse-animation {
+    0% {
+        box-shadow: 0 0 0 0 rgba(var(--primary-rgb), 0.7), 0 4px 15px rgba(var(--primary-rgb), 0.3);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(var(--primary-rgb), 0), 0 4px 15px rgba(var(--primary-rgb), 0.3);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(var(--primary-rgb), 0), 0 4px 15px rgba(var(--primary-rgb), 0.3);
+    }
+}
+
+/* Header Button için ışık efekti ve tıklama animasyonu */
+.patreon-header .header-button {
+    --x-light: 50%;
+    --y-light: 50%;
+    position: relative;
+    overflow: hidden;
+}
+
+.patreon-header .header-button.light-active::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at var(--x-light) var(--y-light), 
+                rgba(255, 255, 255, 0.5) 0%, 
+                rgba(255, 255, 255, 0.2) 30%, 
+                transparent 70%);
+    opacity: 0.8;
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* Ripple effect animasyonu için */
+.patreon-header .header-button .ripple-effect {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(0);
+    animation: rippleAnimation 0.6s linear;
+    z-index: 1;
+}
+
+@keyframes rippleAnimation {
+    to {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+/* Buton icon animasyonu */
+@keyframes iconRotate {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(15deg); }
+    75% { transform: rotate(-15deg); }
+    100% { transform: rotate(0deg); }
+}
+
+.patreon-header .header-button .btn-icon.icon-hover {
+    color: white;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+/* Ekstra pulse animasyonu */
+.patreon-header .header-button.extra-pulse {
+    animation: extraPulseAnimation 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+@keyframes extraPulseAnimation {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(var(--primary-rgb), 0.8), 0 4px 15px rgba(var(--primary-rgb), 0.3);
+    }
+    50% {
+        transform: scale(1.08);
+        box-shadow: 0 0 20px 10px rgba(var(--primary-rgb), 0.3), 0 4px 15px rgba(var(--primary-rgb), 0.3);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(var(--primary-rgb), 0.3), 0 4px 15px rgba(var(--primary-rgb), 0.3);
+    }
 }
 
 /* ---------- RESPONSIVE DÜZENLEMELER ---------- */
@@ -419,21 +838,18 @@
   .navbar-collapse {
     position: fixed;
     top: 0;
-    right: -100%;
-        width: 280px;
+    right: -320px; /* Daha geniş menü */
+    width: 300px;
         height: 100vh;
-        padding: 80px 20px 20px;
-        background: var(--dark-color-90);
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
+    padding: 90px 25px 25px;
+    background: rgba(26, 41, 66, 0.97);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
     overflow-y: auto;
-        -webkit-transition: right 0.3s ease;
-        -moz-transition: right 0.3s ease;
-        -o-transition: right 0.3s ease;
-        transition: right 0.3s ease;
+    transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         z-index: 1050;
-        -webkit-box-shadow: -5px 0 30px rgba(0, 0, 0, 0.5);
         box-shadow: -5px 0 30px rgba(0, 0, 0, 0.5);
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .navbar-collapse.show {
@@ -443,6 +859,7 @@
   .navbar-nav {
     flex-direction: column;
     width: 100%;
+    gap: 0.8rem;
   }
 
   .nav-item {
@@ -452,43 +869,51 @@
 
   .nav-link {
     font-size: 1.1rem;
-    padding: 0.75rem 1rem;
+    padding: 0.85rem 1.2rem;
     border-radius: 12px;
-    -webkit-transition: all 0.3s ease;
-    -moz-transition: all 0.3s ease;
-    -o-transition: all 0.3s ease;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     display: flex;
     align-items: center;
     width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.05);
   }
 
   .nav-link:hover {
-    background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.1), rgba(var(--primary-rgb), 0.05));
+    background: rgba(var(--primary-rgb), 0.15);
     color: var(--white-color);
-    -webkit-transform: translateX(8px);
-    -ms-transform: translateX(8px);
     transform: translateX(8px);
+    border-color: rgba(var(--primary-rgb), 0.3);
+  }
+  
+  .nav-link.active {
+    background: rgba(var(--primary-rgb), 0.25);
+    border-color: rgba(var(--primary-rgb), 0.4);
   }
 
   .navbar-toggler {
     position: relative;
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
     border: none;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
     padding: 8px;
     z-index: 1060;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    transition: all 0.3s ease;
+  }
+
+  .navbar-toggler:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
   }
 
   .navbar-toggler:focus {
-    -webkit-box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.25);
-    box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.25);
+    box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.3);
     outline: none;
   }
 
@@ -498,16 +923,11 @@
     height: 2px;
     background: var(--white-color);
     border-radius: 2px;
-    -webkit-transition: all 0.3s ease;
-    -moz-transition: all 0.3s ease;
-    -o-transition: all 0.3s ease;
     transition: all 0.3s ease;
     transform-origin: center;
   }
 
   .navbar-toggler[aria-expanded="true"] .toggler-icon:nth-child(1) {
-    -webkit-transform: translateY(8px) rotate(45deg);
-    -ms-transform: translateY(8px) rotate(45deg);
     transform: translateY(8px) rotate(45deg);
   }
 
@@ -516,8 +936,6 @@
   }
 
   .navbar-toggler[aria-expanded="true"] .toggler-icon:nth-child(3) {
-    -webkit-transform: translateY(-8px) rotate(-45deg);
-    -ms-transform: translateY(-8px) rotate(-45deg);
     transform: translateY(-8px) rotate(-45deg);
   }
 
@@ -527,16 +945,13 @@
     right: 0;
     bottom: 0;
     left: 0;
-    background: rgba(0, 0, 0, 0.5);
-    -webkit-backdrop-filter: blur(2px);
-    backdrop-filter: blur(2px);
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
     z-index: 1040;
     opacity: 0;
     visibility: hidden;
-    -webkit-transition: all 0.3s ease;
-    -moz-transition: all 0.3s ease;
-    -o-transition: all 0.3s ease;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .screen-darken.active {
@@ -547,12 +962,18 @@
   body.overflow-hidden {
     overflow: hidden;
   }
+
+  .patreon-header.transparent {
+    background: rgba(24, 28, 47, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
 }
 
 /* Feature detection için fallback çözümler */
 @supports not (backdrop-filter: blur(10px)) {
     .patreon-header.transparent {
-        background: rgba(35, 45, 60, 0.85);
+        background: rgba(22, 30, 46, 0.9);
     }
     
     .patreon-header.scrolled {
@@ -561,7 +982,7 @@
     
     @media (max-width: 991.98px) {
         .navbar-collapse {
-            background: rgba(33, 37, 41, 0.97);
+            background: rgba(26, 41, 66, 0.97);
         }
     }
 }
@@ -569,6 +990,10 @@
 @supports not (transform-style: preserve-3d) {
     .patreon-header .navbar-brand:hover {
         transform: scale(1.03);
+    }
+    
+    .patreon-header .nav-link:hover {
+        transform: scale(1.05);
     }
     
     .patreon-header .nav-link:hover .nav-icon {

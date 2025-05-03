@@ -33,6 +33,8 @@
         }
         
        
+        
+       
     </style>
     
     <!-- Preload kritik fontlar -->
@@ -41,15 +43,17 @@
     
     <!-- Preload kritik görüntüler -->
     <link rel="preload" href="assets/svg/brands/logo-sy-svg.svg" as="image">
-    <link rel="preload" href="assets/images/video-poster.jpg" as="image">
+    <!-- Kullanılmayan önbellek kaldırıldı -->
+    
+    <!-- Font Awesome - öncelikli yükleme (settings panel için gerekli) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Settings CSS - öncelikli yükleme -->
+    <link rel="stylesheet" href="assets/translations/settings.css">
     
     <!-- Bootstrap CSS - gecikmeli yükleme -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"></noscript>
-    
-    <!-- Font Awesome - gecikmeli yükleme -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
     
     <!-- CSS Dosyaları - gecikmeli yükleme -->
     <link rel="stylesheet" href="base.css" media="print" onload="this.media='all'">
@@ -71,15 +75,15 @@
     
     <!-- Diğer CSS dosyaları - gecikmeli yükleme -->
     <link rel="stylesheet" href="assets/css/shock.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="assets/css/custom.css" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="assets/css/section-transition.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="assets/translations/settings.css" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icon-css@3.5.0/css/flag-icon.min.css" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" media="print" onload="this.media='all'">
     
-    <!-- Kritik JavaScript Dosyaları - async kullanımı -->
+    <!-- Kritik JavaScript Dosyaları - preload ve öncelikli yükleme -->
+    <link rel="preload" href="app.js" as="script">
+    <!-- app.js sayfanın sonuna taşındı -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" defer></script>
     
@@ -141,6 +145,26 @@
 }
 </script>
 
+    <!-- Yükleme ekranı sorunlarına karşı ek stil -->
+    <style>
+        /* JavaScript çalışmasa bile yükleme ekranını gizle */
+        body.loaded #loading {
+            display: none !important;
+        }
+        
+        /* Sayfa yüklendikten 5 saniye sonra yükleme ekranını otomatik gizle */
+        @keyframes hideLoader {
+            to {
+                opacity: 0;
+                z-index: -999;
+                display: none;
+            }
+        }
+        
+        #loading {
+            animation: hideLoader 0s ease-in 5s forwards;
+        }
+    </style>
 
 </head>
 <body data-bs-spy="scroll" data-bs-target=".navbar" data-bs-offset="51" class="shock-active">
@@ -219,11 +243,10 @@
     <!-- Hero Section - daha okunabilir ve kullanıcı dostu -->
     <section id="home" class="patreon-hero">
         <div class="hero-video-background">
-            <video muted playsinline preload="none" data-src="assets/videos/20250405_1356_Blend Video_blend_01jr2sgeepe5bacvv560fftha6.mp4" poster="assets/images/video-poster.jpg" id="hero-video" aria-label="Gürel Yönetim tanıtım videosu" aria-describedby="hero-video-transcript" tabindex="0">
-                <source data-src="assets/videos/20250405_1356_Blend Video_blend_01jr2sgeepe5bacvv560fftha6.mp4" type="video/mp4" media="(min-width: 992px)">
-                <source data-src="assets/videos/20250405_1356_Blend Video_blend_01jr2sgeepe5bacvv560fftha6.mp4" type="video/mp4" media="(min-width: 768px)" data-quality="medium">
-                <source data-src="assets/videos/20250405_1356_Blend Video_blend_01jr2sgeepe5bacvv560fftha6.mp4" type="video/mp4" data-quality="low">
-                <track kind="descriptions" srclang="tr" label="Video Açıklamaları" src="assets/videos/hero-video-tr.vtt">
+            <video muted autoplay playsinline preload="metadata" src="assets/videos/20250405_1356_Blend Video_blend_01jr2sgeepe5bacvv560fftha6.mp4" poster="assets/images/hero-bg.jpg" id="hero-video">
+                <source src="assets/videos/20250405_1356_Blend Video_blend_01jr2sgeepe5bacvv560fftha6.mp4" type="video/mp4" media="(min-width: 992px)">
+                <source src="assets/videos/20250405_1356_Blend Video_blend_01jr2sgeepe5bacvv560fftha6.mp4" type="video/mp4" media="(min-width: 768px)" data-quality="medium">
+                <source src="assets/videos/20250405_1356_Blend Video_blend_01jr2sgeepe5bacvv560fftha6.mp4" type="video/mp4" data-quality="low">
             </video>
             <div class="video-overlay"></div>
         </div>
@@ -386,80 +409,6 @@
         </div>
     </section>
 
-    <!-- Hero başlık animasyonu için script -->
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // DOM elemanlarını önbelleğe alma - gereksiz DOM erişimlerini azaltmak için
-        const heroContent = document.querySelector('.hero-content.glass-effect');
-        const hero3dCard = document.querySelector('.hero-3d-card');
-        const changingWord = document.getElementById('changingWord');
-        const regionIndicators = document.querySelectorAll('.region-indicator');
-        const patreonHero = document.querySelector('.patreon-hero');
-        const statCounters = document.querySelectorAll('.hero-stat-counter');
-        
-        // İstatistik sayaçları animasyonu
-        function animateCounters() {
-            // IntersectionObserver ile görünür olduğunda animasyonu başlat
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const indicator = entry.target;
-                        const countElement = indicator.querySelector('.region-count');
-                        
-                        if (countElement && !countElement.dataset.counted) {
-                            countElement.dataset.counted = "true";
-                            const finalValue = parseInt(countElement.textContent, 10);
-                            let currentValue = 0;
-                            
-                            // Daha verimli sayaç için zamanlayıcı kullanıma
-                            const startTime = performance.now();
-                            const duration = 1500; // 1.5 saniye
-                            
-                            function updateCounter(timestamp) {
-                                const elapsed = timestamp - startTime;
-                                const progress = Math.min(elapsed / duration, 1);
-                                
-                                // Easing fonksiyonu (yumuşak başlangıç ve bitiş)
-                                const easedProgress = progress < 0.5 
-                                    ? 2 * progress * progress 
-                                    : 1 - Math.pow(-2 * progress + 2, 2) / 2;
-                                
-                                currentValue = Math.floor(easedProgress * finalValue);
-                                countElement.textContent = currentValue;
-                                
-                                if (progress < 1) {
-                                    requestAnimationFrame(updateCounter);
-                                } else {
-                                    countElement.textContent = finalValue;
-                                }
-                            }
-                            
-                            // Başlangıç değeri
-                            countElement.textContent = '0';
-                            
-                            // Animasyonu başlat
-                            requestAnimationFrame(updateCounter);
-                        }
-                    }
-                });
-            }, {
-                threshold: 0.1,
-                rootMargin: "0px 0px -10% 0px"
-            });
-            
-            // Her göstergeyi gözle
-            regionIndicators.forEach(indicator => {
-                counterObserver.observe(indicator);
-            });
-        }
-        
-        // Sayaç animasyonunu başlat
-        animateCounters();
-    });
-    </script>
-
-  
-
     <!-- Modern About Us Section -->
     <section id="about" class="about-section modern-about">
         <div class="floating-shapes">
@@ -494,12 +443,12 @@
                         <!-- Misyon ve Vizyon Bölümü -->
                         <div class="mission-vision-container my-4">
                             <div class="mission-vision-card">
-                                <h4><i class="fas fa-bullseye"></i> Misyonumuz</h4>
-                                <p>Mülk sahiplerinin ve site sakinlerinin yaşam kalitesini yükseltmek, gayrimenkul değerlerini artırmak ve şeffaf, güvenilir ve profesyonel bir yönetim sistemi ile tüm paydaşlarımıza maksimum fayda sağlamaktır.</p>
+                                <h4><i class="fas fa-bullseye me-2"></i> Misyonumuz</h4>
+                                <p class="text-dark">Mülk sahiplerinin ve site sakinlerinin yaşam kalitesini yükseltmek, gayrimenkul değerlerini artırmak ve şeffaf, güvenilir ve profesyonel bir yönetim sistemi ile tüm paydaşlarımıza maksimum fayda sağlamaktır.</p>
                                 </div>
                             <div class="mission-vision-card vision">
-                                <h4><i class="fas fa-binoculars"></i> Vizyonumuz</h4>
-                                <p>Balıkesir genelinde profesyonel apartman ve site yönetiminin referans noktası olmak, teknoloji odaklı yönetim standartları geliştirerek sektörün gelişimine öncülük etmek ve müşteri memnuniyetinde daima ilk sırada yer almaktır.</p>
+                                <h4><i class="fas fa-binoculars me-2"></i> Vizyonumuz</h4>
+                                <p class="text-dark">Balıkesir genelinde profesyonel apartman ve site yönetiminin referans noktası olmak, teknoloji odaklı yönetim standartları geliştirerek sektörün gelişimine öncülük etmek ve müşteri memnuniyetinde daima ilk sırada yer almaktır.</p>
                             </div>
                         </div>
                         
@@ -827,113 +776,6 @@
         </div>
     </section>
 
-    <!-- Ekip Animasyonları için JavaScript -->
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // Sayfanın bu kısmı yüklendiğinde önce kartları gizli yap
-        const teamCards = document.querySelectorAll('.team-card');
-        teamCards.forEach(card => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(50px)';
-        });
-        
-        // Sonra onları sırayla göster
-        setTimeout(() => {
-            teamCards.forEach((card, index) => {
-                setTimeout(() => {
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                    card.classList.add('animate-in');
-                }, 100 * index);
-            });
-        }, 500);
-
-        // IntersectionObserver ile scroll animasyonu
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate-in');
-                }
-            });
-        }, { threshold: 0.1 });
-
-        teamCards.forEach(card => {
-            observer.observe(card);
-        });
-
-        // Floating dots yaratma
-        const floatingDots = document.querySelector('.floating-dots');
-        if (floatingDots) {
-            for (let i = 0; i < 10; i++) {
-                const dot = document.createElement('div');
-                dot.className = 'dot';
-                dot.style.width = Math.random() * 10 + 5 + 'px';
-                dot.style.height = dot.style.width;
-                dot.style.left = Math.random() * 100 + '%';
-                dot.style.top = Math.random() * 100 + '%';
-                dot.style.animationDuration = Math.random() * 10 + 5 + 's';
-                dot.style.animationDelay = Math.random() * 5 + 's';
-                floatingDots.appendChild(dot);
-            }
-        }
-
-        // Mouse takibi efektleri
-        const cards = document.querySelectorAll('.team-card');
-        cards.forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = ((e.clientX - rect.left) / rect.width) * 100;
-                const y = ((e.clientY - rect.top) / rect.height) * 100;
-                
-                card.style.setProperty('--mouse-x', `${x}%`);
-                card.style.setProperty('--mouse-y', `${y}%`);
-                
-                // 3D kart döndürme efekti
-                const rotateY = (((x - 50) / 50) * 5);
-                const rotateX = (((y - 50) / 50) * -5);
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-                
-                // Paralaks efekti
-                const elements = card.querySelectorAll('[data-mouse-parallax-element]');
-                elements.forEach(element => {
-                    const speed = element.getAttribute('data-mouse-parallax-speed') || 1;
-                    const offsetX = (x - 50) * speed * 0.1;
-                    const offsetY = (y - 50) * speed * 0.1;
-                    element.style.transform = `translate3d(${offsetX}px, ${offsetY}px, 20px)`;
-                });
-            });
-            
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
-                
-                const elements = card.querySelectorAll('[data-mouse-parallax-element]');
-                elements.forEach(element => {
-                    element.style.transform = 'translate3d(0, 0, 0)';
-                });
-            });
-        });
-        
-        // Mobil kaydırma kontrolleri
-        const teamContainer = document.querySelector('.team-container');
-        const prevButton = document.querySelector('.scroll-arrow.prev');
-        const nextButton = document.querySelector('.scroll-arrow.next');
-        
-        if (teamContainer && prevButton && nextButton) {
-            prevButton.addEventListener('click', () => {
-                const firstCard = teamContainer.querySelector('.col-md-6');
-                const cardWidth = firstCard.offsetWidth;
-                teamContainer.scrollBy({ left: -cardWidth, behavior: 'smooth' });
-            });
-            
-            nextButton.addEventListener('click', () => {
-                const firstCard = teamContainer.querySelector('.col-md-6');
-                const cardWidth = firstCard.offsetWidth;
-                teamContainer.scrollBy({ left: cardWidth, behavior: 'smooth' });
-            });
-        }
-    });
-    </script>
-
     <!-- Hizmetlerimiz Bölümü -->
     <section id="services" class="services-section section-padding bg-light">
         <!-- Arkaplan şekilleri -->
@@ -1003,17 +845,18 @@
                                     </p>
                                     
                                     <ul class="service-box-features">
+                                        <!-- Aidat takibi ve tahsilatı -->
                                         <li class="service-feature">
                                             <i class="fas fa-check-circle"></i>
-                                            <span>Aidat takibi ve tahsilatı</span>
+                                            <span class="text-dark">Aidat takibi ve tahsilatı</span>
                                         </li>
                                         <li class="service-feature">
                                             <i class="fas fa-check-circle"></i>
-                                            <span>Şeffaf raporlama ve bütçe yönetimi</span>
+                                            <span class="text-dark">Şeffaf raporlama ve bütçe yönetimi</span>
                                         </li>
                                         <li class="service-feature">
                                             <i class="fas fa-check-circle"></i>
-                                            <span>Gelir-gider takibi ve dokümantasyon</span>
+                                            <span class="text-dark">Gelir-gider takibi ve dokümantasyon</span>
                                         </li>
                                     </ul>
                                     
@@ -1116,7 +959,7 @@
                                         <span class="service-badge alt">Uzman</span>
                                     </div>
                                     
-                                    <a href="#" class="service-box-btn">
+                                    <a href="#" class="service-box-btn text-dark">
                                         Detaylı Bilgi <i class="fas fa-arrow-right"></i>
                                     </a>
                                 </div>
@@ -1163,7 +1006,7 @@
                                         <span class="service-badge alt">7/24 Destek</span>
                                     </div>
                                     
-                                    <a href="#" class="service-box-btn">
+                                    <a href="#" class="service-box-btn text-dark">
                                         Detaylı Bilgi <i class="fas fa-arrow-right"></i>
                                     </a>
                                 </div>
@@ -1215,7 +1058,7 @@
                                         <span class="service-badge alt">Periyodik</span>
                                     </div>
                                     
-                                    <a href="#" class="service-box-btn">
+                                    <a href="#" class="service-box-btn text-dark">
                                         Detaylı Bilgi <i class="fas fa-arrow-right"></i>
                                     </a>
                                 </div>
@@ -1262,7 +1105,7 @@
                                         <span class="service-badge alt">Güvenilir</span>
                                     </div>
                                     
-                                    <a href="#" class="service-box-btn">
+                                    <a href="#" class="service-box-btn text-dark">
                                         Detaylı Bilgi <i class="fas fa-arrow-right"></i>
                                     </a>
                                 </div>
@@ -1309,7 +1152,7 @@
                                         <span class="service-badge alt">Periyodik</span>
                                     </div>
                                     
-                                    <a href="#" class="service-box-btn">
+                                    <a href="#" class="service-box-btn text-dark">
                                         Detaylı Bilgi <i class="fas fa-arrow-right"></i>
                                     </a>
                                 </div>
@@ -1356,7 +1199,7 @@
                                         <span class="service-badge alt">Düzenli</span>
                                     </div>
                                     
-                                    <a href="#" class="service-box-btn">
+                                    <a href="#" class="service-box-btn text-dark">
                                         Detaylı Bilgi <i class="fas fa-arrow-right"></i>
                                     </a>
                                 </div>
@@ -1478,9 +1321,9 @@
                                     </div>
                                     <div class="contact-text slide-up">
                                         <h5>Ofis Adresimiz</h5>
-                                        <p>Soğanyemez, 513. Sk. No:6/19, 10300 Edremit/Balıkesir</p>
+                                        <p class="text-dark">Soğanyemez, 513. Sk. No:6/19, 10300 Edremit/Balıkesir</p>
                                         <a href="https://www.google.com/maps/dir/?api=1&destination=39.59245070539585,27.01689447544059&travelmode=driving" target="_blank" class="contact-link ripple-effect">
-                                            <i class="fas fa-directions"></i> Yol Tarifi
+                                            <i class="fas fa-directions"></i> <span class="text-dark">Yol Tarifi</span>
                                         </a>
                                     </div>
                                 </div>
@@ -1493,7 +1336,7 @@
                                     <div class="contact-text slide-up">
                                         <h5>Bizi Arayın</h5>
                                         <p><a href="tel:+905305556007" class="highlight-phone">0530 555 60 07</a></p>
-                                        <span class="availability">7/24 Teknik Destek Hattı</span>
+                                        <span class="availability text-dark">7/24 Teknik Destek Hattı</span>
                                     </div>
                                 </div>
                                     
@@ -1505,7 +1348,7 @@
                                     <div class="contact-text slide-up">
                                         <h5>E-posta Gönder</h5>
                                         <p><a href="mailto:gurelyonetim@gmail.com" class="email-link">gurelyonetim@gmail.com</a></p>
-                                        <span class="response-time">24 saat içinde yanıt</span>
+                                        <span class="response-time text-dark">24 saat içinde yanıt</span>
                                     </div>
                                 </div>
                                     
@@ -1518,16 +1361,16 @@
                                         <h5>Çalışma Saatleri</h5>
                                         <div class="working-hours">
                                             <div class="day-slot">
-                                                <span class="day">Pazartesi - Cuma:</span>
-                                                <span class="hours">09:00 - 18:00</span>
+                                                <span class="day text-dark">Pazartesi - Cuma:</span>
+                                                <span class="hours text-dark">09:00 - 18:00</span>
                                             </div>
                                             <div class="day-slot">
-                                                <span class="day">Cumartesi:</span>
-                                                <span class="hours">09:00 - 14:00</span>
+                                                <span class="day text-dark">Cumartesi:</span>
+                                                <span class="hours text-dark">09:00 - 14:00</span>
                                             </div>
                                             <div class="day-slot closed">
-                                                <span class="day">Pazar:</span>
-                                                <span class="hours">Kapalı</span>
+                                                <span class="day text-dark">Pazar:</span>
+                                                <span class="hours text-dark">Kapalı</span>
                                             </div>
                                         </div>
                                     </div>
@@ -1549,34 +1392,34 @@
                                     </div>
                                 </div>
                                 <h3 class="form-title fade-in">Bizimle İletişime Geçin</h3>
-                                <p class="form-subtitle slide-up">Size en kısa sürede dönüş yapacağız</p>
+                                <p class="form-subtitle slide-up text-dark">Size en kısa sürede dönüş yapacağız</p>
                             </div>
                             
                             <form id="contactForm" class="contact-form">
                                 <!-- Ad Soyad Alanı -->
                                 <div class="form-floating mb-4 fade-in">
-                                    <input type="text" class="form-control focus-ring input-animate" id="nameInput" name="name" placeholder="Ad Soyad" data-aos="fade-right" data-aos-delay="100" data-aos-duration="800">
+                                    <input type="text" class="form-control focus-ring input-animate text-dark" id="nameInput" name="name" placeholder="Ad Soyad" data-aos="fade-right" data-aos-delay="100" data-aos-duration="800">
                                     <label for="nameInput"><i class="fas fa-user me-2"></i>Ad Soyad</label>
                                     <div class="error-message fade-in" data-field="name"></div>
                                 </div>
                                 
                                 <!-- E-posta Alanı -->
                                 <div class="form-floating mb-4 fade-in" style="animation-delay: 0.1s;">
-                                    <input type="email" class="form-control focus-ring input-animate" id="emailInput" name="email" placeholder="E-posta Adresi" data-aos="fade-right" data-aos-delay="200" data-aos-duration="800">
+                                    <input type="email" class="form-control focus-ring input-animate text-dark" id="emailInput" name="email" placeholder="E-posta Adresi" data-aos="fade-right" data-aos-delay="200" data-aos-duration="800">
                                     <label for="emailInput"><i class="fas fa-envelope me-2"></i>E-posta Adresi</label>
                                     <div class="error-message fade-in" data-field="email"></div>
                                 </div>
             
                                 <!-- Telefon Alanı -->
                                 <div class="form-floating mb-4 fade-in" style="animation-delay: 0.2s;">
-                                    <input type="tel" class="form-control focus-ring input-animate" id="phoneInput" name="phone" placeholder="Telefon Numarası" data-aos="fade-right" data-aos-delay="300" data-aos-duration="800">
+                                    <input type="tel" class="form-control focus-ring input-animate text-dark" id="phoneInput" name="phone" placeholder="Telefon Numarası" data-aos="fade-right" data-aos-delay="300" data-aos-duration="800">
                                     <label for="phoneInput"><i class="fas fa-phone me-2"></i>Telefon Numarası</label>
                                     <div class="error-message fade-in" data-field="phone"></div>
                                 </div>
                                 
                                 <!-- Hizmet Seçimi -->
                                 <div class="form-floating mb-4 fade-in" style="animation-delay: 0.3s;">
-                                    <select class="form-select focus-ring input-animate" id="serviceSelect" name="service" data-aos="fade-right" data-aos-delay="400" data-aos-duration="800">
+                                    <select class="form-select focus-ring input-animate text-dark" id="serviceSelect" name="service" data-aos="fade-right" data-aos-delay="400" data-aos-duration="800">
                                         <option value="">Seçiniz</option>
                                         <option value="site">Apartman ve Site Yönetimi</option>
                                         <option value="property">Mülk Yönetimi</option>
@@ -1589,7 +1432,7 @@
         
                                 <!-- Mesaj Alanı -->
                                 <div class="form-floating mb-4 fade-in" style="animation-delay: 0.4s;">
-                                    <textarea class="form-control focus-ring input-animate" id="messageInput" name="message" placeholder="Mesajınız" style="height: 150px" data-aos="fade-right" data-aos-delay="500" data-aos-duration="800"></textarea>
+                                    <textarea class="form-control focus-ring input-animate text-dark" id="messageInput" name="message" placeholder="Mesajınız" style="height: 150px" data-aos="fade-right" data-aos-delay="500" data-aos-duration="800"></textarea>
                                     <label for="messageInput"><i class="fas fa-comment me-2"></i>Mesajınız</label>
                                     <div class="error-message fade-in" data-field="message"></div>
                                 </div>
@@ -1856,8 +1699,8 @@
                         <div class="footer-item">
                             <!-- Button -->
                             <a href="#contact" class="btn btn-sm btn-outline-primary d-inline-flex align-items-center justify-content-center mx-auto w-100">
-                                <span class="me-1">İletişime Geç</span>
-                                <i class="fa-solid fa-arrow-right small"></i>
+                                <span class="me-1 text-dark">İletişime Geç</span>
+                                <i class="fa-solid fa-arrow-right small text-dark"></i>
                             </a>
                         </div>
                     </div>
@@ -1916,7 +1759,7 @@
                                     Soğanyemez, 513. Sk. No:6/19, 10300 Edremit/Balıkesir
                                 </address>
                                 <a href="https://goo.gl/maps/nLq8nY6W5Z7B4XYKA" class="btn btn-sm btn-outline-primary mt-2 d-inline-flex align-items-center justify-content-center mx-auto w-100" target="_blank" rel="noopener">
-                                    <i class="fas fa-map-marked-alt me-1 small"></i> Haritada Göster
+                                    <i class="fas fa-map-marked-alt me-1 small"></i> <span class="text-dark">Haritada Göster</span>
                                 </a>
                             </div>
                         </div>
@@ -2005,8 +1848,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.1/dist/vanilla-tilt.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js" defer></script>
-    <script src="app.js"></script>
-    <script src="modules.js"></script>
+    <!-- app.js sayfa başında zaten yüklendi -->
 
     <!-- Scroll Indicator -->
     <div class="scroll-indicator">
@@ -2028,229 +1870,31 @@
     <div class="screen-darken"></div>
 
     <!-- Body sonunda olmalı -->
-    <script src="header.js"></script>
-
-    <!-- Zaman çizelgesi ve adres kontrolü scriptleri -->
     <script>
-        // Sayfa yüklendiğinde çalışacak kodlar
-        document.addEventListener('DOMContentLoaded', function() {
-            // Adres kontrolü aracı
-            const serviceAreas = [
-                'edremit', 'akçay', 'güre', 'burhaniye', 'altınoluk', 
-                'küçükkuyu', 'pelitköy', 'gömeç', 'ayvalık',
-                // İlçelerin alternatif yazılışları
-                'akcay', 'gure', 'kucukkuyu', 'pelitkoy', 'gomec', 'ayvalik'
-            ];
-            
-            const checkServiceAreaBtn = document.getElementById('check-service-area');
-            const serviceAreaInput = document.getElementById('service-area-input');
-            const serviceAreaResult = document.getElementById('service-area-result');
-            
-            if (checkServiceAreaBtn) {
-                checkServiceAreaBtn.addEventListener('click', function() {
-                    const inputValue = serviceAreaInput.value.trim().toLowerCase();
-                    
-                    if (inputValue === '') {
-                        serviceAreaResult.className = 'service-area-result not-found';
-                        serviceAreaResult.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i> Lütfen bir ilçe veya semt adı girin.';
-                        return;
-                    }
-                    
-                    let found = false;
-                    let closestMatch = '';
-                    let closestDistance = Infinity;
-                    
-                    // Önce tam eşleşme kontrolü
-                    for (const area of serviceAreas) {
-                        if (area === inputValue || area.includes(inputValue) || inputValue.includes(area)) {
-                            found = true;
-                            break;
-                        }
-                        
-                        // Levenshtein mesafesi hesaplama (en yakın eşleşmeyi bulmak için)
-                        const distance = levenshteinDistance(area, inputValue);
-                        if (distance < closestDistance && distance <= 3) { // Maksimum 3 karakter farkı kabul et
-                            closestDistance = distance;
-                            closestMatch = area;
-                        }
-                    }
-                    
-                    if (found) {
-                        serviceAreaResult.className = 'service-area-result found';
-                        serviceAreaResult.innerHTML = '<i class="fas fa-check-circle me-2"></i> Evet! Bu bölgede hizmet veriyoruz. <a href="#contact" class="ms-2">Hemen iletişime geçin</a>';
-                    } else if (closestMatch) {
-                        // En yakın eşleşmeyi öner
-                        serviceAreaResult.className = 'service-area-result found';
-                        serviceAreaResult.innerHTML = `<i class="fas fa-check-circle me-2"></i> "${closestMatch.charAt(0).toUpperCase() + closestMatch.slice(1)}" bölgesinde hizmet veriyoruz. <a href="#contact" class="ms-2">Hemen iletişime geçin</a>`;
-                    } else {
-                        serviceAreaResult.className = 'service-area-result not-found';
-                        serviceAreaResult.innerHTML = '<i class="fas fa-times-circle me-2"></i> Maalesef bu bölgede henüz hizmet vermiyoruz. <a href="#contact" class="ms-2">Detaylı bilgi için iletişime geçin</a>';
-                    }
-                });
-                
-                // Enter tuşu ile de çalışsın
-                serviceAreaInput.addEventListener('keyup', function(event) {
-                    if (event.key === 'Enter') {
-                        checkServiceAreaBtn.click();
-                    }
-                });
-            }
-            
-            // İlke kartları için gelişmiş hover efekti
-            const principleCards = document.querySelectorAll('.principle-card');
-            
-            principleCards.forEach(card => {
-                card.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-5px)';
-                    const icon = this.querySelector('.icon-wrapper');
-                    if (icon) {
-                        icon.style.transform = 'scale(1.1) rotate(5deg)';
-                    }
-                });
-                
-                card.addEventListener('mouseleave', function() {
-                    this.style.transform = '';
-                    const icon = this.querySelector('.icon-wrapper');
-                    if (icon) {
-                        icon.style.transform = '';
-                    }
-                });
-            });
-            
-            // Levenshtein mesafesi hesaplama fonksiyonu (yazım hatalarına karşı tolerans için)
-            function levenshteinDistance(a, b) {
-                const matrix = [];
-                
-                // Matris oluşturma
-                for (let i = 0; i <= b.length; i++) {
-                    matrix[i] = [i];
-                }
-                
-                for (let j = 0; j <= a.length; j++) {
-                    matrix[0][j] = j;
-                }
-                
-                // Mesafe hesaplama
-                for (let i = 1; i <= b.length; i++) {
-                    for (let j = 1; j <= a.length; j++) {
-                        if (b.charAt(i-1) === a.charAt(j-1)) {
-                            matrix[i][j] = matrix[i-1][j-1];
-                        } else {
-                            matrix[i][j] = Math.min(
-                                matrix[i-1][j-1] + 1, // değiştirme
-                                matrix[i][j-1] + 1,   // ekleme
-                                matrix[i-1][j] + 1    // silme
-                            );
-                        }
-                    }
-                }
-                
-                return matrix[b.length][a.length];
-            }
-        });
+        /* KODLAR APP.JS'E TAŞINDI */
     </script>
 
     <div id="hero-video-transcript" class="visually-hidden">
       Video transkripsiyonu: Mücadeleci profesyonellerin mülk yönetimi süreçleri, toplantılar, denetimler ve kiracı iletişim sahneleri.
     </div>
 
-    <!-- HTML'e eklenecek script -->
-    <script>
-    $(document).ready(function() {
-        $('.service-card.tilt').tilt({
-            glare: true,
-            maxGlare: 0.3,
-            maxTilt: 10,
-            perspective: 1000
-        });
-    });
-    </script>
-
-    <!-- Lazy loading için gerekli JavaScript kodu -->
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Video lazy loading
-        const lazyVideo = document.getElementById('hero-video');
-        if (lazyVideo) {
-            // Sayfa yüklendikten sonra videoyu başlat
-            const videoSrc = lazyVideo.getAttribute('data-src');
-            if (videoSrc) {
-                // IntersectionObserver ile görünür olduğunda yükle
-                const videoObserver = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            lazyVideo.setAttribute('src', videoSrc);
-                            lazyVideo.removeAttribute('data-src');
-                            lazyVideo.setAttribute('autoplay', '');
-                            lazyVideo.setAttribute('loop', '');
-                            
-                            // Video kaynakları (source) için de lazy loading
-                            const sources = lazyVideo.querySelectorAll('source[data-src]');
-                            sources.forEach(source => {
-                                source.setAttribute('src', source.getAttribute('data-src'));
-                                source.removeAttribute('data-src');
-                            });
-                            
-                            lazyVideo.load();
-                            lazyVideo.play().catch(e => console.log('Video otomatik oynatılamadı:', e));
-                            
-                            // Observer'ı kaldır
-                            videoObserver.unobserve(lazyVideo);
-                        }
-                    });
-                }, { threshold: 0.1 });
-                
-                videoObserver.observe(lazyVideo);
-            }
-        }
-        
-        // Genel lazy loading (tüm görseller için)
-        const lazyImages = document.querySelectorAll('img[data-src]');
-        const imageObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    img.src = img.dataset.src;
-                    img.removeAttribute('data-src');
-                    imageObserver.unobserve(img);
-                }
-            });
-        }, { threshold: 0.1, rootMargin: "50px" });
-        
-        lazyImages.forEach(img => {
-            imageObserver.observe(img);
-        });
-        
-        // Tüm görselleri otomatik olarak lazy load yap
-        document.querySelectorAll('img:not([data-src]):not([loading])').forEach(img => {
-            // alt etiketi olmayan görüntülere boş alt etiketi ekle (a11y)
-            if (!img.hasAttribute('alt')) {
-                img.alt = '';
-            }
-            // Halihazırda data-src veya loading attribute'u olmayan görsellere ekle
-            img.setAttribute('loading', 'lazy');
-        });
-        
-        // Linklerin preload özelliği (hover olduğu anda hızla yüklemek için)
-        const preloadLinks = document.querySelectorAll('a[href^="http"]:not([rel]), a[href^="/"]:not([rel])');
-        preloadLinks.forEach(link => {
-            link.addEventListener('mouseenter', function() {
-                const url = this.getAttribute('href');
-                if (url && !this.dataset.prefetched) {
-                    const prefetchLink = document.createElement('link');
-                    prefetchLink.rel = 'prefetch';
-                    prefetchLink.href = url;
-                    document.head.appendChild(prefetchLink);
-                    this.dataset.prefetched = true;
-                }
-            });
-        });
-    });
-    </script>
-
- 
+    <!-- Uygulama script dosyaları -->
+    <script src="header.js"></script>
+    <script src="app.js"></script>
+    <!-- aos.js de yukarıda unpkg.com'dan yüklenmiştir -->
     
-    </section>
+    <!-- Sayfa yükleme durumunu kontrol eden script -->
+    <script>
+        // Sayfa yüklendikten sonra body'ye loaded sınıfı ekle
+        window.addEventListener('load', function() {
+            document.body.classList.add('loaded');
+        });
+        
+        // Sayfanın 5 saniye içinde yüklenememesi durumunda da body'ye loaded sınıfı ekle
+        setTimeout(function() {
+            document.body.classList.add('loaded');
+        }, 5000);
+    </script>
 
 </body>
 </html>

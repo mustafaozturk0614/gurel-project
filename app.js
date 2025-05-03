@@ -1,6 +1,6 @@
 /**
  * Gürel Yönetim - Ana JavaScript Dosyası
- * Version: 2.0.0
+ * Version: 2.1.0
  */
 
 // Sabitler ve Yapılandırma
@@ -32,8 +32,35 @@ const CONFIG = {
   }
 };
 
-// Harita Konumları
-const MAP_LOCATIONS = {
+// DOMContentLoaded event listener'ını başa alalım
+document.addEventListener('DOMContentLoaded', function() {
+  console.log("DOMContentLoaded event tetiklendi - app.js");
+  
+  // Settings elemanlarını kontrol et
+  const settingsToggle = document.getElementById('settingsToggle');
+  const settingsPanel = document.getElementById('settingsPanel');
+  
+  console.log("Settings elemanları:", {
+    settingsToggle: settingsToggle ? true : false,
+    settingsPanel: settingsPanel ? true : false
+  });
+  
+  // initApp fonksiyonunu çağır
+  initApp();
+});
+
+// Uygulama State Yönetimi - Singleton Pattern
+const AppState = (() => {
+  // Private state
+  const state = {
+    isMenuOpen: false,
+    currentSection: '',
+    isHeaderScrolled: false,
+    activeRegion: 'Edremit',
+    isDarkMode: window.matchMedia('(prefers-color-scheme: dark)').matches,
+    currentLanguage: localStorage.getItem('selectedLanguage') || 'tr',
+    // MAP_LOCATIONS entegrasyonu
+    mapLocations: {
     'Edremit': { 
     lat: 39.592450,
     lng: 27.016894,
@@ -63,19 +90,8 @@ const MAP_LOCATIONS = {
     lng: 26.733333,
     zoom: 16,
     position: { top: '35%', left: '25%' }
-  }
-};
-
-// Uygulama State Yönetimi - Singleton Pattern
-const AppState = (() => {
-  // Private state
-  const state = {
-    isMenuOpen: false,
-    currentSection: '',
-    isHeaderScrolled: false,
-    activeRegion: 'Edremit',
-    isDarkMode: window.matchMedia('(prefers-color-scheme: dark)').matches,
-    currentLanguage: localStorage.getItem('selectedLanguage') || 'tr'
+      }
+    }
   };
   
   // Public API
@@ -220,13 +236,12 @@ const Utils = {
   },
   
   /**
-   * İyileştirilmiş mobil kontrol fonksiyonu (tarayıcı algılama dahil)
+   * İyileştirilmiş mobil kontrol fonksiyonu
    */
   isMobile() {
     // İlk çağrıda hesaplanır ve saklanır (memoization)
     if (this._isMobileResult === undefined) {
-      this._isMobileResult = window.innerWidth < CONFIG.breakpoints.lg || 
-        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      this._isMobileResult = window.innerWidth < CONFIG.breakpoints.lg;
     }
     return this._isMobileResult;
   },
@@ -265,197 +280,167 @@ const Utils = {
         resolve();
       });
     });
+  },
+  
+  /**
+   * Genelleştirilmiş IntersectionObserver yardımcı fonksiyonu
+   * Birçok yerde tekrarlanan kodu tek bir yerden yönetir
+   */
+  createObserver(elements, callback, options = {}) {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+          callback(entry.target);
+          if (options.unobserve) observer.unobserve(entry.target);
+        }
+      });
+    }, options);
+    
+    elements.forEach(el => observer.observe(el));
+    return observer;
   }
 };
 
 // Window resize olayında mobil durum önbelleğini sıfırla
 window.addEventListener('resize', Utils.resetMobileCache.bind(Utils));
 
-// Ana başlatma işlevi
-document.addEventListener('DOMContentLoaded', () => {
-  initApp();
-});
-
-// Tüm modülleri başlatan ana fonksiyon
-function initApp() {
-  // Sayfa yükleme animasyonunu kaldır
-  setTimeout(() => {
-    document.getElementById('loading').style.display = 'none';
-    document.documentElement.classList.add('loaded');
-  }, 500);
-
-  // Header sistemini başlat
-  initHeaderSystem();
-
-  // Tab sistemi
-  initTabSystem();
-
-  // Modern hero efektleri
-  initModernHero();
-
-  // Paralaks efektleri
-  initParallaxEffects();
-
-  // Tilt kart efektleri
-  initTiltEffects();
-
-  // Sayaçları başlat
-  initCounters();
+/**
+ * Ekip Kartları için Animasyonlar ve Etkileşimler
+ */
+function initTeamAnimations() {
+  const teamMembers = document.querySelectorAll('.team-member');
   
-  // Form doğrulamasını başlat
-  initFormValidation();
-  
-  // Harita özelliklerini başlat
-  initMapFeatures();
-  
-  // Telif hakkı yılını güncelle
-  updateCopyrightYear();
-  
-  // Smooth scroll için scroll olaylarını başlat
-  initScrollEvents();
-  
-  // Animasyonları başlat
-  initServiceAnimations();
-  
-
-  
-  // Tema sistemini başlat (dark/light mode)
-  initThemeSystem();
-  
-  // Mobil menüyü başlat
-  initMobileMenu();
-
-  // AOS - Animate on scroll kütüphanesini başlat
-  AOS.init({
-    duration: 800,
-    easing: 'ease-in-out',
-    once: true,
-    mirror: false
-  });
+  if (teamMembers.length > 0) {
+    teamMembers.forEach(member => {
+      // Hover olayları
+      member.addEventListener('mouseenter', () => {
+        member.classList.add('hovered');
+      });
+      
+      member.addEventListener('mouseleave', () => {
+        member.classList.remove('hovered');
+      });
+      
+      // IntersectionObserver ile giriş animasyonu
+      Utils.createObserver([member], (el) => {
+        el.classList.add('animated');
+      }, { threshold: 0.3 });
+    });
+  }
 }
+
+/**
+ * jQuery ile hizmet kartları için tilt efekti
+ */
+function initJQueryEffects() {
+  // jQuery hazır olduğunda çalıştır
+  if (typeof $ !== 'undefined' && typeof $.fn.tilt !== 'undefined') {
+    $('.service-card.tilt').tilt({
+      glare: true,
+      maxGlare: 0.3,
+      maxTilt: 10,
+      perspective: 1000
+    });
+  }
+}
+
+/**
+ * Uygulama Başlatma Fonksiyonu - Sadeleştirilmiş
+ */
+function initApp() {
+  console.log("initApp fonksiyonu çağrıldı");
+  
+  // Ana init fonksiyonları
+  // Yükleme ekranını hemen kaldırmayı dene
+  try {
+    removeLoader();
+  } catch (error) {
+    console.error("Yükleme ekranı kaldırılırken hata:", error);
+  }
+  
+  console.log("initSettingsPanel fonksiyonu çağrılacak");
+  initSettingsPanel(); // Settings paneli fonksiyonunu ilk sırada çağır
+  
+  initHeaderSystem();
+  initTabSystem();
+  initModernHero();
+  initParallaxEffects();
+  initTiltEffects();
+  initCounters();
+  initFormValidation();
+  initMapFeatures();
+  initScrollEvents();
+  updateCopyrightYear();
+  initThemeSystem();
+  initMobileMenu();
+  initTeamAnimations();
+  initAddressChecker();
+  initLazyLoading();
+  initServiceAnimations();
+
+  // AOS Kütüphanesi init
+  if (typeof AOS !== 'undefined') {
+    AOS.init({
+      duration: CONFIG.animation.duration,
+      easing: CONFIG.animation.easing,
+      once: CONFIG.animation.once,
+      mirror: CONFIG.animation.mirror,
+      offset: CONFIG.animation.offset
+    });
+  }
+}
+
+/**
+ * Yükleme ekranını kaldırmak için ayrı fonksiyon
+ */
+function removeLoader() {
+      const loader = document.getElementById('loading');
+      if (loader) {
+        loader.style.opacity = '0';
+        loader.style.zIndex = '-1';
+    setTimeout(() => {
+      loader.style.display = 'none';
+    }, 300);
+  }
+}
+
+// Sayfa yüklenmesinden bağımsız olarak yükleme ekranını kaldırma zamanlaması
+window.addEventListener('load', removeLoader);
+// Yükleme çok uzun sürerse otomatik olarak kaldır (5 saniye sonra)
+setTimeout(removeLoader, 5000);
 
 /**
  * Header Sistemleri
  */
 function initHeaderSystem() {
-  const header = document.querySelector('.patreon-header');
-  const navbarToggler = document.querySelector('.navbar-toggler');
-  const navbarCollapse = document.querySelector('.navbar-collapse');
+  const header = document.querySelector('#header');
+  const navLinks = document.querySelectorAll('.nav-link');
   
-  if (!header) return;
-  
-  // Header scroll olayı
-  const updateHeader = Utils.throttle(() => {
-    const scrollTop = window.scrollY;
-    const isScrolled = scrollTop > CONFIG.scroll.threshold;
-    
-    // Header durumunu güncelle
-    header.classList.toggle('scrolled', isScrolled);
-    AppState.set('isHeaderScrolled', isScrolled);
-    
-    // Opaklık ve blur efektlerini ayarla
-    if (header.classList.contains('transparent')) {
-      const opacity = Math.min(scrollTop / CONFIG.scroll.threshold * CONFIG.scroll.headerOpacity, CONFIG.scroll.headerOpacity);
-      const blur = Math.min(scrollTop / CONFIG.scroll.threshold * CONFIG.scroll.blurAmount, CONFIG.scroll.blurAmount);
+  if (header) {
+    // Header scroll olayları
+    window.addEventListener('scroll', Utils.throttle(() => {
+      const scrollY = window.scrollY;
       
-      header.style.backgroundColor = `rgba(255, 255, 255, ${opacity})`;
-      header.style.backdropFilter = `blur(${blur}px)`;
-    }
-    
-    // Aktif menü öğesini güncelle
-    updateActiveNavItem();
-    
-    // Event yayınla
-    EventBus.publish('headerStateChanged', { isScrolled, scrollTop });
-  }, 16); // 60fps için 16ms throttle
-  
-  // İlk yükleme için header durumunu ayarla
-  updateHeader();
-  
-  // Scroll olayını dinle
-  window.addEventListener('scroll', updateHeader);
-  
-  // Navbar toggle işlevi
-  if (navbarToggler && navbarCollapse) {
-    navbarToggler.addEventListener('click', () => {
-      const expanded = navbarToggler.getAttribute('aria-expanded') === 'true';
-      const newState = !expanded;
-      
-      // Durumu güncelle
-      AppState.set('isMenuOpen', newState);
-      navbarToggler.setAttribute('aria-expanded', String(newState));
-      navbarCollapse.classList.toggle('show', newState);
-      document.body.classList.toggle('menu-open', newState);
-      
-      // Menü açıldığında headerin görünümünü ayarla
-      if (newState && Utils.isMobile()) {
-        header.classList.remove('transparent');
-        header.classList.add('scrolled');
-      } else if (window.scrollY <= CONFIG.scroll.threshold) {
-        header.classList.add('transparent');
-        header.classList.remove('scrolled');
+      // Header scroll durumunu güncelle
+      if (scrollY > CONFIG.scroll.threshold && !AppState.get('isHeaderScrolled')) {
+        AppState.set('isHeaderScrolled', true);
+        header.classList.add('header-scrolled');
+      } else if (scrollY <= CONFIG.scroll.threshold && AppState.get('isHeaderScrolled')) {
+        AppState.set('isHeaderScrolled', false);
+        header.classList.remove('header-scrolled');
       }
-      
-      // Event yayınla
-      EventBus.publish('menuStateChanged', { isOpen: newState });
-    });
+    }, 150));
     
-    // Menü öğelerine tıklandığında menüyü kapat
-    document.querySelectorAll('.nav-link, .header-button').forEach(link => {
+    // Mobil menüyü kapat (link tıklandığında)
+    navLinks.forEach(link => {
       link.addEventListener('click', () => {
-        if (AppState.get('isMenuOpen')) {
-          AppState.set('isMenuOpen', false);
-          navbarCollapse.classList.remove('show');
-          navbarToggler.setAttribute('aria-expanded', 'false');
-          document.body.classList.remove('menu-open');
-          
-          // Header durumunu güncelle
-          setTimeout(updateHeader, 300);
+        if (Utils.isMobile() && AppState.get('isMenuOpen')) {
+          const mobileMenuToggle = document.querySelector('#mobile-menu-toggle');
+          if (mobileMenuToggle) mobileMenuToggle.click();
         }
       });
     });
-    
-    // Sayfa dışına tıklandığında menüyü kapat
-    document.addEventListener('click', (e) => {
-      if (AppState.get('isMenuOpen') && 
-          !navbarCollapse.contains(e.target) && 
-          !navbarToggler.contains(e.target)) {
-        AppState.set('isMenuOpen', false);
-        navbarCollapse.classList.remove('show');
-        navbarToggler.setAttribute('aria-expanded', 'false');
-        document.body.classList.remove('menu-open');
-        
-        // Header durumunu güncelle
-        if (window.scrollY <= CONFIG.scroll.threshold) {
-          header.classList.add('transparent');
-          header.classList.remove('scrolled');
-        }
-      }
-    });
   }
-  
-  // Yumuşak geçiş için tüm çapa linklerini düzenle
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', (e) => {
-      e.preventDefault();
-      const targetId = anchor.getAttribute('href');
-      if (targetId === '#') return;
-      
-      const targetElement = document.querySelector(targetId);
-      if (targetElement) {
-        const headerHeight = header.offsetHeight || 0;
-        const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY;
-        
-        window.scrollTo({
-          top: targetPosition - headerHeight,
-          behavior: 'smooth'
-        });
-        
-        // URL'i güncelle
-        history.pushState(null, '', targetId);
-      }
-    });
-  });
 }
 
 /**
@@ -506,142 +491,31 @@ function updateActiveNavItem() {
  * Tab Sistemi
  */
 function initTabSystem() {
-  // Hero alanı tab sistemini başlat
-  const tabElms = document.querySelectorAll('#serviceTabList [data-bs-toggle="tab"]');
+  const tabContainers = document.querySelectorAll('.tab-container');
   
-  if (!tabElms.length) return;
-  
-  const TabManager = {
-    activeTab: null,
-    
-    init() {
-  tabElms.forEach((tabElm, idx, tabElmsArr) => {
-        // Tıklama olayı
-        tabElm.addEventListener('click', (e) => {
-      e.preventDefault();
-          this.switchTab(tabElm, idx, tabElmsArr);
-        });
-        
-        // Klavye navigasyonu
-        tabElm.addEventListener('keydown', (e) => {
-          let newIndex;
-          switch (e.key) {
-            case 'ArrowRight': 
-              newIndex = (idx + 1) % tabElmsArr.length; 
-              break;
-            case 'ArrowLeft': 
-              newIndex = (idx - 1 + tabElmsArr.length) % tabElmsArr.length; 
-              break;
-            case 'Home': 
-              newIndex = 0; 
-              break;
-            case 'End': 
-              newIndex = tabElmsArr.length - 1; 
-              break;
-            default: 
-              return;
-          }
-          e.preventDefault();
-          tabElmsArr[newIndex].focus();
-          this.switchTab(tabElmsArr[newIndex], newIndex, tabElmsArr);
-        });
-      });
+  if (tabContainers.length > 0) {
+    tabContainers.forEach(container => {
+      const tabs = container.querySelectorAll('.tab');
+      const tabContents = container.querySelectorAll('.tab-content');
       
-      // İlk tabı aktif et
-      if (tabElms[0]) {
-        this.switchTab(tabElms[0], 0, tabElms);
-      }
-    },
-    
-    switchTab(tabElm, index, allTabs) {
-      // Önceki aktif tabı deaktive et
-      allTabs.forEach(t => {
-        t.classList.remove('active');
-        t.setAttribute('aria-selected', 'false');
-        t.setAttribute('tabindex', '-1');
-        const tabPane = document.querySelector(t.getAttribute('data-bs-target'));
-        if (tabPane) {
-          tabPane.classList.remove('show', 'active');
-        }
-      });
-      
-      // Yeni tabı aktive et
-      tabElm.classList.add('active');
-      tabElm.setAttribute('aria-selected', 'true');
-      tabElm.setAttribute('tabindex', '0');
-      
-      const target = document.querySelector(tabElm.getAttribute('data-bs-target'));
-      if (target) {
-        target.classList.add('show', 'active');
-        animateCards(target);
-      }
-      
-      this.activeTab = index;
-      
-      // Event yayınla
-      EventBus.publish('tabChanged', { 
-        index, 
-        tabId: tabElm.getAttribute('data-bs-target') 
-      });
-    }
-  };
-  
-  TabManager.init();
-  
-  // Servis kategorisi sekmelerini başlat
-  const serviceTabs = document.querySelectorAll('.service-category-tabs .nav-link');
-  if (serviceTabs.length) {
-    const ServiceTabManager = {
-      init() {
-        serviceTabs.forEach((tab, idx) => {
-          tab.addEventListener('click', () => {
-            this.switchServiceTab(tab, idx);
-          });
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          const targetId = tab.getAttribute('data-tab');
           
-          // Klavye ile sekme açma
-          tab.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              this.switchServiceTab(tab, idx);
+          // Aktif tab'ı güncelle
+          tabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          
+          // İçerikleri güncelle
+          tabContents.forEach(content => {
+            content.classList.remove('active');
+            if (content.getAttribute('id') === targetId) {
+              content.classList.add('active');
             }
-          });
         });
-        
-        // İlk servis tabını aktif et
-        if (serviceTabs[0]) {
-          this.switchServiceTab(serviceTabs[0], 0);
-        }
-      },
-      
-      switchServiceTab(tab, index) {
-        serviceTabs.forEach(t => {
-          t.classList.remove('active');
-          t.setAttribute('aria-selected', 'false');
-        });
-        
-        tab.classList.add('active');
-        tab.setAttribute('aria-selected', 'true');
-        
-        const targetId = tab.getAttribute('data-bs-target').replace('#', '');
-        const tabContentContainer = document.querySelector('.service-category-tabs + .tab-content');
-        
-        if (tabContentContainer) {
-        const tabPanes = tabContentContainer.querySelectorAll('.tab-pane');
-        tabPanes.forEach(pane => {
-          pane.classList.remove('show', 'active');
-          if (pane.id === targetId) {
-            pane.classList.add('show', 'active');
-            animateCards(pane);
-          }
-        });
-        }
-        
-        // Event yayınla
-        EventBus.publish('serviceTabChanged', { index, targetId });
-      }
-    };
-    
-    ServiceTabManager.init();
+      });
+      });
+    });
   }
 }
 
@@ -684,310 +558,121 @@ function animateCards(container) {
  * Servis Animasyonları
  */
 function initServiceAnimations() {
-  const cards = document.querySelectorAll('.services-section .service-card');
-  if (!cards.length) return;
+  const serviceItems = document.querySelectorAll('.service-item');
   
-  // Intersection Observer ile görünüm animasyonu
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('animate-visible');
-        observer.unobserve(entry.target);
-        
-        // Event yayınla
-        EventBus.publish('serviceCardVisible', { 
-          cardId: entry.target.id 
-        });
-      }
-    });
-  }, { 
-    threshold: 0.2,
-    rootMargin: '50px'
-  });
-  
-  cards.forEach(card => {
-    // Başlangıç durumu
-    card.classList.add('not-visible');
-    observer.observe(card);
-  
-  // Kart tıklama dalgalanma efekti
-    card.addEventListener('click', function(e) {
-      const rect = this.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      
-      // Ripple elementi oluştur
-      const ripple = document.createElement('div');
-      ripple.classList.add('ripple-effect');
-      ripple.style.left = `${x}px`;
-      ripple.style.top = `${y}px`;
-      
-      this.appendChild(ripple);
-      
-      // Ripple elementini temizle
-      setTimeout(() => {
-        ripple.remove();
-      }, 600);
-      
-      // Event yayınla
-      EventBus.publish('serviceCardClicked', {
-        cardId: this.id,
-        position: { x, y }
+  if (serviceItems.length > 0) {
+    // IntersectionObserver ile animasyon
+    Utils.createObserver(serviceItems, (item) => {
+      item.classList.add('animated');
+    }, { threshold: 0.2 });
+    
+    // Hover efektleri
+    serviceItems.forEach(item => {
+      item.addEventListener('mouseenter', () => {
+        item.classList.add('hovered');
       });
+      
+      item.addEventListener('mouseleave', () => {
+        item.classList.remove('hovered');
     });
   });
+  }
 }
 
 /**
  * Modern Hero Özellikleri
  */
 function initModernHero() {
-  // Paralaks efekti (masaüstü için)
-  if (window.innerWidth > CONFIG.breakpoints.lg) {
-    const ParallaxManager = {
-      layers: document.querySelectorAll('.parallax-layer'),
-      
-      init() {
-        if (!this.layers.length) return;
-        
-        document.addEventListener('mousemove', this.handleMouseMove.bind(this));
-        window.addEventListener('deviceorientation', this.handleDeviceOrientation.bind(this));
-      },
-      
-      handleMouseMove(e) {
-            const pageX = e.clientX;
-            const pageY = e.clientY;
-            
-        requestAnimationFrame(() => {
-          this.layers.forEach(layer => {
-        const speed = layer.getAttribute('data-depth') || 0.05;
-                const x = (window.innerWidth - pageX * speed) / 100;
-                const y = (window.innerHeight - pageY * speed) / 100;
-            
-            layer.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-          });
-        });
-      },
-      
-      handleDeviceOrientation(e) {
-        if (!e.beta || !e.gamma) return;
-        
-        requestAnimationFrame(() => {
-          const x = e.gamma / 45;
-          const y = e.beta / 45;
-          
-          this.layers.forEach(layer => {
-            const speed = layer.getAttribute('data-depth') || 0.05;
-            layer.style.transform = `translate3d(${x * speed * 100}px, ${y * speed * 100}px, 0)`;
-            });
-        });
-    }
-    };
-    
-    ParallaxManager.init();
-  }
+  const heroSection = document.querySelector('.hero-section');
   
-  // 3D kart efekti
-  const Card3DManager = {
-    card: document.querySelector('.hero-3d-card'),
+  if (heroSection) {
+    // Yükleme sonrası animasyon
+    setTimeout(() => {
+      heroSection.classList.add('loaded');
+    }, 500);
     
-    init() {
-      if (!this.card || window.innerWidth <= CONFIG.breakpoints.lg) return;
+    // Parallax efektleri
+    if (!Utils.isMobile()) {
+      const heroContent = heroSection.querySelector('.hero-content');
+      const heroImage = heroSection.querySelector('.hero-image');
       
-      this.card.addEventListener('mousemove', this.handleMouseMove.bind(this));
-      this.card.addEventListener('mouseleave', this.handleMouseLeave.bind(this));
-      
-      // VanillaTilt entegrasyonu
-      if (window.VanillaTilt) {
-        VanillaTilt.init(this.card, {
-          max: 10,
-          speed: 300,
-          glare: true,
-          "max-glare": 0.2,
-          gyroscope: true
-        });
-      }
-    },
-    
-    handleMouseMove(e) {
-      const cardRect = this.card.getBoundingClientRect();
-            const cardCenterX = cardRect.left + cardRect.width / 2;
-            const cardCenterY = cardRect.top + cardRect.height / 2;
-            const mouseX = e.clientX - cardCenterX;
-            const mouseY = e.clientY - cardCenterY;
-            
-            const rotateX = -mouseY / 20;
-            const rotateY = mouseX / 20;
-            
-      const cardWrapper = this.card.querySelector('.card-3d-wrapper');
-      if (cardWrapper) {
-        cardWrapper.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-            
-        // Derinlik efekti
-        const items = this.card.querySelectorAll('.service-icon, h4, p');
-            items.forEach((item, index) => {
-                const depth = index * 0.5 + 2;
-                item.style.transform = `translateZ(${depth}px)`;
-            });
-      }
-    },
+      window.addEventListener('mousemove', Utils.throttle((e) => {
+        const mouseX = e.clientX / window.innerWidth;
+        const mouseY = e.clientY / window.innerHeight;
         
-    handleMouseLeave() {
-      const cardWrapper = this.card.querySelector('.card-3d-wrapper');
-      if (cardWrapper) {
-        cardWrapper.style.transform = 'rotateX(0deg) rotateY(0deg)';
-            
-        // Derinliği sıfırla
-        const items = this.card.querySelectorAll('.service-icon, h4, p');
-            items.forEach(item => {
-                item.style.transform = 'translateZ(0px)';
-            });
-      }
-    }
-  };
-  
-  Card3DManager.init();
-  
-  // Video lazy loading
-  const VideoManager = {
-    video: document.getElementById('hero-video'),
-    
-    init() {
-      if (!this.video) return;
-      
-      // IntersectionObserver ile görünüm kontrolü
-      const observer = new IntersectionObserver(
-        this.handleIntersection.bind(this),
-        { threshold: 0.1 }
-      );
-      
-      observer.observe(this.video);
-      
-      // Yedek yükleme olayları
-      window.addEventListener('scroll', () => this.loadVideo(), { once: true });
-      window.addEventListener('mousemove', () => this.loadVideo(), { once: true });
-      window.addEventListener('touchstart', () => this.loadVideo(), { once: true });
-    },
-    
-    handleIntersection(entries) {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          this.loadVideo();
+        if (heroContent) {
+          heroContent.style.transform = `translate(${mouseX * 20 - 10}px, ${mouseY * 20 - 10}px)`;
         }
-      });
-    },
-    
-    loadVideo() {
-      if (this.video.getAttribute('data-loaded') === 'true') return;
-      
-      this.video.setAttribute('data-loaded', 'true');
-      this.video.load();
-      
-      // Video hazır olduğunda oynat
-      this.video.addEventListener('loadeddata', () => {
-        this.video.play();
-        EventBus.publish('heroVideoLoaded', null);
-      });
-    }
-  };
-  
-  VideoManager.init();
-  
-  // Scroll göstergesi
-  const ScrollIndicator = {
-    indicator: document.querySelector('.scroll-indicator'),
-    
-    init() {
-      if (!this.indicator) return;
-      
-      this.indicator.addEventListener('click', this.handleClick.bind(this));
-      window.addEventListener('scroll', this.handleScroll.bind(this));
-    },
-    
-    handleClick() {
-            const aboutSection = document.querySelector('#about');
-            if (aboutSection) {
-                aboutSection.scrollIntoView({ behavior: 'smooth' });
-            }
-    },
         
-    handleScroll() {
-      this.indicator.classList.toggle('hidden', window.scrollY > 300);
+        if (heroImage) {
+          heroImage.style.transform = `translate(${mouseX * -20 + 10}px, ${mouseY * -20 + 10}px)`;
+        }
+      }, 50));
+    }
   }
-  };
-  
-  ScrollIndicator.init();
 }
 
 /**
  * Paralaks Efektleri
  */
 function initParallaxEffects() {
-  const ParallaxElements = {
-    elements: {
-      '.hero-wave-transition': { factor: 0.02, scale: true },
-      '.floating-feature-card': { factor: -0.03 }
-    },
-    
-    init() {
-      window.addEventListener('scroll', () => {
-        requestAnimationFrame(this.updateElements.bind(this));
-      });
-    },
-    
-    updateElements() {
-    const scrollTop = window.scrollY;
-    
-      Object.entries(this.elements).forEach(([selector, config]) => {
-      const element = document.querySelector(selector);
-        if (!element) return;
-        
-        const translateY = scrollTop * config.factor;
-        const transform = config.scale
-          ? `translateY(${translateY}px) scale(1.02)`
-          : `translateY(${translateY}px)`;
-        
-        element.style.transform = transform;
-      });
-    }
-  };
+  const parallaxElements = document.querySelectorAll('.parallax');
   
-  ParallaxElements.init();
+  if (parallaxElements.length > 0 && !Utils.isMobile()) {
+    window.addEventListener('scroll', Utils.throttle(() => {
+      parallaxElements.forEach(element => {
+        const scrolled = window.scrollY;
+        const speed = parseFloat(element.getAttribute('data-speed') || '0.5');
+        const direction = element.getAttribute('data-direction') || 'up';
+        const offset = element.offsetTop;
+        
+        let translateY;
+        
+        if (direction === 'up') {
+          translateY = (scrolled - offset) * speed;
+        } else {
+          translateY = (scrolled - offset) * -speed;
+        }
+        
+        // Uygulamadan önce görünürlüğü kontrol et
+        if (Utils.isInViewport(element, 300)) {
+          element.style.transform = `translate3d(0, ${translateY}px, 0)`;
+        }
+      });
+    }, 50));
+  }
 }
 
 /**
  * Tilt Efektleri
  */
 function initTiltEffects() {
-  const tiltElements = document.querySelectorAll('[data-tilt]');
+  const tiltElements = document.querySelectorAll('.tilt-effect');
   
-  if (!tiltElements.length) return;
-  
-  // Vanilla JS ile basit tilt efekti
-  tiltElements.forEach(element => {
-    const handleTilt = (e) => {
-      if (e.type === 'mousemove') {
-        const { left, top, width, height } = element.getBoundingClientRect();
-        const x = (e.clientX - left) / width - 0.5;
-        const y = (e.clientY - top) / height - 0.5;
+  if (tiltElements.length > 0 && !Utils.isMobile()) {
+    tiltElements.forEach(element => {
+      element.addEventListener('mousemove', (e) => {
+        const rect = element.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
         
-        element.style.transform = `perspective(1000px) rotateY(${x * 10}deg) rotateX(${-y * 10}deg) scale3d(1.03, 1.03, 1.03)`;
-      } else {
-        element.style.transform = 'perspective(1000px) rotateY(0) rotateX(0) scale3d(1, 1, 1)';
-      }
-    };
-    
-    element.addEventListener('mousemove', handleTilt);
-    element.addEventListener('mouseleave', handleTilt);
-  });
-  
-  // VanillaTilt kütüphanesi varsa daha gelişmiş efektler ekle
-  if (typeof VanillaTilt !== 'undefined') {
-    VanillaTilt.init(tiltElements, {
-      max: 5,
-      speed: 400,
-      perspective: 800,
-      scale: 1.03
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        const deltaX = (x - centerX) / centerX * 10;
+        const deltaY = (y - centerY) / centerY * 10;
+        
+        element.style.transform = `perspective(1000px) rotateX(${-deltaY}deg) rotateY(${deltaX}deg)`;
+      });
+      
+      element.addEventListener('mouseleave', () => {
+        element.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
+        element.style.transition = 'transform 0.5s ease';
+      });
+      
+      element.addEventListener('mouseenter', () => {
+        element.style.transition = 'transform 0.1s ease';
+      });
     });
   }
 }
@@ -996,197 +681,216 @@ function initTiltEffects() {
  * Sayaç Animasyonları
  */
 function initCounters() {
-  // Hero stats için sayaç animasyonu
-  const startHeroStatsCounter = () => {
-    const heroStats = document.querySelectorAll('.hero-stats .counting');
-    if (heroStats.length === 0) return;
-    
-    const observer = new IntersectionObserver(
-        entries => entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const target = +entry.target.getAttribute('data-count');
-                const increment = Math.max(1, Math.trunc(target / 50));
+  const counters = document.querySelectorAll('.counter');
+  
+  if (counters.length > 0) {
+    // IntersectionObserver kullanarak optimize et
+    Utils.createObserver(counters, (counter) => {
+      // Hedef değeri al
+      const target = parseInt(counter.getAttribute('data-count'), 10);
+      const duration = parseInt(counter.getAttribute('data-duration') || '2000', 10);
                 let current = 0;
                 
-                const updateCount = () => {
-                    if (current < target) {
-                        current += increment;
-                        if (current > target) current = target;
-                        entry.target.textContent = current;
-                        requestAnimationFrame(updateCount);
-                    }
-                };
-                
-                updateCount();
-                observer.unobserve(entry.target);
-            }
-        }),
-        { threshold: 0.5 }
-    );
-    
-    heroStats.forEach(stat => observer.observe(stat));
-  };
-  
-  // Genel sayaç animasyonu
-  const startCounting = () => {
-    document.querySelectorAll('.counting').forEach(counter => {
-      const target = +counter.getAttribute('data-count');
-      const increment = Math.trunc(target / 200);
+      // Başlangıç değerini ayarla
+      counter.textContent = '0';
       
-      const updateCount = () => {
-        const count = +counter.innerText.replace(/,/g, '');
-        if (count < target) {
-          counter.innerText = (count + increment).toString();
-          setTimeout(updateCount, 1);
-        } else {
-          counter.innerText = target.toString();
+      // Sayaç animasyonu
+      const step = (timestamp) => {
+        if (!counter.startTime) counter.startTime = timestamp;
+        const progress = timestamp - counter.startTime;
+        
+        // Yüzde hesapla
+        const percent = Math.min(progress / duration, 1);
+        current = Math.floor(percent * target);
+        counter.textContent = current.toLocaleString();
+        
+        // Animasyonu devam ettir
+        if (percent < 1) {
+          window.requestAnimationFrame(step);
         }
       };
       
-      updateCount();
-    });
-  };
-  
-  // Sayaç gözlemcisi
-    const observer = new IntersectionObserver(
-        entries => entries.forEach(entry => {
-            if (entry.isIntersecting) {
-        if (entry.target.classList.contains('hero-stats')) {
-          startHeroStatsCounter();
-        } else {
-                startCounting();
-        }
-                observer.unobserve(entry.target);
-            }
-        }),
-        { threshold: 0.4 }
-    );
-
-  // Sayaç içeren elementleri gözlemle
-  const statsWrappers = document.querySelectorAll('.hero-stats, .stats-wrapper');
-  statsWrappers.forEach(wrapper => {
-    observer.observe(wrapper);
-  });
+      // Animasyonu başlat
+      window.requestAnimationFrame(step);
+    }, { threshold: 0.1 });
+  }
 }
 
 /**
- * Form Doğrulama
+ * Form Doğrulama Yardımcı Nesnesi
+ * Tüm form işlemleri için merkezi bir yer
  */
-function initFormValidation() {
-  const FormValidator = {
-    form: document.getElementById('contactForm'),
+const FormValidator = {
+  // Form doğrulama yardımcı fonksiyonları
+  isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  },
+  
+  isValidPhone(phone) {
+    return /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/.test(phone);
+  },
+  
+  // Form alanı hata gösterimi
+  showError(input, message) {
+    if (!input) return;
     
-    init() {
-      if (!this.form) return;
-      
-      this.form.addEventListener('submit', this.handleSubmit.bind(this));
-      this.initFormIcons();
-      this.initInputValidation();
-    },
+    input.classList.add('is-invalid');
+    const errorElement = input.parentElement.querySelector('.error-message');
+    if (errorElement) {
+      errorElement.textContent = message;
+      errorElement.style.display = 'block';
+    }
+  },
+  
+  // Hata mesajını temizleme
+  clearError(input) {
+    if (!input) return;
     
-    handleSubmit(e) {
-    e.preventDefault();
+    input.classList.remove('is-invalid');
+    const errorElement = input.parentElement.querySelector('.error-message');
+    if (errorElement) {
+      errorElement.textContent = '';
+      errorElement.style.display = 'none';
+    }
+  },
+  
+  // Tüm form hatalarını temizleme
+  clearAllErrors(form) {
+    if (!form) return;
     
-      const formData = new FormData(this.form);
-      const formFields = {
-        name: formData.get('name'),
-        email: formData.get('email'),
-        phone: formData.get('phone'),
-        service: formData.get('service'),
-        message: formData.get('message')
-      };
-      
-      if (this.validateForm(formFields)) {
-        this.submitForm(formFields);
-      }
-    },
+    form.querySelectorAll('.error-message').forEach(elem => {
+      elem.textContent = '';
+      elem.style.display = 'none';
+    });
     
-    validateForm(fields) {
-  let isValid = true;
-      this.clearErrors();
+    form.querySelectorAll('.is-invalid').forEach(input => {
+      input.classList.remove('is-invalid');
+    });
+  },
   
-  // Ad Soyad doğrulama
-      if (!fields.name?.trim()) {
-        this.showError('name', 'Ad Soyad alanı zorunludur');
+  // Form alanını doğrulama
+  validateField(input) {
+    if (!input) return true;
+    
+    const name = input.getAttribute('name');
+    const value = input.value.trim();
+    let isValid = true;
+    
+    switch (name) {
+      case 'name':
+        if (!value) {
+          this.showError(input, 'Ad Soyad alanı zorunludur');
+          isValid = false;
+        } else if (value.length < 3) {
+          this.showError(input, 'Ad Soyad en az 3 karakter olmalıdır');
+          isValid = false;
+        } else {
+          this.clearError(input);
+        }
+        break;
+        
+      case 'email':
+        if (!value) {
+          this.showError(input, 'E-posta alanı zorunludur');
     isValid = false;
-      } else if (fields.name.trim().length < 3) {
-        this.showError('name', 'Ad Soyad en az 3 karakter olmalıdır');
+        } else if (!this.isValidEmail(value)) {
+          this.showError(input, 'Geçerli bir e-posta adresi giriniz');
     isValid = false;
-  }
-  
-  // Email doğrulama
-      if (!fields.email?.trim()) {
-        this.showError('email', 'E-posta alanı zorunludur');
+        } else {
+          this.clearError(input);
+        }
+        break;
+        
+      case 'phone':
+        if (!value) {
+          this.showError(input, 'Telefon alanı zorunludur');
     isValid = false;
-      } else if (!this.isValidEmail(fields.email)) {
-        this.showError('email', 'Geçerli bir e-posta adresi giriniz');
+        } else if (!this.isValidPhone(value)) {
+          this.showError(input, 'Geçerli bir telefon numarası giriniz');
     isValid = false;
-  }
-  
-  // Telefon doğrulama
-      if (!fields.phone?.trim()) {
-        this.showError('phone', 'Telefon alanı zorunludur');
+        } else {
+          this.clearError(input);
+        }
+        break;
+        
+      case 'message':
+        if (!value) {
+          this.showError(input, 'Mesaj alanı zorunludur');
     isValid = false;
-      } else if (!this.isValidPhone(fields.phone)) {
-        this.showError('phone', 'Geçerli bir telefon numarası giriniz');
+        } else if (value.length < 10) {
+          this.showError(input, 'Mesajınız en az 10 karakter olmalıdır');
     isValid = false;
-  }
-  
-  // Hizmet seçimi doğrulama
-      if (!fields.service) {
-        this.showError('service', 'Lütfen bir hizmet seçiniz');
+        } else {
+          this.clearError(input);
+        }
+        break;
+        
+      case 'service':
+        if (!value) {
+          this.showError(input, 'Lütfen bir hizmet seçiniz');
     isValid = false;
-  }
-  
-  // Mesaj doğrulama
-      if (!fields.message?.trim()) {
-        this.showError('message', 'Mesaj alanı zorunludur');
+        } else {
+          this.clearError(input);
+        }
+        break;
+        
+      case 'consent':
+        if (input.type === 'checkbox' && !input.checked) {
+          this.showError(input, 'Bu alanı işaretlemelisiniz');
     isValid = false;
-      } else if (fields.message.trim().length < 10) {
-        this.showError('message', 'Mesajınız en az 10 karakter olmalıdır');
+        } else {
+          this.clearError(input);
+        }
+        break;
+        
+      default:
+        // Diğer alan tipleri için varsayılan doğrulama
+        if (input.hasAttribute('required') && !value) {
+          this.showError(input, 'Bu alan zorunludur');
     isValid = false;
+        } else {
+          this.clearError(input);
+        }
   }
   
   return isValid;
     },
     
-    showError(fieldName, message) {
-      const input = this.form.querySelector(`[name="${fieldName}"]`);
-      const errorElement = input?.parentElement.querySelector('.error-message');
-      
-      if (input && errorElement) {
-    errorElement.textContent = message;
-    errorElement.style.display = 'block';
-    input.classList.add('is-invalid');
-  }
-    },
+  // Formun tamamını doğrulama
+  validateForm(form) {
+    if (!form) return false;
     
-    clearErrors() {
-      this.form.querySelectorAll('.error-message').forEach(elem => {
-    elem.textContent = '';
-    elem.style.display = 'none';
-  });
+    let isValid = true;
+    this.clearAllErrors(form);
+    
+    const inputs = form.querySelectorAll('input, textarea, select');
+    inputs.forEach(input => {
+      if (!this.validateField(input)) {
+        isValid = false;
+      }
+    });
+    
+    return isValid;
+  },
   
-      this.form.querySelectorAll('.is-invalid').forEach(input => {
-    input.classList.remove('is-invalid');
-  });
-    },
+  // Form gönderimi
+  async submitForm(form, options = {}) {
+    if (!form) return false;
     
-    isValidEmail(email) {
-      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    },
-    
-    isValidPhone(phone) {
-      return /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/.test(phone);
-    },
-    
-    async submitForm(formData) {
-      try {
-        // SweetAlert2 ile yükleniyor göster
+    try {
+      // Form verilerini topla
+      const formData = new FormData(form);
+      const formDataObj = {};
+      
+      formData.forEach((value, key) => {
+        formDataObj[key] = value;
+      });
+      
+      // Yükleniyor göster
   if (typeof Swal !== 'undefined') {
     Swal.fire({
-      title: 'Mesajınız Gönderiliyor',
-      text: 'Lütfen bekleyin...',
+          title: options.loadingTitle || 'İşleminiz Gerçekleştiriliyor',
+          text: options.loadingText || 'Lütfen bekleyin...',
       icon: 'info',
       allowOutsideClick: false,
       didOpen: () => {
@@ -1195,313 +899,278 @@ function initFormValidation() {
     });
         }
         
-        // Form verilerini gönder
-        // TODO: API endpoint'i eklenecek
-        // const response = await fetch('/api/contact', {
-        //   method: 'POST',
-        //   headers: {
-        //     'Content-Type': 'application/json'
-        //   },
-        //   body: JSON.stringify(formData)
-        // });
+      // API endpoint'i ile iletişim
+      if (options.apiEndpoint) {
+        // Gerçek form gönderimi
+        const response = await fetch(options.apiEndpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formDataObj)
+        });
         
-        // Simüle edilmiş başarılı gönderim
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        if (!response.ok) {
+          throw new Error('Form gönderimi başarısız oldu');
+        }
+      } else {
+        // Simülasyon modu - gerçek API yoksa
+        await new Promise(resolve => setTimeout(resolve, options.simulationTime || 1500));
+      }
         
         // Formu temizle
-        this.form.reset();
+      form.reset();
         
         // Başarı mesajı göster
         if (typeof Swal !== 'undefined') {
       Swal.fire({
-        title: 'Teşekkürler!',
-        text: 'Mesajınız başarıyla gönderildi. En kısa sürede sizinle iletişime geçeceğiz.',
+          title: options.successTitle || 'Teşekkürler!',
+          text: options.successText || 'İşleminiz başarıyla tamamlandı.',
         icon: 'success',
-        confirmButtonText: 'Tamam'
+          confirmButtonText: options.confirmButtonText || 'Tamam'
       });
   } else {
-      alert('Mesajınız başarıyla gönderildi. En kısa sürede sizinle iletişime geçeceğiz.');
+        alert(options.successText || 'İşleminiz başarıyla tamamlandı.');
+      }
+      
+      // Başarı callback'ini çağır
+      if (typeof options.onSuccess === 'function') {
+        options.onSuccess(formDataObj);
         }
         
         // Event yayınla
-        EventBus.publish('formSubmitted', { success: true });
-        
+      EventBus.publish('formSubmitted', { 
+        success: true,
+        formId: form.id,
+        data: formDataObj
+      });
+      
+      return true;
       } catch (error) {
         console.error('Form gönderme hatası:', error);
         
+      // Hata mesajı göster
         if (typeof Swal !== 'undefined') {
           Swal.fire({
-            title: 'Hata!',
-            text: 'Mesajınız gönderilemedi. Lütfen daha sonra tekrar deneyin.',
+          title: options.errorTitle || 'Hata!',
+          text: options.errorText || 'İşleminiz gerçekleştirilemedi. Lütfen daha sonra tekrar deneyin.',
             icon: 'error',
-            confirmButtonText: 'Tamam'
+          confirmButtonText: options.confirmButtonText || 'Tamam'
           });
         } else {
-          alert('Mesajınız gönderilemedi. Lütfen daha sonra tekrar deneyin.');
+        alert(options.errorText || 'İşleminiz gerçekleştirilemedi. Lütfen daha sonra tekrar deneyin.');
+      }
+      
+      // Hata callback'ini çağır
+      if (typeof options.onError === 'function') {
+        options.onError(error);
         }
         
         // Event yayınla
         EventBus.publish('formSubmitted', { 
           success: false, 
+        formId: form.id,
           error: error.message 
         });
-      }
-    },
-    
-    initFormIcons() {
-      const formControls = this.form.querySelectorAll('.form-control, .form-select');
       
-      formControls.forEach(input => {
-        ['focus', 'blur'].forEach(eventType => {
-          input.addEventListener(eventType, () => {
-            const icon = input.parentElement.querySelector('.form-icon');
-            if (icon) {
-              icon.classList.toggle('active-icon', eventType === 'focus');
-            }
-          });
-        });
-      });
-    },
+      return false;
+    }
+  },
+  
+  // Form input olaylarını başlatma
+  initFormInputs(form) {
+    if (!form) return;
     
-    initInputValidation() {
-      const inputs = this.form.querySelectorAll('input, textarea, select');
+    const inputs = form.querySelectorAll('input, textarea, select');
       
       inputs.forEach(input => {
+      // Input değiştiğinde doğrulama
         input.addEventListener('input', () => {
           if (input.classList.contains('is-invalid')) {
             this.validateField(input);
           }
         });
         
+      // Focus kaybolduğunda doğrulama
         input.addEventListener('blur', () => {
           this.validateField(input);
         });
-      });
-    },
-    
-    validateField(input) {
-      const name = input.getAttribute('name');
-      const value = input.value.trim();
       
-      switch (name) {
-        case 'name':
-          if (value.length < 3) {
-            this.showError(name, 'Ad Soyad en az 3 karakter olmalıdır');
-          } else {
-            this.clearFieldError(input);
-          }
-          break;
-          
-        case 'email':
-          if (!this.isValidEmail(value)) {
-            this.showError(name, 'Geçerli bir e-posta adresi giriniz');
-          } else {
-            this.clearFieldError(input);
-          }
-          break;
-          
-        case 'phone':
-          if (!this.isValidPhone(value)) {
-            this.showError(name, 'Geçerli bir telefon numarası giriniz');
-          } else {
-            this.clearFieldError(input);
-          }
-          break;
-          
-        case 'message':
-          if (value.length < 10) {
-            this.showError(name, 'Mesajınız en az 10 karakter olmalıdır');
-          } else {
-            this.clearFieldError(input);
-          }
-          break;
+      // Focus stilleri
+      input.addEventListener('focus', () => {
+        input.parentElement.classList.add('input-focused');
+        const icon = input.parentElement.querySelector('.form-icon');
+        if (icon) {
+          icon.classList.add('active-icon');
+        }
+      });
+      
+      input.addEventListener('blur', () => {
+        if (input.value === '') {
+          input.parentElement.classList.remove('input-focused');
+        }
+        const icon = input.parentElement.querySelector('.form-icon');
+        if (icon) {
+          icon.classList.remove('active-icon');
+        }
+      });
+      
+      // Başlangıçta değer varsa stil ekle
+      if (input.value !== '') {
+        input.parentElement.classList.add('input-focused');
       }
-    },
-    
-    clearFieldError(input) {
-      input.classList.remove('is-invalid');
-      const errorElement = input.parentElement.querySelector('.error-message');
-      if (errorElement) {
-        errorElement.textContent = '';
-        errorElement.style.display = 'none';
-      }
-    }
-  };
-  
-  FormValidator.init();
-}
+    });
+  }
+};
 
 /**
  * Harita Özellikleri
  */
 function initMapFeatures() {
-  const MapManager = {
-    regionTags: document.querySelectorAll('.region-tag'),
-    mapContainer: document.querySelector('.map-container'),
-    pinMarker: document.querySelector('.map-pin-marker'),
-    infoContainer: document.querySelector('.location-details'),
-    currentRegion: 'Edremit',
+  // Google Maps entegrasyonu için
+  const mapElement = document.getElementById('gmap');
+  const regionButtons = document.querySelectorAll('.region-button');
+  
+  if (mapElement && typeof google !== 'undefined') {
+    // AppState'teki mapLocations'i kullan
+    const defaultLocation = AppState.get('mapLocations')[AppState.get('activeRegion')];
     
-    init() {
-      if (!this.regionTags.length || !this.mapContainer) return;
-      
-      // Bölge etiketlerine tıklama olayı ekle
-      this.regionTags.forEach(tag => {
-        if (tag.dataset.region) {
-          tag.addEventListener('click', () => {
-            this.handleRegionClick(tag);
-          });
+    // Harita özelliklerini konfigüre et
+    const mapOptions = {
+      zoom: defaultLocation.zoom || CONFIG.map.zoom,
+      center: new google.maps.LatLng(
+        defaultLocation.lat || CONFIG.map.center.lat,
+        defaultLocation.lng || CONFIG.map.center.lng
+      ),
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      scrollwheel: false,
+      styles: [
+        // Harita stilleri burada olacak
+      ]
+    };
+    
+    // Haritayı oluştur
+    const map = new google.maps.Map(mapElement, mapOptions);
+    
+    // Tüm konumlar için marker ekle
+    const markers = {};
+    
+    Object.entries(AppState.get('mapLocations')).forEach(([region, location]) => {
+      const marker = new google.maps.Marker({
+        position: new google.maps.LatLng(location.lat, location.lng),
+        map,
+        title: region,
+        animation: google.maps.Animation.DROP,
+        icon: {
+          url: 'assets/img/map-marker.png',
+          scaledSize: new google.maps.Size(40, 40)
         }
       });
       
-      // İlk bölgeyi aktif et
-      if (this.regionTags[0]?.dataset.region) {
-        this.handleRegionClick(this.regionTags[0]);
-      }
+      // Click olayını ekle
+      marker.addListener('click', () => {
+        // İlgili bölgeye git (varsa)
+        const regionButton = document.querySelector(`.region-button[data-region="${region}"]`);
+        if (regionButton) {
+          regionButton.click();
+        }
+      });
       
-      // Map expand button
-      this.initExpandButton();
-      
-      // Tooltips
-      this.initTooltips();
-    },
+      markers[region] = marker;
+    });
     
-    handleRegionClick(tag) {
-      const region = tag.dataset.region;
-      
-      // Aktif sınıfını güncelle
-      this.regionTags.forEach(t => t.classList.remove('active'));
-      tag.classList.add('active');
-      
-      // Pin'i hareket ettir
-      this.updatePinPosition(region);
-      
-      // Bölge bilgilerini güncelle
-      this.updateRegionInfo(region);
-      
-      // Harita animasyonu
-      this.animateMap();
-      
-      // State güncelle
-      this.currentRegion = region;
-      
-      // Event yayınla
-      EventBus.publish('regionChanged', { region });
-    },
-    
-    updatePinPosition(region) {
-      if (!this.pinMarker) return;
-      
-      const position = MAP_LOCATIONS[region]?.position || MAP_LOCATIONS['Edremit'].position;
-      
-      // Pin konumunu güncelle
-      this.pinMarker.style.top = position.top;
-      this.pinMarker.style.left = position.left;
-      
-      // Pin animasyonu
-      this.pinMarker.classList.add('pin-bounce');
-      setTimeout(() => {
-        this.pinMarker.classList.remove('pin-bounce');
-      }, 1000);
-    },
-    
-    updateRegionInfo(region) {
-      if (!this.infoContainer) return;
-      
-      const info = MAP_LOCATIONS[region] || MAP_LOCATIONS['Edremit'];
-      
-      this.infoContainer.innerHTML = `
-        <div class="location-item">
-            <div class="icon-box">
-                <i class="fas fa-map-marker"></i>
-            </div>
-            <div class="location-text">
-            <h5>${region}</h5>
-            <p>${info.address || ''}</p>
-            </div>
-        </div>
-        <div class="location-item">
-            <div class="icon-box">
-                <i class="fas fa-building"></i>
-            </div>
-            <div class="location-text">
-                <h5>Hizmet Alanı</h5>
-            <p>${info.properties || ''}</p>
-            <p>${info.service || ''}</p>
-            </div>
-        </div>
-    `;
-    },
-    
-    animateMap() {
-      this.mapContainer.classList.add('animate-map');
-      setTimeout(() => {
-        this.mapContainer.classList.remove('animate-map');
-      }, 500);
-    },
-    
-    initExpandButton() {
-      const expandButton = document.querySelector('.map-expand-button');
-      
-      if (expandButton && typeof bootstrap !== 'undefined') {
-        expandButton.addEventListener('click', () => {
-          const mapModal = new bootstrap.Modal(document.getElementById('mapModal'));
-          if (mapModal) {
-            mapModal.show();
+    // Bölge butonları için click olayı
+    if (regionButtons.length > 0) {
+      regionButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          const region = button.getAttribute('data-region');
+          if (!region) return;
+          
+          // Active sınıfını değiştir
+          regionButtons.forEach(btn => btn.classList.remove('active'));
+          button.classList.add('active');
+          
+          // AppState'i güncelle
+          AppState.set('activeRegion', region);
+          
+          // Haritayı yeni konuma kaydır
+          const location = AppState.get('mapLocations')[region];
+          
+          if (location) {
+            map.panTo(new google.maps.LatLng(location.lat, location.lng));
+            map.setZoom(location.zoom || CONFIG.map.zoom);
+            
+            // Markeri vurgula
+            Object.values(markers).forEach(m => {
+              m.setAnimation(null);
+            });
+            
+            if (markers[region]) {
+              markers[region].setAnimation(google.maps.Animation.BOUNCE);
+              setTimeout(() => markers[region].setAnimation(null), 1500);
+            }
           }
-        });
-      }
-    },
-    
-    initTooltips() {
-      if (typeof bootstrap === 'undefined' || !bootstrap.Tooltip) return;
-      
-      this.regionTags.forEach(tag => {
-        const region = tag.getAttribute('data-region');
-        const tooltipContent = `${region} bölgesi hizmet alanımız`;
-        
-        new bootstrap.Tooltip(tag, {
-          title: tooltipContent,
-          placement: 'top',
-          trigger: 'hover'
         });
       });
     }
-  };
-  
-  MapManager.init();
+    
+    // Pencere boyutu değiştiğinde haritayı yeniden boyutlandır
+    window.addEventListener('resize', () => {
+      const center = map.getCenter();
+      google.maps.event.trigger(map, 'resize');
+      map.setCenter(center);
+    });
+  }
 }
 
 /**
  * Scroll Olayları 
  */
 function initScrollEvents() {
-  // Scroll progress bar
-  const scrollProgressBar = document.querySelector('.scroll-progress-bar');
+  const sections = document.querySelectorAll('section[id]');
+  const scrollTopBtn = document.querySelector('.scroll-top');
   
-  if (scrollProgressBar) {
-    window.addEventListener('scroll', () => {
-      const scrollPosition = window.scrollY;
-      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const scrollProgress = (scrollPosition / scrollHeight) * 100;
-      
-      scrollProgressBar.style.width = `${scrollProgress}%`;
-    });
+  if (sections.length > 0) {
+    // IntersectionObserver ile etkin bölüm takibi
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        // Ekran içindeki bölümü tespit et
+        if (entry.isIntersecting) {
+          // Mevcut bölümü güncelle
+          const currentSection = entry.target.getAttribute('id');
+          AppState.set('currentSection', currentSection);
+          
+          // İlgili nav linkini aktif et
+          document.querySelectorAll('.nav-link').forEach(navLink => {
+            navLink.classList.remove('active');
+            if (navLink.getAttribute('href') === `#${currentSection}`) {
+              navLink.classList.add('active');
+            }
+          });
+        }
+      });
+    }, { threshold: 0.3 });
+    
+    // Her bölümü gözlemle
+    sections.forEach(section => sectionObserver.observe(section));
   }
   
-  // Scroll indicator
-  const scrollIndicator = document.querySelector('.scroll-indicator');
-    if (scrollIndicator) {
-    scrollIndicator.addEventListener('click', () => {
+  // Yukarı kaydır butonu
+  if (scrollTopBtn) {
+    window.addEventListener('scroll', Utils.throttle(() => {
+      if (window.scrollY > window.innerHeight / 2) {
+        scrollTopBtn.classList.add('active');
+      } else {
+        scrollTopBtn.classList.remove('active');
+      }
+    }, 200));
+    
+    scrollTopBtn.addEventListener('click', (e) => {
+      e.preventDefault();
       window.scrollTo({
         top: 0,
         behavior: 'smooth'
       });
-    });
-    
-    window.addEventListener('scroll', () => {
-      const scrollPosition = window.scrollY;
-      scrollIndicator.classList.toggle('visible', scrollPosition > 300);
     });
   }
 }
@@ -1510,13 +1179,12 @@ function initScrollEvents() {
  * Yardımcı Fonksiyonlar
  */
 function updateCopyrightYear() {
-  const copyrightElement = document.getElementById('copyright-year');
-  if (copyrightElement) {
-    const startYear = 2022;
+  const copyrightElements = document.querySelectorAll('.copyright-year');
     const currentYear = new Date().getFullYear();
-    copyrightElement.textContent = startYear === currentYear ? 
-      startYear : `${startYear}-${currentYear}`;
-  }
+  
+  copyrightElements.forEach(element => {
+    element.textContent = currentYear.toString();
+  });
 }
 
 // Buton dalgalanma efekti
@@ -1534,258 +1202,127 @@ document.addEventListener('DOMContentLoaded', function() {
  * Tema Sistemi
  */
 function initThemeSystem() {
-  const ThemeManager = {
-    settingsToggle: document.getElementById('settingsToggle'),
-    settingsPanel: document.getElementById('settingsPanel'),
-    settingsClose: document.getElementById('settingsClose'),
-    themeToggle: document.getElementById('themeToggle'),
-    contrastToggle: document.getElementById('contrastToggle'),
-    fontSizeControls: document.querySelectorAll('.font-size-btn'),
-    colorOptions: document.querySelectorAll('.color-option'),
-    
-    init() {
-      if (!this.settingsPanel || !this.settingsToggle) return;
-      
-      // Panel toggle
-      this.settingsToggle.addEventListener('click', this.handlePanelToggle.bind(this));
-      
-      // Panel kapatma
-      this.settingsClose.addEventListener('click', this.handlePanelClose.bind(this));
-      
-      // Tema değiştirme
-      if (this.themeToggle) {
-        this.themeToggle.addEventListener('change', this.handleThemeChange.bind(this));
-      }
-      
-      // Kontrast modu
-      if (this.contrastToggle) {
-        this.contrastToggle.addEventListener('change', this.handleContrastChange.bind(this));
-      }
-      
-      // Font boyutu kontrolleri
-      this.fontSizeControls.forEach(btn => {
-        btn.addEventListener('click', () => this.handleFontSizeChange(btn));
-      });
-      
-      // Renk seçenekleri
-      this.colorOptions.forEach(option => {
-        option.addEventListener('click', () => this.handleColorChange(option));
-      });
-      
-      // Dışarı tıklama
-      document.addEventListener('click', this.handleOutsideClick.bind(this));
-      
-      // Kaydedilmiş ayarları yükle
-      this.loadSettings();
-    },
-    
-    handlePanelToggle() {
-      this.settingsPanel.classList.toggle('active');
-      this.settingsToggle.classList.toggle('active');
-    },
-    
-    handlePanelClose() {
-      this.settingsPanel.classList.remove('active');
-      this.settingsToggle.classList.remove('active');
-    },
-    
-    handleThemeChange() {
-      document.body.classList.toggle('dark-mode');
-      this.saveSettings('theme', this.themeToggle.checked ? 'dark' : 'light');
-      
-      // Event yayınla
-      EventBus.publish('themeChanged', { 
-        isDark: this.themeToggle.checked 
-      });
-    },
-    
-    handleContrastChange() {
-      document.body.classList.toggle('high-contrast');
-      this.saveSettings('contrast', this.contrastToggle.checked);
-      
-      // Event yayınla
-      EventBus.publish('contrastChanged', { 
-        isHighContrast: this.contrastToggle.checked 
-      });
-    },
-    
-    handleFontSizeChange(btn) {
-      const currentSize = parseInt(document.documentElement.style.fontSize) || 100;
-      const isIncrease = btn.id === 'increaseFontSize';
-      const newSize = isIncrease ? currentSize + 10 : currentSize - 10;
-      
-      if (newSize >= 70 && newSize <= 130) {
-        document.documentElement.style.fontSize = newSize + '%';
-        document.getElementById('currentFontSize').textContent = newSize + '%';
-        this.saveSettings('fontSize', newSize);
-        
-        // Event yayınla
-        EventBus.publish('fontSizeChanged', { size: newSize });
-      }
-    },
-    
-    handleColorChange(option) {
-      const color = option.getAttribute('data-color');
-      const theme = option.getAttribute('data-theme');
-      
-      document.documentElement.style.setProperty('--primary-color', color);
-      this.colorOptions.forEach(opt => opt.classList.remove('active'));
-      option.classList.add('active');
-      
-      this.saveSettings('themeColor', { color, theme });
-      
-      // Event yayınla
-      EventBus.publish('colorChanged', { color, theme });
-    },
-    
-    handleOutsideClick(e) {
-      if (!this.settingsPanel.contains(e.target) && 
-          !this.settingsToggle.contains(e.target)) {
-        this.settingsPanel.classList.remove('active');
-        this.settingsToggle.classList.remove('active');
-      }
-    },
-    
-    saveSettings(key, value) {
-      const settings = JSON.parse(localStorage.getItem('siteSettings') || '{}');
-      settings[key] = value;
-      localStorage.setItem('siteSettings', JSON.stringify(settings));
-    },
-    
-    loadSettings() {
-      const settings = JSON.parse(localStorage.getItem('siteSettings') || '{}');
-      
-      // Tema
-      if (settings.theme) {
-        document.body.classList.toggle('dark-mode', settings.theme === 'dark');
-        this.themeToggle.checked = settings.theme === 'dark';
-      }
-      
-      // Kontrast
-      if (settings.contrast !== undefined) {
-        document.body.classList.toggle('high-contrast', settings.contrast);
-        this.contrastToggle.checked = settings.contrast;
-      }
-      
-      // Font boyutu
-      if (settings.fontSize) {
-        document.documentElement.style.fontSize = settings.fontSize + '%';
-        document.getElementById('currentFontSize').textContent = settings.fontSize + '%';
-      }
-      
-      // Tema rengi
-      if (settings.themeColor) {
-        document.documentElement.style.setProperty('--primary-color', settings.themeColor.color);
-        this.colorOptions.forEach(opt => {
-          if (opt.getAttribute('data-theme') === settings.themeColor.theme) {
-            opt.classList.add('active');
-          }
-        });
-      }
-      
-      // Event yayınla
-      EventBus.publish('settingsLoaded', settings);
-    }
-  };
+  const themeToggle = document.querySelector('.theme-toggle');
+  const html = document.documentElement;
   
-  ThemeManager.init();
+  // Tema değiştirme fonksiyonu
+  function toggleTheme(isDark) {
+    AppState.set('isDarkMode', isDark);
+    localStorage.setItem('darkMode', isDark.toString());
+    
+    // HTML'e class ekle/çıkar
+    if (isDark) {
+      html.classList.add('dark-mode');
+      html.classList.remove('light-mode');
+    } else {
+      html.classList.add('light-mode');
+      html.classList.remove('dark-mode');
+    }
+    
+    // Toggle butonunu güncelle
+    if (themeToggle) {
+      const icon = themeToggle.querySelector('i');
+      if (icon) {
+        if (isDark) {
+          icon.className = 'bi bi-sun-fill';
+          themeToggle.setAttribute('aria-label', 'Açık temaya geç');
+        } else {
+          icon.className = 'bi bi-moon-fill';
+          themeToggle.setAttribute('aria-label', 'Koyu temaya geç');
+        }
+      }
+    }
+    
+    // EventBus üzerinden yayınla
+    EventBus.publish('themeChanged', { isDarkMode: isDark });
+  }
+  
+  // Sistem/kayıtlı tema tercihini kontrol et
+  function initTheme() {
+    const savedTheme = localStorage.getItem('darkMode');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const isDark = savedTheme ? savedTheme === 'true' : systemPrefersDark;
+    
+    toggleTheme(isDark);
+  }
+  
+  // Tema değişikliği için event listener
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      toggleTheme(!AppState.get('isDarkMode'));
+    });
+  }
+  
+  // Sistem teması değişikliğini izle
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    // Sadece özel tercih yoksa sistem temasını izle
+    if (localStorage.getItem('darkMode') === null) {
+      toggleTheme(e.matches);
+    }
+  });
+  
+  // Temayı başlat
+  initTheme();
 }
 
 /**
  * Mobil Menü Sistemleri
  */
 function initMobileMenu() {
-  const navbar = document.querySelector('.navbar');
-  const navbarToggler = document.querySelector('.navbar-toggler');
-  const navbarCollapse = document.querySelector('.navbar-collapse');
+  const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+  const mobileMenu = document.querySelector('.mobile-nav');
+  const backdrop = document.querySelector('.mobile-backdrop');
   
-  // Arka plan karartma elementi (screen-darken)
-  let overlay = document.querySelector('.screen-darken');
-  
-  // Overlay yoksa oluştur
-  if (!overlay) {
-    overlay = document.createElement('div');
-    overlay.className = 'screen-darken';
-    document.body.appendChild(overlay);
-  }
-  
-  if (!navbar || !navbarToggler || !navbarCollapse) return;
-  
-  // Menü açma/kapama
-  navbarToggler.addEventListener('click', () => {
-    const isExpanded = navbarToggler.getAttribute('aria-expanded') === 'true';
-    navbarToggler.setAttribute('aria-expanded', !isExpanded);
-    
-    if (!isExpanded) {
-      // Menüyü açarken
-      navbarCollapse.classList.add('show');
-      document.body.classList.add('overflow-hidden');
-      overlay.classList.add('active');
+  if (mobileMenuToggle && mobileMenu) {
+    mobileMenuToggle.addEventListener('click', () => {
+      // Menü durumunu değiştir
+      const isOpen = AppState.get('isMenuOpen');
+      AppState.set('isMenuOpen', !isOpen);
       
-      // Force reflow ve animasyon için timeout
-      void navbarCollapse.offsetWidth;
-      navbarCollapse.style.right = '0';
+      // DOM üzerinde değişiklikleri yap
+      Utils.batchDOMUpdates(() => {
+        if (!isOpen) {
+          // Menüyü aç
+          document.body.classList.add('mobile-nav-active');
+          mobileMenuToggle.classList.add('active');
+          if (backdrop) backdrop.style.display = 'block';
+          
+          // Menüyü göster (animasyon ile)
+          setTimeout(() => {
+            mobileMenu.style.transform = 'translateX(0)';
+            if (backdrop) backdrop.style.opacity = '1';
+          }, 50);
     } else {
-      // Menüyü kapatırken
-      navbarCollapse.style.right = '-100%';
-      overlay.classList.remove('active');
-      document.body.classList.remove('overflow-hidden');
-      
-      // Animasyon tamamlandıktan sonra show sınıfını kaldır
+          // Menüyü kapat
+          mobileMenuToggle.classList.remove('active');
+          mobileMenu.style.transform = 'translateX(-100%)';
+          if (backdrop) backdrop.style.opacity = '0';
+          
+          // Temizleme ve gizleme
       setTimeout(() => {
-        navbarCollapse.classList.remove('show');
+            document.body.classList.remove('mobile-nav-active');
+            if (backdrop) backdrop.style.display = 'none';
       }, 300);
     }
   });
-  
-  // Overlay'e tıklandığında menüyü kapat
-  overlay.addEventListener('click', () => {
-    navbarToggler.setAttribute('aria-expanded', 'false');
-    navbarCollapse.style.right = '-100%';
-    overlay.classList.remove('active');
-    document.body.classList.remove('overflow-hidden');
-    
-    // Animasyon tamamlandıktan sonra show sınıfını kaldır
-    setTimeout(() => {
-      navbarCollapse.classList.remove('show');
-    }, 300);
-  });
-  
-  // Menü öğelerine tıklandığında menüyü kapat
-  document.querySelectorAll('.navbar-nav .nav-link, .navbar-nav .header-button').forEach(link => {
-    link.addEventListener('click', () => {
-      navbarToggler.setAttribute('aria-expanded', 'false');
-      navbarCollapse.style.right = '-100%';
-      overlay.classList.remove('active');
-      document.body.classList.remove('overflow-hidden');
-      
-      // Animasyon tamamlandıktan sonra show sınıfını kaldır
-      setTimeout(() => {
-        navbarCollapse.classList.remove('show');
-      }, 300);
     });
-  });
-  
-  // Sayfa kaydırıldığında hamburger butonunun ve header'ın görünümünü ayarla
-  window.addEventListener('scroll', () => {
-    const header = document.querySelector('.patreon-header');
-    if (header && window.scrollY > 50) {
-      navbarToggler.style.background = 'rgba(255, 255, 255, 0.1)';
-    } else {
-      navbarToggler.style.background = 'rgba(0, 0, 0, 0.2)';
+    
+    // Backdrop tıklama olayı
+    if (backdrop) {
+      backdrop.addEventListener('click', () => {
+        if (AppState.get('isMenuOpen')) {
+          mobileMenuToggle.click();
+        }
+      });
     }
-  });
-  
-  // Ekran boyutu değiştiğinde kontrol
-  window.addEventListener('resize', () => {
-    if (window.innerWidth >= CONFIG.breakpoints.lg) {
-      navbarToggler.setAttribute('aria-expanded', 'false');
-      navbarCollapse.classList.remove('show');
-      navbarCollapse.style.right = '';
-      overlay.classList.remove('active');
-      document.body.classList.remove('overflow-hidden');
-    }
-  });
+    
+    // Escape tuşu ile menü kapatma
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && AppState.get('isMenuOpen')) {
+        mobileMenuToggle.click();
+      }
+    });
+  }
 }
 
 // İnitialize
@@ -2709,3 +2246,429 @@ document.addEventListener('DOMContentLoaded', function() {
   // İletişim etkileşimlerini başlat
   initContactInteractions();
 });
+
+/**
+ * Adres Kontrolü ve Bölge Eşleştirme
+ */
+function initAddressChecker() {
+  const addressForm = document.getElementById('addressCheckerForm');
+  const regionSelect = document.getElementById('region-select');
+  
+  if (addressForm && regionSelect) {
+    // Bölge değişimi olayı
+    regionSelect.addEventListener('change', () => {
+      const selectedRegion = regionSelect.value;
+      const mapElement = document.getElementById('gmap');
+      
+      // Seçilen bölgeyi AppState'e kaydet
+      if (selectedRegion && AppState.get('mapLocations')[selectedRegion]) {
+        AppState.set('activeRegion', selectedRegion);
+        
+        // Region butonunu aktif et (varsa)
+        const regionButton = document.querySelector(`.region-button[data-region="${selectedRegion}"]`);
+        if (regionButton) {
+          regionButton.click();
+        }
+      }
+    });
+    
+    // Form gönderimi
+    addressForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      
+      // Form doğrulama
+      if (FormValidator.validateForm(addressForm)) {
+        const formData = new FormData(addressForm);
+        const data = {};
+        
+        formData.forEach((value, key) => {
+          data[key] = value;
+        });
+        
+        // Sweet Alert ile mesaj göster
+        if (typeof Swal !== 'undefined') {
+          Swal.fire({
+            title: 'Adresiniz Kontrol Ediliyor',
+            text: `${data.address} adresinde hizmet kontrolü yapılıyor...`,
+            icon: 'info',
+            showCancelButton: false,
+            confirmButtonText: 'Tamam',
+            allowOutsideClick: false,
+            didOpen: () => {
+              Swal.showLoading();
+            }
+          });
+          
+          // Adres kontrolü simülasyonu
+          setTimeout(() => {
+            // Simüle edilmiş kontrol sonucu
+            const isServiceAvailable = Math.random() > 0.3;
+            
+            if (isServiceAvailable) {
+              Swal.fire({
+                title: 'Harika!',
+                text: 'Belirttiğiniz adrese hizmet verebiliyoruz. Sizi hemen arayalım!',
+                icon: 'success',
+                confirmButtonText: 'İletişime Geç'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  // İletişim formu kısmına kaydır
+                  const contactSection = document.getElementById('contact');
+                  if (contactSection) {
+                    contactSection.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }
+              });
+        } else {
+              Swal.fire({
+                title: 'Üzgünüz!',
+                text: 'Belirttiğiniz adres henüz hizmet alanımız dışında. Başka bir adres deneyebilir misiniz?',
+                icon: 'error',
+                confirmButtonText: 'Tekrar Dene'
+              });
+            }
+          }, 2000);
+        }
+      }
+    });
+  }
+}
+
+/**
+ * Lazy Loading ve Performans Optimizasyonu
+ */
+function initLazyLoading() {
+  const lazyImages = document.querySelectorAll('img.lazy');
+  const lazyVideos = document.querySelectorAll('video[data-src]');
+  const heroVideo = document.getElementById('hero-video');
+  
+  // Görüntü lazy loading
+  if (lazyImages.length > 0) {
+    Utils.createObserver(lazyImages, (img) => {
+      if (img.dataset.src) {
+        img.src = img.dataset.src;
+        img.classList.add('loaded');
+        img.classList.remove('lazy');
+      }
+    }, { rootMargin: '200px 0px' });
+  }
+  
+  // Video lazy loading - video varsa src'ye ata ve oynat
+  if (lazyVideos.length > 0) {
+    Utils.createObserver(lazyVideos, (video) => {
+      if (video.dataset.src) {
+        video.src = video.dataset.src;
+        
+        // Source alt öğelerine de src ata
+        const sources = video.querySelectorAll('source[data-src]');
+        sources.forEach(source => {
+          source.src = source.dataset.src;
+        });
+        
+        // Video yüklendiğinde veya hata oluştuğunda yakalamak için
+        video.addEventListener('loadeddata', function() {
+          video.classList.add('loaded');
+        }, { once: true });
+        
+        video.addEventListener('error', function() {
+          console.warn('Video yüklenemedi:', video.src);
+        }, { once: true });
+        
+        // Video yüklemesi başlat
+        video.load();
+      }
+    }, { rootMargin: '200px 0px' });
+  }
+  
+  // Hero video optimizasyonu
+  if (heroVideo) {
+    // Mobil cihazlarda video yüklemeyi geciktir
+    if (Utils.isMobile()) {
+      heroVideo.preload = 'metadata';
+    }
+    
+    heroVideo.addEventListener('loadedmetadata', function() {
+      // Metadata yüklendi, play() çağrılabilir
+      heroVideo.play().catch(err => {
+        console.warn('Otomatik oynatma başlatılamadı:', err);
+      });
+    }, { once: true });
+    
+    heroVideo.addEventListener('error', function(e) {
+      console.warn('Hero video yüklenirken hata oluştu:', e);
+      // Hata durumunda poster görüntüsünü göster
+      heroVideo.poster = 'assets/images/hero-bg.jpg';
+    }, { once: true });
+  }
+  
+  // Sayfa kapanırken bellek temizliği
+  window.addEventListener('beforeunload', function() {
+    // Video elemanlarını durdur ve kaynakları temizle
+    document.querySelectorAll('video').forEach(video => {
+      video.pause();
+      video.src = '';
+      video.load();
+    });
+  }, { once: true });
+}
+
+// Hata yakalama mekanizması - konsol hatalarını temizler
+(function handleRuntimeErrors() {
+    // Chrome/Edge eklenti hatalarını bastır
+    if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.lastError) {
+        console.warn('Eklenti hatası bastırıldı:', chrome.runtime.lastError);
+    }
+    
+    // Sayfa yüklendiğinde eklenti hatalarını gözardı et
+    window.addEventListener('load', function() {
+        if (typeof chrome !== 'undefined' && chrome.runtime) {
+            const originalSendMessage = chrome.runtime.sendMessage;
+            chrome.runtime.sendMessage = function() {
+                try {
+                    return originalSendMessage.apply(this, arguments);
+                } catch (e) {
+                    console.warn('Eklenti mesaj hatası bastırıldı');
+                    return false;
+                }
+            };
+        }
+        
+        // Tüm hata mesajlarını temizle
+        console.clear();
+    });
+})();
+
+/**
+ * Settings Panel İşlevselliği
+ */
+function initSettingsPanel() {
+  console.log("initSettingsPanel çağrıldı");
+  let settingsToggle = document.getElementById('settingsToggle');
+  const settingsPanel = document.getElementById('settingsPanel');
+  const settingsClose = document.getElementById('settingsClose');
+  const themeToggle = document.getElementById('themeToggle');
+  const contrastToggle = document.getElementById('contrastToggle');
+  const decreaseFontSize = document.getElementById('decreaseFontSize');
+  const increaseFontSize = document.getElementById('increaseFontSize');
+  const currentFontSize = document.getElementById('currentFontSize');
+  const colorOptions = document.querySelectorAll('.color-option');
+  
+  console.log("Elementler sorgulandı:", { 
+    settingsToggle: settingsToggle ? true : false, 
+    settingsPanel: settingsPanel ? true : false,
+    settingsClose: settingsClose ? true : false 
+  });
+  
+  // Önceden eklenen click event listener'ları temizle
+  if (settingsToggle) {
+    const newToggle = settingsToggle.cloneNode(true);
+    settingsToggle.parentNode.replaceChild(newToggle, settingsToggle);
+    settingsToggle = newToggle;
+  }
+  
+  // Panel açma/kapama
+  if (settingsToggle && settingsPanel) {
+    console.log("Click event listener ekleniyor");
+    settingsToggle.addEventListener('click', function(e) {
+      console.log("Settings toggle tıklandı");
+      e.preventDefault();
+      e.stopPropagation();
+      
+      if (settingsPanel.classList.contains('active')) {
+        settingsPanel.classList.remove('active');
+        settingsToggle.classList.remove('active');
+        console.log("Panel kapatıldı");
+      } else {
+        settingsPanel.classList.add('active');
+        settingsToggle.classList.add('active');
+        console.log("Panel açıldı");
+      }
+      
+      return false;
+    });
+  }
+  
+  // Panel kapatma
+  if (settingsClose && settingsPanel) {
+    settingsClose.addEventListener('click', function() {
+      settingsPanel.classList.remove('active');
+      if (settingsToggle) {
+        settingsToggle.classList.remove('active');
+      }
+    });
+  }
+  
+  // Tema değiştirme
+  if (themeToggle) {
+    const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+    themeToggle.checked = savedDarkMode;
+    
+    themeToggle.addEventListener('change', function() {
+      const isDarkMode = this.checked;
+      document.body.classList.toggle('dark-mode', isDarkMode);
+      localStorage.setItem('darkMode', isDarkMode);
+      
+      // Tema önizleme güncelleme
+      const themePreview = document.querySelector('.theme-preview');
+      if (themePreview) {
+        themePreview.classList.toggle('theme-preview-night', isDarkMode);
+      }
+    });
+    
+    // Sayfa yüklendiğinde tema ayarını uygula
+    document.body.classList.toggle('dark-mode', savedDarkMode);
+  }
+  
+  // Kontrast değiştirme
+  if (contrastToggle) {
+    const savedHighContrast = localStorage.getItem('highContrast') === 'true';
+    contrastToggle.checked = savedHighContrast;
+    
+    contrastToggle.addEventListener('change', function() {
+      const isHighContrast = this.checked;
+      document.body.classList.toggle('high-contrast', isHighContrast);
+      localStorage.setItem('highContrast', isHighContrast);
+    });
+    
+    // Sayfa yüklendiğinde kontrast ayarını uygula
+    document.body.classList.toggle('high-contrast', savedHighContrast);
+  }
+  
+  // Font boyutu değiştirme
+  let fontSizeValue = parseInt(localStorage.getItem('fontSize')) || 100;
+  
+  if (currentFontSize) {
+    currentFontSize.textContent = fontSizeValue + '%';
+  }
+  
+  function updateFontSize(newSize) {
+    fontSizeValue = newSize;
+    
+    if (currentFontSize) {
+      currentFontSize.textContent = fontSizeValue + '%';
+    }
+    
+    document.documentElement.style.fontSize = (fontSizeValue / 100) + 'rem';
+    localStorage.setItem('fontSize', fontSizeValue);
+  }
+  
+  if (decreaseFontSize) {
+    decreaseFontSize.addEventListener('click', function() {
+      if (fontSizeValue > 70) {
+        updateFontSize(fontSizeValue - 10);
+      }
+    });
+  }
+  
+  if (increaseFontSize) {
+    increaseFontSize.addEventListener('click', function() {
+      if (fontSizeValue < 130) {
+        updateFontSize(fontSizeValue + 10);
+      }
+    });
+  }
+  
+  // Sayfa yüklendiğinde font boyutunu uygula
+  updateFontSize(fontSizeValue);
+  
+  // Tema rengi değiştirme
+  if (colorOptions && colorOptions.length > 0) {
+    const savedThemeColor = localStorage.getItem('themeColor') || '#0055a4';
+    
+    // Sayfa yüklendiğinde kaydedilmiş tema rengini uygula
+    document.documentElement.style.setProperty('--primary-color', savedThemeColor);
+    
+    // Aktif renk seçeneğini işaretle
+    colorOptions.forEach(option => {
+      const optionColor = option.getAttribute('data-color');
+      if (optionColor === savedThemeColor) {
+        option.classList.add('active');
+      } else {
+        option.classList.remove('active');
+      }
+      
+      // Renk seçeneği tıklama olayı
+      option.addEventListener('click', function() {
+        const color = this.getAttribute('data-color');
+        
+        // Aktif seçeneği güncelle
+        colorOptions.forEach(opt => opt.classList.remove('active'));
+        this.classList.add('active');
+        
+        // Tema rengini uygula
+        document.documentElement.style.setProperty('--primary-color', color);
+        localStorage.setItem('themeColor', color);
+      });
+    });
+  }
+  
+  // ESC tuşu ile paneli kapatma
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && settingsPanel.classList.contains('active')) {
+      settingsPanel.classList.remove('active');
+      if (settingsToggle) {
+        settingsToggle.classList.remove('active');
+      }
+    }
+  });
+  
+  // Panel dışına tıklama ile kapatma
+  document.addEventListener('click', function(e) {
+    if (settingsPanel && settingsPanel.classList.contains('active')) {
+      // Panel içindeki bir elemana tıklanmadıysa ve toggle butonuna da tıklanmadıysa kapat
+      if (!settingsPanel.contains(e.target) && e.target !== settingsToggle) {
+        settingsPanel.classList.remove('active');
+        if (settingsToggle) {
+          settingsToggle.classList.remove('active');
+        }
+      }
+    }
+  });
+}
+
+// Tarayıcı eklenti hatalarını yönetmek için hata işleyiciler
+window.addEventListener('error', function(e) {
+  // contentScript.bundle.js hataları gibi Chrome eklenti hatalarını filtrele
+  if (e.filename && (e.filename.includes('contentScript.bundle.js') || e.filename.includes('chrome-extension'))) {
+    console.debug('Eklenti hatası yakalandı ve görmezden gelindi:', e.message);
+    e.preventDefault();
+    e.stopPropagation();
+    return true;
+  }
+});
+
+// Mesaj kanalı hatalarını yakalama
+window.addEventListener('unhandledrejection', function(e) {
+  if (e.reason && 
+     (e.reason.message && e.reason.message.includes('message channel closed') || 
+      e.reason.toString().includes('message channel closed'))) {
+    console.debug('Mesaj kanalı hatası yakalandı ve görmezden gelindi');
+    e.preventDefault();
+    e.stopPropagation();
+    return true;
+  }
+});
+
+// Console.clear çağrılarını yakalama ve engelleme
+const originalConsole = { ...console };
+console.clear = function() {
+  console.debug('Console.clear çağrısı engellendi');
+  return true;
+};
+
+// Chrome eklenti mesaj hatalarını yakalama
+if (typeof chrome !== 'undefined' && chrome.runtime) {
+  try {
+    const originalSendMessage = chrome.runtime.sendMessage;
+    chrome.runtime.sendMessage = function() {
+      try {
+        return originalSendMessage.apply(this, arguments);
+      } catch (e) {
+        console.debug('Chrome mesaj hatası görmezden gelindi:', e.message);
+        return true;
+      }
+    };
+  } catch (e) {
+    console.debug('Chrome runtime API erişim hatası:', e.message);
+  }
+}

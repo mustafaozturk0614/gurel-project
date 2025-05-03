@@ -1,5 +1,22 @@
 /* Enhanced Hero Section Styles - Gürel Yönetim */
 
+/* ----- Genel Değişkenler ve Reusable Stiller ----- */
+:root {
+    --primary-rgb: 0, 82, 204;
+    --secondary-rgb: 0, 150, 136;
+    --glass-bg-color: rgba(35, 45, 60, 0.2);
+    --glass-bg-hover: rgba(35, 45, 60, 0.4);
+    --text-color: rgba(255, 255, 255, 0.9);
+    --text-color-secondary: rgba(255, 255, 255, 0.7);
+    --border-color: rgba(255, 255, 255, 0.125);
+    --border-hover: rgba(255, 255, 255, 0.12);
+    --card-radius: 12px;
+    --shadow-default: 0 10px 25px rgba(0, 0, 0, 0.08);
+    --shadow-hover: 0 15px 30px rgba(0, 0, 0, 0.12);
+    --transition-default: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    --transition-fast: all 0.3s ease;
+  }
+  
 /* ----- Erişilebilirlik için Odak Durumları ----- */
 :focus {
     outline: 3px solid #007bff;
@@ -13,24 +30,18 @@
 :focus-visible {
     outline: 3px solid #007bff;
     outline-offset: 2px;
-    -webkit-box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
     box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
 }
 
 /* ----- Temel Hero Container Stilleri ----- */
 .hero-content.glass-effect {
-    background: rgba(35, 45, 60, 0.5);
-    -webkit-backdrop-filter: blur(5px);
-    backdrop-filter: blur(5px);
-    border-radius: 12px;
+    background: var(--glass-bg-color);
+    backdrop-filter: blur(12px) saturate(180%);
+    border: 1px solid var(--border-color);
+    border-radius: var(--card-radius);
     padding: 2rem;
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    -webkit-box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-    -webkit-transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-    -moz-transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-    -o-transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    box-shadow: var(--shadow-default);
+    transition: var(--transition-default);
     position: relative;
     overflow: hidden;
     height: 100%;
@@ -38,14 +49,14 @@
     flex-direction: column;
     justify-content: center;
     will-change: transform, box-shadow;
+    transform: perspective(1000px) rotateX(2deg);
 }
 
-/* Modern sınır efekti */
 .hero-content.glass-effect::after {
     content: '';
     position: absolute;
     inset: 0;
-    border-radius: 12px;
+    border-radius: var(--card-radius);
     padding: 1px;
     background: linear-gradient(
         to bottom right, 
@@ -58,9 +69,6 @@
     mask-composite: exclude;
     pointer-events: none;
     opacity: 0;
-    -webkit-transition: opacity 0.5s ease;
-    -moz-transition: opacity 0.5s ease;
-    -o-transition: opacity 0.5s ease;
     transition: opacity 0.5s ease;
     will-change: opacity;
 }
@@ -69,7 +77,35 @@
     opacity: 1;
 }
 
-/* Işık efekti minimalist hale getirildi */
+  .hero-content.glass-effect::before {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    background: radial-gradient(
+      circle at center,
+      rgba(255, 255, 255, 0.8) 0%,
+      rgba(255, 255, 255, 0) 70%
+    );
+    opacity: 0;
+    transform: scale(0.5);
+    animation: pulse 15s infinite;
+  }
+  
+  .hero-content.glass-effect:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--border-hover);
+    background: var(--glass-bg-hover);
+  }
+  
+  .hero-content.glass-effect:hover::before {
+    opacity: 0.4;
+  }
+  
+  /* ----- Işık Efekti ----- */
 .hero-light-effect {
     position: absolute;
     width: 80px;
@@ -77,68 +113,10 @@
     border-radius: 50%;
     background: radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 70%);
     pointer-events: none;
-    -webkit-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     z-index: 0;
-    -webkit-animation: light-fade 1.5s ease-out forwards;
     animation: light-fade 1.5s ease-out forwards;
     will-change: transform, opacity;
-}
-
-@-webkit-keyframes light-fade {
-    0% { 
-        -webkit-transform: translate(-50%, -50%) scale(0); 
-        transform: translate(-50%, -50%) scale(0); 
-        opacity: 0.25; 
-    }
-    100% { 
-        -webkit-transform: translate(-50%, -50%) scale(2); 
-        transform: translate(-50%, -50%) scale(2); 
-        opacity: 0; 
-    }
-}
-@keyframes light-fade {
-    0% { 
-        -webkit-transform: translate(-50%, -50%) scale(0); 
-        transform: translate(-50%, -50%) scale(0); 
-        opacity: 0.25; 
-    }
-    100% { 
-        -webkit-transform: translate(-50%, -50%) scale(2); 
-        transform: translate(-50%, -50%) scale(2); 
-        opacity: 0; 
-    }
-}
-
-.hero-content.glass-effect:hover {
-    -webkit-transform: translateY(-2px);
-    -ms-transform: translateY(-2px);
-    transform: translateY(-2px);
-    -webkit-box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
-    border-color: rgba(255, 255, 255, 0.12);
-    background: rgba(35, 45, 60, 0.4);
-}
-
-.hero-content.glass-effect::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.05), transparent 70%);
-    opacity: 0;
-    -webkit-transition: opacity 0.4s ease;
-    -moz-transition: opacity 0.4s ease;
-    -o-transition: opacity 0.4s ease;
-    transition: opacity 0.4s ease;
-    z-index: 0;
-}
-
-.hero-content.glass-effect:hover::before {
-    opacity: 0.4;
 }
 
 /* ----- Premium Badge Tasarımı ----- */
@@ -146,16 +124,11 @@
     display: inline-flex;
     align-items: center;
     background: rgba(0, 82, 204, 0.15);
-    border: none;
     border-radius: 30px;
     padding: 0.4rem 1rem;
     margin-bottom: 1.2rem;
     position: relative;
     overflow: hidden;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
 }
 
 .badge-icon {
@@ -168,16 +141,14 @@
     justify-content: center;
     margin-right: 8px;
     font-size: 0.7rem;
-    color: rgba(255, 255, 255, 0.9);
-    -webkit-box-shadow: none;
-    box-shadow: none;
+    color: var(--text-color);
 }
 
 .badge-text {
     font-size: 0.7rem;
     font-weight: 600;
     letter-spacing: 0.03em;
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--text-color);
     text-transform: uppercase;
 }
 
@@ -187,19 +158,21 @@
     font-weight: 800;
     line-height: 1.2;
     margin-bottom: 1.2rem;
-    -webkit-transition: all 0.3s ease;
-    -moz-transition: all 0.3s ease;
-    -o-transition: all 0.3s ease;
-    transition: all 0.3s ease;
+    transition: var(--transition-fast);
     z-index: 1;
     position: relative;
 }
 
-.title-line-gradient {
+  .title-line-gradient,
+  .title-effect {
     color: #ffffff;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
     position: relative;
     display: inline-block;
+    transition: var(--transition-fast);
+  }
+  
+  .title-line-gradient {
     padding-bottom: 5px;
 }
 
@@ -207,17 +180,6 @@
     display: block;
     position: relative;
     margin-top: 8px;
-}
-
-.title-effect {
-    position: relative;
-    display: inline-block;
-    -webkit-transition: all 0.3s ease;
-    -moz-transition: all 0.3s ease;
-    -o-transition: all 0.3s ease;
-    transition: all 0.3s ease;
-    color: #ffffff;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
 }
 
 .title-effect::after {
@@ -233,49 +195,20 @@
         rgba(255, 255, 255, 0.4),
         rgba(255, 255, 255, 0.2)
     );
-    -webkit-transform: scaleX(0);
-    -ms-transform: scaleX(0);
     transform: scaleX(0);
-    -webkit-transform-origin: left;
-    -ms-transform-origin: left;
     transform-origin: left;
-    -webkit-transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-    -moz-transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-    -o-transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
     transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .fancy-hero-title:hover .title-effect::after {
-    -webkit-transform: scaleX(1);
-    -ms-transform: scaleX(1);
     transform: scaleX(1);
 }
 
-/* Bu kısım değişen kelimeler için - minimalist ve şık */
+  /* ----- Neon Accent Text ----- */
 .accent-text {
     color: #ffffff;
-    background: rgba(0, 82, 204, 0.25);
-    border-radius: 3px;
-    padding: 0 6px;
-    margin: 0 2px;
-    position: relative;
-    display: inline-block;
-    -webkit-transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    -moz-transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    -o-transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    font-weight: 700;
-    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
-    -webkit-box-shadow: none;
-    box-shadow: none;
-    will-change: transform, background-color;
-}
-
-.fancy-hero-title:hover .accent-text {
-    -webkit-transform: translateY(-2px);
-    -ms-transform: translateY(-2px);
-    transform: translateY(-2px);
-    background: rgba(0, 82, 204, 0.25);
+    text-shadow: 0 0 5px #00c3ff, 0 0 10px #00c3ff, 0 0 15px #00c3ff;
+    animation: neonPulse 2s infinite alternate;
 }
 
 /* ----- Hero Description Stilleri ----- */
@@ -286,10 +219,7 @@
     position: relative;
     padding-left: 1.5rem;
     margin-bottom: 1.5rem;
-    -webkit-transition: all 0.3s ease;
-    -moz-transition: all 0.3s ease;
-    -o-transition: all 0.3s ease;
-    transition: all 0.3s ease;
+    transition: var(--transition-fast);
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
     font-weight: 400;
 }
@@ -299,23 +229,16 @@
     left: 0;
     top: 2px;
     font-size: 1.2rem;
-    color: rgba(255, 255, 255, 0.6);
-    -webkit-transition: all 0.3s ease;
-    -moz-transition: all 0.3s ease;
-    -o-transition: all 0.3s ease;
-    transition: all 0.3s ease;
+    color: var(--text-color-secondary);
+    transition: var(--transition-fast);
 }
 
 .hero-content:hover .hero-description.premium-text {
-    -webkit-transform: translateX(3px);
-    -ms-transform: translateX(3px);
     transform: translateX(3px);
     color: rgba(255, 255, 255, 0.95);
 }
 
 .hero-content:hover .quote-icon {
-    -webkit-transform: translateY(-2px);
-    -ms-transform: translateY(-2px);
     transform: translateY(-2px);
     color: rgba(255, 255, 255, 0.5);
 }
@@ -330,7 +253,6 @@
     background: rgba(0, 0, 0, 0.2);
     border-radius: 8px;
     padding: 0.8rem 0.5rem;
-    border: none;
 }
 
 .region-indicator {
@@ -338,9 +260,6 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    -webkit-transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    -moz-transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    -o-transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     flex: 1;
     min-width: 80px;
@@ -350,26 +269,19 @@
 }
 
 .region-indicator:hover {
-    -webkit-transform: translateY(-2px);
-    -ms-transform: translateY(-2px);
     transform: translateY(-2px);
     background: rgba(255, 255, 255, 0.04);
 }
 
 .region-icon {
     font-size: 1rem;
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--text-color-secondary);
     margin-bottom: 0.4rem;
-    -webkit-transition: all 0.3s ease;
-    -moz-transition: all 0.3s ease;
-    -o-transition: all 0.3s ease;
-    transition: all 0.3s ease;
+    transition: var(--transition-fast);
 }
 
 .region-indicator:hover .region-icon {
     color: #ffffff;
-    -webkit-transform: scale(1.1);
-    -ms-transform: scale(1.1);
     transform: scale(1.1);
 }
 
@@ -384,7 +296,7 @@
 
 .region-text {
     font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--text-color-secondary);
     font-weight: 500;
 }
 
@@ -398,9 +310,6 @@
 .animated-btn {
     position: relative;
     overflow: hidden;
-    -webkit-transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    -moz-transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    -o-transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     z-index: 1;
     white-space: nowrap;
@@ -410,23 +319,26 @@
 .animated-btn:focus-visible {
     outline: 3px solid #007bff;
     outline-offset: 2px;
-    -webkit-box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
     box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
-    -webkit-transform: translateY(-2px);
-    -ms-transform: translateY(-2px);
+    transform: translateY(-2px);
+  }
+  
+  .animated-btn:hover {
     transform: translateY(-2px);
 }
 
 .hero-btn-primary.animated-btn {
     background: rgba(0, 82, 204, 0.85);
-    border: none;
     color: #fff;
     font-weight: 600;
-    -webkit-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 5px 15px rgba(0, 82, 204, 0.4);
     padding: 10px 20px;
     letter-spacing: 0.3px;
     border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+    border: none;
 }
 
 .hero-btn-secondary.animated-btn {
@@ -435,21 +347,28 @@
     font-weight: 500;
     border: 1px solid rgba(255, 255, 255, 0.25);
     padding: 9px 18px;
-    -webkit-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
     letter-spacing: 0.3px;
     border-radius: 6px;
 }
 
-.hero-btn-primary.animated-btn:hover,
-.hero-btn-secondary.animated-btn:hover {
-    -webkit-transform: translateY(-2px);
-    -ms-transform: translateY(-2px);
-    transform: translateY(-2px);
+  .hero-btn-primary.animated-btn:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: all 0.6s;
+    z-index: -1;
+  }
+  
+  .hero-btn-primary.animated-btn:hover:before {
+    left: 100%;
 }
 
 .hero-btn-primary.animated-btn:hover {
-    -webkit-box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
     background: rgba(0, 82, 204, 0.75);
 }
@@ -457,7 +376,6 @@
 .hero-btn-secondary.animated-btn:hover {
     background-color: rgba(255, 255, 255, 0.12);
     border-color: rgba(255, 255, 255, 0.25);
-    -webkit-box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
 }
 
@@ -472,135 +390,80 @@
     background: rgba(255, 255, 255, 0.2);
     border-radius: 50%;
     z-index: -1;
-    -webkit-transform: translate(-50%, -50%) scale(0);
-    -ms-transform: translate(-50%, -50%) scale(0);
     transform: translate(-50%, -50%) scale(0);
     opacity: 0;
-    -webkit-transition: transform 0.6s, opacity 0.6s;
-    -moz-transition: transform 0.6s, opacity 0.6s;
-    -o-transition: transform 0.6s, opacity 0.6s;
     transition: transform 0.6s, opacity 0.6s;
 }
 
 .hero-btn-primary.animated-btn:hover::after {
-    -webkit-transform: translate(-50%, -50%) scale(1);
-    -ms-transform: translate(-50%, -50%) scale(1);
     transform: translate(-50%, -50%) scale(1);
-    opacity: 0;
-    -webkit-animation: pulse 1.5s infinite;
+    opacity:.0;
     animation: pulse 1.5s infinite;
 }
 
-@-webkit-keyframes pulse {
-    0% {
-        -webkit-transform: translate(-50%, -50%) scale(0.2);
-        transform: translate(-50%, -50%) scale(0.2);
-        opacity: 0.5;
-    }
-    100% {
-        -webkit-transform: translate(-50%, -50%) scale(1.2);
-        transform: translate(-50%, -50%) scale(1.2);
-        opacity: 0;
-    }
-}
-@keyframes pulse {
-    0% {
-        -webkit-transform: translate(-50%, -50%) scale(0.2);
-        transform: translate(-50%, -50%) scale(0.2);
-        opacity: 0.5;
-    }
-    100% {
-        -webkit-transform: translate(-50%, -50%) scale(1.2);
-        transform: translate(-50%, -50%) scale(1.2);
-        opacity: 0;
-    }
-}
-
 .hero-btn-icon {
-    -webkit-transition: transform 0.3s ease;
-    -moz-transition: transform 0.3s ease;
-    -o-transition: transform 0.3s ease;
     transition: transform 0.3s ease;
     margin-left: 6px;
     font-size: 0.9rem;
 }
 
 .animated-btn:hover .hero-btn-icon {
-    -webkit-transform: translateX(3px);
-    -ms-transform: translateX(3px);
     transform: translateX(3px);
 }
 
-/* ----- Hero 3D Kart Tasarımı Geliştirmeleri ----- */
+  /* ----- Hero 3D Kart Tasarımı ----- */
 .hero-3d-card {
     position: relative;
-    background: rgba(35, 45, 60, 0.45);
+    background: transparent;
     border-radius: 15px;
-    padding: 2rem;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
-    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    padding: 2.5rem;
+    border: none;
+    box-shadow: none;
+    transition: var(--transition-default);
     transform-style: preserve-3d;
-    perspective: 1000px;
+    perspective: 1200px;
     overflow: hidden;
     z-index: 1;
     isolation: isolate;
-    backdrop-filter: blur(8px);
-    will-change: transform, box-shadow;
+    backdrop-filter: none;
+    will-change: transform;
 }
 
-.hero-3d-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -2;
-    background: radial-gradient(
-        circle at 50% 0%, 
-        rgba(var(--primary-rgb), 0.15), 
-        transparent 70%
-    );
-    opacity: 0;
-    transition: opacity 0.6s ease;
-}
-
+.hero-3d-card::before,
 .hero-3d-card::after {
     content: '';
     position: absolute;
     inset: 0;
-    z-index: -1;
-    border-radius: 15px;
-    padding: 1px;
-    background: linear-gradient(
-        135deg,
-        rgba(255, 255, 255, 0.15) 0%,
-        rgba(255, 255, 255, 0.05) 25%,
-        rgba(var(--primary-rgb), 0.1) 50%,
-        rgba(var(--secondary-rgb), 0.1) 75%,
-        rgba(255, 255, 255, 0.05) 100%
-    );
-    mask: linear-gradient(#fff 0 0) content-box, 
-          linear-gradient(#fff 0 0);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, 
-                  linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
     opacity: 0;
     transition: opacity 0.6s ease;
 }
 
+.hero-3d-card::before {
+    z-index: -2;
+    background: radial-gradient(
+        circle at 50% 0%, 
+        rgba(var(--primary-rgb), 0.05),
+        transparent 70%
+    );
+}
+
+.hero-3d-card::after {
+    display: none;
+}
+
 .hero-3d-card:hover {
     transform: translateY(-8px) rotateX(2deg) rotateY(2deg);
-    box-shadow: 
-        0 20px 40px rgba(0, 0, 0, 0.2),
-        0 0 30px rgba(var(--primary-rgb), 0.1);
+    box-shadow: none;
 }
 
-.hero-3d-card:hover::before {
-    opacity: 1;
+/* Service Area Title gizleme */
+.service-area-title {
+    display: none;
 }
 
+.hero-3d-card:hover::before,
 .hero-3d-card:hover::after {
-    opacity: 1;
+    opacity: 0.5;
 }
 
 /* 3D Kart İçeriği Animasyon */
@@ -610,7 +473,8 @@
     transform-style: preserve-3d;
 }
 
-.hero-3d-card:hover .card-3d-wrap {
+.hero-3d-card:hover .card-3d-wrap,
+.hero-3d-card:hover .tab-content-improved {
     transform: translateZ(15px);
 }
 
@@ -625,21 +489,9 @@
     transform-style: preserve-3d;
 }
 
-.service-area-title {
-    position: relative;
-    font-size: 1.3rem;
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-    color: rgba(255, 255, 255, 0.9);
-    transform: translateZ(10px);
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
+/* Başlık ikonunu gizleme */
 .service-title-icon {
-    display: inline-block;
-    margin-right: 0.5rem;
-    color: rgba(var(--primary-rgb), 0.9);
-    transform: translateZ(15px);
+    display: none;
 }
 
 .nav-tabs-wrapper {
@@ -651,10 +503,6 @@
     position: relative;
     transform: translateZ(5px);
     transition: transform 0.3s ease;
-}
-
-.hero-3d-card:hover .tab-content-improved {
-    transform: translateZ(10px);
 }
 
 /* Işık Efekti */
@@ -681,20 +529,6 @@
     transform: rotate(60deg);
 }
 
-/* Animasyon Performans İyileştirmeleri */
-@media (prefers-reduced-motion: reduce) {
-    .hero-3d-card,
-    .hero-3d-card::before,
-    .hero-3d-card::after,
-    .hero-3d-card-shine,
-    .card-3d-wrap,
-    .tab-content-improved {
-        transition: none !important;
-        transform: none !important;
-        animation: none !important;
-    }
-}
-
 /* ----- Service Card Stili ----- */
 .service-card {
     background: rgba(25, 35, 50, 0.5);
@@ -702,17 +536,12 @@
     padding: 20px;
     position: relative;
     border: 1px solid rgba(255, 255, 255, 0.06);
-    transition: all 0.3s ease;
-    -webkit-transition: all 0.3s ease;
-    -moz-transition: all 0.3s ease;
-    -o-transition: all 0.3s ease;
+    transition: var(--transition-fast);
     display: flex;
     flex-direction: column;
     height: 100%;
     overflow: hidden;
-    -webkit-backdrop-filter: blur(5px);
     backdrop-filter: blur(5px);
-    -webkit-box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
     z-index: 1;
 }
@@ -720,12 +549,34 @@
 .service-card:hover, 
 .service-card:focus {
     transform: translateY(-5px);
-    -webkit-transform: translateY(-5px);
-    -ms-transform: translateY(-5px);
     background: rgba(25, 35, 50, 0.6);
     border-color: rgba(255, 255, 255, 0.12);
-    -webkit-box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
     box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+}
+  
+  .service-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 10px;
+    padding: 1px;
+    background: linear-gradient(
+      to bottom right, 
+      transparent, 
+      rgba(255, 255, 255, 0.1), 
+      transparent
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    will-change: opacity;
+  }
+  
+  .service-card:hover::after {
+    opacity: 1;
 }
 
 .service-card .card-logo {
@@ -742,20 +593,18 @@
     width: 35px;
     height: auto;
     opacity: 0.8;
-    transition: all 0.3s ease;
-    -webkit-transition: all 0.3s ease;
+    transition: var(--transition-fast);
 }
 
 .service-card:hover .service-logo {
     opacity: 1;
     transform: scale(1.05);
-    -webkit-transform: scale(1.05);
 }
 
 .service-card .logo-label {
     font-size: 11px;
     font-weight: 700;
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--text-color-secondary);
     background: rgba(0, 0, 0, 0.2);
     border-radius: 3px;
     padding: 2px 5px;
@@ -765,16 +614,14 @@
 
 .service-card .service-icon {
     font-size: 28px;
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--text-color-secondary);
     margin-bottom: 15px;
-    transition: all 0.3s ease;
-    -webkit-transition: all 0.3s ease;
+    transition: var(--transition-fast);
 }
 
 .service-card:hover .service-icon {
     color: #fff;
     transform: translateY(-3px);
-    -webkit-transform: translateY(-3px);
 }
 
 .service-card .service-title {
@@ -785,7 +632,7 @@
 }
 
 .service-card .service-description {
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--text-color-secondary);
     font-size: 14px;
     margin-bottom: 15px;
     line-height: 1.4;
@@ -805,44 +652,12 @@
 
 .service-card.tilt {
     transform-style: preserve-3d;
-    -webkit-transform-style: preserve-3d;
     perspective: 1000px;
-    -webkit-perspective: 1000px;
     will-change: transform;
 }
 
 .service-card.tilt:hover {
     transform: translateY(-5px) rotateX(2deg) rotateY(2deg);
-    -webkit-transform: translateY(-5px) rotateX(2deg) rotateY(2deg);
-    -ms-transform: translateY(-5px);
-}
-
-.service-card::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 10px;
-    padding: 1px;
-    background: linear-gradient(
-        to bottom right, 
-        transparent, 
-        rgba(255, 255, 255, 0.1), 
-        transparent
-    );
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    -webkit-transition: opacity 0.5s ease;
-    -moz-transition: opacity 0.5s ease;
-    -o-transition: opacity 0.5s ease;
-    will-change: opacity;
-}
-
-.service-card:hover::after {
-    opacity: 1;
 }
 
 .service-card .btn {
@@ -850,71 +665,18 @@
     align-self: flex-start;
     font-size: 13px;
     background: rgba(255, 255, 255, 0.15);
-    border: none;
+    border: 1px solid rgba(255, 255, 255, 0.15);
     padding: 6px 12px;
     border-radius: 5px;
-    transition: all 0.3s ease;
-    -webkit-transition: all 0.3s ease;
-    -moz-transition: all 0.3s ease;
-    -o-transition: all 0.3s ease;
-    color: rgba(255, 255, 255, 0.9);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    transition: var(--transition-fast);
+    color: var(--text-color);
 }
 
 .service-card .btn:hover {
     background: rgba(255, 255, 255, 0.25);
     color: #fff;
     transform: translateY(-2px);
-    -webkit-transform: translateY(-2px);
-    -ms-transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-/* ----- Feature Detection ve Fallback Düzenlemeleri ----- */
-@supports not (backdrop-filter: blur(5px)) {
-    .hero-content.glass-effect {
-        background: rgba(35, 45, 60, 0.85);
-    }
-    
-    .hero-3d-card {
-        background: rgba(25, 35, 50, 0.85);
-    }
-    
-    .service-card {
-        background: rgba(0, 0, 0, 0.6);
-    }
-}
-
-@supports not ((-webkit-mask-composite: xor) or (mask-composite: exclude)) {
-    .hero-content.glass-effect::after,
-    .hero-3d-card::after {
-        display: none;
-    }
-    
-    .hero-content.glass-effect,
-    .hero-3d-card {
-        border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    
-    .hero-content.glass-effect:hover,
-    .hero-3d-card:hover {
-        border-color: rgba(255, 255, 255, 0.2);
-    }
-}
-
-@supports not (transform-style: preserve-3d) {
-    .hero-3d-card {
-        transform: none !important;
-    }
-    
-    .hero-3d-card:hover {
-        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
-    }
-    
-    .fancy-hero-title:hover .title-effect::after {
-        opacity: 0.8;
-    }
 }
 
 /* ----- Patreon Hero Stilleri ----- */
@@ -922,14 +684,18 @@
     position: relative;
     padding: 8rem 0 6rem;
     overflow: hidden;
-    background: var(--primary-gradient);
+    background: linear-gradient(135deg, rgba(0, 82, 204, 0.9), rgba(0, 150, 136, 0.7), rgba(25, 118, 210, 0.8));
+    background-size: 300% 300%;
+    animation: gradientFlow 15s ease infinite;
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 1;
+    transform-style: preserve-3d;
+    perspective: 1000px;
 }
 
-/* Hero için arkaplan desenleri */
 .patreon-hero::before {
     content: '';
     position: absolute;
@@ -986,16 +752,7 @@
     z-index: 1;
 }
 
-/* Paralaks efekti için animasyon */
-.patreon-hero {
-    position: relative;
-    overflow: hidden;
-    padding: 9rem 0;
-    z-index: 1;
-    transform-style: preserve-3d;
-    perspective: 1000px;
-}
-
+  /* Paralaks efekti */
 .patreon-hero.parallax-active .hero-video-background {
     transform: translateY(var(--parallax-offset, 0)) scale(1.05);
     transition: transform 0.1s ease-out;
@@ -1011,21 +768,39 @@
     transition: transform 0.1s ease-out;
 }
 
-/* Responsive Düzenlemeler */
+  /* ----- Animasyonlar ----- */
+  @keyframes pulse {
+    0% { opacity: 0; transform: scale(0.5); }
+    50% { opacity: 0.2; transform: scale(1); }
+    100% { opacity: 0; transform: scale(0.5); }
+  }
+  
+  @keyframes neonPulse {
+    from { text-shadow: 0 0 5px #00c3ff, 0 0 10px #00c3ff; }
+    to { text-shadow: 0 0 10px #00c3ff, 0 0 20px #00c3ff, 0 0 30px #00c3ff; }
+  }
+  
+  @keyframes light-fade {
+    0% { transform: translate(-50%, -50%) scale(0); opacity: 0.25; }
+    100% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
+  }
+  
+  @keyframes gradientFlow {
+    0% { background-position: 0% 50% }
+    50% { background-position: 100% 50% }
+    100% { background-position: 0% 50% }
+  }
+  
+  /* ----- Media Queries ----- */
 @media (max-width: 992px) {
-    .hero-content.glass-effect {
+    .hero-content.glass-effect,
+    .hero-3d-card {
         padding: 1.5rem;
         margin-bottom: 1.5rem;
     }
     
-    .hero-3d-card {
-        padding: 1.2rem;
-    }
-    
     .hero-buttons {
-        display: flex;
         flex-direction: column;
-        gap: 0.8rem;
     }
     
     .hero-buttons .btn {
@@ -1040,10 +815,6 @@
 }
 
 @media (max-width: 768px) {
-    .hero-content.glass-effect {
-        padding: 1.2rem;
-    }
-    
     .fancy-hero-title {
         text-align: center;
         font-size: 2rem;
@@ -1058,21 +829,24 @@
     .quote-icon {
         top: 0;
         left: 50%;
-        -webkit-transform: translateX(-50%);
-        -ms-transform: translateX(-50%);
         transform: translateX(-50%);
     }
     
-    .hero-buttons {
-        flex-direction: column;
+    .service-card {
+      margin-bottom: 20px;
     }
     
-    .hero-btn {
-        width: 100%;
+    .service-card .badge {
+      font-size: 10px;
+      padding: 4px 8px;
     }
-}
-
-/* Küçük telefonlar için ek düzenlemeler */
+    
+    .service-card .btn {
+      padding: 5px 10px;
+      font-size: 12px;
+    }
+  }
+  
 @media (max-width: 480px) {
     .fancy-hero-title {
         font-size: 1.8rem;
@@ -1085,199 +859,95 @@
     .hero-badge.premium-badge {
         width: 100%;
         justify-content: center;
-    }
 }
 
-/* Tarayıcı Uyumluluğu: flexbox desteği olmayan tarayıcılar için */
-@supports not (display: flex) {
-    .hero-buttons {
-        display: block;
+    .service-card {
         text-align: center;
     }
     
-    .hero-buttons .btn {
-        display: inline-block;
-        margin: 0.5rem;
+    .service-card .card-logo {
+      position: static;
+      margin-bottom: 15px;
+      justify-content: center;
     }
     
-    .hero-content.glass-effect,
-    .hero-3d-card {
-        display: block;
+    .service-card .service-badges,
+    .service-card .btn {
+      margin-left: auto;
+      margin-right: auto;
+      align-self: center;
     }
     
-    .patreon-hero {
-        display: block;
-        text-align: center;
-        padding: 100px 0;
+    .service-card .service-icon {
+      margin-left: auto;
+      margin-right: auto;
     }
-}
-
-/* Tarayıcı Uyumluluğu: CSS değişkenleri (custom properties) desteği olmayan tarayıcılar için */
-@supports not (--custom: property) {
-    .patreon-hero {
-        background: linear-gradient(135deg, #00396F 0%, #0057a9 100%);
-    }
-    
-    .hero-btn-primary.animated-btn {
-        background-color: #007bff;
+  }
+  
+  /* ----- Feature Detection ve Fallback Düzenlemeleri ----- */
+  @supports not (backdrop-filter: blur(5px)) {
+    .hero-content.glass-effect {
+      background: rgba(35, 45, 60, 0.85);
     }
     
-    .hero-btn-primary.animated-btn:hover {
-        background-color: #0069d9;
+    .hero-3d-card,
+    .service-card {
+      background: rgba(25, 35, 50, 0.85);
     }
-    
-    .accent-text {
-        color: #0094ff;
-        background-color: rgba(0, 123, 255, 0.2);
-    }
-    
-    .fancy-hero-title:hover .accent-text {
-        background-color: rgba(0, 123, 255, 0.25);
-    }
-}
-
-/* Tarayıcı Uyumluluğu: CSS filter desteği olmayan tarayıcılar için */
-@supports not (filter: blur(5px)) {
-    .hero-video-background video {
-        opacity: 0.7;
-    }
-    
-    .patreon-hero::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.4);
-        z-index: 1;
-    }
-    
-    .header-logo,
-    .navbar-brand img {
-        opacity: 0.9;
-    }
-}
-
-/* Tarayıcı Uyumluluğu: clip-path desteği olmayan tarayıcılar için */
-@supports not (clip-path: inset(0 0 0 0)) {
-    .patreon-header.transparent {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-}
-
-/* Tarayıcı Uyumluluğu: Grid desteği olmayan tarayıcılar için */
-@supports not (display: grid) {
-    .region-indicators {
-        overflow: hidden;
-    }
-    
-    .region-indicator {
-        float: left;
-        width: 25%;
-        box-sizing: border-box;
-    }
-}
-
-/* Tarayıcı Uyumluluğu: CSS animations desteği olmayan tarayıcılar için */
-@supports not (animation-name: heroVideoPulse) {
-    .hero-light-effect {
+  }
+  
+  @supports not ((-webkit-mask-composite: xor) or (mask-composite: exclude)) {
+    .hero-content.glass-effect::after,
+    .hero-3d-card::after,
+    .service-card::after {
         display: none;
     }
     
-    .hero-btn-primary.animated-btn::after {
-        display: none;
-    }
-    
-    .hero-content.glass-effect::after {
-        opacity: 0.1;
-    }
-}
-
-/* Fancy hero başlık için touchscreen desteği ve iyileştirmeler */
-@media (any-pointer: coarse) {
-    .fancy-hero-title .title-effect::after {
-        width: 25%;
-    }
-    
-    .fancy-hero-title:active .title-effect::after {
-        -webkit-transform: scaleX(1);
-        -ms-transform: scaleX(1);
-        transform: scaleX(1);
-    }
-    
-    .fancy-hero-title:active .accent-text {
-        -webkit-transform: translateY(-2px);
-        -ms-transform: translateY(-2px);
-        transform: translateY(-2px);
-        background: rgba(0, 82, 204, 0.25);
-    }
-    
-    .hero-btn-primary.animated-btn:active,
-    .hero-btn-secondary.animated-btn:active {
-        -webkit-transform: translateY(-2px);
-        -ms-transform: translateY(-2px);
-        transform: translateY(-2px);
-    }
-    
-    .animated-btn:active .hero-btn-icon {
-        -webkit-transform: translateX(3px);
-        -ms-transform: translateX(3px);
-        transform: translateX(3px);
-    }
-    
-    .hero-content.glass-effect:active {
-        -webkit-transform: translateY(-2px);
-        -ms-transform: translateY(-2px);
-        transform: translateY(-2px);
-        -webkit-box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
-        border-color: rgba(255, 255, 255, 0.12);
-    }
-    
-    .hero-3d-card:active {
-        -webkit-transform: translateY(-2px);
-        -ms-transform: translateY(-2px);
-        transform: translateY(-2px);
-        -webkit-box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
-        border-color: rgba(255, 255, 255, 0.1);
-        background: rgba(25, 35, 50, 0.35);
-    }
-}
-
-/* Tarayıcı Uyumluluğu: Dokunmatik cihazlar için passive event desteği */
-.hero-content.glass-effect,
-.hero-3d-card,
-.patreon-hero {
-    touch-action: manipulation;
-}
-
-/* Tarayıcı Uyumluluğu: scroll-behavior desteği olmayan tarayıcılar için */
-@supports not (scroll-behavior: smooth) {
-    html {
-        scroll-padding-top: 100px;
-    }
-}
-
-/* Tarayıcı Uyumluluğu: Animasyonlar için prefers-reduced-motion desteği */
-@media (prefers-reduced-motion: reduce) {
     .hero-content.glass-effect,
     .hero-3d-card,
-    .fancy-hero-title,
+    .service-card {
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .hero-content.glass-effect:hover,
+    .hero-3d-card:hover,
+    .service-card:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+  }
+  
+  @supports not (transform-style: preserve-3d) {
+.hero-3d-card,
+    .service-card.tilt {
+      transform: none !important;
+    }
+    
+    .hero-3d-card:hover,
+    .service-card.tilt:hover {
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+    }
+  }
+  
+  /* Animasyon Performans İyileştirmeleri */
+@media (prefers-reduced-motion: reduce) {
+    .hero-3d-card,
+    .hero-3d-card::before,
+    .hero-3d-card::after,
+    .hero-3d-card-shine,
+    .card-3d-wrap,
+    .tab-content-improved,
+    .hero-content.glass-effect,
+    .hero-light-effect,
     .hero-btn-primary.animated-btn,
     .hero-btn-secondary.animated-btn,
-    .hero-light-effect,
-    .hero-video-background video {
-        -webkit-transition: none !important;
-        -moz-transition: none !important;
-        -o-transition: none !important;
+    .hero-video-background video,
+    .fancy-hero-title .title-effect::after,
+    .fancy-hero-title .accent-text,
+    .hero-content .quote-icon,
+    .hero-content .hero-description.premium-text {
         transition: none !important;
-        -webkit-animation: none !important;
-        animation: none !important;
-        -webkit-transform: none !important;
-        -ms-transform: none !important;
         transform: none !important;
+      animation: none !important;
         will-change: auto !important;
     }
     
@@ -1287,18 +957,9 @@
     .hero-3d-card::after {
         display: none !important;
     }
-    
-    .fancy-hero-title:hover .title-effect::after,
-    .fancy-hero-title:hover .accent-text,
-    .hero-content:hover .quote-icon,
-    .hero-content:hover .hero-description.premium-text {
-        -webkit-transform: none !important;
-        -ms-transform: none !important;
-        transform: none !important;
-    }
-}
-
-/* Print medyası için tarayıcı uyumluluğu */
+  }
+  
+  /* Print media için tarayıcı uyumluluğu */
 @media print {
     .patreon-hero {
         background: #ffffff !important;
@@ -1320,11 +981,8 @@
     .hero-content.glass-effect,
     .hero-3d-card {
         background: transparent !important;
-        -webkit-box-shadow: none !important;
         box-shadow: none !important;
         border: 1px solid #cccccc !important;
-        -webkit-transform: none !important;
-        -ms-transform: none !important;
         transform: none !important;
         padding: 15px !important;
     }
@@ -1334,7 +992,6 @@
     .hero-buttons .btn {
         color: #000000 !important;
         text-shadow: none !important;
-        -webkit-text-shadow: none !important;
     }
     
     .accent-text {
@@ -1356,316 +1013,85 @@
     }
 }
 
-/* Internet Explorer Uyumluluğu - IE11 için ek vendor prefix'ler */
-@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-    .patreon-hero {
-        display: block;
-        padding-top: 100px;
-    }
-    
-    .hero-content.glass-effect,
-    .hero-3d-card {
-        background-color: rgba(35, 45, 60, 0.9);
-    }
-    
-    .fancy-hero-title .accent-text {
-        position: relative;
-    }
-    
-    .hero-buttons {
-        display: block;
-    }
-    
-    .hero-buttons .btn {
-        display: inline-block;
-        margin: 5px;
-    }
-    
-    .hero-video-background video {
-        position: absolute;
-        width: 100%;
-        height: auto;
-        opacity: 0.7;
-    }
-    
-    .hero-badge.premium-badge {
-        top: 0;
-        left: 0;
-    }
-    
-    .hero-light-effect {
-        display: none;
-    }
-    
-    .patreon-hero::before {
-        display: none;
-    }
-}
-
-/* Service kartları için eski tarayıcı uyumluluğu ve fallback düzenlemeleri */
-@supports not (mask-composite: exclude) {
-    .service-card::after {
-        display: none;
-    }
-    
-    .service-card {
-        border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    
-    .service-card:hover {
-        border-color: rgba(255, 255, 255, 0.2);
-    }
-}
-
-@supports not (transform-style: preserve-3d) {
-    .service-card.tilt {
-        transform: none !important;
-        -webkit-transform: none !important;
-    }
-    
-    .service-card.tilt:hover {
-        transform: translateY(-5px) !important;
-        -webkit-transform: translateY(-5px) !important;
-        -ms-transform: translateY(-5px) !important;
-    }
-}
-
-/* Karların responsive düzenlemeleri */
-@media (max-width: 992px) {
-    .service-card {
-        padding: 15px;
-    }
-    
-    .service-card .service-title {
-        font-size: 16px;
-        margin-bottom: 8px;
-    }
-    
-    .service-card .service-description {
-        font-size: 13px;
-        margin-bottom: 10px;
-    }
-    
-    .service-card .service-icon {
-        font-size: 24px;
-        margin-bottom: 10px;
-    }
-}
-
-@media (max-width: 768px) {
-    .service-card {
-        margin-bottom: 20px;
-    }
-    
-    .service-card .badge {
-        font-size: 10px;
-        padding: 4px 8px;
-    }
-    
-    .service-card .btn {
-        padding: 5px 10px;
-        font-size: 12px;
-    }
-}
-
-@media (max-width: 480px) {
-    .service-card {
-        text-align: center;
-    }
-    
-    .service-card .card-logo {
-        position: static;
-        margin-bottom: 15px;
-        justify-content: center;
-    }
-    
-    .service-card .service-badges,
-    .service-card .btn {
-        margin-left: auto;
-        margin-right: auto;
-        align-self: center;
-    }
-    
-    .service-card .service-icon {
-        margin-left: auto;
-        margin-right: auto;
-    }
-}
-
-/* CSS Grid desteği olmayan tarayıcılar için */
-@supports not (display: grid) {
-    .service-card {
-        display: inline-block;
-        vertical-align: top;
-        width: 100%;
-        margin-bottom: 20px;
-    }
-}
-
-/* Animasyonlu İstatistikler */
-.hero-stats-container {
-    position: relative;
-    padding: 2rem 0;
-    margin-top: 3rem;
-    background: linear-gradient(180deg, rgba(15, 23, 42, 0) 0%, rgba(15, 23, 42, 0.8) 100%);
-    border-radius: 0 0 var(--radius-xl) var(--radius-xl);
-    z-index: 5;
-}
-
-.hero-stats-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 1.5rem;
-    padding: 2rem;
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(10px);
-    border-radius: var(--radius-lg);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-}
-
-.hero-stat-item {
-    flex: 1;
-    min-width: 180px;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem;
-    transform: translateY(0);
-    transition: transform 0.3s var(--ease-out-back);
-}
-
-.hero-stat-item:hover {
-    transform: translateY(-5px);
-}
-
-.hero-stat-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 60px;
-    height: 60px;
-    border-radius: var(--radius-circle);
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    font-size: 1.5rem;
-    color: #fff;
-    box-shadow: 0 10px 20px rgba(var(--primary-rgb), 0.2);
-}
-
-.hero-stat-content {
-    display: flex;
-    flex-direction: column;
-}
-
-.hero-stat-value {
-    display: flex;
-    align-items: baseline;
-    font-size: 2.2rem;
-    font-weight: 800;
-    color: #fff;
-    line-height: 1;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.hero-stat-suffix {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: rgba(var(--primary-rgb), 1);
-    margin-left: 2px;
-}
-
-.hero-stat-label {
-    font-size: 1rem;
-    color: rgba(255, 255, 255, 0.7);
-    margin-top: 0.3rem;
-}
-
-/* İstatistik animasyonu */
-.hero-stat-counter {
-    position: relative;
-    display: inline-block;
-    color: #fff;
-    transition: all 0.3s ease;
-}
-
-.hero-stat-counter.animate {
-    animation: counter-pulse 1s ease-out;
-}
-
-@keyframes counter-pulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.1);
-        text-shadow: 0 0 15px rgba(var(--primary-rgb), 0.8);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-/* Sayfa yüklenene kadar geçiş animasyonu */
-.hero-stat-counter::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 1.5s ease-out;
-}
-
-.hero-stat-counter.animate::after {
-    transform: scaleX(1);
-}
-
-/* Mobil Responsive */
-@media (max-width: 992px) {
-    .hero-stats-wrapper {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-    }
-}
-
-@media (max-width: 576px) {
-    .hero-stats-wrapper {
-        grid-template-columns: 1fr;
-    }
-    
-    .hero-stat-item {
-        min-width: 100%;
-    }
-}  /* Uzmanlaştığımız Alanlar bölümü için stil */
+/* ----- Uzmanlaştığımız Alanlar Bölümü ----- */
 .expertise-area-intro {
-    background: rgba(255, 255, 255, 0.15); 
+    background: rgba(35, 45, 60, 0.75);
     backdrop-filter: blur(10px);
-    border-radius: 12px;
+    border-radius: var(--card-radius, 12px);
     padding: 1.5rem;
     color: #fff;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
     border: 1px solid rgba(255, 255, 255, 0.18);
+    transition: var(--transition-fast);
+}
+
+.expertise-area-intro:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
 }
 
 .expertise-highlight {
-    font-size: 1.1rem;
-    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    background: rgba(var(--primary-rgb), 0.15);
+    border-radius: 30px;
+    padding: 0.4rem 1.2rem;
     margin-bottom: 1.5rem;
-    padding-left: 1rem;
-    border-left: 4px solid var(--primary-color);
-    background: rgba(0, 82, 204, 0.2);
-    padding: 10px 15px;
-    border-radius: 6px;
+        position: relative;
+    overflow: hidden;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(var(--primary-rgb), 0.2);
+    transition: var(--transition-fast);
+}
+
+.expertise-highlight::before {
+    content: '';
+        position: absolute;
+    top: 0;
+    left: -100%;
+        width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.8s ease;
+    z-index: 0;
+}
+
+.expertise-highlight:hover::before {
+    left: 100%;
+}
+
+.expertise-highlight i {
+    color: white;
+    margin-right: 8px;
+    background: rgba(var(--primary-rgb), 0.6);
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.expertise-highlight:hover {
+    background: rgba(var(--primary-rgb), 0.25);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
 .expertise-features {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.2rem;
     margin-top: 1.5rem;
 }
 
@@ -1675,12 +1101,15 @@
     background: rgba(255, 255, 255, 0.1);
     padding: 1rem;
     border-radius: 8px;
-    transition: all 0.3s ease;
+    transition: var(--transition-fast);
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .expertise-feature:hover {
     transform: translateY(-5px);
     background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
 .feature-icon {
@@ -1690,44 +1119,245 @@
     width: 45px;
     height: 45px;
     border-radius: 50%;
-    background: var(--primary-color);
+    background: rgba(0, 82, 204, 1);
     margin-right: 1rem;
     font-size: 1.2rem;
     color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    flex-shrink: 0;
+    transition: var(--transition-fast);
+}
+
+.expertise-feature:hover .feature-icon {
+    transform: scale(1.1) rotate(10deg);
+    box-shadow: 0 6px 12px rgba(0, 82, 204, 0.4);
+    animation: pulse-icon 1.5s infinite alternate;
+}
+
+.feature-content {
+    flex: 1;
 }
 
 .feature-content h5 {
     margin: 0 0 0.5rem;
     font-size: 1rem;
     font-weight: 600;
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .feature-content p {
     margin: 0;
     font-size: 0.9rem;
-    opacity: 0.9;
+    opacity: 1;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.4;
 }
 
 .expertise-cta {
     text-align: center;
+    margin-top: 1.5rem;
 }
 
 .expertise-cta .btn {
-    transition: all 0.3s ease;
-    border-width: 2px;
+    transition: var(--transition-default);
+    border-width: 1px;
     font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    background: rgba(0, 82, 204, 0.85);
+    color: #fff;
+    border-color: transparent;
+    padding: 0.5rem 1.2rem;
+    font-size: 0.85rem;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 5px 15px rgba(0, 82, 204, 0.4);
 }
 
 .expertise-cta .btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+    background: rgba(0, 82, 204, 0.75);
 }
 
 @media (max-width: 768px) {
     .expertise-features {
         grid-template-columns: 1fr;
     }
+    
+    .expertise-highlight {
+        font-size: 1rem;
+        text-align: center;
+        border-left: none;
+        border-bottom: 4px solid rgba(var(--primary-rgb), 1);
+    }
+    
+    .expertise-feature {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .feature-icon {
+        margin-right: 0;
+        margin-bottom: 0.75rem;
+    }
+    
+    .expertise-cta .btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .expertise-area-intro {
+    padding: 1rem;
+    }
+    
+    .expertise-highlight {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+    
+    .feature-content h5 {
+        font-size: 0.95rem;
+    }
+    
+    .feature-content p {
+        font-size: 0.8rem;
+    }
+}
+
+/* Orta büyüklükteki ekranlar için */
+@media (min-width: 768px) and (max-width: 991px) {
+    .expertise-features {
+        grid-template-columns: repeat(2, 1fr); /* 2 sütun */
+    }
+}
+
+/* Tab iyileştirmeleri */
+.nav-tabs-improved {
+    display: flex;
+    flex-wrap: wrap; /* Küçük ekranlarda sarmaya izin ver */
+    gap: 0.5rem;
+    border-bottom: none;
+}
+
+.nav-tabs-improved .nav-link {
+    padding: 0.6rem 1rem;
+    border-radius: 0.5rem; /* Daha yuvarlak köşeler */
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.nav-tabs-improved .nav-link.active {
+    background: linear-gradient(135deg, rgba(0, 82, 204, 0.7), rgba(0, 150, 136, 0.5));
+    border-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.nav-tabs-improved .nav-link:hover:not(.active) {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-1px);
+}
+
+/* Odak durumları için net belirteçler */
+.nav-link:focus-visible,
+.expertise-feature:focus-visible,
+.btn:focus-visible {
+    outline: 3px solid #ffffff;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 3px rgba(0, 82, 204, 0.6);
+}
+
+/* Yüksek kontrast modu için iyileştirmeler */
+@media (forced-colors: active) {
+    .expertise-highlight,
+    .expertise-feature,
+    .feature-icon,
+    .expertise-cta .btn {
+        border: 2px solid currentColor;
+    }
+}
+
+/* Kart efektleri */
+.expertise-area-intro::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: var(--card-radius, 12px);
+    background: linear-gradient(135deg, 
+        rgba(0, 82, 204, 0.4),
+        rgba(0, 150, 136, 0.3),
+        rgba(0, 82, 204, 0.4));
+    opacity: 0.3;
+    filter: blur(20px);
+    transform: translateZ(-10px);
+    pointer-events: none;
+}
+
+/* Daha ilgi çekici simge animasyonları */
+.expertise-feature:hover .feature-icon {
+    transform: scale(1.1) rotate(10deg);
+    box-shadow: 0 6px 12px rgba(0, 82, 204, 0.4);
+    animation: pulse-icon 1.5s infinite alternate;
+}
+
+@keyframes pulse-icon {
+    from { box-shadow: 0 0 5px rgba(0, 82, 204, 0.4), 0 0 10px rgba(0, 82, 204, 0.2); }
+    to { box-shadow: 0 0 10px rgba(0, 82, 204, 0.6), 0 0 20px rgba(0, 82, 204, 0.3); }
+}
+
+.nav-tabs-improved .nav-link i {
+    margin-right: 8px;
+    font-size: 1rem;
+    transition: transform 0.3s ease;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.nav-tabs-improved .nav-link:hover i,
+.nav-tabs-improved .nav-link.active i {
+    transform: translateY(-2px);
+    color: white;
+}
+
+.tab-illustration {
+    opacity: 0.7;
+    margin-left: 6px;
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.nav-tabs-improved .nav-link:hover .tab-illustration,
+.nav-tabs-improved .nav-link.active .tab-illustration {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.tab-illustration svg {
+    width: 18px;
+    height: 18px;
+}
+
+.nav-tabs-improved .nav-link.active .tab-illustration svg path {
+    fill: white;
+}
+
+.nav-tabs-improved .nav-link::before {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: white;
+    transition: width 0.3s ease;
+}
+
+.nav-tabs-improved .nav-link:hover::before,
+.nav-tabs-improved .nav-link.active::before {
+    width: 100%;
 }
