@@ -1,0 +1,914 @@
+/**
+ * Ayarlar Paneli - Gürel Yönetim Tema Sistemi
+ * Tema ayarları paneli için modern stiller 
+ * Sürüm: 4.0.1
+ * Son Güncelleme: 2024
+ * 
+ * Not: Ayarlar paneli CSS'i, themes.css'ten ayrılmış ve 
+ * settings-panel.css'e taşınmıştır. Bu, sorumlulukların
+ * ayrılması ilkesine uygun bir kod organizasyonu sağlar.
+ */
+
+/* CSS Değişkenleri - Kolay özelleştirme */
+:root {
+  --panel-width: 320px;
+  --panel-padding: 1.25rem;
+  --panel-border-radius: 0 0 0 12px;
+  --toggle-size: 50px;
+  --toggle-radius: 50%;
+  --option-size: 36px;
+  --section-spacing: 1.75rem;
+  --transition-speed: 0.3s;
+  --animation-speed: 0.4s;
+  
+  /* Gölgeler */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.2);
+  
+  /* Z-indeksler */
+  --z-panel: 9999;
+  --z-toggle: 9998;
+}
+
+/* Panel ana yapısı - BASİTLEŞTİRİLDİ */
+.settings-panel,
+.floating-settings-panel {
+  position: fixed;
+  top: 0;
+  right: -350px; /* Varsayılan olarak ekranın dışında */
+  width: var(--panel-width);
+  height: 100%;
+  background-color: var(--background-color, #fff);
+  box-shadow: var(--shadow-lg);
+  z-index: var(--z-panel);
+  border-radius: var(--panel-border-radius);
+  border-left: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: right 0.3s ease; /* Sadece right için geçiş - basitleştirildi */
+  scrollbar-width: thin;
+}
+
+/* Açık panel - BASİTLEŞTİRİLDİ */
+.settings-panel.open,
+.floating-settings-panel.open {
+  right: 0; /* Sağ kenardan görünür hale getir */
+}
+
+/* Ayarlar başlığı */
+.settings-header {
+  padding: var(--panel-padding);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(135deg, var(--primary-color, #0055a4) 0%, var(--primary-color-dark, #00336e) 100%);
+  color: white;
+  border-radius: var(--panel-border-radius) 0 0 0;
+}
+
+.settings-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.settings-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.25rem;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.settings-close:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Ayarlar içeriği */
+.settings-content {
+  padding: var(--panel-padding);
+}
+
+/* Ayar bölümleri */
+.settings-section {
+  margin-bottom: var(--section-spacing);
+  padding-bottom: var(--section-spacing);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.settings-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.settings-section > span {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: var(--text-color, #333);
+}
+
+/* Toggle düğmesi */
+.toggle-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.contrast-toggle {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-label {
+  position: relative;
+  display: inline-block;
+  width: 52px;
+  height: 26px;
+  background-color: #ccc;
+  border-radius: 26px;
+  cursor: pointer;
+  padding-left: 60px;
+  user-select: none;
+  transition: background-color 0.3s;
+  line-height: 26px;
+}
+
+.toggle-label::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background-color: white;
+  transition: transform 0.3s, background-color 0.3s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.contrast-toggle:checked + .toggle-label {
+  background-color: var(--primary-color, #0055a4);
+}
+
+.contrast-toggle:checked + .toggle-label::before {
+  transform: translateX(26px);
+}
+
+.contrast-toggle:focus + .toggle-label {
+  box-shadow: 0 0 0 2px rgba(0, 85, 164, 0.3);
+}
+
+/* Font boyutu kontrolleri */
+.font-size-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.font-size-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: var(--background-light, #f5f5f5);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.font-size-btn:hover {
+  background-color: var(--background-hover, #e9e9e9);
+}
+
+.font-size-btn:active {
+  transform: scale(0.95);
+}
+
+#currentFontSize {
+  flex: 1;
+  text-align: center;
+  font-weight: 600;
+  color: var(--text-color, #333);
+  transition: transform 0.3s, color 0.3s;
+}
+
+/* Renk seçenekleri */
+.color-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.color-option {
+  width: var(--option-size);
+  height: var(--option-size);
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.color-option:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.color-option::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: white;
+  transition: transform 0.2s;
+  opacity: 0;
+}
+
+.color-option.active::after {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
+/* Toggle Butonu */
+.settings-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: var(--toggle-size);
+  height: var(--toggle-size);
+  border-radius: var(--toggle-radius);
+  background: linear-gradient(135deg, var(--primary-color, #0055a4) 0%, var(--primary-color-dark, #00336e) 100%);
+  box-shadow: var(--shadow-md);
+  color: white;
+  border: none;
+  cursor: pointer;
+  z-index: var(--z-toggle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.settings-toggle:hover {
+  transform: scale(1.05);
+  box-shadow: var(--shadow-lg);
+}
+
+.settings-toggle i {
+  animation: spin 4s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Tema önizleme */
+.theme-preview {
+  position: relative;
+  width: 100%;
+  height: 120px;
+  background: linear-gradient(to bottom, #87CEFA, #4682B4);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  transition: background 0.5s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.theme-preview-sun {
+  position: absolute;
+  top: 20px;
+  left: 30px;
+  width: 30px;
+  height: 30px;
+  background-color: #FFD700;
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.7);
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.theme-preview-moon {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  width: 25px;
+  height: 25px;
+  background-color: #E6E6E6;
+  border-radius: 50%;
+  box-shadow: inset -4px 0 0 #CCCCCC;
+  opacity: 0;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.theme-preview-landscape {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  background-color: #228B22;
+  transition: background 0.5s ease;
+}
+
+/* Animasyonlar için CSS sınıfları */
+.font-size-btn.clicked {
+  transform: scale(0.85);
+  background-color: rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.color-option.clicked {
+  transform: scale(0.85);
+  transition: transform 0.2s ease;
+}
+
+#currentFontSize.updated {
+  animation: fontSizePulse 0.5s ease;
+}
+
+@keyframes fontSizePulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); color: var(--primary-color, #0055a4); }
+  100% { transform: scale(1); }
+}
+
+/* Tema önizleme animasyonları */
+.theme-preview.dark-preview {
+  background: linear-gradient(to bottom, #1A237E, #000);
+}
+
+.theme-preview.dark-preview .theme-preview-sun {
+  opacity: 0;
+  transform: translateX(-50px);
+}
+
+.theme-preview.dark-preview .theme-preview-moon {
+  opacity: 1;
+  transform: translateX(-50px);
+}
+
+.theme-preview.dark-preview .theme-preview-landscape {
+  background: #1B5E20;
+}
+
+/* Duyarlı tasarım için mobil uyum */
+@media (max-width: 576px) {
+  .settings-panel,
+  .floating-settings-panel {
+    width: 280px;
+  }
+  
+  .settings-toggle {
+    bottom: 15px;
+    right: 15px;
+    width: 45px;
+    height: 45px;
+  }
+}
+
+/* Animasyon çekirdek sınıfları */
+.fade-in {
+  animation: fadeIn 0.3s ease forwards;
+}
+
+.slide-up {
+  animation: slideUp 0.4s ease forwards;
+}
+
+.pulse-element {
+  animation: pulseAnim 2s infinite;
+}
+
+.float-element {
+  animation: floatAnim 3s ease-in-out infinite;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes pulseAnim {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes floatAnim {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
+
+/* Bilgi metni için stiller */
+.settings-footer {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.settings-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  color: var(--text-muted, #666);
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.settings-info i {
+  color: var(--primary-color, #0055a4);
+  margin-top: 2px;
+}
+
+/* Karanlık tema içindeki ayarlar paneli - Daha yüksek kontrast */
+[data-theme="dark"] .settings-panel,
+[data-theme="dark"] .floating-settings-panel {
+  background-color: #1a1a1a;
+  border-left-color: rgba(255, 255, 255, 0.05);
+  box-shadow: -5px 0 20px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .settings-section {
+  border-bottom-color: rgba(255, 255, 255, 0.07);
+}
+
+[data-theme="dark"] .settings-section > span {
+  color: #fff;
+}
+
+[data-theme="dark"] .settings-section > span::after {
+  background: var(--primary-color, #0055a4);
+  opacity: 0.9;
+}
+
+[data-theme="dark"] .toggle-label {
+  background: #444;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .toggle-label:after {
+  background: #f0f0f0;
+}
+
+[data-theme="dark"] .font-size-controls {
+  background-color: #2a2a2a;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] #currentFontSize {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ddd;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .font-size-btn {
+  color: #ddd;
+}
+
+[data-theme="dark"] .font-size-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .settings-toggle {
+  box-shadow: var(--shadow-md),
+              inset 0 -2px 5px rgba(0, 0, 0, 0.4),
+              inset 0 2px 5px rgba(255, 255, 255, 0.1);
+}
+
+/* Yüksek kontrast teması */
+[data-theme="highContrast"] .settings-panel,
+[data-theme="highContrast"] .floating-settings-panel {
+  background-color: #000;
+  border-left: 3px solid #fff;
+}
+
+[data-theme="highContrast"] .settings-header {
+  background: #000;
+  border-bottom: 3px solid #fff;
+}
+
+[data-theme="highContrast"] .settings-section {
+  border-bottom: 2px solid #fff;
+}
+
+[data-theme="highContrast"] .settings-section > span {
+  color: #fff;
+}
+
+[data-theme="highContrast"] .settings-section > span::after {
+  background: #fff;
+}
+
+[data-theme="highContrast"] .toggle-label {
+  background: #000;
+  border: 2px solid #fff;
+}
+
+[data-theme="highContrast"] .toggle-label:after {
+  background: #fff;
+}
+
+[data-theme="highContrast"] .contrast-toggle:checked + .toggle-label {
+  background: #000;
+}
+
+[data-theme="highContrast"] .font-size-controls {
+  background-color: #000;
+  border: 2px solid #fff;
+}
+
+[data-theme="highContrast"] .font-size-btn {
+  color: #fff;
+}
+
+/* Mobil cihazlar için responsive tasarım - Daha iyi optimizasyon */
+@media (max-width: 768px) {
+  :root {
+    --panel-width: 280px;
+    --panel-padding: 1rem;
+    --section-spacing: 1.5rem;
+  }
+  
+  .settings-panel,
+  .floating-settings-panel {
+    border-radius: 0;
+  }
+  
+  .color-options {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+}
+
+/* Küçük ekranlar için ek düzenlemeler */
+@media (max-width: 480px) {
+  :root {
+    --panel-width: 100%;
+    --toggle-size: 45px;
+  }
+  
+  .settings-panel,
+  .floating-settings-panel {
+    right: -100%;
+    top: 0;
+    width: 100%;
+    border-radius: 0;
+  }
+  
+  .settings-panel.open,
+  .floating-settings-panel.open {
+    transform: translateX(0);
+  }
+  
+  .settings-content {
+    padding: 1rem;
+  }
+  
+  .settings-toggle {
+    bottom: 15px;
+    right: 15px;
+  }
+  
+  .color-options {
+    gap: 0.8rem;
+  }
+  
+  .color-option {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+/* Erişilebilirlik iyileştirmeleri */
+.settings-toggle:focus-visible,
+.settings-close:focus-visible,
+.font-size-btn:focus-visible {
+  outline: 3px solid var(--primary-color, #0055a4);
+  outline-offset: 2px;
+}
+
+/* Motion azaltılmış durum */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .settings-toggle:hover {
+    transform: none;
+  }
+  
+  .settings-toggle i {
+    animation: none;
+  }
+  
+  .settings-panel::before,
+  .settings-section::before {
+    display: none;
+  }
+}
+
+/* RTL Dil Desteği - Daha gelişmiş */
+[dir="rtl"] .settings-panel,
+[dir="rtl"] .floating-settings-panel {
+  right: auto;
+  left: calc(-1 * var(--panel-width) - 20px);
+  border-radius: 0 0 12px 0;
+  border-left: none;
+  border-right: 1px solid rgba(0, 0, 0, 0.08);
+  transform: translateX(-10px);
+}
+
+[dir="rtl"] .settings-panel.open,
+[dir="rtl"] .floating-settings-panel.open {
+  left: 0;
+  transform: translateX(0);
+}
+
+[dir="rtl"] .settings-section::before {
+  left: auto;
+  right: -5px;
+  border-radius: 5px 0 0 5px;
+  transform: translateX(100%);
+}
+
+[dir="rtl"] .settings-section:hover::before {
+  transform: translateX(0);
+}
+
+[dir="rtl"] .settings-section > span::after {
+  left: auto;
+  right: 0;
+}
+
+[dir="rtl"] .settings-toggle {
+  right: auto;
+  left: 25px;
+}
+
+[dir="rtl"] .toggle-label::after {
+  left: auto;
+  right: 2px;
+}
+
+[dir="rtl"] .contrast-toggle:checked + .toggle-label::after {
+  right: calc(100% - 26px);
+  left: auto;
+}
+
+/* Ekran okuyucu için yardımcı sınıflar - Erişilebilirlik için iyileştirildi */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Sayfa içindeki önemli içerik okunurken (focus-within) bulanıklaştırma */
+body:focus-within .settings-toggle {
+  opacity: 0.7;
+  transform: scale(0.9);
+}
+
+/* Tema önizleme bölümü */
+.theme-preview {
+  height: 80px;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  margin: 1rem 0;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to bottom, #87CEEB, #E0F7FA);
+}
+
+.theme-preview-sun {
+  width: 40px;
+  height: 40px;
+  background: #FFD700;
+  border-radius: 50%;
+  box-shadow: 0 0 20px #FFD700;
+  position: absolute;
+  right: 30px;
+  top: 15px;
+  transition: all 0.5s;
+}
+
+.theme-preview-moon {
+  width: 35px;
+  height: 35px;
+  background: #ddd;
+  border-radius: 50%;
+  box-shadow: inset -8px 2px 0 0px #aaa;
+  position: absolute;
+  right: 40px;
+  top: 15px;
+  opacity: 0;
+  transition: all 0.5s;
+}
+
+.theme-preview-landscape {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 30px;
+  background: #4CAF50;
+  border-radius: 80% 80% 0 0 / 100% 100% 0 0;
+  transition: all 0.5s;
+}
+
+.contrast-toggle:checked ~ .theme-preview .theme-preview-sun {
+  opacity: 0;
+  transform: translateX(-50px);
+}
+
+.contrast-toggle:checked ~ .theme-preview .theme-preview-moon {
+  opacity: 1;
+  transform: translateX(-50px);
+}
+
+.contrast-toggle:checked ~ .theme-preview {
+  background: linear-gradient(to bottom, #1A237E, #000);
+}
+
+.contrast-toggle:checked ~ .theme-preview .theme-preview-landscape {
+  background: #1B5E20;
+}
+
+/* Settings Footer */
+.settings-footer {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color, rgba(0, 0, 0, 0.1));
+}
+
+.settings-info {
+  display: flex;
+  font-size: 0.85rem;
+  color: #666;
+  background-color: rgba(0, 0, 0, 0.03);
+  padding: 0.75rem;
+  border-radius: 8px;
+  line-height: 1.4;
+  align-items: flex-start;
+}
+
+.settings-info i {
+  margin-right: 8px;
+  font-size: 1rem;
+  color: var(--primary-color, #0055a4);
+  margin-top: 2px;
+}
+
+[data-theme="dark"] .settings-info {
+  color: #aaa;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="dark"] .settings-footer {
+  border-top-color: rgba(255, 255, 255, 0.07);
+}
+
+/* Loading indicator for settings that need processing time */
+.settings-loading {
+  position: relative;
+}
+
+.settings-loading::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.settings-loading.is-loading::after {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Tema önizleme animasyonları */
+.theme-preview.dark-preview {
+  background: linear-gradient(to bottom, #1A237E, #000);
+}
+
+.theme-preview.dark-preview .theme-preview-sun {
+  opacity: 0;
+  transform: translateX(-50px);
+}
+
+.theme-preview.dark-preview .theme-preview-moon {
+  opacity: 1;
+  transform: translateX(-50px);
+}
+
+.theme-preview.dark-preview .theme-preview-landscape {
+  background: #1B5E20;
+}
+
+/* Animasyon efektleri */
+.font-size-btn.clicked {
+  transform: scale(0.85);
+  background-color: rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.color-option.clicked {
+  transform: scale(0.85);
+  transition: transform 0.2s ease;
+}
+
+#currentFontSize.updated {
+  animation: fontSizePulse 0.5s ease;
+}
+
+@keyframes fontSizePulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); background-color: var(--primary-color, #0055a4); color: white; }
+  100% { transform: scale(1); }
+}
+
+/* Daha iyi tema değiştirme geçişleri */
+body, #settingsPanel, .color-option, .settings-toggle, .settings-header {
+  transition: all 0.4s ease-in-out;
+}
+
+/* İyileştirilmiş kaydırma çubuğu */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+} 
