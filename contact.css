@@ -1,11 +1,13 @@
 /* Genel Stiller */
 /* :root kısmını kaldırarak base.css'deki değişkenleri kullanacağız */
 
+/* Modern İletişim Bölümü - themes.css kullanımı */
+
 /* Modern İletişim Bölümü - 2023 */
 .contact-section {
   position: relative;
   padding: clamp(3rem, 10vh, 6rem) 0;
-  background: var(--bg-light);
+  background: var(--color-surface);
   overflow: hidden;
 }
 
@@ -16,7 +18,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, rgba(245, 247, 250, 1), rgba(236, 240, 243, 1));
+  background: linear-gradient(135deg, var(--color-background), var(--color-surface));
   z-index: -1;
 }
 
@@ -68,12 +70,12 @@
 
 /* Temel kart tasarımı - sabit yapı */
 .contact-card {
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  background-color: var(--color-background);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--box-shadow-md);
   padding: 2.5rem;
   height: 100%;
-  border: 1px solid rgba(230, 230, 230, 1);
+  border: 1px solid var(--color-border);
   transition: box-shadow 0.5s ease, border-color 0.5s ease, transform 0.2s ease;
   position: relative;
   overflow: hidden;
@@ -82,7 +84,7 @@
 
 /* Geliştirilmiş kart üzerine gelme efekti - sadece gölge ve kenarlık değişecek */
 .contact-card:hover {
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--box-shadow-lg);
   border-color: rgba(var(--primary-rgb), 0.3);
 }
 
@@ -119,8 +121,8 @@
   justify-content: center;
   width: 80px;
   height: 80px;
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-  color: #fff;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  color: var(--text-on-primary);
   font-size: 2rem;
   border-radius: 50%;
   margin-bottom: 1.5rem;
@@ -136,7 +138,7 @@
 .contact-card:hover .contact-card-icon {
   transform: rotate(8deg) scale(1.05);
   box-shadow: 0 12px 30px rgba(var(--primary-rgb), 0.35);
-  background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+  background: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
 }
 
 /* İkon içi dalgalanma efekti */
@@ -171,21 +173,21 @@
 }
 
 .contact-card-title {
-  font-size: 1.75rem;
-  font-weight: 600;
-  color: #333;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
   margin-bottom: 0.5rem;
   transition: color 0.3s ease;
 }
 
 .contact-card:hover .contact-card-title {
-  color: var(--primary-color);
+  color: var(--color-primary);
 }
 
 .contact-card-subtitle {
-  font-size: 1rem;
-  color: #777;
-  line-height: 1.6;
+  font-size: var(--font-size-md);
+  color: var(--text-secondary);
+  line-height: var(--line-height-normal);
 }
 
 /* İletişim bilgileri */

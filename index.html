@@ -8,34 +8,46 @@
     <meta name="keywords" content="site yönetimi, apartman yönetimi, profesyonel yönetim, Balıkesir, Edremit, Akçay">
     
     <!-- favicon -->
-    <link rel="icon" href="assets/img/favicon.png" type="image/png">
+    <link rel="icon" href="assets/img/logo-sy-svg.svg" type="image/png">
     
-    <!-- Kritik CSS - Doğrudan sayfa içinde -->
+    <!-- Kritik CSS - Inline edilmiş -->
     <style>
-        /* Kritik Render Bloğu CSS - Sayfa ilk göründüğünde gerekli olan minimum stil */
-        :root {
-            --primary-color: #0052cc;
-            --dark-color: #1a1a1a;
-            --white-color: #ffffff;
-        }
-        body {margin: 0; font-family: 'Poppins', sans-serif; overflow-x: hidden;}
-        #loading {position: fixed; width: 100%; height: 100%; background: var(--white-color); z-index: 99999; display: flex; justify-content: center; align-items: center;}
-        .patreon-header {position: fixed; top: 0; left: 0; width: 100%; z-index: 990; background-color: transparent; height: 80px; display: flex; align-items: center;}
-        .hero-content.glass-effect {background: rgba(35, 45, 60, 0.5); border-radius: 12px; padding: 2rem;}
-        .fancy-hero-title {font-size: clamp(2.2rem, 4vw, 3.2rem); font-weight: 800; color: var(--white-color);}
-        .hero-buttons {display: flex; gap: 0.8rem; margin-top: 1rem;}
-        .btn-primary {background: rgba(0, 82, 204, 0.85); border: none; color: var(--white-color); font-weight: 600; padding: 10px 20px;}
-        .hero-video-background video {object-fit: cover; width: 100%; height: 100%; position: absolute;}
-        .patreon-hero {position: relative; padding: 8rem 0 6rem; background: linear-gradient(90deg, rgba(0, 82, 204, 0.8), rgba(0, 150, 136, 0.5));}
-        @media (max-width: 768px) {
-            .hero-buttons {flex-direction: column;}
-            .fancy-hero-title {font-size: 2rem;}
-        }
-        
-       
-        
-       
+        /* Kritik CSS içeriği */
+        @import url("critical.css");
     </style>
+    
+    <!-- CSS Dosyaları - Async olarak yükleniyor -->
+    <link rel="stylesheet" href="base.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="header.css?v=1.1" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="hero-enhanced.css" media="print" onload="this.media='all'">
+
+    
+    <!-- Tema Sistemi CSS -->
+    <link rel="stylesheet" href="themes.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="settings-panel.css" media="print" onload="this.media='all'">
+    
+    <!-- Önbellek yenilemesi için -->
+    <script>
+        // CSS dosyalarını dinamik olarak yükle
+        function loadCSS(src) {
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = src;
+            link.media = 'print';
+            link.onload = function() { this.media = 'all'; };
+            document.head.appendChild(link);
+        }
+        
+        // JavaScript dosyaları için timestamp ekle (önbellek yenilemesi için)
+        var timestamp = new Date().getTime();
+        document.addEventListener('DOMContentLoaded', function() {
+            // İkincil CSS dosyalarını yükle
+            loadCSS('about.css?' + timestamp);
+            loadCSS('contact.css?' + timestamp);
+            loadCSS('services.css?' + timestamp);
+            loadCSS('footer.css?' + timestamp);
+        });
+    </script>
     
     <!-- Preload kritik fontlar -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -55,24 +67,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"></noscript>
     
-    <!-- CSS Dosyaları - gecikmeli yükleme -->
-    <link rel="stylesheet" href="base.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="header.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="hero-enhanced.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="about.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="contact.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="footer.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="services.css" media="print" onload="this.media='all'">
-    <noscript>
-    <link rel="stylesheet" href="base.css">
-        <link rel="stylesheet" href="header.css">
-        <link rel="stylesheet" href="hero-enhanced.css">
-        <link rel="stylesheet" href="about.css">
-        <link rel="stylesheet" href="contact.css">
-        <link rel="stylesheet" href="footer.css">
-        <link rel="stylesheet" href="services.css">
-    </noscript>
-    
     <!-- Diğer CSS dosyaları - gecikmeli yükleme -->
     <link rel="stylesheet" href="assets/css/shock.css" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="assets/css/section-transition.css" media="print" onload="this.media='all'">
@@ -84,8 +78,6 @@
     <!-- Kritik JavaScript Dosyaları - preload ve öncelikli yükleme -->
     <link rel="preload" href="app.js" as="script">
     <!-- app.js sayfanın sonuna taşındı -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" defer></script>
     
     <!-- Meta tags for SEO -->
     <meta name="description" content="Balıkesir Edremit bölgesinde profesyonel apartman, site ve mülk yönetimi hizmetleri sunan güvenilir çözüm ortağınız. 9 farklı bölgede hizmet veriyoruz.">
@@ -185,7 +177,7 @@
         <div class="container">
             <nav class="navbar navbar-expand-xl">
                 <a class="navbar-brand" href="#">
-                    <img src="assets/svg/brands/logo-sy-svg.svg" alt="Gürel Yönetim" width="180" height="60" loading="lazy" class="header-logo" style="filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));">
+                    <img src="assets/svg/brands/logo-sy-svg.svg" alt="Gürel Yönetim" width="210" height="90" loading="lazy" class="header-logo" style="filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));">
                     <div class="brand-text" style="margin-left: 1rem; padding-left: 1rem; border-left: 3px solid rgba(255,255,255,0.7);">
                         <span class="brand-name" style="font-size: 1.7rem; font-weight: 800; text-shadow: 0 2px 6px rgba(0,0,0,0.7); color: #ffffff; letter-spacing: -0.5px;">Gürel Yönetim</span>
                     </div>
@@ -197,8 +189,6 @@
                 </div>
                 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Menüyü Aç/Kapat">
-                    <span class="toggler-icon"></span>
-                    <span class="toggler-icon"></span>
                     <span class="toggler-icon"></span>
                 </button>
                 
@@ -1777,7 +1767,7 @@
     </footer>
 
     <!-- Settings Panel -->
-    <div class="floating-settings-panel" id="settingsPanel">
+    <div class="settings-panel floating-settings-panel" id="settingsPanel">
         <div class="settings-header">
             <h3 data-translate="settings.title">Site Ayarları</h3>
             <button class="settings-close" id="settingsClose"><i class="fas fa-times"></i></button>
@@ -1843,12 +1833,32 @@
         <i class="fas fa-cog"></i>
     </button>
 
-    <!-- Scripts -->
+    <!-- Scripts - Tüm script etiketlerini sayfanın sonuna taşıyorum -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.1/dist/vanilla-tilt.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js" defer></script>
-    <!-- app.js sayfa başında zaten yüklendi -->
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.1/dist/vanilla-tilt.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+    <!-- Tema ve Ayarlar Sistemi (Sıralama önemli) -->
+    <script src="theme-manager.js"></script>
+    <script src="settings-panel.js"></script>
+    <script src="header.js?v=1.2"></script>
+    <script src="app.js"></script>
+
+    <!-- Sayfa yükleme durumunu kontrol eden script -->
+    <script>
+        // Sayfa yüklendikten sonra body'ye loaded sınıfı ekle
+        window.addEventListener('load', function() {
+            document.body.classList.add('loaded');
+        });
+        
+        // Sayfanın 5 saniye içinde yüklenememesi durumunda da body'ye loaded sınıfı ekle
+        setTimeout(function() {
+            document.body.classList.add('loaded');
+        }, 5000);
+    </script>
 
     <!-- Scroll Indicator -->
     <div class="scroll-indicator">
@@ -1878,10 +1888,24 @@
       Video transkripsiyonu: Mücadeleci profesyonellerin mülk yönetimi süreçleri, toplantılar, denetimler ve kiracı iletişim sahneleri.
     </div>
 
-    <!-- Uygulama script dosyaları -->
-    <script src="header.js"></script>
-    <script src="app.js"></script>
-    <!-- aos.js de yukarıda unpkg.com'dan yüklenmiştir -->
+    <!-- Tema test paneli - Geliştirme sırasında kullanılabilir -->
+    <div class="theme-tester-static" style="position: fixed; bottom: 10px; right: 10px; background: #fff; border: 1px solid #ccc; padding: 10px; z-index: 9999; border-radius: 4px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); display: none;">
+      <div>
+        <strong>Tema Testi</strong>
+        <div>
+          <button onclick="document.documentElement.setAttribute('data-theme', 'light')">Aydınlık</button>
+          <button onclick="document.documentElement.setAttribute('data-theme', 'dark')">Karanlık</button>
+          <button onclick="document.documentElement.setAttribute('data-theme', 'highContrast')">Yüksek Kontrast</button>
+        </div>
+        <div style="margin-top: 8px;">
+          <button onclick="document.documentElement.setAttribute('data-color-theme', 'blue')">Mavi</button>
+          <button onclick="document.documentElement.setAttribute('data-color-theme', 'green')">Yeşil</button>
+          <button onclick="document.documentElement.setAttribute('data-color-theme', 'orange')">Turuncu</button>
+          <button onclick="document.documentElement.setAttribute('data-color-theme', 'purple')">Mor</button>
+          <button onclick="document.documentElement.setAttribute('data-color-theme', 'red')">Kırmızı</button>
+        </div>
+      </div>
+    </div>
     
     <!-- Sayfa yükleme durumunu kontrol eden script -->
     <script>

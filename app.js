@@ -371,7 +371,6 @@ function initApp() {
     initMapFeatures();
     initScrollEvents();
     updateCopyrightYear();
-    initThemeSystem();
   initMobileMenu();
     initTeamAnimations();
     initAddressChecker();
@@ -1201,68 +1200,28 @@ document.addEventListener('DOMContentLoaded', function() {
 /**
  * Tema Sistemi
  */
-function initThemeSystem() {
-  const themeToggle = document.querySelector('.theme-toggle');
-  const html = document.documentElement;
+function initThemeSupport() {
+  console.log('Tema sistemi theme-manager.js ile entegre ediliyor...');
   
-  // Tema değiştirme fonksiyonu
-  function toggleTheme(isDark) {
-    AppState.set('isDarkMode', isDark);
-    localStorage.setItem('darkMode', isDark.toString());
-    
-    // HTML'e class ekle/çıkar
-    if (isDark) {
-      html.classList.add('dark-mode');
-      html.classList.remove('light-mode');
-    } else {
-      html.classList.add('light-mode');
-      html.classList.remove('dark-mode');
-    }
-    
-    // Toggle butonunu güncelle
-    if (themeToggle) {
-      const icon = themeToggle.querySelector('i');
-      if (icon) {
-        if (isDark) {
-          icon.className = 'bi bi-sun-fill';
-          themeToggle.setAttribute('aria-label', 'Açık temaya geç');
-        } else {
-          icon.className = 'bi bi-moon-fill';
-          themeToggle.setAttribute('aria-label', 'Koyu temaya geç');
-        }
-      }
-    }
-    
-    // EventBus üzerinden yayınla
-    EventBus.publish('themeChanged', { isDarkMode: isDark });
+  // ThemeManager sınıfı window.themeManager ile erişilebilir olmalı
+  if (typeof window.themeManager === 'undefined') {
+    console.warn('ThemeManager bulunamadı. theme-manager.js dosyasının yüklendiğinden emin olun.');
+    return;
   }
   
-  // Sistem/kayıtlı tema tercihini kontrol et
-  function initTheme() {
-    const savedTheme = localStorage.getItem('darkMode');
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const isDark = savedTheme ? savedTheme === 'true' : systemPrefersDark;
-    
-    toggleTheme(isDark);
-  }
-  
-  // Tema değişikliği için event listener
-  if (themeToggle) {
-    themeToggle.addEventListener('click', () => {
-      toggleTheme(!AppState.get('isDarkMode'));
+  // Tema değişikliklerini EventBus aracılığıyla yayınla
+  window.themeManager.on('themeChanged', (settings) => {
+    EventBus.publish('themeChanged', { 
+      isDarkMode: settings.theme === 'dark',
+      theme: settings.theme,
+      colorTheme: settings.colorTheme
     });
-  }
-  
-  // Sistem teması değişikliğini izle
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-    // Sadece özel tercih yoksa sistem temasını izle
-    if (localStorage.getItem('darkMode') === null) {
-      toggleTheme(e.matches);
-    }
   });
   
-  // Temayı başlat
-  initTheme();
+  // Sistem tema değişikliklerini izle
+  window.themeManager.on('systemThemeChanged', (data) => {
+    console.log('Sistem teması değişti:', data);
+  });
 }
 
 /**
@@ -2529,206 +2488,126 @@ function initLazyLoading() {
  * Settings Panel İşlevselliği
  */
 function initSettingsPanel() {
-  const settingsToggle = document.getElementById('settingsToggle');
-  const settingsPanel = document.getElementById('settingsPanel');
-  const settingsClose = document.getElementById('settingsClose');
-  const themeToggle = document.getElementById('themeToggle');
-  const contrastToggle = document.getElementById('contrastToggle');
-  const decreaseFontSize = document.getElementById('decreaseFontSize');
-  const increaseFontSize = document.getElementById('increaseFontSize');
-  const currentFontSize = document.getElementById('currentFontSize');
-  const colorOptions = document.querySelectorAll('.color-option');
+  console.log('Ayarlar paneli başlatılıyor...');
   
-  // Panel açma/kapama fonksiyonu
-  function toggleSettingsPanel(e) {
-    if (e) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
+  // SettingsPanel zaten başlatılmış mı kontrol et
+  if (window.settingsPanel) {
+    console.log('SettingsPanel zaten başlatılmış.');
+    return;
+  }
+  
+  // SettingsPanel sınıfının yüklendiğini kontrol et
+  if (typeof SettingsPanel === 'undefined') {
+    console.error('SettingsPanel sınıfı bulunamadı. settings-panel.js dosyasının yüklendiğini kontrol ediyorum...');
     
-    if (settingsPanel.classList.contains('active')) {
-      settingsPanel.classList.remove('active');
-      settingsToggle.classList.remove('active');
+    // settings-panel.js dosyasını dinamik olarak yükle
+    const script = document.createElement('script');
+    script.src = 'settings-panel.js';
+    script.onload = function() {
+      console.log('settings-panel.js dosyası başarıyla yüklendi, şimdi başlatılıyor...');
+      if (typeof SettingsPanel !== 'undefined') {
+        window.settingsPanel = new SettingsPanel({
+          container: document.body,
+          panelPosition: 'right',
+          showThemeSelector: true,
+          showColorThemeSelector: true,
+          showFontSizeSelector: true,
+          showAccessibilityOptions: true,
+          showCustomThemeSelector: true,
+          debug: true
+        });
     } else {
-      settingsPanel.classList.add('active');
-      settingsToggle.classList.add('active');
-    }
-    
-    return false;
+        console.error('settings-panel.js yüklendi ancak SettingsPanel sınıfı bulunamadı!');
+      }
+    };
+    script.onerror = function() {
+      console.error('settings-panel.js dosyası yüklenemedi!');
+    };
+    document.head.appendChild(script);
+    return;
   }
   
-  // Panel açma/kapama
-  if (settingsToggle && settingsPanel) {
-    settingsToggle.addEventListener('click', toggleSettingsPanel);
-    
-    // Klavye erişilebilirliği için
-    settingsToggle.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter' || e.key === ' ') {
-        toggleSettingsPanel(e);
-      }
+  // SettingsPanel'i özelleştirilmiş ayarlarla başlat
+  try {
+    console.log('SettingsPanel sınıfı bulundu, başlatılıyor...');
+    window.settingsPanel = new SettingsPanel({
+      container: document.body,
+      panelPosition: 'right',
+      showThemeSelector: true,
+      showColorThemeSelector: true,
+      showFontSizeSelector: true,
+      showAccessibilityOptions: true,
+      showCustomThemeSelector: true,
+      debug: true
     });
+    
+    // NOT: Burada toggle butonuna event listener EKLEMİYORUZ çünkü settings-panel.js içinde zaten ekleniyor
+    // Bu sayede çift tetiklenme sorununu önlemiş oluyoruz
+    
+    console.log('SettingsPanel başarıyla başlatıldı');
+  } catch (error) {
+    console.error('SettingsPanel başlatılırken hata oluştu:', error);
   }
   
-  // Panel kapatma
-  if (settingsClose && settingsPanel) {
-    settingsClose.addEventListener('click', function() {
-      settingsPanel.classList.remove('active');
-      if (settingsToggle) {
-        settingsToggle.classList.remove('active');
-      }
-    });
-  }
-  
-  // Tema değiştirme
-  if (themeToggle) {
-    // Sayfa yüklendiğinde kaydedilmiş temayı kontrol et
-    const savedDarkMode = localStorage.getItem('darkMode') === 'true';
-    
-    // Toggle düğmesini kaydedilmiş duruma göre ayarla
-    themeToggle.checked = savedDarkMode;
-    
-    // Sayfanın tema sınıfını ayarla
-    document.body.classList.toggle('dark-mode', savedDarkMode);
-    
-    // Change olayını dinle ve tema değişikliğini uygula
-    themeToggle.addEventListener('change', function() {
-      const isDarkMode = this.checked;
-      document.body.classList.toggle('dark-mode', isDarkMode);
-      localStorage.setItem('darkMode', isDarkMode);
-      
-      // Temaya uygun stil değişikliklerini yap
-      if (isDarkMode) {
-        document.querySelectorAll('.theme-preview-sun').forEach(el => {
-          el.style.right = '-30px';
-        });
-        document.querySelectorAll('.theme-preview-moon').forEach(el => {
-          el.style.right = '25px';
-        });
-      } else {
-        document.querySelectorAll('.theme-preview-sun').forEach(el => {
-          el.style.right = '25px';
-        });
-        document.querySelectorAll('.theme-preview-moon').forEach(el => {
-          el.style.right = '-30px';
-        });
-      }
-    });
-    
-    // Sayfa yüklendiğinde tema önizlemesini ayarla
-    if (savedDarkMode) {
-      document.querySelectorAll('.theme-preview-sun').forEach(el => {
-        el.style.right = '-30px';
-      });
-      document.querySelectorAll('.theme-preview-moon').forEach(el => {
-        el.style.right = '25px';
-      });
-    } else {
-      document.querySelectorAll('.theme-preview-sun').forEach(el => {
-        el.style.right = '25px';
-      });
-      document.querySelectorAll('.theme-preview-moon').forEach(el => {
-        el.style.right = '-30px';
+  // EventBus ile entegrasyon
+  if (typeof EventBus !== 'undefined') {
+    EventBus.subscribe('settingsToggled', (data) => {
+      console.log('Ayarlar paneli durumu değişti:', data);
       });
     }
   }
   
-  // Kontrast değiştirme
-  if (contrastToggle) {
-    const savedHighContrast = localStorage.getItem('highContrast') === 'true';
-    contrastToggle.checked = savedHighContrast;
-    
-    contrastToggle.addEventListener('change', function() {
-      const isHighContrast = this.checked;
-      document.body.classList.toggle('high-contrast', isHighContrast);
-      localStorage.setItem('highContrast', isHighContrast);
-    });
-    
-    // Sayfa yüklendiğinde kontrast ayarını uygula
-    document.body.classList.toggle('high-contrast', savedHighContrast);
+// Toggle fonksiyonu - BASİTLEŞTİRİLDİ
+function toggleSettingsPanel(event) {
+  console.log('toggleSettingsPanel app.js içinden çağrıldı');
+  
+  // Event propagation'ı durdur
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
   }
   
-  // Font boyutu değiştirme
-  let fontSizeValue = parseInt(localStorage.getItem('fontSize')) || 100;
-  
-  if (currentFontSize) {
-    currentFontSize.textContent = fontSizeValue + '%';
+  // SettingsPanel sınıfını kontrol et ve mevcut ise kullan
+  if (window.settingsPanel) {
+    // Event parametresi olmadan çağır, çünkü SettingsPanel içinde kendi event yönetimi var
+    window.settingsPanel.togglePanel();
+    return;
   }
   
-  function updateFontSize(newSize) {
-    fontSizeValue = newSize;
-    
-    if (currentFontSize) {
-      currentFontSize.textContent = fontSizeValue + '%';
-    }
-    
-    document.documentElement.style.fontSize = (fontSizeValue / 100) + 'rem';
-    localStorage.setItem('fontSize', fontSizeValue);
+  // SettingsPanel sınıfı yoksa manuel olarak yap (bu duruma düşmemeli normalde)
+  const panel = document.getElementById('settingsPanel');
+  if (!panel) {
+    console.error('settingsPanel elementi bulunamadı!');
+    return;
   }
   
-  if (decreaseFontSize) {
-    decreaseFontSize.addEventListener('click', function() {
-      if (fontSizeValue > 70) {
-        updateFontSize(fontSizeValue - 10);
-      }
-    });
+  // Panel açık mı kapalı mı kontrol et ve tersine çevir
+  const isOpen = panel.classList.contains('open');
+  
+  if (isOpen) {
+    panel.classList.remove('open');
+    console.log('Panel kapatıldı (manuel)');
+  } else {
+    panel.classList.add('open');
+    console.log('Panel açıldı (manuel)');
   }
-  
-  if (increaseFontSize) {
-    increaseFontSize.addEventListener('click', function() {
-      if (fontSizeValue < 130) {
-        updateFontSize(fontSizeValue + 10);
-      }
-    });
-  }
-  
-  // Sayfa yüklendiğinde font boyutunu uygula
-  updateFontSize(fontSizeValue);
-  
-  // Tema rengi değiştirme
-  if (colorOptions && colorOptions.length) {
-    // Kaydedilmiş tema rengini al
-    const savedThemeColor = localStorage.getItem('themeColor') || 'blue';
-    let savedColorHex = '#0055a4'; // Varsayılan mavi
-    
-    // Renk seçeneklerini oluştur ve aktif olanı işaretle
-    colorOptions.forEach(option => {
-      if (option.dataset.theme === savedThemeColor) {
-        option.classList.add('active');
-        savedColorHex = option.dataset.color;
-      }
-      
-      option.addEventListener('click', function() {
-        const color = this.dataset.color;
-        const theme = this.dataset.theme;
-        
-        // Tema rengini değiştir
-        document.documentElement.style.setProperty('--primary-color', color);
-        document.documentElement.setAttribute('data-theme', theme);
-        localStorage.setItem('themeColor', theme);
-        
-        // Aktif sınıfını güncelle
-        colorOptions.forEach(opt => {
-          opt.classList.remove('active');
-        });
-        this.classList.add('active');
-      });
-    });
-    
-    // Sayfa yüklendiğinde tema rengini uygula
-    document.documentElement.style.setProperty('--primary-color', savedColorHex);
-    document.documentElement.setAttribute('data-theme', savedThemeColor);
-  }
-  
-  // Dışarıya tıklayınca paneli kapat
-  document.addEventListener('click', function(e) {
-    if (settingsPanel && settingsPanel.classList.contains('active')) {
-      if (!settingsPanel.contains(e.target) && e.target !== settingsToggle && !settingsToggle.contains(e.target)) {
-        settingsPanel.classList.remove('active');
-        settingsToggle.classList.remove('active');
-      }
-    }
-  });
 }
+
+// DOMContentLoaded ve window load olaylarında initSettingsPanel'i çağır
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('DOMContentLoaded - initSettingsPanel çağrılıyor...');
+  setTimeout(initSettingsPanel, 500); // Küçük bir gecikme ile çağır
+});
+
+window.addEventListener('load', function() {
+  console.log('Window load - initSettingsPanel kontrol ediliyor...');
+  if (!window.settingsPanel) {
+    console.log('SettingsPanel hala başlatılmamış, tekrar başlatılıyor...');
+    initSettingsPanel();
+  }
+  
+  // NOT: Toggle butonuna event listener EKLEMİYORUZ çünkü settings-panel.js içinde zaten ekleniyor
+});
 
 // Tarayıcı eklenti hatalarını yönetmek için hata işleyiciler
 window.addEventListener('error', function(e) {
