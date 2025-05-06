@@ -22,7 +22,7 @@ class SettingsPanel {
         normal: '100%',
         large: '120%'
       },
-      debug: true  // Debug modu açık, sorunu görmek için
+      debug: false  // Debug modu kapalı 
     };
 
     // Kullanıcı ayarları ile birleştir
@@ -85,7 +85,7 @@ class SettingsPanel {
           
           // Manuel ThemeManager oluştur
           window.themeManager = {
-            settings: { theme: 'light', fontSize: 'normal', colorTheme: 'blue' },
+            settings: { theme: 'light', fontSize: 'normal', colorTheme: 'blue' }, // Varsayılan olarak light tema
             setTheme: function(theme) { 
               console.log('Manuel ThemeManager: setTheme', theme);
               document.documentElement.setAttribute('data-theme', theme);
@@ -149,10 +149,14 @@ class SettingsPanel {
       return;
     }
     
-    // Mevcut durumu ayarla
+    // Mevcut tema durumunu kontrol et ve toggle'ı ayarla
     if (this.themeManager && this.themeManager.settings) {
-      themeToggle.checked = this.themeManager.settings.theme === 'dark';
+      const currentTheme = this.themeManager.settings.theme;
+      themeToggle.checked = currentTheme === 'dark';
       this.updateThemePreview(themeToggle.checked);
+      
+      // Etiketleri güncelle
+      this.updateToggleLabels(currentTheme);
     }
     
     // Olay dinleyici ekle
@@ -165,6 +169,8 @@ class SettingsPanel {
       
       if (this.themeManager) {
         this.themeManager.setTheme(newTheme);
+        // Etiketleri güncelle
+        this.updateToggleLabels(newTheme);
       } else {
         // ThemeManager yoksa manuel olarak tema değiştir
         document.documentElement.setAttribute('data-theme', newTheme);
@@ -174,6 +180,37 @@ class SettingsPanel {
         document.dispatchEvent(event);
       }
     });
+  }
+  
+  /**
+   * Tema durumuna göre toggle etiketlerini günceller
+   * @param {string} theme - Mevcut tema (light, dark, highContrast)
+   */
+  updateToggleLabels(theme) {
+    const darkModeLabel = document.querySelector('label[for="themeToggle"]');
+    const highContrastLabel = document.querySelector('label[for="contrastToggle"]');
+    
+    if (darkModeLabel) {
+      // Dark mod etiketini güncelle
+      if (theme === 'dark') {
+        darkModeLabel.textContent = 'Açık Moda Geç';
+        darkModeLabel.style.color = '#ffffff';
+      } else {
+        darkModeLabel.textContent = 'Karanlık Mod';
+        darkModeLabel.style.color = '#333333';
+      }
+    }
+    
+    if (highContrastLabel) {
+      // Yüksek kontrast etiketini güncelle
+      if (theme === 'highContrast') {
+        highContrastLabel.textContent = 'Normal Kontrasta Geç';
+        highContrastLabel.style.color = '#ffffff';
+      } else {
+        highContrastLabel.textContent = 'Yüksek Kontrast';
+        highContrastLabel.style.color = theme === 'dark' ? '#ffffff' : '#333333';
+      }
+    }
   }
   
   /**
@@ -189,6 +226,9 @@ class SettingsPanel {
     // Mevcut durumu ayarla
     if (this.themeManager && this.themeManager.settings) {
       contrastToggle.checked = this.themeManager.settings.theme === 'highContrast';
+      
+      // Etiket güncelle
+      this.updateToggleLabels(this.themeManager.settings.theme);
     }
     
     // Olay dinleyici ekle
@@ -197,6 +237,8 @@ class SettingsPanel {
       const newTheme = contrastToggle.checked ? 'highContrast' : 'light';
       if (this.themeManager) {
         this.themeManager.setTheme(newTheme);
+        // Etiketleri güncelle
+        this.updateToggleLabels(newTheme);
       } else {
         // ThemeManager yoksa manuel olarak tema değiştir
         document.documentElement.setAttribute('data-theme', newTheme);
@@ -266,154 +308,163 @@ class SettingsPanel {
   }
   
   /**
-   * Font boyutunu ayarlar
+   * Font boyutunu değiştirir
+   * @param {string} size - Font boyutu (small, normal, large)
    */
   setFontSize(size) {
+    if (!size || !['small', 'normal', 'large'].includes(size)) {
+      console.error('Geçersiz font boyutu:', size);
+      return;
+    }
+    
     if (this.themeManager) {
       this.themeManager.setFontSize(size);
-      console.log('Font boyutu ayarlandı:', size);
     } else {
-      // ThemeManager yoksa manuel olarak font boyutu değiştir
-      const fontSizeValue = 
-        size === 'small' ? '85%' : 
-        size === 'large' ? '120%' : '100%';
-        
-      document.documentElement.style.fontSize = fontSizeValue;
-      console.log('Font boyutu manuel ayarlandı:', size, fontSizeValue);
+      // ThemeManager yoksa manuel olarak font boyutunu değiştir
+      const sizeValues = {
+        small: '85%',
+        normal: '100%',
+        large: '120%'
+      };
       
-      // Custom event gönder - bazı komponentler bunu dinliyor olabilir
-      const event = new CustomEvent('fontSizeChanged', { detail: { fontSize: size, value: fontSizeValue } });
-      document.dispatchEvent(event);
+      document.documentElement.style.fontSize = sizeValues[size];
     }
   }
   
   /**
-   * Font boyutu göstergesini günceller
+   * Font boyutu göstergesi güncellenir
+   * @param {HTMLElement} display - Font boyutu gösteren element
    */
   updateFontSizeDisplay(display) {
     if (!display) return;
     
-    const fontSize = this.themeManager && this.themeManager.settings ? this.themeManager.settings.fontSize : 'normal';
-    const sizeText = this.options.fontSizes[fontSize] || '100%';
-    console.log('Font boyutu göstergesi güncelleniyor:', fontSize, sizeText);
-    display.textContent = sizeText;
+    const fontSize = this.themeManager && this.themeManager.settings 
+      ? this.themeManager.settings.fontSize 
+      : 'normal';
     
-    // Animasyon efekti
+    // Yüzde değeri oluştur
+    let percentValue;
+    if (fontSize === 'small') percentValue = '85%';
+    else if (fontSize === 'large') percentValue = '120%';
+    else percentValue = '100%';
+    
+    // Değeri göster
+    display.textContent = percentValue;
     display.classList.add('updated');
     setTimeout(() => display.classList.remove('updated'), 500);
   }
   
   /**
-   * Renk seçeneklerini başlatır
+   * Renk tema seçeneklerini başlatır
    */
   initColorOptions() {
     const colorOptions = document.querySelectorAll('.color-option');
-    if (!colorOptions.length) {
+    
+    if (!colorOptions || colorOptions.length === 0) {
       console.error('Renk seçenekleri bulunamadı!');
       return;
     }
     
-    // İlk durumda aktif rengi ayarla
-    if (this.themeManager && this.themeManager.settings) {
-      this.updateColorOptions(colorOptions, this.themeManager.settings.colorTheme);
-    }
+    // Mevcut renk temasını al
+    const currentTheme = this.themeManager && this.themeManager.settings 
+      ? this.themeManager.settings.colorTheme 
+      : 'blue';
     
-    // Her bir renk seçeneği için event listener ekle
+    // Renk seçeneklerini döngüye al ve olay dinleyicileri ekle
     colorOptions.forEach(option => {
+      const theme = option.getAttribute('data-theme');
+      const color = option.getAttribute('data-color');
+      
+      // Aktif rengi işaretle
+      if (theme === currentTheme) {
+        option.classList.add('active');
+      }
+      
+      // Tıklama olayı ekle
       option.addEventListener('click', () => {
-        const colorTheme = option.getAttribute('data-theme');
-        const colorValue = option.getAttribute('data-color');
+        // Önceki aktif seçeneği kaldır
+        colorOptions.forEach(opt => opt.classList.remove('active'));
         
-        if (colorTheme) {
-          console.log('Renk teması değiştiriliyor:', colorTheme, colorValue);
-          
-          // Animasyon efekti
-          option.classList.add('clicked');
-          setTimeout(() => option.classList.remove('clicked'), 300);
-          
-          // Renk temasını ayarla
-          this.setColorTheme(colorTheme, colorValue);
-          this.updateColorOptions(colorOptions, colorTheme);
-        }
+        // Yeni seçeneği aktif yap
+        option.classList.add('active');
+        
+        // Tema rengini değiştir
+        this.setColorTheme(theme, color);
+        
+        // Tıklama efekti
+        option.classList.add('clicked');
+        setTimeout(() => option.classList.remove('clicked'), 300);
       });
     });
+    
+    // Mevcut temayı güncelle
+    this.updateColorOptions(colorOptions, currentTheme);
   }
   
   /**
-   * Renk temasını ayarlar
+   * Renk temasını değiştirir
+   * @param {string} theme - Renk tema adı (blue, red, green, orange, purple)
+   * @param {string} color - Renk değeri (hex kodu)
    */
   setColorTheme(theme, color) {
+    if (!theme) return;
+    
     if (this.themeManager) {
       this.themeManager.setColorTheme(theme);
     } else {
-      // ThemeManager yoksa manuel olarak renk teması değiştir
-      document.documentElement.setAttribute('data-color-theme', theme);
-      
-      // CSS değişkenlerini güncelle
+      // ThemeManager yoksa manuel olarak renk temasını değiştir
       document.documentElement.style.setProperty('--primary-color', color);
-      document.documentElement.style.setProperty('--primary-color-dark', this.adjustColorBrightness(color, -20));
-      document.documentElement.style.setProperty('--primary-color-light', this.adjustColorBrightness(color, 20));
-      
-      // Custom event gönder
-      const event = new CustomEvent('colorThemeChanged', { detail: { theme, color } });
-      document.dispatchEvent(event);
+      document.documentElement.setAttribute('data-color-theme', theme);
     }
   }
   
   /**
-   * Rengin parlaklığını ayarlar
+   * Renk değerinin parlaklığını ayarlar
+   * @param {string} hex - Hexadecimal renk değeri (#RRGGBB)
+   * @param {number} percent - Parlaklık değişim yüzdesi (-100 ile 100 arası)
+   * @returns {string} - Yeni hexadecimal renk değeri
    */
   adjustColorBrightness(hex, percent) {
-    hex = hex.replace(/^\s*#|\s*$/g, '');
-    
-    // 3 karakterli hex'i 6 karaktere dönüştür
-    if(hex.length == 3) {
-      hex = hex.replace(/(.)/g, '$1$1');
-    }
-    
-    // Hex'i RGB'ye dönüştür
-    var r = parseInt(hex.substr(0, 2), 16);
-    var g = parseInt(hex.substr(2, 2), 16);
-    var b = parseInt(hex.substr(4, 2), 16);
-    
-    // Parlaklığı ayarla
-    r = this.clamp(r + Math.floor(r * (percent / 100)), 0, 255);
-    g = this.clamp(g + Math.floor(g * (percent / 100)), 0, 255);
-    b = this.clamp(b + Math.floor(b * (percent / 100)), 0, 255);
-    
-    // RGB'yi hex'e dönüştür
-    return '#' + 
-      ((r < 16 ? '0' : '') + r.toString(16)) +
-      ((g < 16 ? '0' : '') + g.toString(16)) +
-      ((b < 16 ? '0' : '') + b.toString(16));
+    let r = parseInt(hex.substr(1, 2), 16),
+        g = parseInt(hex.substr(3, 2), 16),
+        b = parseInt(hex.substr(5, 2), 16);
+
+    r = this.clamp(r + (percent * r / 100), 0, 255);
+    g = this.clamp(g + (percent * g / 100), 0, 255);
+    b = this.clamp(b + (percent * b / 100), 0, 255);
+
+    const rStr = Math.round(r).toString(16).padStart(2, '0');
+    const gStr = Math.round(g).toString(16).padStart(2, '0');
+    const bStr = Math.round(b).toString(16).padStart(2, '0');
+
+    return `#${rStr}${gStr}${bStr}`;
   }
-  
+
   /**
-   * Değeri belirli bir aralıkta tutar
+   * Değeri belirli bir aralıkla sınırlar
+   * @param {number} val - Değer
+   * @param {number} min - Minimum değer
+   * @param {number} max - Maksimum değer
+   * @returns {number} - Sınırlanmış değer
    */
   clamp(val, min, max) {
     return Math.min(Math.max(val, min), max);
   }
-  
+
   /**
-   * Renk seçeneklerinin aktif durumunu günceller
+   * Renk seçeneklerini günceller
+   * @param {NodeList} options - Renk seçenek elementleri
+   * @param {string} activeTheme - Aktif renk teması
    */
   updateColorOptions(options, activeTheme) {
     options.forEach(option => {
       const theme = option.getAttribute('data-theme');
-      if (theme === activeTheme) {
-        option.classList.add('active');
-        
-        // Diğer elemanlarda aktif renkten stil için kullan
-        document.documentElement.style.setProperty('--active-color', option.getAttribute('data-color'));
-      } else {
-        option.classList.remove('active');
-      }
+      option.classList.toggle('active', theme === activeTheme);
     });
   }
-
+  
   /**
-   * Olayları bağlar
+   * Olay dinleyicilerini ekler
    */
   attachEventListeners() {    
     console.log('Panel event listenerları ekleniyor');
@@ -438,114 +489,155 @@ class SettingsPanel {
       });
     }
     
-    // Panel dışı tıklama - DÜZELTME
+    // Panel dışına tıklama olayını izle ve panel açıksa kapat
     document.addEventListener('click', (e) => {
-      if (this.isOpen && 
-          this.panel && 
-          !this.panel.contains(e.target) && 
-          e.target !== this.toggleButton &&
-          !this.toggleButton.contains(e.target)) {
-        console.log('Panel dışına tıklandı, panel kapatılıyor');
-        this.closePanel();
-      }
+      // Panel açık değilse işlem yapma
+      if (!this.isOpen) return;
+      
+      // Tıklanan element panelin içinde veya toggle butonu ise işlem yapma
+      if (this.panel && this.panel.contains(e.target)) return;
+      if (this.toggleButton && this.toggleButton.contains(e.target)) return;
+      
+      console.log('Panel dışına tıklandı, panel kapatılıyor');
+      this.closePanel();
     });
-    
-    // ESC tuşu
-    document.addEventListener('keydown', (e) => {
-      if (this.isOpen && e.key === 'Escape') {
-        console.log('ESC tuşuna basıldı, panel kapatılıyor');
-        this.closePanel();
-      }
-    });
+
+    // ThemeManager olaylarını dinle
+    if (this.themeManager) {
+      // Tema değiştiğinde UI'ı güncelle
+      this.themeManager.on('themeChanged', () => {
+        this.updateUI();
+      });
+    } else {
+      // ThemeManager yoksa doküman olaylarını dinle
+      document.addEventListener('themeChanged', () => {
+        this.updateUI();
+      });
+    }
   }
 
   /**
-   * Panel açılıp/kapanmasını kontrol eder - DÜZELTME
+   * Paneli açıp kapatır
    */
   togglePanel() {
     console.log('togglePanel fonksiyonu çağrıldı');
+    if (!this.panel) {
+      console.error('Panel elementi tanımlı değil!');
+      return;
+    }
     
-    // Timeout ekleyerek aynı çevrimde açılıp kapanma sorununu önle
-    setTimeout(() => {
-      if (this.isOpen) {
-        this.closePanel();
-      } else {
-        this.openPanel();
-      }
-    }, 10);
+    if (this.isOpen) {
+      this.closePanel();
+    } else {
+      this.openPanel();
+    }
   }
-
+  
   /**
-   * Paneli açar - BASİTLEŞTİRİLDİ
+   * Paneli açar
    */
   openPanel() {
     if (!this.panel) return;
     
-    // 1. Panel sınıfı ekle
     this.panel.classList.add('open');
-    
-    // 2. Panel durumunu güncelle
     this.isOpen = true;
     
-    // 3. ARIA güncelle
-    if (this.toggleButton) {
-      this.toggleButton.setAttribute('aria-expanded', 'true');
-    }
-    
+    // Olay tetikle
     console.log('Panel açıldı:', this.isOpen);
+    
+    // Tema rengine göre panelin stilini güncelle
+    this.updatePanelStylesForTheme();
+    
+    // Açıldığında UI'ı güncelle
+    this.updateUI();
   }
-
+  
   /**
-   * Paneli kapatır - BASİTLEŞTİRİLDİ
+   * Paneli kapatır
    */
   closePanel() {
     if (!this.panel) return;
     
-    // 1. Panel sınıfını kaldır
     this.panel.classList.remove('open');
-    
-    // 2. Panel durumunu güncelle
     this.isOpen = false;
     
-    // 3. ARIA güncelle
-    if (this.toggleButton) {
-      this.toggleButton.setAttribute('aria-expanded', 'false');
-    }
-    
+    // Olay tetikle
     console.log('Panel kapatıldı:', this.isOpen);
   }
-
+  
   /**
-   * UI güncellemesi yapar
+   * Temaya göre panel stillerini günceller
+   */
+  updatePanelStylesForTheme() {
+    if (!this.panel) return;
+    
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    
+    // Temaya göre panel text renklerini güncelle
+    const allTextElements = this.panel.querySelectorAll('.settings-section > span, .toggle-label, #currentFontSize');
+    allTextElements.forEach(element => {
+      if (currentTheme === 'dark' || currentTheme === 'highContrast') {
+        element.style.color = '#ffffff';
+      } else {
+        element.style.color = '#333333';
+      }
+    });
+  }
+  
+  /**
+   * Arayüzü günceller
    */
   updateUI() {
-    console.log('updateUI fonksiyonu çağrıldı');
+    if (!this.panel) return;
     
-    // Tema toggle durumunu güncelle
+    // Mevcut ayarları al
+    let currentTheme = 'light';
+    let currentColorTheme = 'blue';
+    let currentFontSize = 'normal';
+    
+    if (this.themeManager && this.themeManager.settings) {
+      currentTheme = this.themeManager.settings.theme;
+      currentColorTheme = this.themeManager.settings.colorTheme;
+      currentFontSize = this.themeManager.settings.fontSize;
+    } else {
+      // ThemeManager yoksa doküman özelliklerinden oku
+      currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+      currentColorTheme = document.documentElement.getAttribute('data-color-theme') || 'blue';
+    }
+    
+    // Toggle düğmelerini güncelle
     const themeToggle = document.getElementById('themeToggle');
-    if (themeToggle && this.themeManager && this.themeManager.settings) {
-      themeToggle.checked = this.themeManager.settings.theme === 'dark';
+    const contrastToggle = document.getElementById('contrastToggle');
+    
+    if (themeToggle) {
+      themeToggle.checked = currentTheme === 'dark';
     }
     
-    // Kontrast toggle durumunu güncelle
-    const contrastToggle = document.getElementById('contrastToggle');
-    if (contrastToggle && this.themeManager && this.themeManager.settings) {
-      contrastToggle.checked = this.themeManager.settings.theme === 'highContrast';
+    if (contrastToggle) {
+      contrastToggle.checked = currentTheme === 'highContrast';
     }
+    
+    // Renk seçeneklerini güncelle
+    const colorOptions = document.querySelectorAll('.color-option');
+    this.updateColorOptions(colorOptions, currentColorTheme);
     
     // Font boyutu göstergesini güncelle
     const fontSizeDisplay = document.getElementById('currentFontSize');
     this.updateFontSizeDisplay(fontSizeDisplay);
     
-    // Renk seçeneklerini güncelle
-    const colorOptions = document.querySelectorAll('.color-option');
-    if (colorOptions.length && this.themeManager && this.themeManager.settings) {
-      this.updateColorOptions(colorOptions, this.themeManager.settings.colorTheme);
-    }
+    // Tema önizlemesini güncelle
+    this.updateThemePreview(currentTheme === 'dark');
+    
+    // Tema durumuna göre toggle etiketlerini güncelle
+    this.updateToggleLabels(currentTheme);
+    
+    // Panel stillerini güncelle
+    this.updatePanelStylesForTheme();
   }
-
+  
   /**
-   * Tema önizlemesini günceller (güneş/ay animasyonu)
+   * Tema önizlemesini günceller
+   * @param {boolean} isDark - Koyu tema mı?
    */
   updateThemePreview(isDark) {
     const preview = document.querySelector('.theme-preview');
@@ -559,23 +651,10 @@ class SettingsPanel {
   }
 }
 
-// Sayfa yüklendiğinde otomatik olarak başlat
+// Sayfa yüklendiğinde ayarlar panelini başlat
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('SettingsPanel başlatılıyor - DOMContentLoaded');
-  
-  // SettingsPanel'i global olarak tanımla
   window.settingsPanel = new SettingsPanel();
 });
 
-// ThemeManager'ın yüklenmesini beklemek için ek güvenlik (başlangıç kodumuz çalışmazsa)
-window.addEventListener('load', () => {
-  console.log('SettingsPanel kontrol ediliyor - window.load');
-  // SettingsPanel'i kontrol et, yoksa oluştur
-  if (!window.settingsPanel) {
-    console.log('SettingsPanel yüklenememiş, tekrar başlatılıyor');
-    window.settingsPanel = new SettingsPanel();
-  }
-});
-
-// Global erişim için
-// export default SettingsPanel; 
+// ThemeManager'a erişim için global değişken
+window.settingsPanel = null; 

@@ -1,7 +1,7 @@
 /**
  * Ayarlar Paneli - Gürel Yönetim Tema Sistemi
  * Tema ayarları paneli için modern stiller 
- * Sürüm: 4.0.1
+ * Sürüm: 4.0.2
  * Son Güncelleme: 2024
  * 
  * Not: Ayarlar paneli CSS'i, themes.css'ten ayrılmış ve 
@@ -144,6 +144,7 @@
   user-select: none;
   transition: background-color 0.3s;
   line-height: 26px;
+  color: var(--text-color, #333); /* Açık temada metin rengi */
 }
 
 .toggle-label::before {
@@ -189,6 +190,7 @@
   justify-content: center;
   cursor: pointer;
   transition: background-color 0.2s, transform 0.2s;
+  color: var(--text-color, #333); /* Açık temada icon rengi için */
 }
 
 .font-size-btn:hover {
@@ -200,18 +202,18 @@
 }
 
 #currentFontSize {
-  flex: 1;
+  width: 60px;
   text-align: center;
   font-weight: 600;
-  color: var(--text-color, #333);
-  transition: transform 0.3s, color 0.3s;
+  color: var(--text-color, #333); /* Açık temada metin rengi */
+  transition: color 0.2s;
 }
 
-/* Renk seçenekleri */
+/* Renk Seçenekleri */
 .color-options {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
 }
 
 .color-option {
@@ -220,8 +222,9 @@
   border-radius: 50%;
   cursor: pointer;
   position: relative;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s, box-shadow 0.2s;
+  border: 2px solid transparent;
+  transition: transform 0.2s, border-color 0.2s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .color-option:hover {
@@ -234,13 +237,18 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) scale(0);
   width: 14px;
   height: 14px;
   border-radius: 50%;
   background-color: white;
-  transition: transform 0.2s;
+  transform: translate(-50%, -50%) scale(0);
   opacity: 0;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.color-option.active {
+  border-color: white;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
 }
 
 .color-option.active::after {
@@ -248,34 +256,34 @@
   opacity: 1;
 }
 
-/* Toggle Butonu */
+/* Settings Toggle Butonu */
 .settings-toggle {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: 30px;
+  right: 30px;
   width: var(--toggle-size);
   height: var(--toggle-size);
   border-radius: var(--toggle-radius);
-  background: linear-gradient(135deg, var(--primary-color, #0055a4) 0%, var(--primary-color-dark, #00336e) 100%);
-  box-shadow: var(--shadow-md);
+  background-color: var(--primary-color, #0055a4);
   color: white;
-  border: none;
-  cursor: pointer;
-  z-index: var(--z-toggle);
+  font-size: 1.2rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
-  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+  z-index: var(--z-toggle);
+  transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+  border: none;
 }
 
 .settings-toggle:hover {
+  background-color: var(--primary-color-dark, #003c7e);
   transform: scale(1.05);
-  box-shadow: var(--shadow-lg);
 }
 
 .settings-toggle i {
-  animation: spin 4s linear infinite;
+  animation: spin 20s linear infinite;
 }
 
 @keyframes spin {
@@ -287,17 +295,16 @@
   }
 }
 
-/* Tema önizleme */
+/* Tema Önizleme */
 .theme-preview {
   position: relative;
   width: 100%;
-  height: 120px;
-  background: linear-gradient(to bottom, #87CEFA, #4682B4);
-  border-radius: 12px;
+  height: 100px;
   overflow: hidden;
-  margin-bottom: 1rem;
-  transition: background 0.5s ease;
-  box-shadow: var(--shadow-sm);
+  border-radius: 12px;
+  margin: 15px 0;
+  background-color: #87CEEB; /* Açık gökyüzü mavi */
+  transition: background-color 0.5s;
 }
 
 .theme-preview-sun {
@@ -306,23 +313,23 @@
   left: 30px;
   width: 30px;
   height: 30px;
-  background-color: #FFD700;
   border-radius: 50%;
+  background-color: #FFD700; /* Altın sarısı */
   box-shadow: 0 0 20px rgba(255, 215, 0, 0.7);
-  transition: transform 0.5s ease, opacity 0.5s ease;
+  transition: opacity 0.5s, transform 0.5s;
 }
 
 .theme-preview-moon {
   position: absolute;
   top: 20px;
-  right: 30px;
+  left: 30px;
   width: 25px;
   height: 25px;
-  background-color: #E6E6E6;
   border-radius: 50%;
-  box-shadow: inset -4px 0 0 #CCCCCC;
+  background-color: #f0f0f0;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
   opacity: 0;
-  transition: transform 0.5s ease, opacity 0.5s ease;
+  transition: opacity 0.5s;
 }
 
 .theme-preview-landscape {
@@ -330,21 +337,20 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 40px;
-  background-color: #228B22;
-  transition: background 0.5s ease;
+  height: 50px;
+  background-color: #4CAF50; /* Yeşil çimen */
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  transition: background-color 0.5s;
 }
 
-/* Animasyonlar için CSS sınıfları */
+/* Animasyon efektleri */
 .font-size-btn.clicked {
-  transform: scale(0.85);
-  background-color: rgba(0, 0, 0, 0.2);
-  transition: transform 0.2s ease, background-color 0.2s ease;
+  animation: fontSizePulse 0.3s ease;
+  background-color: rgba(0, 85, 164, 0.1);
 }
 
 .color-option.clicked {
-  transform: scale(0.85);
-  transition: transform 0.2s ease;
+  animation: colorPulse 0.3s ease;
 }
 
 #currentFontSize.updated {
@@ -352,48 +358,46 @@
 }
 
 @keyframes fontSizePulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.2); color: var(--primary-color, #0055a4); }
-  100% { transform: scale(1); }
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
 }
 
-/* Tema önizleme animasyonları */
+/* Karanlık tema önizlemesi */
 .theme-preview.dark-preview {
-  background: linear-gradient(to bottom, #1A237E, #000);
+  background-color: #2c3e50; /* Koyu gece mavisi */
 }
 
 .theme-preview.dark-preview .theme-preview-sun {
   opacity: 0;
-  transform: translateX(-50px);
 }
 
 .theme-preview.dark-preview .theme-preview-moon {
   opacity: 1;
-  transform: translateX(-50px);
 }
 
 .theme-preview.dark-preview .theme-preview-landscape {
-  background: #1B5E20;
+  background-color: #2E7D32; /* Koyu yeşil çimen */
 }
 
-/* Duyarlı tasarım için mobil uyum */
+/* Mobil uyumluluk */
 @media (max-width: 576px) {
   .settings-panel,
   .floating-settings-panel {
-    width: 280px;
+    width: 85vw;
+    max-width: 300px;
   }
   
   .settings-toggle {
-    bottom: 15px;
-    right: 15px;
     width: 45px;
     height: 45px;
+    bottom: 20px;
+    right: 20px;
   }
 }
 
-/* Animasyon çekirdek sınıfları */
+/* Animasyon sınıfları */
 .fade-in {
-  animation: fadeIn 0.3s ease forwards;
+  animation: fadeIn 0.4s ease forwards;
 }
 
 .slide-up {
@@ -419,107 +423,110 @@
 }
 
 @keyframes pulseAnim {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.8; }
 }
 
 @keyframes floatAnim {
-  0% { transform: translateY(0); }
+  0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
-  100% { transform: translateY(0); }
 }
 
-/* Bilgi metni için stiller */
+/* Bilgi metni */
 .settings-footer {
-  margin-top: 1.5rem;
+  margin-top: 2rem;
   padding-top: 1rem;
   border-top: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .settings-info {
+  background-color: rgba(0, 85, 164, 0.1);
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 0.875rem;
+  color: var(--text-color, #333);
   display: flex;
   align-items: flex-start;
-  gap: 0.5rem;
-  color: var(--text-muted, #666);
-  font-size: 0.875rem;
-  line-height: 1.4;
+  gap: 8px;
 }
 
 .settings-info i {
+  font-size: 1.1rem;
   color: var(--primary-color, #0055a4);
   margin-top: 2px;
 }
 
-/* Karanlık tema içindeki ayarlar paneli - Daha yüksek kontrast */
+/* Karanlık Tema Stilleri */
 [data-theme="dark"] .settings-panel,
 [data-theme="dark"] .floating-settings-panel {
-  background-color: #1a1a1a;
-  border-left-color: rgba(255, 255, 255, 0.05);
-  box-shadow: -5px 0 20px rgba(0, 0, 0, 0.4);
+  background-color: #1e1e1e;
+  border-left-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
 }
 
 [data-theme="dark"] .settings-section {
-  border-bottom-color: rgba(255, 255, 255, 0.07);
+  border-bottom-color: rgba(255, 255, 255, 0.1);
 }
 
 [data-theme="dark"] .settings-section > span {
-  color: #fff;
+  color: #ffffff;
 }
 
 [data-theme="dark"] .settings-section > span::after {
-  background: var(--primary-color, #0055a4);
-  opacity: 0.9;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 [data-theme="dark"] .toggle-label {
-  background: #444;
-  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+  background-color: #444;
+  color: #ffffff;
 }
 
 [data-theme="dark"] .toggle-label:after {
-  background: #f0f0f0;
+  background: #1e1e1e;
 }
 
 [data-theme="dark"] .font-size-controls {
-  background-color: #2a2a2a;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+  color: #fff;
 }
 
 [data-theme="dark"] #currentFontSize {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #ddd;
-  border-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+  padding: 4px 8px;
 }
 
 [data-theme="dark"] .font-size-btn {
-  color: #ddd;
+  background-color: #333;
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
 }
 
 [data-theme="dark"] .font-size-btn:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: #444;
 }
 
 [data-theme="dark"] .settings-toggle {
-  box-shadow: var(--shadow-md),
-              inset 0 -2px 5px rgba(0, 0, 0, 0.4),
-              inset 0 2px 5px rgba(255, 255, 255, 0.1);
+  background-color: var(--primary-color, #0055a4);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  color: #ffffff;
 }
 
-/* Yüksek kontrast teması */
+/* Yüksek Kontrast Tema Stilleri */
 [data-theme="highContrast"] .settings-panel,
 [data-theme="highContrast"] .floating-settings-panel {
   background-color: #000;
-  border-left: 3px solid #fff;
+  border-left-color: #fff;
+  color: #fff;
 }
 
 [data-theme="highContrast"] .settings-header {
   background: #000;
-  border-bottom: 3px solid #fff;
+  border-bottom: 2px solid #fff;
 }
 
 [data-theme="highContrast"] .settings-section {
-  border-bottom: 2px solid #fff;
+  border-bottom-color: #fff;
 }
 
 [data-theme="highContrast"] .settings-section > span {
@@ -531,8 +538,9 @@
 }
 
 [data-theme="highContrast"] .toggle-label {
-  background: #000;
+  background-color: #000;
   border: 2px solid #fff;
+  color: #fff;
 }
 
 [data-theme="highContrast"] .toggle-label:after {
@@ -540,59 +548,63 @@
 }
 
 [data-theme="highContrast"] .contrast-toggle:checked + .toggle-label {
-  background: #000;
+  background-color: #fff;
+  color: #000;
 }
 
 [data-theme="highContrast"] .font-size-controls {
-  background-color: #000;
-  border: 2px solid #fff;
-}
-
-[data-theme="highContrast"] .font-size-btn {
   color: #fff;
 }
 
-/* Mobil cihazlar için responsive tasarım - Daha iyi optimizasyon */
+[data-theme="highContrast"] .font-size-btn {
+  background-color: #000;
+  border: 2px solid #fff;
+  color: #fff;
+}
+
+/* Mobil stil ayarları */
 @media (max-width: 768px) {
   :root {
     --panel-width: 280px;
+    --toggle-size: 45px;
+    --option-size: 32px;
     --panel-padding: 1rem;
-    --section-spacing: 1.5rem;
   }
   
   .settings-panel,
   .floating-settings-panel {
-    border-radius: 0;
+    width: var(--panel-width);
   }
   
   .color-options {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
   }
 }
 
-/* Küçük ekranlar için ek düzenlemeler */
 @media (max-width: 480px) {
   :root {
-    --panel-width: 100%;
-    --toggle-size: 45px;
+    --panel-width: 260px;
+    --toggle-size: 40px;
+    --option-size: 28px;
+    --panel-padding: 0.875rem;
   }
   
   .settings-panel,
   .floating-settings-panel {
-    right: -100%;
-    top: 0;
-    width: 100%;
+    width: 85vw;
+    max-width: var(--panel-width);
     border-radius: 0;
+    right: -100vw;
   }
   
   .settings-panel.open,
   .floating-settings-panel.open {
-    transform: translateX(0);
+    right: 0;
   }
   
   .settings-content {
-    padding: 1rem;
+    padding: var(--panel-padding);
   }
   
   .settings-toggle {
@@ -601,24 +613,25 @@
   }
   
   .color-options {
-    gap: 0.8rem;
+    grid-template-columns: repeat(5, 1fr);
   }
   
   .color-option {
-    width: 32px;
-    height: 32px;
+    width: 100%;
+    height: var(--option-size);
   }
 }
 
-/* Erişilebilirlik iyileştirmeleri */
+/* Klavye erişilebilirliği */
 .settings-toggle:focus-visible,
-.settings-close:focus-visible,
+.contrast-toggle:focus-visible + .toggle-label,
+.color-option:focus-visible,
 .font-size-btn:focus-visible {
   outline: 3px solid var(--primary-color, #0055a4);
   outline-offset: 2px;
 }
 
-/* Motion azaltılmış durum */
+/* Azaltılmış hareket için */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -638,60 +651,59 @@
   }
   
   .settings-panel::before,
-  .settings-section::before {
-    display: none;
+  .settings-panel::after {
+    animation: none;
   }
 }
 
-/* RTL Dil Desteği - Daha gelişmiş */
+/* RTL desteği */
 [dir="rtl"] .settings-panel,
 [dir="rtl"] .floating-settings-panel {
   right: auto;
-  left: calc(-1 * var(--panel-width) - 20px);
-  border-radius: 0 0 12px 0;
+  left: -350px;
   border-left: none;
   border-right: 1px solid rgba(0, 0, 0, 0.08);
-  transform: translateX(-10px);
+  border-radius: 0 0 12px 0;
 }
 
 [dir="rtl"] .settings-panel.open,
 [dir="rtl"] .floating-settings-panel.open {
+  right: auto;
   left: 0;
-  transform: translateX(0);
 }
 
 [dir="rtl"] .settings-section::before {
   left: auto;
-  right: -5px;
-  border-radius: 5px 0 0 5px;
-  transform: translateX(100%);
+  right: 0;
+  border-left: none;
+  border-right: 3px solid var(--primary-color, #0055a4);
 }
 
 [dir="rtl"] .settings-section:hover::before {
-  transform: translateX(0);
+  transform: translateX(3px);
 }
 
 [dir="rtl"] .settings-section > span::after {
-  left: auto;
-  right: 0;
+  right: auto;
+  left: 0;
 }
 
 [dir="rtl"] .settings-toggle {
   right: auto;
-  left: 25px;
+  left: 30px;
 }
 
 [dir="rtl"] .toggle-label::after {
+  right: 4px;
   left: auto;
-  right: 2px;
 }
 
 [dir="rtl"] .contrast-toggle:checked + .toggle-label::after {
-  right: calc(100% - 26px);
-  left: auto;
+  transform: translateX(-26px);
+  right: 30px;
 }
 
-/* Ekran okuyucu için yardımcı sınıflar - Erişilebilirlik için iyileştirildi */
+/* Ekran okuyucu için gizli metin */
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -704,170 +716,84 @@
   border: 0;
 }
 
-/* Sayfa içindeki önemli içerik okunurken (focus-within) bulanıklaştırma */
+/* Keyboard odaklanması için highlight */
 body:focus-within .settings-toggle {
-  opacity: 0.7;
-  transform: scale(0.9);
+  animation: pulse 2s infinite;
+  outline: 2px solid var(--primary-color, #0055a4);
+  outline-offset: 2px;
 }
 
-/* Tema önizleme bölümü */
+/* Tema önizleme ile ilgili stil güncellemeleri */
 .theme-preview {
-  height: 80px;
-  border-radius: 10px;
-  overflow: hidden;
   position: relative;
-  margin: 1rem 0;
-  box-shadow: var(--shadow-sm);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(to bottom, #87CEEB, #E0F7FA);
+  width: 100%;
+  height: 100px;
+  border-radius: 12px;
+  margin: 10px 0;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .theme-preview-sun {
+  position: absolute;
   width: 40px;
   height: 40px;
-  background: #FFD700;
   border-radius: 50%;
-  box-shadow: 0 0 20px #FFD700;
-  position: absolute;
-  right: 30px;
-  top: 15px;
-  transition: all 0.5s;
+  background-color: #ffcc00;
+  top: 20px;
+  left: 30px;
+  box-shadow: 0 0 30px rgba(255, 204, 0, 0.8);
+  transition: all 0.5s ease;
 }
 
 .theme-preview-moon {
+  position: absolute;
   width: 35px;
   height: 35px;
-  background: #ddd;
   border-radius: 50%;
-  box-shadow: inset -8px 2px 0 0px #aaa;
-  position: absolute;
-  right: 40px;
-  top: 15px;
+  background-color: #ddd;
+  top: 20px;
+  left: 30px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
   opacity: 0;
-  transition: all 0.5s;
+  transition: all 0.5s ease;
 }
 
 .theme-preview-landscape {
   position: absolute;
   bottom: 0;
   left: 0;
-  right: 0;
-  height: 30px;
-  background: #4CAF50;
-  border-radius: 80% 80% 0 0 / 100% 100% 0 0;
-  transition: all 0.5s;
+  width: 100%;
+  height: 40px;
+  background-color: #4CAF50;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  transition: all 0.3s ease;
 }
 
-.contrast-toggle:checked ~ .theme-preview .theme-preview-sun {
-  opacity: 0;
-  transform: translateX(-50px);
-}
-
-.contrast-toggle:checked ~ .theme-preview .theme-preview-moon {
-  opacity: 1;
-  transform: translateX(-50px);
-}
-
-.contrast-toggle:checked ~ .theme-preview {
-  background: linear-gradient(to bottom, #1A237E, #000);
-}
-
-.contrast-toggle:checked ~ .theme-preview .theme-preview-landscape {
-  background: #1B5E20;
-}
-
-/* Settings Footer */
-.settings-footer {
-  margin-top: 2rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--border-color, rgba(0, 0, 0, 0.1));
-}
-
-.settings-info {
-  display: flex;
-  font-size: 0.85rem;
-  color: #666;
-  background-color: rgba(0, 0, 0, 0.03);
-  padding: 0.75rem;
-  border-radius: 8px;
-  line-height: 1.4;
-  align-items: flex-start;
-}
-
-.settings-info i {
-  margin-right: 8px;
-  font-size: 1rem;
-  color: var(--primary-color, #0055a4);
-  margin-top: 2px;
-}
-
-[data-theme="dark"] .settings-info {
-  color: #aaa;
-  background-color: rgba(255, 255, 255, 0.05);
-}
-
-[data-theme="dark"] .settings-footer {
-  border-top-color: rgba(255, 255, 255, 0.07);
-}
-
-/* Loading indicator for settings that need processing time */
-.settings-loading {
-  position: relative;
-}
-
-.settings-loading::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(255, 255, 255, 0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s;
-}
-
-.settings-loading.is-loading::after {
-  opacity: 1;
-  pointer-events: all;
-}
-
-/* Tema önizleme animasyonları */
 .theme-preview.dark-preview {
-  background: linear-gradient(to bottom, #1A237E, #000);
+  background-color: #1a2533;
 }
 
 .theme-preview.dark-preview .theme-preview-sun {
   opacity: 0;
-  transform: translateX(-50px);
 }
 
 .theme-preview.dark-preview .theme-preview-moon {
   opacity: 1;
-  transform: translateX(-50px);
 }
 
 .theme-preview.dark-preview .theme-preview-landscape {
-  background: #1B5E20;
+  background-color: #1f3d20;
 }
 
-/* Animasyon efektleri */
 .font-size-btn.clicked {
-  transform: scale(0.85);
-  background-color: rgba(0, 0, 0, 0.2);
-  transition: transform 0.2s ease, background-color 0.2s ease;
+  animation: fontSizePulse 0.3s ease;
+  background-color: rgba(0, 85, 164, 0.1);
 }
 
 .color-option.clicked {
-  transform: scale(0.85);
-  transition: transform 0.2s ease;
+  animation: colorPulse 0.3s ease;
 }
 
 #currentFontSize.updated {
@@ -875,40 +801,76 @@ body:focus-within .settings-toggle {
 }
 
 @keyframes fontSizePulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.2); background-color: var(--primary-color, #0055a4); color: white; }
-  100% { transform: scale(1); }
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
 }
 
-/* Daha iyi tema değiştirme geçişleri */
+/* Genel erişilebilirlik iyileştirmeleri */
 body, #settingsPanel, .color-option, .settings-toggle, .settings-header {
-  transition: all 0.4s ease-in-out;
+  font-family: 'Poppins', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 400;
 }
 
-/* İyileştirilmiş kaydırma çubuğu */
+/* Scrollbar stilleri */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: #f1f1f1;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.2);
+  background: #c1c1c1;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.4);
+  background: #a8a8a8;
 }
 
 [data-theme="dark"] ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
+  background: #555;
 }
 
 [data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: #777;
+}
+
+/* Tema ve kontrast toggle stillerinin geliştirilmesi */
+.toggle-wrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.contrast-toggle + .toggle-label,
+#themeToggle + .toggle-label {
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+.toggle-label {
+  padding-left: 60px;
+  font-weight: 500;
+}
+
+/* Açık tema daha iyi okunurluk için metin kontrastı */
+body:not([data-theme="dark"]):not([data-theme="highContrast"]) .settings-section > span,
+body:not([data-theme="dark"]):not([data-theme="highContrast"]) .toggle-label,
+body:not([data-theme="dark"]):not([data-theme="highContrast"]) #currentFontSize {
+  color: #333;
+  font-weight: 500;
+}
+
+body:not([data-theme="dark"]):not([data-theme="highContrast"]) .settings-info {
+  color: #444;
+  font-weight: 500;
+  background-color: rgba(0, 85, 164, 0.07);
+  border: 1px solid rgba(0, 85, 164, 0.1);
 } 
