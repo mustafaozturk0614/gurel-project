@@ -23,7 +23,7 @@ class ThemeManager {
     // Font boyutu değerleri
     this.fontSizeValues = {
       small: '85%',
-      normal: '100%', 
+      normal: '100%',
       large: '120%',
       xlarge: '140%'
     };
@@ -37,13 +37,13 @@ class ThemeManager {
       reducedMotion: false, // Azaltılmış hareket
       ...options
     };
-    
+
     // Options değişkenini sınıf özelliği olarak kaydet
     this.options = options || {};
     
     // Olay dinleyicileri dizisi
     this.eventListeners = [];
-    
+
     // Debug modu
     this.debug = options.debug || false;
     
@@ -89,7 +89,7 @@ class ThemeManager {
     this.darkModeMediaQuery.addEventListener('change', this.handleSystemThemeChange.bind(this));
     
     // Sistem animasyon tercihlerini dinle
-    this.reducedMotionMediaQuery.addEventListener('change', this.handleReducedMotionChange.bind(this));
+        this.reducedMotionMediaQuery.addEventListener('change', this.handleReducedMotionChange.bind(this));
     
     // Sayfa yüklenme/yükleme olayını dinle
     window.addEventListener('load', () => {
@@ -654,7 +654,7 @@ class ThemeManager {
     this.eventListeners[event].forEach(callback => {
       try {
         callback(data);
-      } catch (error) {
+        } catch (error) {
         console.error(`[ThemeManager] Event callback error for ${event}:`, error);
       }
     });
@@ -711,8 +711,8 @@ class ThemeManager {
    */
   destroy() {
     // Event listener'ları kaldır
-    this.darkModeMediaQuery.removeEventListener('change', this.handleSystemThemeChange);
-    this.reducedMotionMediaQuery.removeEventListener('change', this.handleReducedMotionChange);
+        this.darkModeMediaQuery.removeEventListener('change', this.handleSystemThemeChange);
+        this.reducedMotionMediaQuery.removeEventListener('change', this.handleReducedMotionChange);
     
     // Event listener dizisini temizle
     this.eventListeners = {};

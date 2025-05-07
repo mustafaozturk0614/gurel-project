@@ -2475,8 +2475,7 @@ function initLazyLoading() {
             };
         }
         
-        // Tüm hata mesajlarını temizle
-        console.clear();
+       
     });
 })();
 
@@ -2620,7 +2619,7 @@ function initSettingsPanelInstance() {
       showThemeSelector: true,
       showColorThemeSelector: true,
       showFontSizeSelector: true,
-      showAccessibilityOptions: true, 
+      showAccessibilityOptions: true,
       showReducedMotionSelector: true, // Yeni: Azaltılmış hareket seçeneği
       showCustomThemeSelector: true,
       colorThemes: ['blue', 'red', 'green', 'orange', 'purple', 'teal', 'pink'], // Yeni renkleri ekle
@@ -2644,7 +2643,7 @@ function initSettingsPanelInstance() {
     
     // EventBus ile entegrasyon (eğer varsa)
     if (typeof EventBus !== 'undefined' && EventBus.publish) {
-      EventBus.publish('settingsPanelInitialized', { success: true });
+    EventBus.publish('settingsPanelInitialized', { success: true });
     }
     
   } catch (error) {
@@ -2855,7 +2854,7 @@ function isLocalStorageAvailable() {
     const testKey = 'test_storage';
     localStorage.setItem(testKey, testKey);
     localStorage.removeItem(testKey);
-    return true;
+        return true;
   } catch (e) {
     return false;
   }
