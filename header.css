@@ -5,12 +5,12 @@
    ========================================================= */
 
 /* ============================================
-   HEADER DEĞİŞKENLERİ (THEME.CSS İLE TAM UYUMLU)
+   HEADER DEĞİŞKENLERİ (THEMES.CSS İLE TAM UYUMLU)
    ============================================ */
 :root {
   /* ---- TEMEL HEADER DEĞİŞKENLERİ ---- */
   --header-height: 90px;
-  --header-height-scrolled: 70px;
+    --header-height-scrolled: 70px;
   --header-height-mini: 55px;
   --header-logo-height: 80px;
   --header-logo-height-scrolled: 45px;
@@ -18,7 +18,7 @@
   --header-transition: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   --header-z-index: 1030;
   
-  /* ---- ARKAPLAN DEĞİŞKENLERİ - THEME.CSS ENTEGRASYONU ---- */
+  /* ---- ARKAPLAN DEĞİŞKENLERİ - THEMES.CSS ENTEGRASYONU ---- */
   --header-bg-transparent: transparent;
   --header-bg-light: var(--background-color, #ffffff);
   --header-bg-dark: var(--neutral-900, #1a1a1a);
@@ -27,7 +27,7 @@
   --header-shadow-dark: var(--shadow-md, 0 2px 20px rgba(0, 0, 0, 0.25));
   --header-shadow-highcontrast: 0 2px 10px rgba(255, 255, 255, 0.3);
   
-  /* ---- İÇERİK RENKLERİ - THEME.CSS ENTEGRASYONU ---- */
+  /* ---- İÇERİK RENKLERİ - THEMES.CSS ENTEGRASYONU ---- */
   --header-text-light: var(--text-color, #333333);
   --header-text-light-hover: var(--text-primary, #333333);
   --header-text-dark: var(--text-light, #ffffff);
@@ -66,12 +66,12 @@
   --header-mobile-menu-bg: var(--header-mobile-menu-bg-light);
   --header-mobile-overlay: var(--header-mobile-overlay-light);
   
-  position: fixed;
-  top: 0;
-  left: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
   right: 0;
   height: var(--header-height);
-  width: 100%;
+    width: 100%;
   z-index: var(--header-z-index);
   transition: transform var(--header-transition),
               height var(--header-transition),
@@ -162,8 +162,8 @@
 .navbar-container {
   position: relative;
   height: 100%;
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
   padding: 0 1rem;
   background-color: transparent !important; /* Navbar container arka planını şeffaf yap */
 }
@@ -204,7 +204,7 @@
 
 /* Scrolled Header Durumu - DÜZELTME: TEK BİR ARKAPLAN KULLAN */
 .patreon-header.scrolled {
-  height: var(--header-height-scrolled);
+    height: var(--header-height-scrolled);
   box-shadow: var(--header-box-shadow);
   background-color: var(--header-bg-color) !important;
 }
@@ -223,16 +223,16 @@
 }
 
 .patreon-header.scrolled .header-logo {
-  height: var(--header-logo-height-scrolled);
+    height: var(--header-logo-height-scrolled);
 }
 
 /* Mini-Header Durumu (derin scroll) */
 .patreon-header.mini-header {
-  height: var(--header-height-mini);
+    height: var(--header-height-mini);
 }
 
 .patreon-header.mini-header .header-logo {
-  height: var(--header-logo-height-mini);
+    height: var(--header-logo-height-mini);
 }
 
 /* ================================
@@ -253,7 +253,7 @@
 
 /* Transparan durumdaki header'ı her zaman göster */
 .patreon-header.transparent.scroll-down {
-  transform: translateY(0);
+        transform: translateY(0);
   -webkit-transform: translateY(0);
 }
 
@@ -264,8 +264,8 @@
   padding: 0.5rem 0;
   margin-right: 1.5rem;
   transition: all var(--header-transition);
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
   z-index: 2; /* Diğer elementlerin üzerinde olması için */
 }
 
@@ -283,9 +283,9 @@
    NAVİGASYON MENÜ
    ================= */
 .navbar-nav {
-  display: flex;
-  align-items: center;
-  margin-left: auto;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
 }
 
 .nav-item {
@@ -294,15 +294,15 @@
 }
 
 .nav-link {
-  position: relative;
+    position: relative;
   color: var(--header-text-color);
   font-size: 1rem;
   font-weight: 500;
   padding: 0.7rem 1rem !important;
   border-radius: 6px;
   transition: all 0.25s ease-in-out;
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .nav-text {
@@ -352,7 +352,7 @@
    HEADER BUTON STİLLERİ
    ======================== */
 .header-button {
-  position: relative;
+    position: relative;
   display: inline-flex;
   align-items: center;
   padding: 0.6rem 1.5rem;
@@ -363,7 +363,7 @@
   border: none;
   border-radius: 30px;
   overflow: hidden;
-  transition: all 0.3s ease;
+    transition: all 0.3s ease;
   z-index: 1;
   box-shadow: var(--header-button-shadow);
   margin-left: 1rem;
@@ -374,22 +374,22 @@
 }
 
 .header-button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
   right: 0;
   bottom: 0;
   background: radial-gradient(circle at var(--x-pos) var(--y-pos), 
                                rgba(255,255,255,0.3) 0%, 
                                rgba(255,255,255,0) 50%);
-  z-index: -1;
-  opacity: 0;
+    z-index: -1;
+    opacity: 0;
   transition: opacity 0.5s ease;
 }
 
 .header-button:hover::before {
-  opacity: 1;
+    opacity: 1;
 }
 
 .header-button:hover {
@@ -608,69 +608,69 @@
   }
   
   /* Mobil menü iç stillemesi */
-  .navbar-collapse {
-    position: fixed;
-    top: 0;
+    .navbar-collapse {
+        position: fixed;
+        top: 0;
     right: 0;
     width: 280px;
-    height: 100vh;
+        height: 100vh;
     padding: 1.5rem;
     background: var(--header-mobile-menu-bg);
     box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
     z-index: 1030;
     transform: translateX(100%);
     transition: transform 0.3s ease;
-    overflow-y: auto;
+        overflow-y: auto;
     display: flex;
     flex-direction: column;
-  }
-  
-  .navbar-collapse.show {
+    }
+
+    .navbar-collapse.show {
     transform: translateX(0);
-  }
-  
-  .navbar-nav {
+    }
+
+    .navbar-nav {
     margin-top: 2rem;
-    flex-direction: column;
+        flex-direction: column;
     align-items: flex-start;
-  }
-  
-  .nav-item {
-    width: 100%;
+    }
+
+    .nav-item {
+        width: 100%;
     margin: 0.3rem 0;
-  }
-  
-  .nav-link {
+    }
+
+    .nav-link {
     padding: 0.8rem 0.5rem !important;
-    display: flex;
-    align-items: center;
-    width: 100%;
+        display: flex;
+        align-items: center;
+        width: 100%;
   }
   
   .header-button {
     margin: 1.5rem 0 0 0;
-    width: 100%;
+        width: 100%;
     justify-content: center;
   }
   
   /* Karartma Overlay */
-  .screen-darken {
-    position: fixed;
-    top: 0;
-    left: 0;
+    .screen-darken {
+        position: fixed;
+        top: 0;
+        left: 0;
     width: 100%;
     height: 100%;
     background-color: var(--header-mobile-overlay);
     z-index: 1020; /* header'dan düşük z-index */
-    opacity: 0;
-    visibility: hidden;
+        opacity: 0;
+        visibility: hidden;
     transition: all 0.3s ease;
-  }
-  
-  .screen-darken.active {
-    opacity: 1;
-    visibility: visible;
-  }
+    }
+
+    .screen-darken.active {
+        opacity: 1;
+        visibility: visible;
+    }
   
   /* Mobil menü açık olduğunda body scroll'u engelle */
   body.menu-open {
@@ -743,7 +743,7 @@
     border-bottom: 1px solid #ddd;
   }
   
-  .patreon-header .navbar {
+.patreon-header .navbar {
     background-color: #fff !important;
     padding: 1rem 0;
   }

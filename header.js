@@ -11,18 +11,18 @@
   // Hata yakalama ve izleme sistemi
   function setupErrorHandling() {
     try {
-      window.addEventListener('error', function(e) {
+    window.addEventListener('error', function(e) {
         // Eklenti veya tarayıcı uzantısı kaynaklı hataları dikkate alma
         if (e.filename && (
           e.filename.includes('contentScript.bundle.js') || 
           e.filename.includes('chrome-extension')
         )) {
           console.debug('Header.js: Extension error ignored:', e.message);
-          e.preventDefault();
-          return true;
-        }
-      });
-    } catch (err) {
+        e.preventDefault();
+        return true;
+      }
+    });
+} catch (err) {
       console.debug('Error tracking setup failed:', err);
     }
   }
@@ -120,7 +120,7 @@
           if (initialScrollTop > 300) {
             this.header.classList.add('mini-header');
           }
-        } else {
+            } else {
           // Sayfa başındaysa transparan göster
           this.header.classList.add('transparent');
           this.header.classList.remove('scrolled', 'mini-header');
@@ -212,8 +212,8 @@
         
         if (this.logo) {
           this.logoImage.style.filter = 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5))';
-        }
-      } else {
+            }
+        } else {
         // Sayfa kaydırıldı - scrolled durumu
         this.header.classList.remove('transparent');
         this.header.classList.add('scrolled');
@@ -316,8 +316,8 @@
         
         if (this.logo) {
           this.logoImage.style.filter = 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5))';
-        }
-      } else {
+                }
+            } else {
         // Scrolled durumdaki tema stillerine geri dön
         let bgColor;
         
@@ -611,7 +611,7 @@
           if (this.screenDarken) this.screenDarken.classList.remove('active');
           document.body.classList.remove('menu-open');
           this.state.isMobileMenuOpen = false;
-        } else {
+            } else {
           // Menü açılıyor
           if (this.screenDarken) this.screenDarken.classList.add('active');
           document.body.classList.add('menu-open');
@@ -624,10 +624,10 @@
         this.screenDarken.addEventListener('click', () => {
           if (this.menuToggler && this.menuToggler.getAttribute('aria-expanded') === 'true') {
             this.menuToggler.click();
-          }
+            }
         });
-      }
-      
+    }
+    
       // ESC tuşuna basıldığında menüyü kapat
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && this.state.isMobileMenuOpen) {

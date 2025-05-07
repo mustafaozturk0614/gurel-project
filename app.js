@@ -1,6 +1,6 @@
 /**
  * Gürel Yönetim - Ana JavaScript Dosyası
- * Version: 2.1.0
+ * Version: 2.2.0
  */
 
 // Sabitler ve Yapılandırma
@@ -32,22 +32,70 @@ const CONFIG = {
   }
 };
 
-// DOMContentLoaded event listener'ını başa alalım
+// İnitializasyon durumlarını izleyen değişkenler
+const INIT_STATUS = {
+  settingsInitialized: false,
+  appInitialized: false
+};
+
+// Tekli bir DOMContentLoaded event listener
 document.addEventListener('DOMContentLoaded', function() {
   console.log("DOMContentLoaded event tetiklendi - app.js");
   
-  // Settings elemanlarını kontrol et
-  const settingsToggle = document.getElementById('settingsToggle');
-  const settingsPanel = document.getElementById('settingsPanel');
-  
-  console.log("Settings elemanları:", {
-    settingsToggle: settingsToggle ? true : false,
-    settingsPanel: settingsPanel ? true : false
-  });
-  
-  // initApp fonksiyonunu çağır
-  initApp();
+  // Tüm başlatma işlemleri burada merkezi olarak yapılır
+  initializeApplication();
 });
+
+/**
+ * Uygulama başlatma ana fonksiyonu
+ * Tüm bileşenleri doğru sırayla başlatır
+ */
+function initializeApplication() {
+  // Yükleme ekranını kaldırmayı dene
+  try {
+    removeLoader();
+  } catch (error) {
+    console.error("Yükleme ekranı kaldırılırken hata:", error);
+  }
+  
+  // Sırayla başlatma işlemleri
+  initApp();
+  
+  // Son olarak ayarlar panelini başlat
+  initSettingsPanel();
+  
+  // Başlatma tamamlandı
+  INIT_STATUS.appInitialized = true;
+  console.log("Uygulama başlatma tamamlandı");
+}
+
+/**
+ * Yükleme ekranını kaldırmak için ayrı fonksiyon
+ */
+function removeLoader() {
+  const loader = document.getElementById('loading');
+  if (loader) {
+    loader.style.opacity = '0';
+    loader.style.zIndex = '-1';
+    setTimeout(() => {
+      loader.style.display = 'none';
+    }, 300);
+  }
+}
+
+// Sayfa yüklenmesinden bağımsız olarak yükleme ekranını kaldırma zamanlaması
+window.addEventListener('load', () => {
+  removeLoader();
+  
+  // Eğer Settings panel başlatılmadıysa, tekrar başlatmayı dene
+  if (!INIT_STATUS.settingsInitialized) {
+    console.log("SettingsPanel henüz başlatılmamış, tekrar deneniyor...");
+    initSettingsPanel();
+  }
+});
+
+// 5 saniye sonra loader'ı kaldır (uzun süren yüklemelerde)
+setTimeout(removeLoader, 5000);
 
 // Uygulama State Yönetimi - Singleton Pattern
 const AppState = (() => {
@@ -61,35 +109,35 @@ const AppState = (() => {
     currentLanguage: localStorage.getItem('selectedLanguage') || 'tr',
     // MAP_LOCATIONS entegrasyonu
     mapLocations: {
-    'Edremit': { 
-    lat: 39.592450,
-    lng: 27.016894,
-    zoom: 16,
-    position: { top: '50%', left: '50%' }
-    },
-    'Akçay': { 
-    lat: 39.583333,
-    lng: 26.933333,
-    zoom: 16,
-    position: { top: '45%', left: '35%' }
-    },
-    'Güre': { 
-    lat: 39.586667,
-    lng: 26.883333,
-    zoom: 16,
-    position: { top: '42%', left: '30%' }
-    },
-    'Burhaniye': { 
-    lat: 39.500000,
-    lng: 26.966667,
-    zoom: 16,
-    position: { top: '65%', left: '55%' }
-    },
-    'Altınoluk': { 
-    lat: 39.566667,
-    lng: 26.733333,
-    zoom: 16,
-    position: { top: '35%', left: '25%' }
+      'Edremit': { 
+        lat: 39.592450,
+        lng: 27.016894,
+        zoom: 16,
+        position: { top: '50%', left: '50%' }
+      },
+      'Akçay': { 
+        lat: 39.583333,
+        lng: 26.933333,
+        zoom: 16,
+        position: { top: '45%', left: '35%' }
+      },
+      'Güre': { 
+        lat: 39.586667,
+        lng: 26.883333,
+        zoom: 16,
+        position: { top: '42%', left: '30%' }
+      },
+      'Burhaniye': { 
+        lat: 39.500000,
+        lng: 26.966667,
+        zoom: 16,
+        position: { top: '65%', left: '55%' }
+      },
+      'Altınoluk': { 
+        lat: 39.566667,
+        lng: 26.733333,
+        zoom: 16,
+        position: { top: '35%', left: '25%' }
       }
     }
   };
@@ -287,9 +335,9 @@ const Utils = {
    * Birçok yerde tekrarlanan kodu tek bir yerden yönetir
    */
   createObserver(elements, callback, options = {}) {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
           callback(entry.target);
           if (options.unobserve) observer.unobserve(entry.target);
         }
@@ -305,28 +353,40 @@ const Utils = {
 window.addEventListener('resize', Utils.resetMobileCache.bind(Utils));
 
 /**
- * Ekip Kartları için Animasyonlar ve Etkileşimler
+ * Uygulama Başlatma Fonksiyonu - Sadeleştirilmiş
  */
-function initTeamAnimations() {
-  const teamMembers = document.querySelectorAll('.team-member');
+function initApp() {
+  console.log("initApp fonksiyonu çağrıldı");
   
-  if (teamMembers.length > 0) {
-    teamMembers.forEach(member => {
-      // Hover olayları
-      member.addEventListener('mouseenter', () => {
-        member.classList.add('hovered');
-      });
-      
-      member.addEventListener('mouseleave', () => {
-        member.classList.remove('hovered');
-      });
-      
-      // IntersectionObserver ile giriş animasyonu
-      Utils.createObserver([member], (el) => {
-        el.classList.add('animated');
-      }, { threshold: 0.3 });
+  // Ana init fonksiyonları
+  initHeaderSystem();
+  initTabSystem();
+  initModernHero();
+  initParallaxEffects();
+  initTiltEffects();
+  initCounters();
+  initMapFeatures();
+  initScrollEvents();
+  updateCopyrightYear();
+  initMobileMenu();
+  initTeamAnimations(); // Fonksiyonu yeniden ekledik, çağrısını da ekliyoruz
+  initAddressChecker();
+  initLazyLoading();
+  initServiceAnimations();
+
+  // AOS Kütüphanesi init
+  if (typeof AOS !== 'undefined') {
+    AOS.init({
+      duration: CONFIG.animation.duration,
+      easing: CONFIG.animation.easing,
+      once: CONFIG.animation.once,
+      mirror: CONFIG.animation.mirror,
+      offset: CONFIG.animation.offset
     });
   }
+  
+  // jQuery efektlerini başlat
+  initJQueryEffects();
 }
 
 /**
@@ -343,70 +403,6 @@ function initJQueryEffects() {
     });
   }
 }
-
-/**
- * Uygulama Başlatma Fonksiyonu - Sadeleştirilmiş
- */
-function initApp() {
-  console.log("initApp fonksiyonu çağrıldı");
-  
-      // Ana init fonksiyonları
-  // Yükleme ekranını hemen kaldırmayı dene
-  try {
-    removeLoader();
-  } catch (error) {
-    console.error("Yükleme ekranı kaldırılırken hata:", error);
-  }
-  
-  console.log("initSettingsPanel fonksiyonu çağrılacak");
-  initSettingsPanel(); // Settings paneli fonksiyonunu ilk sırada çağır
-  
-    initHeaderSystem();
-    initTabSystem();
-    initModernHero();
-    initParallaxEffects();
-    initTiltEffects();
-    initCounters();
-    initFormValidation();
-    initMapFeatures();
-    initScrollEvents();
-    updateCopyrightYear();
-  initMobileMenu();
-    initTeamAnimations();
-    initAddressChecker();
-    initLazyLoading();
-  initServiceAnimations();
-
-    // AOS Kütüphanesi init
-    if (typeof AOS !== 'undefined') {
-  AOS.init({
-        duration: CONFIG.animation.duration,
-        easing: CONFIG.animation.easing,
-        once: CONFIG.animation.once,
-        mirror: CONFIG.animation.mirror,
-        offset: CONFIG.animation.offset
-      });
-  }
-}
-
-/**
- * Yükleme ekranını kaldırmak için ayrı fonksiyon
- */
-function removeLoader() {
-      const loader = document.getElementById('loading');
-      if (loader) {
-        loader.style.opacity = '0';
-        loader.style.zIndex = '-1';
-    setTimeout(() => {
-      loader.style.display = 'none';
-    }, 300);
-  }
-}
-
-// Sayfa yüklenmesinden bağımsız olarak yükleme ekranını kaldırma zamanlaması
-window.addEventListener('load', removeLoader);
-// Yükleme çok uzun sürerse otomatik olarak kaldır (5 saniye sonra)
-setTimeout(removeLoader, 5000);
 
 /**
  * Header Sistemleri
@@ -2485,173 +2481,422 @@ function initLazyLoading() {
 })();
 
 /**
- * Settings Panel İşlevselliği
+ * Settings Panel İşlevselliği - Optimize edilmiş
+ * Ayarlar panelini başlatır ve yönetir
  */
 function initSettingsPanel() {
+  // Eğer daha önce başlatıldıysa tekrar çalıştırmayı engelle
+  if (INIT_STATUS.settingsInitialized) {
+    console.log('SettingsPanel zaten başlatılmış, tekrar başlatılmayacak.');
+    return;
+  }
+  
   console.log('Ayarlar paneli başlatılıyor...');
   
-  // SettingsPanel zaten başlatılmış mı kontrol et
-  if (window.settingsPanel) {
-    console.log('SettingsPanel zaten başlatılmış.');
+  // CSS dosyalarının yüklenip yüklenmediğini kontrol et
+  const settingsPanelCssLoaded = document.querySelector('link[href*="settings-panel.css"]');
+  if (!settingsPanelCssLoaded) {
+    console.log('Settings panel CSS yükleniyor...');
+    loadSettingsPanelCSS();
+  }
+  
+  // LocalStorage kullanılabilirliğini kontrol et
+  if (!isLocalStorageAvailable()) {
+    console.warn('LocalStorage kullanılamıyor. Tema ayarları kaydedilemeyecek.');
+    showSettingsError('Tarayıcı ayarları nedeniyle tema tercihleri kaydedilemeyecek.');
+  }
+  
+  // Gerekli elementlerin var olduğunu kontrol et
+  const settingsToggle = document.getElementById('settingsToggle');
+  const settingsPanel = document.getElementById('settingsPanel');
+  const settingsClose = document.getElementById('settingsClose');
+  
+  if (!settingsToggle || !settingsPanel) {
+    console.error('Settings panel elementleri bulunamadı. Panel başlatılamıyor.');
     return;
   }
   
-  // SettingsPanel sınıfının yüklendiğini kontrol et
-  if (typeof SettingsPanel === 'undefined') {
-    console.error('SettingsPanel sınıfı bulunamadı. settings-panel.js dosyasının yüklendiğini kontrol ediyorum...');
+  // CSS dosyasında fixed-settings-toggle sınıfını ekle
+  settingsToggle.classList.add('fixed-settings-toggle');
+  
+  // Panel overlay'i oluştur
+  let settingsOverlay = document.querySelector('.settings-overlay');
+  if (!settingsOverlay) {
+    settingsOverlay = document.createElement('div');
+    settingsOverlay.className = 'settings-overlay';
+    document.body.appendChild(settingsOverlay);
+  }
+  
+  // Panel açma/kapama işlevi
+  const toggleSettingsPanel = () => {
+    const isOpen = settingsPanel.classList.contains('open');
     
-    // settings-panel.js dosyasını dinamik olarak yükle
-    const script = document.createElement('script');
-    script.src = 'settings-panel.js';
-    script.onload = function() {
-      console.log('settings-panel.js dosyası başarıyla yüklendi, şimdi başlatılıyor...');
-      if (typeof SettingsPanel !== 'undefined') {
-        window.settingsPanel = new SettingsPanel({
-          container: document.body,
-          panelPosition: 'right',
-          showThemeSelector: true,
-          showColorThemeSelector: true,
-          showFontSizeSelector: true,
-          showAccessibilityOptions: true,
-          showCustomThemeSelector: true,
-          debug: true
-        });
+    if (isOpen) {
+      settingsPanel.classList.remove('open');
+      settingsOverlay.classList.remove('active');
+      settingsToggle.setAttribute('aria-expanded', 'false');
+      document.removeEventListener('keydown', closeOnEscape);
     } else {
-        console.error('settings-panel.js yüklendi ancak SettingsPanel sınıfı bulunamadı!');
-      }
-    };
-    script.onerror = function() {
-      console.error('settings-panel.js dosyası yüklenemedi!');
-    };
-    document.head.appendChild(script);
+      settingsPanel.classList.add('open');
+      settingsOverlay.classList.add('active');
+      settingsToggle.setAttribute('aria-expanded', 'true');
+      document.addEventListener('keydown', closeOnEscape);
+    }
+  };
+  
+  // Olay dinleyicileri ekle
+  settingsToggle.addEventListener('click', toggleSettingsPanel);
+  
+  if (settingsClose) {
+    settingsClose.addEventListener('click', toggleSettingsPanel);
+  }
+  
+  settingsOverlay.addEventListener('click', toggleSettingsPanel);
+  
+  // ESC tuşu ile panel kapatma
+  document.addEventListener('keydown', closeOnEscape);
+  
+  // Mobil cihazlarda panel ayarlamaları
+  adjustSettingsPanelForMobile();
+  
+  // Panel örneğini başlat
+  initSettingsPanelInstance();
+  
+  // ThemeManager uyumluluğu
+  setupThemeManagerIntegration();
+  
+  // Ayarlar panelinin başlatıldığını kaydet
+  INIT_STATUS.settingsInitialized = true;
+  
+  // Sayfa yüklendiğinde gizlemeyi önle
+  window.addEventListener('load', function() {
+    console.log('Ayarlar paneli görünürlüğü kontrol ediliyor...');
+    settingsToggle.style.visibility = 'visible';
+    settingsToggle.style.opacity = '1';
+  });
+  
+  console.log('Ayarlar paneli başarıyla başlatıldı.');
+}
+
+/**
+ * Settings Panel CSS dosyasını dinamik olarak yükler
+ */
+function loadSettingsPanelCSS() {
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = 'settings-panel.css';
+  link.type = 'text/css';
+  
+  // Yükleme durumunu izle
+  link.onload = function() {
+    console.log('settings-panel.css başarıyla yüklendi');
+  };
+  
+  link.onerror = function() {
+    console.warn('settings-panel.css yüklenemedi. Tema ayarları sınırlı stillerle gösterilecek.');
+  };
+  
+  document.head.appendChild(link);
+}
+
+/**
+ * SettingsPanel örneğini oluşturur - Optimize edilmiş
+ */
+function initSettingsPanelInstance() {
+  // Eğer daha önce başlatıldıysa tekrar başlatma
+  if (window.settingsPanel instanceof SettingsPanel) {
+    console.log('SettingsPanel zaten başlatılmış');
     return;
   }
   
-  // SettingsPanel'i özelleştirilmiş ayarlarla başlat
   try {
-    console.log('SettingsPanel sınıfı bulundu, başlatılıyor...');
+    // Cihaz tipini belirle (mobil veya masaüstü)
+    const isMobile = window.innerWidth < CONFIG.breakpoints.md;
+    const defaultPosition = isMobile ? 'bottom' : 'right';
+    
     window.settingsPanel = new SettingsPanel({
       container: document.body,
-      panelPosition: 'right',
+      panelPosition: defaultPosition,
       showThemeSelector: true,
       showColorThemeSelector: true,
       showFontSizeSelector: true,
-      showAccessibilityOptions: true,
+      showAccessibilityOptions: true, 
+      showReducedMotionSelector: true, // Yeni: Azaltılmış hareket seçeneği
       showCustomThemeSelector: true,
-      debug: true
+      colorThemes: ['blue', 'red', 'green', 'orange', 'purple', 'teal', 'pink'], // Yeni renkleri ekle
+      useSettingsPanelCSS: true, // CSS dosyasını kullan
+      adaptToDarkMode: true, // Karanlık moda uyum sağla
+      debug: false
     });
     
-    // NOT: Burada toggle butonuna event listener EKLEMİYORUZ çünkü settings-panel.js içinde zaten ekleniyor
-    // Bu sayede çift tetiklenme sorununu önlemiş oluyoruz
-    
     console.log('SettingsPanel başarıyla başlatıldı');
+    
+    // Theme manager ile entegrasyonu sağla
+    setupThemeManagerIntegration();
+    
+    // Mobil cihaz için uyarla
+    if (isMobile) {
+      adjustSettingsPanelForMobile();
+    }
+    
+    // Başlatma durumunu güncelle
+    INIT_STATUS.settingsInitialized = true;
+    
+    // EventBus ile entegrasyon (eğer varsa)
+    if (typeof EventBus !== 'undefined' && EventBus.publish) {
+      EventBus.publish('settingsPanelInitialized', { success: true });
+    }
+    
   } catch (error) {
     console.error('SettingsPanel başlatılırken hata oluştu:', error);
+    showSettingsError('Ayarlar paneli başlatılırken beklenmeyen bir hata oluştu.');
+  }
+}
+
+/**
+ * ThemeManager ile SettingsPanel entegrasyonunu sağlar
+ */
+function setupThemeManagerIntegration() {
+  // ThemeManager örneğini kontrol et
+  if (!window.themeManager) {
+    console.warn('ThemeManager bulunamadı. Tema değişiklikleri kaydedilmeyebilir.');
+    return;
   }
   
-  // EventBus ile entegrasyon
-  if (typeof EventBus !== 'undefined') {
-    EventBus.subscribe('settingsToggled', (data) => {
-      console.log('Ayarlar paneli durumu değişti:', data);
+  // Tema değişikliklerini ThemeManager'a ilet
+  if (window.settingsPanel) {
+    // ThemeManager olaylarını dinle
+    window.themeManager.on('themeModeChange', (mode) => {
+      console.log('Tema modu değişti:', mode);
+      // SettingsPanel'i güncelle
+      if (window.settingsPanel && window.settingsPanel.updateUI) {
+        window.settingsPanel.updateUI();
+      }
+    });
+    
+    window.themeManager.on('colorThemeChange', (colorTheme) => {
+      console.log('Renk teması değişti:', colorTheme);
+      // SettingsPanel'i güncelle
+      if (window.settingsPanel && window.settingsPanel.updateUI) {
+        window.settingsPanel.updateUI();
+      }
+    });
+    
+    // SettingsPanel olaylarını dinle ve ThemeManager fonksiyonlarını çağır
+    if (window.settingsPanel.on) {
+      window.settingsPanel.on('themeChange', (mode) => {
+        window.themeManager.setThemeMode(mode);
+      });
+      
+      window.settingsPanel.on('colorChange', (color) => {
+        window.themeManager.setColorTheme(color);
+      });
+      
+      window.settingsPanel.on('fontSizeChange', (size) => {
+        window.themeManager.setFontSize(size);
+      });
+      
+      window.settingsPanel.on('contrastChange', (level) => {
+        window.themeManager.setContrastLevel(level);
+      });
+      
+      window.settingsPanel.on('reducedMotionChange', (enabled) => {
+        window.themeManager.setReducedMotion(enabled);
       });
     }
   }
+}
+
+/**
+ * Mobil cihazlar için panel ayarlarını günceller
+ */
+function adjustSettingsPanelForMobile() {
+  const panel = document.getElementById('settingsPanel');
   
-// Toggle fonksiyonu - BASİTLEŞTİRİLDİ
+  if (!panel) return;
+  
+  // Mobil cihaz için panel konumunu ayarla
+  if (window.innerWidth < CONFIG.breakpoints.sm) {
+    panel.classList.add('mobile-panel');
+    // Panel pozisyonunu alt kısma ayarla
+    if (window.settingsPanel && window.settingsPanel.setPanelPosition) {
+      window.settingsPanel.setPanelPosition('bottom');
+    }
+  } else {
+    panel.classList.remove('mobile-panel');
+    // Panel pozisyonunu sağ kısma ayarla
+    if (window.settingsPanel && window.settingsPanel.setPanelPosition) {
+      window.settingsPanel.setPanelPosition('right');
+    }
+  }
+}
+
+/**
+ * Tema ayarları panelini gösterir/gizler
+ */
 function toggleSettingsPanel(event) {
-  console.log('toggleSettingsPanel app.js içinden çağrıldı');
-  
   // Event propagation'ı durdur
   if (event) {
     event.preventDefault();
     event.stopPropagation();
   }
   
-  // SettingsPanel sınıfını kontrol et ve mevcut ise kullan
-  if (window.settingsPanel) {
-    // Event parametresi olmadan çağır, çünkü SettingsPanel içinde kendi event yönetimi var
+  // SettingsPanel örneği varsa kullan
+  if (window.settingsPanel && typeof window.settingsPanel.togglePanel === 'function') {
     window.settingsPanel.togglePanel();
     return;
   }
   
-  // SettingsPanel sınıfı yoksa manuel olarak yap (bu duruma düşmemeli normalde)
+  // SettingsPanel yoksa panel element'ini doğrudan kullan
   const panel = document.getElementById('settingsPanel');
-  if (!panel) {
-    console.error('settingsPanel elementi bulunamadı!');
-    return;
-  }
-  
-  // Panel açık mı kapalı mı kontrol et ve tersine çevir
-  const isOpen = panel.classList.contains('open');
-  
-  if (isOpen) {
-    panel.classList.remove('open');
-    console.log('Panel kapatıldı (manuel)');
-  } else {
-    panel.classList.add('open');
-    console.log('Panel açıldı (manuel)');
+  if (panel) {
+    const isOpen = panel.classList.contains('open');
+    
+    if (!isOpen) {
+      // Açılırken transition efekti için
+      panel.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+      panel.classList.add('open');
+      
+      // Arka plan oluştur (overlay)
+      const overlay = document.querySelector('.settings-overlay, .settings-panel-overlay') || document.createElement('div');
+      if (!document.querySelector('.settings-overlay') && !document.querySelector('.settings-panel-overlay')) {
+        overlay.className = 'settings-panel-overlay'; // Yeni class adı kullan
+        overlay.style.position = 'fixed';
+        overlay.style.top = '0';
+        overlay.style.left = '0';
+        overlay.style.width = '100%';
+        overlay.style.height = '100%';
+        overlay.style.background = 'rgba(0,0,0,0.5)';
+        overlay.style.zIndex = '999';
+        overlay.style.opacity = '0';
+        overlay.style.transition = 'opacity 0.3s ease';
+        
+        // Arka plana tıklayınca kapat
+        overlay.onclick = function() {
+          toggleSettingsPanel();
+        };
+        
+        document.body.appendChild(overlay);
+      }
+      
+      // Arka planı göster
+      setTimeout(() => {
+        overlay.style.opacity = '1';
+        overlay.classList.add('active');
+      }, 10);
+      
+      // Escape tuşu ile kapatma
+      document.addEventListener('keydown', closeOnEscape);
+    } else {
+      // Kapatırken
+      panel.classList.remove('open');
+      
+      // Arka planı gizle
+      const overlay = document.querySelector('.settings-overlay, .settings-panel-overlay');
+      if (overlay) {
+        overlay.style.opacity = '0';
+        overlay.classList.remove('active');
+        setTimeout(() => {
+          if (overlay.parentNode) {
+            overlay.parentNode.removeChild(overlay);
+          }
+        }, 300);
+      }
+      
+      // Escape dinleyicisini kaldır
+      document.removeEventListener('keydown', closeOnEscape);
+    }
   }
 }
 
-// DOMContentLoaded ve window load olaylarında initSettingsPanel'i çağır
-document.addEventListener('DOMContentLoaded', function() {
-  console.log('DOMContentLoaded - initSettingsPanel çağrılıyor...');
-  setTimeout(initSettingsPanel, 500); // Küçük bir gecikme ile çağır
-});
-
-window.addEventListener('load', function() {
-  console.log('Window load - initSettingsPanel kontrol ediliyor...');
-  if (!window.settingsPanel) {
-    console.log('SettingsPanel hala başlatılmamış, tekrar başlatılıyor...');
-    initSettingsPanel();
+/**
+ * Hata mesajını göster
+ */
+function showSettingsError(message) {
+  // Hata bildirimi göster
+  const errorDiv = document.createElement('div');
+  errorDiv.className = 'settings-error';
+  errorDiv.innerHTML = `
+    <i class="fas fa-exclamation-triangle"></i>
+    <span>${message}</span>
+    <button class="settings-error-close">&times;</button>
+  `;
+  
+  // Kapatma butonuna tıklanınca kaldır
+  const closeButton = errorDiv.querySelector('.settings-error-close');
+  if (closeButton) {
+    closeButton.addEventListener('click', () => {
+      if (errorDiv.parentNode) {
+        errorDiv.parentNode.removeChild(errorDiv);
+      }
+    });
   }
   
-  // NOT: Toggle butonuna event listener EKLEMİYORUZ çünkü settings-panel.js içinde zaten ekleniyor
-});
+  // Belirli bir süre sonra otomatik kaldır
+  setTimeout(() => {
+    if (errorDiv.parentNode) {
+      errorDiv.classList.add('settings-error-hide');
+      setTimeout(() => {
+        if (errorDiv.parentNode) {
+          errorDiv.parentNode.removeChild(errorDiv);
+        }
+      }, 500);
+    }
+  }, 5000);
+  
+  document.body.appendChild(errorDiv);
+}
 
-// Tarayıcı eklenti hatalarını yönetmek için hata işleyiciler
-window.addEventListener('error', function(e) {
-  // contentScript.bundle.js hataları gibi Chrome eklenti hatalarını filtrele
-  if (e.filename && (e.filename.includes('contentScript.bundle.js') || e.filename.includes('chrome-extension'))) {
-    console.debug('Eklenti hatası yakalandı ve görmezden gelindi:', e.message);
-    e.preventDefault();
-    e.stopPropagation();
-    return true;
-  }
-});
-
-// Mesaj kanalı hatalarını yakalama
-window.addEventListener('unhandledrejection', function(e) {
-  if (e.reason && 
-     (e.reason.message && e.reason.message.includes('message channel closed') || 
-      e.reason.toString().includes('message channel closed'))) {
-    console.debug('Mesaj kanalı hatası yakalandı ve görmezden gelindi');
-    e.preventDefault();
-    e.stopPropagation();
-    return true;
-  }
-});
-
-// Console.clear çağrılarını yakalama ve engelleme
-const originalConsole = { ...console };
-console.clear = function() {
-  console.debug('Console.clear çağrısı engellendi');
-  return true;
-};
-
-// Chrome eklenti mesaj hatalarını yakalama
-if (typeof chrome !== 'undefined' && chrome.runtime) {
+/**
+ * LocalStorage kullanılabilirliğini kontrol eder
+ */
+function isLocalStorageAvailable() {
   try {
-    const originalSendMessage = chrome.runtime.sendMessage;
-    chrome.runtime.sendMessage = function() {
-      try {
-        return originalSendMessage.apply(this, arguments);
-      } catch (e) {
-        console.debug('Chrome mesaj hatası görmezden gelindi:', e.message);
-        return true;
-      }
-    };
+    const testKey = 'test_storage';
+    localStorage.setItem(testKey, testKey);
+    localStorage.removeItem(testKey);
+    return true;
   } catch (e) {
-    console.debug('Chrome runtime API erişim hatası:', e.message);
+    return false;
+  }
+}
+
+// Escape tuşu ile kapatma işlevi
+function closeOnEscape(e) {
+  if (e.key === 'Escape') {
+    toggleSettingsPanel();
+    document.removeEventListener('keydown', closeOnEscape);
+  }
+}
+
+// Sayfa yeniden boyutlandırıldığında mobil ayarları güncelle
+window.addEventListener('resize', debounce(() => {
+  if (INIT_STATUS.settingsInitialized) {
+    adjustSettingsPanelForMobile();
+  }
+}, 250));
+
+/**
+ * Ekip Kartları için Animasyonlar ve Etkileşimler
+ */
+function initTeamAnimations() {
+  const teamMembers = document.querySelectorAll('.team-member');
+  
+  if (teamMembers.length > 0) {
+    teamMembers.forEach(member => {
+      // Hover olayları
+      member.addEventListener('mouseenter', () => {
+        member.classList.add('hovered');
+      });
+      
+      member.addEventListener('mouseleave', () => {
+        member.classList.remove('hovered');
+      });
+      
+      // IntersectionObserver ile giriş animasyonu
+      Utils.createObserver([member], (el) => {
+        el.classList.add('animated');
+      }, { threshold: 0.3 });
+    });
   }
 }

@@ -1,6 +1,6 @@
 /* =========================================
  * Gürel Yönetim - Gelişmiş Merkezi Tema Sistemi
- * Sürüm: 3.0.0
+ * Sürüm: 3.2.0
  * Son Güncelleme: 2024
  * =========================================*/
 
@@ -41,6 +41,16 @@
   --primary-700: #004080;
   --primary-800: #00346b;
   --primary-900: #002857;
+  
+  /* RGB renk değerleri (JS ile erişim kolaylığı için) */
+  --primary-rgb: 0, 85, 164;
+  --secondary-rgb: 234, 134, 0;
+  --text-rgb: 51, 51, 51;
+  --background-rgb: 255, 255, 255;
+  --success-rgb: 40, 167, 69;
+  --info-rgb: 23, 162, 184;
+  --warning-rgb: 255, 193, 7;
+  --error-rgb: 220, 53, 69;
   
   /* İkincil Renkler */
   --secondary-color: #ea8600;
@@ -234,6 +244,16 @@
   --section-padding-sm: 2rem 0;
   --section-padding-md: 4rem 0;
   --section-padding-lg: 6rem 0;
+  
+  /* Kontrast Ayarları - Yeni */
+  --contrast-ratio: 1; /* Normal kontrast için varsayılan değer */
+  --contrast-bg-opacity: 1;
+  --contrast-text-opacity: 1;
+  --contrast-border-width: 1px;
+  
+  /* Tema Modu - Yeni */
+  --auto-theme-morning-hour: 7; /* Sabah 7'de aydınlık temaya geç */
+  --auto-theme-evening-hour: 19; /* Akşam 7'de karanlık temaya geç */
   
   /* Kenar yuvarlaklığı */
   --border-radius-none: 0;
@@ -884,68 +904,108 @@ html[data-reduced-motion="true"] * {
  * 10. SİSTEM TEMA ENTEGRASYONU
  * =========================================*/
 
-/* İşletim sistemi tema tercihlerini algılama */
+/* Sistem teması iç içe geçmiş CSS değişkenleri yoluyla değişir */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) {
-    /* Açıkça tema seçilmediyse sistem tercihini izle */
-    --primary-color: #4286c5;
-    --primary-light: #5ca0e0;
-    --primary-dark: #2c5a8c;
-    --secondary-color: #ffaa33;
-    --secondary-light: #ffcc66;
-    --secondary-dark: #cc7700;
-    
-    /* Metin renkleri */
-    --text-color: #f5f5f5;
-    --text-color-light: #d3d3d3;
-    --text-color-dimmed: #aaaaaa;
-    --text-color-inverted: #333333;
-    
-    /* Gövde renkleri */
-    --background-color: #1a1a1a;
-    --background-alt: #2a2a2a;
-    --surface-color: #2a2a2a;
-    
-    /* Kenarlık renkleri */
-    --border-color: #444444;
-    --border-color-light: #555555;
-    --divider-color: rgba(255, 255, 255, 0.1);
-    
-    /* Element/Bileşen renkleri */
-    --card-background: #2a2a2a;
-    --card-border-color: #444444;
-    --navbar-background: #222222;
-    --navbar-text-color: #f5f5f5;
-    --sidebar-background: #222222;
-    --sidebar-text-color: #f5f5f5;
-    --footer-background: #222222;
-    --tooltip-background: #f5f5f5;
-    --tooltip-text-color: #222222;
-    
-    /* Gölge değişkenleri */
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
-    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
-    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.4);
-    --shadow-focus: 0 0 0 3px rgba(66, 134, 197, 0.5);
+    /* ... */
   }
   
   body:not(.theme-set) {
-    background-color: #1a1a1a;
-    color: #f5f5f5;
-  }
-}
-
-/* Hareket hassasiyeti azaltılmış mod için destek */
-@media (prefers-reduced-motion) {
-  :root:not([data-reduced-motion]) * {
-    transition-duration: 0.001s !important;
-    animation-duration: 0.001s !important;
+    /* ... */
   }
 }
 
 /* =========================================
- * 11. BİLEŞEN TEMEL STİLLERİ
+ * 12. SİSTEM TEMA ENTEGRASYONU - GELİŞTİRME
  * =========================================*/
+
+/* Sistem Otomatik Karanlık Mod Entegrasyonu */
+@media (prefers-color-scheme: dark) {
+  /* Sadece tema ayarlanmamışsa veya sistem teması seçildiyse */
+  :root:not([data-theme]), 
+  :root[data-theme="system"] {
+    /* Tüm koyu tema değişkenlerini uygulama */
+    --text-color: #f5f5f5;
+    --text-primary: #f5f5f5;
+    --text-secondary: #d0d0d0;
+    --text-tertiary: #a0a0a0;
+    --text-disabled: #777777;
+    --text-inverted: #333333;
+    --text-on-primary: #ffffff;
+    --text-on-secondary: #ffffff;
+    --text-muted: #a0a0a0;
+    --text-success: #5dd879;
+    --text-info: #4fbfd1;
+    --text-warning: #ffcd39;
+    --text-error: #e05c6a;
+    --text-link: #4d94db;
+    --text-link-hover: #80b3e6;
+    
+    --background-color: #121212;
+    --background-alt: #1f1f1f;
+    --background-tertiary: #2b2b2b;
+    --surface-color: #252525;
+    --surface-alt: #2e2e2e;
+    --overlay-color: rgba(0, 0, 0, 0.75);
+    --overlay-light: rgba(0, 0, 0, 0.5);
+    
+    --border-color: #555555;
+    --border-color-light: #444444;
+    --border-color-focus: #4d94db;
+    --border-color-hover: #666666;
+    --border-color-active: #777777;
+    --divider-color: rgba(255, 255, 255, 0.1);
+    
+    --button-secondary-bg: #333333;
+    --button-secondary-text: #f5f5f5;
+    --button-secondary-border: #555555;
+    --button-secondary-hover-bg: #444444;
+    --button-secondary-active-bg: #666666;
+    
+    --input-bg: #333333;
+    --input-border: #555555;
+    --input-text: #f5f5f5;
+    --input-placeholder: #a0a0a0;
+    --input-focus-border: #4d94db;
+    --input-disabled-bg: #2a2a2a;
+    --input-disabled-text: #777777;
+  
+    --card-background: #252525;
+    --card-border-color: #444444;
+    --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    --card-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.25);
+  
+    /* Navbar ve Footer */
+    --navbar-background: #1a1a1a;
+    --navbar-text-color: #f5f5f5;
+    --navbar-border: #333333;
+    --navbar-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+    --footer-background: #1a1a1a;
+    --footer-text: #d0d0d0;
+  }
+  
+  /* Sistem karanlık modunu kullanırken sayfa arkaplanı */
+  body:not(.theme-set) {
+    background-color: var(--background-color);
+    color: var(--text-color);
+  }
+}
+
+/* Otomatik Tema Modu (Gündüz/Gece zamanına göre) */
+@media (prefers-reduced-motion: no-preference) {
+  /* Zamanlamaya dayalı geçişi aktifleştir */
+  :root[data-theme="auto"] {
+    transition: --background-color 0.5s ease,
+                --text-color 0.5s ease,
+                --surface-color 0.5s ease,
+                --border-color 0.5s ease;
+  }
+}
+
+/* =========================================
+ * 13. ÖZEL DURUMLAR
+ * ========================================*/
 
 /* Butonlar */
 .btn {
@@ -964,17 +1024,16 @@ html[data-reduced-motion="true"] * {
 }
 
 .btn-primary {
-  background-color: var(--button-primary-bg);
-  color: var(--button-primary-text);
-  border: 1px solid var(--button-primary-border);
+  background-color: var(--primary-color, #0055a4) !important;
+  border-color: var(--primary-color, #0055a4) !important;
+  color: #fff !important;
 }
 
-.btn-primary:hover {
-  background-color: var(--button-primary-hover-bg);
-}
-
-.btn-primary:active {
-  background-color: var(--button-primary-active-bg);
+.btn-primary:hover, 
+.btn-primary:focus {
+  background-color: var(--primary-hover-color, #0046a3) !important;
+  border-color: var(--primary-hover-color, #0046a3) !important;
+  opacity: 0.9;
 }
 
 .btn-secondary {
@@ -1376,7 +1435,7 @@ select.form-control {
 
 /* Metin Renkleri */
 .text-primary {
-  color: var(--primary-color) !important;
+  color: var(--primary-color, #0055a4) !important;
 }
 
 .text-secondary {
@@ -1409,7 +1468,7 @@ select.form-control {
 }
 
 .text-dark {
-  color: var(--text-color) !important;
+  color: var(--dark-text, #212529) !important;
 }
 
 /* Arka Plan Renkleri */
@@ -1862,4 +1921,361 @@ select.form-control {
  * - İşletim sistemi tema tercihi entegrasyonu
  * 
  * Son güncelleme: 2024
- */ 
+ */
+
+/* =========================================
+ * 2.1 YENİ KONTRAST SEVİYELERİ
+ * =========================================*/
+
+/* Normal Kontrast - Varsayılan */
+body.contrast-normal {
+  --contrast-ratio: 1;
+  --contrast-bg-opacity: 1;
+  --contrast-text-opacity: 1;
+  --contrast-border-width: 1px;
+}
+
+/* Hafif Kontrast */
+body.contrast-mild {
+  --contrast-ratio: 1.2;
+  --contrast-bg-opacity: 1;
+  --contrast-text-opacity: 1;
+  --contrast-border-width: 1px;
+}
+
+/* Orta Kontrast */
+body.contrast-medium {
+  --contrast-ratio: 1.5;
+  --contrast-bg-opacity: 1;
+  --contrast-text-opacity: 1;
+  --contrast-border-width: 2px;
+}
+
+/* Yüksek Kontrast */
+body.contrast-high {
+  --contrast-ratio: 2;
+  --contrast-bg-opacity: 1;
+  --contrast-text-opacity: 1;
+  --contrast-border-width: 3px;
+}
+
+/* Hafif Kontrast - Açık Tema */
+body.contrast-mild:not([data-theme="dark"]) {
+  --text-color: #000000;
+  --text-primary: #000000;
+  --text-secondary: #404040;
+  --text-tertiary: #686868;
+  
+  --border-color: #666666;
+  --input-border: #666666;
+  --button-secondary-border: #666666;
+}
+
+/* Orta Kontrast - Açık Tema */
+body.contrast-medium:not([data-theme="dark"]) {
+  --text-color: #000000;
+  --text-primary: #000000;
+  --text-secondary: #222222;
+  --text-tertiary: #333333;
+  
+  --border-color: #000000;
+  --input-border: #000000;
+  --button-secondary-border: #000000;
+  
+  --link-color: #00349c;
+  --success-color: #006600;
+  --error-color: #cc0000;
+}
+
+/* Yüksek Kontrast - Açık Tema */
+body.contrast-high:not([data-theme="dark"]) {
+  --text-color: #000000;
+  --text-primary: #000000;
+  --text-secondary: #000000;
+  --text-tertiary: #000000;
+  --text-link: #0000CC;
+  
+  --background-color: #ffffff;
+  --background-alt: #ffffff;
+  --background-tertiary: #ffffff;
+  --surface-color: #ffffff;
+  --surface-alt: #ffffff;
+  
+  --border-color: #000000;
+  --input-border: #000000;
+  --button-secondary-border: #000000;
+  --card-border-color: #000000;
+  
+  --link-color: #0000CC;
+  --success-color: #006600;
+  --error-color: #cc0000;
+  --button-primary-bg: #000000;
+  --button-primary-hover-bg: #333333;
+}
+
+/* Hafif Kontrast - Koyu Tema */
+body[data-theme="dark"].contrast-mild {
+  --text-color: #ffffff;
+  --text-primary: #ffffff;
+  --text-secondary: #dddddd;
+  --text-tertiary: #bbbbbb;
+  
+  --border-color: #999999;
+  --input-border: #999999;
+  --button-secondary-border: #999999;
+}
+
+/* Orta Kontrast - Koyu Tema */
+body[data-theme="dark"].contrast-medium {
+  --text-color: #ffffff;
+  --text-primary: #ffffff;
+  --text-secondary: #eeeeee;
+  --text-tertiary: #dddddd;
+  
+  --border-color: #ffffff;
+  --input-border: #ffffff;
+  --button-secondary-border: #ffffff;
+  
+  --link-color: #99ccff;
+  --success-color: #66ff66;
+  --error-color: #ff6666;
+}
+
+/* Yüksek Kontrast - Koyu Tema */
+body[data-theme="dark"].contrast-high {
+  --text-color: #ffffff;
+  --text-primary: #ffffff;
+  --text-secondary: #ffffff;
+  --text-tertiary: #ffffff;
+  
+  --background-color: #000000;
+  --background-alt: #000000;
+  --background-tertiary: #000000;
+  --surface-color: #000000;
+  --surface-alt: #000000;
+  
+  --border-color: #ffffff;
+  --input-border: #ffffff;
+  --button-secondary-border: #ffffff;
+  --card-border-color: #ffffff;
+  
+  --link-color: #99ccff;
+  --success-color: #66ff66;
+  --error-color: #ff6666;
+  --button-primary-bg: #ffffff;
+  --button-primary-text: #000000;
+  --button-primary-hover-bg: #dddddd;
+}
+
+/* Kontrast stilleri - Ortak */
+body.contrast-medium button,
+body.contrast-medium a,
+body.contrast-medium input,
+body.contrast-medium select,
+body.contrast-high button,
+body.contrast-high a,
+body.contrast-high input,
+body.contrast-high select {
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+body.contrast-medium:focus,
+body.contrast-high:focus {
+  outline-width: calc(var(--contrast-border-width) + 1px);
+  outline-style: solid;
+}
+
+body.contrast-medium .card,
+body.contrast-high .card {
+  border-width: var(--contrast-border-width);
+  box-shadow: none;
+}
+
+body.contrast-medium .btn,
+body.contrast-high .btn {
+  border-width: var(--contrast-border-width);
+}
+
+body.contrast-high .shadow,
+body.contrast-high .shadow-sm,
+body.contrast-high .shadow-lg,
+body.contrast-high .card-shadow,
+body.contrast-high .card-shadow-hover {
+  box-shadow: none !important;
+}
+
+/**
+ * Panel Stilleri - Settings Panel İçin 
+ */
+.settings-panel {
+  /* Tema değişkenleri entegrasyonu */
+  --settings-panel-bg: var(--surface-color);
+  --settings-panel-text: var(--text-primary);
+  --settings-panel-border: var(--border-color);
+  --settings-panel-header-bg: var(--surface-variant);
+  --settings-panel-shadow: var(--elevation-high);
+  --settings-panel-item-hover: var(--hover-overlay);
+  --settings-panel-active: var(--primary-color);
+  --settings-panel-inactive: var(--text-muted);
+  --settings-panel-radius: var(--radius-lg);
+  --settings-panel-z-index: 1000;
+  
+  /* Temel özellikler - settings-panel.css ile çakışmaması için minimum tanımlar */
+  position: fixed;
+  background-color: var(--settings-panel-bg);
+  color: var(--settings-panel-text);
+  border-radius: var(--settings-panel-radius);
+  box-shadow: var(--settings-panel-shadow);
+  z-index: var(--settings-panel-z-index);
+}
+
+/* Mobil görünüm temel ayarları - detaylar settings-panel.css'de */
+@media (max-width: 576px) {
+  .settings-panel {
+    width: calc(100% - var(--spacing-lg) * 2);
+    max-height: 80vh;
+    border-radius: var(--radius-lg);
+  }
+}
+
+/* RTL dil desteği temel ayarları - detaylar settings-panel.css'de */
+[dir="rtl"] .settings-panel {
+  right: auto;
+  left: var(--spacing-lg);
+  transform: translateX(-120%);
+}
+
+[dir="rtl"] .settings-panel.open {
+  transform: translateX(0);
+}
+
+/**
+ * Yükleme Göstergesi ve Hata Göstergesi
+ * Temel stiller, detaylı stiller settings-panel.css'de
+ */
+.settings-loading {
+  position: fixed;
+  background-color: var(--surface-color);
+  border-radius: var(--radius-md);
+  box-shadow: var(--elevation-medium);
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  color: var(--text-primary);
+}
+
+.settings-error {
+  animation: errorSlideIn 0.3s var(--ease-out-cubic);
+  background-color: var(--error-color, #f44336);
+  color: var(--on-error, white);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--elevation-low);
+}
+
+@keyframes errorSlideIn {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Azaltılmış hareket göstergesi - temel stil */
+.reduced-motion-indicator {
+  position: fixed;
+  border-radius: var(--radius-pill);
+  background-color: var(--surface-color);
+  color: var(--text-secondary);
+  box-shadow: var(--elevation-low);
+  z-index: 100;
+}
+
+/**
+ * Renk tema seçici için temel stiller
+ * Detaylı stiller settings-panel.css'de
+ */
+.color-theme-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+.color-option {
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+  position: relative;
+}
+
+.color-option:hover {
+  transform: scale(1.1);
+}
+
+.color-option.active {
+  border-color: var(--text-primary);
+}
+
+/**
+ * Ayarlar panel overlay - temel stil
+ */
+.settings-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  opacity: 0;
+  transition: opacity var(--transition-medium) var(--ease-out-cubic);
+}
+
+/* Buton renk stillerini düzeltiyorum */
+.btn-outline-primary {
+  color: var(--primary-color, #0055a4) !important;
+  border-color: var(--primary-color, #0055a4) !important;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:focus {
+  background-color: var(--primary-color, #0055a4) !important;
+  color: #fff !important;
+}
+
+/**
+ * Tema Renk Değişkenleri için CSS düzeltmesi
+ * Buton renkleri ve metin renkleri düzeltiliyor
+ */
+
+/* Butonlar için tema renk değişkenleri */
+.btn-primary {
+  background-color: var(--primary-color, #0055a4) !important;
+  border-color: var(--primary-color, #0055a4) !important;
+  color: #fff !important;
+}
+
+.btn-primary:hover, 
+.btn-primary:focus {
+  background-color: var(--primary-hover-color, #0046a3) !important;
+  border-color: var(--primary-hover-color, #0046a3) !important;
+  opacity: 0.9;
+}
+
+/* Metin renkleri için düzeltme */
+.text-primary {
+  color: var(--primary-color, #0055a4) !important;
+}
+
+/* Koyu metin rengi */
+.text-dark {
+  color: var(--dark-text, #212529) !important;
+}
+
+/* Card ve panel içindeki tüm metin renkleri */
+.card p, .panel p, .service-box-content p {
+  color: var(--dark-text, #333) !important;
+}

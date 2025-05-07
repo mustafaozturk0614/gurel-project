@@ -61,7 +61,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <!-- Settings CSS - öncelikli yükleme -->
-    <link rel="stylesheet" href="assets/translations/settings.css">
+   
     
     <!-- Bootstrap CSS - gecikmeli yükleme -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" media="print" onload="this.media='all'">
@@ -613,7 +613,27 @@
                  
                  <div class="">
                 <!-- Trustmary Widget -->
-                <script src="https://widget.trustmary.com/oyGuoLpy1"></script>
+                <script>
+                    // Trustmary widget yükleme hatalarını yakalamak için
+                    (function() {
+                        try {
+                            // Orijinal script içeriği
+                            var trustmaryScript = document.createElement('script');
+                            trustmaryScript.src = "https://widget.trustmary.com/oyGuoLpy1";
+                            trustmaryScript.onerror = function(e) {
+                                console.warn('Trustmary widget yüklenemedi. Çevrimdışı olabilirsiniz veya servis kullanılamıyor olabilir.');
+                                // Hata durumunda alternatif içerik gösterme
+                                document.querySelector('.trustmary-wrapper').innerHTML = 
+                                    '<div class="alert alert-info">'+
+                                    '<p class="mb-0"><i class="fas fa-info-circle me-2"></i>Müşteri yorumları şu anda yüklenemiyor. Lütfen daha sonra tekrar deneyiniz.</p>'+
+                                    '</div>';
+                            };
+                            document.head.appendChild(trustmaryScript);
+                        } catch(err) {
+                            console.warn('Trustmary widget hatası:', err);
+                        }
+                    })();
+                </script>
                  </div>
                  
                  <div class="review-cta text-center mt-5">
@@ -1767,61 +1787,138 @@
     </footer>
 
     <!-- Settings Panel -->
-    <div class="settings-panel floating-settings-panel" id="settingsPanel">
+    <div class="settings-panel floating-settings-panel" id="settingsPanel" role="dialog" aria-labelledby="settingsTitle" aria-describedby="settingsDescription">
         <div class="settings-header">
-            <h3 data-translate="settings.title">Site Ayarları</h3>
-            <button class="settings-close" id="settingsClose"><i class="fas fa-times"></i></button>
+            <h3 id="settingsTitle" data-translate="settings.title">Site Ayarları</h3>
+            <button class="settings-close" id="settingsClose" aria-label="Ayarları kapat"><i class="fas fa-times" aria-hidden="true"></i></button>
         </div>
+        
+        <p id="settingsDescription" class="visually-hidden">Bu panelden site tema rengini, kontrast ayarlarını ve yazı boyutunu değiştirebilirsiniz.</p>
+        
         <div class="settings-content">
             <!-- Theme Mode -->
             <div class="settings-section">
-                <span data-translate="settings.themeMode">Tema Modu</span>
-                <div class="theme-preview">
-                    <div class="theme-preview-sun"></div>
-                    <div class="theme-preview-moon"></div>
-                    <div class="theme-preview-landscape"></div>
+                <span id="themeModeLabel" data-translate="settings.themeMode">Tema Modu</span>
+                <div class="theme-mode-options" role="radiogroup" aria-labelledby="themeModeLabel">
+                    <div class="theme-mode-option">
+                        <input type="radio" id="themeAuto" name="themeMode" value="auto" class="theme-radio">
+                        <label for="themeAuto" class="theme-label">
+                            <i class="fas fa-sync" aria-hidden="true"></i>
+                            <span data-translate="settings.themeAuto">Otomatik</span>
+                        </label>
+                    </div>
+                    <div class="theme-mode-option">
+                        <input type="radio" id="themeLight" name="themeMode" value="light" class="theme-radio">
+                        <label for="themeLight" class="theme-label">
+                            <i class="fas fa-sun" aria-hidden="true"></i>
+                            <span data-translate="settings.themeLight">Açık</span>
+                        </label>
+                    </div>
+                    <div class="theme-mode-option">
+                        <input type="radio" id="themeDark" name="themeMode" value="dark" class="theme-radio">
+                        <label for="themeDark" class="theme-label">
+                            <i class="fas fa-moon" aria-hidden="true"></i>
+                            <span data-translate="settings.themeDark">Koyu</span>
+                        </label>
+                    </div>
+                    <div class="theme-mode-option">
+                        <input type="radio" id="themeSystem" name="themeMode" value="system" class="theme-radio">
+                        <label for="themeSystem" class="theme-label">
+                            <i class="fas fa-desktop" aria-hidden="true"></i>
+                            <span data-translate="settings.themeSystem">Sistem</span>
+                        </label>
+                    </div>
                 </div>
-                <div class="toggle-wrapper">
-                    <input type="checkbox" id="themeToggle" class="contrast-toggle">
-                    <label for="themeToggle" class="toggle-label" data-translate="settings.darkMode">Karanlık Mod</label>
+                
+                <!-- Geliştirilmiş tema önizlemesi -->
+                <div class="theme-preview-container">
+                    <h4 class="preview-title">Önizleme</h4>
+                    <!-- Güneş-Ay animasyon önizlemesi -->
+                    <div class="theme-preview">
+                        <div class="theme-preview-sun"></div>
+                        <div class="theme-preview-moon"></div>
+                        <div class="theme-preview-landscape"></div>
+                    </div>
+                    
+                    <!-- Tema gösterge ikonları -->
+                    <div class="theme-indicators">
+                       <div class="theme-indicator" id="lightIndicator">
+                          <i class="fas fa-sun"></i>
+                          <span>Açık Mod</span>
+                       </div>
+                       <div class="theme-indicator" id="darkIndicator">
+                          <i class="fas fa-moon"></i>
+                          <span>Koyu Mod</span>
+                       </div>
+                    </div>
+                    
+                    <div class="theme-preview-frame">
+                        <div class="theme-preview-header">
+                            <div class="preview-logo"></div>
+                            <div class="preview-nav">
+                                <div class="preview-nav-item"></div>
+                                <div class="preview-nav-item"></div>
+                                <div class="preview-nav-item"></div>
+                            </div>
+                        </div>
+                        <div class="theme-preview-content">
+                            <div class="preview-heading"></div>
+                            <div class="preview-text-line"></div>
+                            <div class="preview-text-line"></div>
+                            <div class="preview-button"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
             
-            <!-- Contrast Mode -->
+            <!-- Contrast Mode - Kademeli Kontrast -->
             <div class="settings-section">
-                <span data-translate="settings.contrastMode">Kontrast Modu</span>
-                <div class="toggle-wrapper">
-                    <input type="checkbox" id="contrastToggle" class="contrast-toggle">
-                    <label for="contrastToggle" class="toggle-label" data-translate="settings.highContrast">Yüksek Kontrast</label>
+                <span id="contrastLevelLabel" data-translate="settings.contrastLevel">Kontrast Seviyesi</span>
+                <div class="contrast-slider-container">
+                    <input type="range" id="contrastSlider" min="0" max="3" value="0" 
+                           aria-labelledby="contrastLevelLabel" aria-describedby="contrastLevelDescription">
+                    <div class="contrast-levels">
+                        <span class="contrast-level" data-level="0">Normal</span>
+                        <span class="contrast-level" data-level="1">Hafif</span>
+                        <span class="contrast-level" data-level="2">Orta</span>
+                        <span class="contrast-level" data-level="3">Yüksek</span>
+                    </div>
+                    <span id="contrastLevelDescription" class="visually-hidden">Kontrast seviyesini ayarlamak için kaydırıcıyı kullanın</span>
                 </div>
             </div>
             
             <!-- Font Size -->
             <div class="settings-section">
-                <span data-translate="settings.fontSize">Yazı Boyutu</span>
-                <div class="font-size-controls">
-                    <button id="decreaseFontSize" class="font-size-btn"><i class="fas fa-minus"></i></button>
-                    <span id="currentFontSize">100%</span>
-                    <button id="increaseFontSize" class="font-size-btn"><i class="fas fa-plus"></i></button>
+                <span id="fontSizeLabel" data-translate="settings.fontSize">Yazı Boyutu</span>
+                <div class="font-size-controls" role="group" aria-labelledby="fontSizeLabel">
+                    <button id="decreaseFontSize" class="font-size-btn" aria-label="Yazı boyutunu küçült"><i class="fas fa-minus" aria-hidden="true"></i></button>
+                    <span id="currentFontSize" aria-live="polite">100%</span>
+                    <button id="increaseFontSize" class="font-size-btn" aria-label="Yazı boyutunu büyüt"><i class="fas fa-plus" aria-hidden="true"></i></button>
+                </div>
+                <div class="font-size-slider">
+                    <input type="range" id="fontSizeSlider" min="80" max="150" value="100" step="10">
                 </div>
             </div>
             
             <!-- Theme Color -->
             <div class="settings-section">
-                <span data-translate="settings.themeColor">Tema Rengi</span>
-                <div class="color-options">
-                    <div class="color-option active" style="background-color: #0055a4;" data-color="#0055a4" data-theme="blue"></div>
-                    <div class="color-option" style="background-color: #d93025;" data-color="#d93025" data-theme="red"></div>
-                    <div class="color-option" style="background-color: #188038;" data-color="#188038" data-theme="green"></div>
-                    <div class="color-option" style="background-color: #ea8600;" data-color="#ea8600" data-theme="orange"></div>
-                    <div class="color-option" style="background-color: #7b1fa2;" data-color="#7b1fa2" data-theme="purple"></div>
+                <span id="themeColorLabel" data-translate="settings.themeColor">Tema Rengi</span>
+                <div class="color-options" role="radiogroup" aria-labelledby="themeColorLabel">
+                    <div class="color-option active" style="background-color: #0055a4;" data-color="#0055a4" data-theme="blue" data-name="Mavi" role="radio" aria-checked="true" tabindex="0" aria-label="Mavi tema"></div>
+                    <div class="color-option" style="background-color: #d93025;" data-color="#d93025" data-theme="red" data-name="Kırmızı" role="radio" aria-checked="false" tabindex="0" aria-label="Kırmızı tema"></div>
+                    <div class="color-option" style="background-color: #188038;" data-color="#188038" data-theme="green" data-name="Yeşil" role="radio" aria-checked="false" tabindex="0" aria-label="Yeşil tema"></div>
+                    <div class="color-option" style="background-color: #ea8600;" data-color="#ea8600" data-theme="orange" data-name="Turuncu" role="radio" aria-checked="false" tabindex="0" aria-label="Turuncu tema"></div>
+                    <div class="color-option" style="background-color: #7b1fa2;" data-color="#7b1fa2" data-theme="purple" data-name="Mor" role="radio" aria-checked="false" tabindex="0" aria-label="Mor tema"></div>
                 </div>
             </div>
             
             <!-- Additional info text at the bottom -->
             <div class="settings-footer">
+                <button id="resetSettings" class="btn btn-sm btn-outline-secondary w-100 mb-2">
+                    <i class="fas fa-undo" aria-hidden="true"></i> Varsayılan Ayarlara Dön
+                </button>
                 <p class="settings-info">
-                    <i class="fas fa-info-circle"></i>
+                    <i class="fas fa-info-circle" aria-hidden="true"></i>
                     <span data-translate="settings.info">Ayarlarınız otomatik olarak kaydedilir ve bir sonraki ziyaretinizde hatırlanır.</span>
                 </p>
             </div>
@@ -1829,9 +1926,13 @@
     </div>
 
     <!-- Settings Toggle Button -->
-    <button id="settingsToggle" class="settings-toggle" title="Ayarları Göster">
-        <i class="fas fa-cog"></i>
+    <button id="settingsToggle" class="settings-toggle fixed-settings-toggle" title="Ayarları Göster" aria-label="Erişilebilirlik ayarlarını aç" aria-expanded="false" aria-controls="settingsPanel">
+        <i class="fas fa-cog" aria-hidden="true"></i>
+        <span class="visually-hidden">Erişilebilirlik Ayarları</span>
     </button>
+    
+    <!-- Settings panel overlay -->
+    <div class="settings-overlay"></div>
 
     <!-- Scripts - Tüm script etiketlerini sayfanın sonuna taşıyorum -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -1888,24 +1989,7 @@
       Video transkripsiyonu: Mücadeleci profesyonellerin mülk yönetimi süreçleri, toplantılar, denetimler ve kiracı iletişim sahneleri.
     </div>
 
-    <!-- Tema test paneli - Geliştirme sırasında kullanılabilir -->
-    <div class="theme-tester-static" style="position: fixed; bottom: 10px; right: 10px; background: #fff; border: 1px solid #ccc; padding: 10px; z-index: 9999; border-radius: 4px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); display: none;">
-      <div>
-        <strong>Tema Testi</strong>
-        <div>
-          <button onclick="document.documentElement.setAttribute('data-theme', 'light')">Aydınlık</button>
-          <button onclick="document.documentElement.setAttribute('data-theme', 'dark')">Karanlık</button>
-          <button onclick="document.documentElement.setAttribute('data-theme', 'highContrast')">Yüksek Kontrast</button>
-        </div>
-        <div style="margin-top: 8px;">
-          <button onclick="document.documentElement.setAttribute('data-color-theme', 'blue')">Mavi</button>
-          <button onclick="document.documentElement.setAttribute('data-color-theme', 'green')">Yeşil</button>
-          <button onclick="document.documentElement.setAttribute('data-color-theme', 'orange')">Turuncu</button>
-          <button onclick="document.documentElement.setAttribute('data-color-theme', 'purple')">Mor</button>
-          <button onclick="document.documentElement.setAttribute('data-color-theme', 'red')">Kırmızı</button>
-        </div>
-      </div>
-    </div>
+  
     
     <!-- Sayfa yükleme durumunu kontrol eden script -->
     <script>
@@ -1919,6 +2003,12 @@
             document.body.classList.add('loaded');
         }, 5000);
     </script>
+
+    <div class="theme-preview">
+      <div class="theme-preview-sun"></div>
+      <div class="theme-preview-moon"></div>
+      <div class="theme-preview-landscape"></div>
+    </div>
 
 </body>
 </html>
