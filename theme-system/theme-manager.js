@@ -31,6 +31,8 @@ class ThemeManager {
       reducedMotion: false, // Azaltılmış hareket
       dayStartHour: 6,  // Otomatik tema için gündüz başlangıç saati
       dayEndHour: 18,   // Otomatik tema için gündüz bitiş saati
+      enableTimeBasedTheme: false, // Saate göre otomatik tema değişimi
+      enableSkyAnimation: false, // Gökyüzü animasyonu
       debug: false      // Debug modu
     };
     
@@ -81,6 +83,16 @@ class ThemeManager {
     
     // Azaltılmış hareket ayarını kontrol et
     this.applyReducedMotion(this.settings.reducedMotion);
+
+    // Gökyüzü animasyonunu başlat (eğer etkinse)
+    if (this.settings.enableSkyAnimation) {
+      this.initSkyAnimation();
+    }
+    
+    // Saate göre otomatik tema değişimini başlat (eğer etkinse)
+    if (this.settings.enableTimeBasedTheme) {
+      this.initTimeBasedTheme();
+    }
     
     // Global erişim için window nesnesine ekle
     window.themeManager = this;
@@ -259,25 +271,28 @@ class ThemeManager {
    * @param {string} mode - Tema modu ('light', 'dark', 'auto', 'system')
    */
   setThemeMode(mode) {
-    // Geçerli bir mod mu?
+    // Geçerli bir tema modu mu kontrol et
     if (!['light', 'dark', 'auto', 'system'].includes(mode)) {
-      console.warn(`Geçersiz tema modu: ${mode}`);
+      console.error(`Geçersiz tema modu: ${mode}`);
       return false;
     }
     
-    // Mevcut değerle aynı mı?
-    if (this.settings.themeMode === mode) return true;
-    
-    // Ayarı güncelle
+    // Temayı değiştir
     this.settings.themeMode = mode;
     
-    // Modu uygula
+    // Tema modunu uygula
     this.initThemeMode();
     
     // Ayarları kaydet
     this.saveSettings();
     
-    // Tema değişimini bildir
+    // Gökyüzü animasyonunu güncelle (etkinse)
+    if (this.settings.enableSkyAnimation) {
+      this.updateSkyAnimation();
+    }
+    
+    // Tema modu değiştirildiğini bildir
+    this.emit('themeModeChanged', mode);
     this.log(`Tema modu değiştirildi: ${mode}`);
     
     return true;
@@ -723,6 +738,109 @@ class ThemeManager {
     if (this.settings.debug) {
       console.log('[ThemeManager]', ...args);
     }
+  }
+
+  /**
+   * Gökyüzü Animasyonu ve Otomatik Tema Değişimi
+   */
+  initSkyAnimation() {
+    this.log('Gökyüzü animasyonu başlatılıyor...');
+    
+    // Mevcut gökyüzü konteynerını kontrol et
+    let skyContainer = document.querySelector('.sky-animation-container');
+    
+    if (skyContainer) {
+      this.log('Var olan gökyüzü animasyon konteynerı güncelleniyor...');
+      skyContainer.innerHTML = ''; // İçeriğini temizle
+    } else {
+      // Gökyüzü animasyon konteynerını oluştur
+      skyContainer = document.createElement('div');
+      skyContainer.className = 'sky-animation-container';
+      
+      // Sayfaya ekle
+      document.body.appendChild(skyContainer);
+    }
+    
+    // Güneş elementi
+    const sun = document.createElement('div');
+    sun.className = 'sun';
+    
+    // Ay elementi
+    const moon = document.createElement('div');
+    moon.className = 'moon';
+    
+    // Yıldızlar konteynerı
+    const stars = document.createElement('div');
+    stars.className = 'stars';
+    
+    // Rastgele yıldızlar ekle
+    for(let i = 0; i < 50; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.width = `${Math.random() * 3 + 1}px`;
+      star.style.height = star.style.width;
+      star.style.top = `${Math.random() * 100}%`;
+      star.style.left = `${Math.random() * 100}%`;
+      star.style.animationDelay = `${Math.random() * 4}s`;
+      stars.appendChild(star);
+    }
+    
+    // Elementleri konteynerımıza ekleyelim
+    skyContainer.appendChild(sun);
+    skyContainer.appendChild(moon);
+    skyContainer.appendChild(stars);
+    
+    // İlk yükleme için mevcut temaya göre animasyon durumunu ayarla
+    this.updateSkyAnimation();
+    
+    this.log('Gökyüzü animasyonu başarıyla başlatıldı');
+  }
+
+  /**
+   * Tema değişikliğine göre gökyüzü animasyonunu güncelle
+   */
+  updateSkyAnimation() {
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    
+    // Geçiş sınıfını ekle
+    document.documentElement.classList.add('theme-transition');
+    
+    // Geçiş tamamlandıktan sonra sınıfı kaldır
+    setTimeout(() => {
+      document.documentElement.classList.remove('theme-transition');
+    }, 1000);
+    
+    this.log(`Gökyüzü animasyonu güncellendi. Tema: ${currentTheme}`);
+  }
+
+  /**
+   * Saate göre otomatik tema değişimi
+   */
+  initTimeBasedTheme() {
+    const checkTime = () => {
+      const currentHour = new Date().getHours();
+      
+      // Gündüz saatleri içindeyse açık mod, değilse koyu mod
+      if (currentHour >= this.settings.dayStartHour && currentHour < this.settings.dayEndHour) {
+        if (document.documentElement.getAttribute('data-theme') !== 'light') {
+          this.setThemeMode('light');
+          this.log(`Saat bazlı tema değişimi: Gündüz saati (${currentHour}), açık tema uygulandı`);
+        }
+      } else {
+        if (document.documentElement.getAttribute('data-theme') !== 'dark') {
+          this.setThemeMode('dark');
+          this.log(`Saat bazlı tema değişimi: Gece saati (${currentHour}), koyu tema uygulandı`);
+        }
+      }
+    };
+    
+    // Başlangıçta kontrol et
+    checkTime();
+    
+    // Her saat başı kontrol et
+    setInterval(checkTime, 3600000); // 1 saat = 3600000 ms
+    
+    this.log('Saat bazlı otomatik tema değişimi başlatıldı');
   }
 }
 

@@ -482,41 +482,113 @@ p, .text-base {
 /* =========================================
  * 8. Geçiş ve Animasyon Stilleri
  * =========================================*/
-:root {
-  --transition-fast: 0.15s ease;
-  --transition-normal: 0.3s ease;
-  --transition-slow: 0.5s ease;
-  --transition-property-common: color, background-color, border-color, box-shadow, transform;
-  --transition-property-colors: color, background-color, border-color;
-  --transition-property-opacity: opacity;
-  --transition-property-shadow: box-shadow;
-  --transition-property-transform: transform;
-}
 
+/* Tema Geçiş Efektleri */
 .theme-transition {
-  transition-property: var(--transition-property-colors);
-  transition-duration: 0.3s;
-  transition-timing-function: ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .transition-colors {
-  transition-property: var(--transition-property-colors);
-  transition-duration: 0.3s;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 .transition-opacity {
-  transition-property: var(--transition-property-opacity);
-  transition-duration: 0.3s;
+  transition: opacity 0.3s ease;
 }
 
 .transition-shadow {
-  transition-property: var(--transition-property-shadow);
-  transition-duration: 0.3s;
+  transition: box-shadow 0.3s ease;
 }
 
 .transition-transform {
-  transition-property: var(--transition-property-transform);
-  transition-duration: 0.3s;
+  transition: transform 0.3s ease;
+}
+
+/* Kesintisiz Tema Geçişleri */
+.theme-transition * {
+  transition: background-color 1s ease, color 1s ease, border-color 1s ease, box-shadow 1s ease !important;
+}
+
+/* Gökyüzü Animasyon Alanı */
+.sky-animation-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+}
+
+/* Güneş */
+.sun {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(to right, #f9d423, #ff4e50);
+  border-radius: 50%;
+  box-shadow: 0 0 40px rgba(255, 177, 66, 0.7);
+  transform: translateY(120%);
+  transition: transform 2s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+/* Ay */
+.moon {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(to right, #e0e0e0, #b0c4de);
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(200, 200, 255, 0.5);
+  transform: translateY(120%);
+  transition: transform 2s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+/* Yıldızlar */
+.stars {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 2s ease;
+}
+
+.star {
+  position: absolute;
+  background-color: white;
+  border-radius: 50%;
+  animation: twinkle 4s infinite;
+}
+
+/* Açık Mod - Güneş Görünür */
+[data-theme="light"] .sun {
+  transform: translate(80px, 80px);
+}
+
+[data-theme="light"] .moon,
+[data-theme="light"] .stars {
+  opacity: 0;
+}
+
+/* Koyu Mod - Ay ve Yıldızlar Görünür */
+[data-theme="dark"] .moon {
+  transform: translate(80px, 80px);
+}
+
+[data-theme="dark"] .stars {
+  opacity: 1;
+}
+
+[data-theme="dark"] .sun {
+  transform: translateY(120%);
+}
+
+/* Yıldız Animasyonu */
+@keyframes twinkle {
+  0% { opacity: 0.2; }
+  50% { opacity: 1; }
+  100% { opacity: 0.2; }
 }
 
 /* =========================================

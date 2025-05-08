@@ -289,6 +289,26 @@ class SettingsPanel {
             </label>
           </div>
         </div>
+        
+        <div class="theme-advanced-options">
+          <div class="switch-control">
+            <input type="checkbox" id="timeBasedThemeToggle" class="switch-checkbox">
+            <label for="timeBasedThemeToggle" class="switch-label">
+              <span class="switch-inner"></span>
+              <span class="switch-switch"></span>
+            </label>
+            <span class="switch-text">Saat bazlı otomatik tema</span>
+          </div>
+          
+          <div class="switch-control">
+            <input type="checkbox" id="skyAnimationToggle" class="switch-checkbox">
+            <label for="skyAnimationToggle" class="switch-label">
+              <span class="switch-inner"></span>
+              <span class="switch-switch"></span>
+            </label>
+            <span class="switch-text">Gökyüzü animasyonu</span>
+          </div>
+        </div>
       </div>
       
       <div class="settings-section">
@@ -555,6 +575,112 @@ class SettingsPanel {
     
     // Referansı sakla
     this.elements.themeToggles = themeRadios;
+
+    // Gelişmiş tema ayarları - Saat bazlı tema ve Gökyüzü animasyonu
+    this.initAdvancedThemeOptions();
+  }
+
+  /**
+   * Gelişmiş tema ayarlarını başlatır - Saat bazlı tema ve Gökyüzü animasyonu
+   */
+  initAdvancedThemeOptions() {
+    // Saat bazlı tema toggle butonunu seç
+    const timeBasedThemeToggle = document.getElementById('timeBasedThemeToggle');
+    
+    // Gökyüzü animasyonu toggle butonunu seç
+    const skyAnimationToggle = document.getElementById('skyAnimationToggle');
+    
+    if (!timeBasedThemeToggle || !skyAnimationToggle) {
+      this.log('Gelişmiş tema ayarları butonları bulunamadı!');
+      return;
+    }
+    
+    // ThemeManager varsa ondan ayarları al
+    if (this.themeManager && this.themeManager.settings) {
+      // Saat bazlı tema ayarını al
+      timeBasedThemeToggle.checked = this.themeManager.settings.enableTimeBasedTheme;
+      
+      // Gökyüzü animasyonu ayarını al
+      skyAnimationToggle.checked = this.themeManager.settings.enableSkyAnimation;
+    } else {
+      // ThemeManager yoksa localStorage'dan oku
+      timeBasedThemeToggle.checked = ThemeUtils.getFromStorage('enableTimeBasedTheme') === 'true';
+      skyAnimationToggle.checked = ThemeUtils.getFromStorage('enableSkyAnimation') === 'true';
+    }
+    
+    // Saat bazlı tema toggle değişikliğinde
+    timeBasedThemeToggle.addEventListener('change', () => {
+      const enabled = timeBasedThemeToggle.checked;
+      
+      // ThemeManager ile ayarı değiştir
+      if (this.themeManager) {
+        this.themeManager.settings.enableTimeBasedTheme = enabled;
+        
+        if (enabled) {
+          // Aktifleştirildiğinde hemen başlat
+          this.themeManager.initTimeBasedTheme();
+        }
+        
+        // Ayarı kaydet
+        ThemeUtils.saveToStorage('enableTimeBasedTheme', enabled);
+      } else {
+        // ThemeManager yoksa localStorage'a kaydet
+        ThemeUtils.saveToStorage('enableTimeBasedTheme', enabled);
+        
+        // Ayarın hemen uygulanması için sayfayı yenileme gerekebilir
+        if (enabled) {
+          // Kullanıcıya bilgi verebiliriz
+          ThemeUtils.announceToScreenReader('Saat bazlı tema etkinleştirildi');
+        }
+      }
+      
+      // Log
+      this.log(`Saat bazlı otomatik tema ${enabled ? 'etkinleştirildi' : 'devre dışı bırakıldı'}`);
+      
+      // Olay tetikle
+      this.emit('timeBasedThemeChanged', enabled);
+    });
+    
+    // Gökyüzü animasyonu toggle değişikliğinde
+    skyAnimationToggle.addEventListener('change', () => {
+      const enabled = skyAnimationToggle.checked;
+      
+      // ThemeManager ile ayarı değiştir
+      if (this.themeManager) {
+        this.themeManager.settings.enableSkyAnimation = enabled;
+        
+        if (enabled) {
+          // Aktifleştirildiğinde hemen başlat
+          this.themeManager.initSkyAnimation();
+        } else {
+          // Devre dışı bırakıldığında gökyüzü konteynerını kaldır
+          const skyContainer = document.querySelector('.sky-animation-container');
+          if (skyContainer) {
+            skyContainer.remove();
+          }
+        }
+        
+        // Ayarı kaydet
+        ThemeUtils.saveToStorage('enableSkyAnimation', enabled);
+      } else {
+        // ThemeManager yoksa localStorage'a kaydet
+        ThemeUtils.saveToStorage('enableSkyAnimation', enabled);
+        
+        // Ayarın hemen uygulanması için sayfayı yenileme gerekebilir
+        if (enabled) {
+          // Kullanıcıya bilgi verebiliriz
+          ThemeUtils.announceToScreenReader('Gökyüzü animasyonu etkinleştirildi');
+        }
+      }
+      
+      // Log
+      this.log(`Gökyüzü animasyonu ${enabled ? 'etkinleştirildi' : 'devre dışı bırakıldı'}`);
+      
+      // Olay tetikle
+      this.emit('skyAnimationChanged', enabled);
+    });
+    
+    this.log('Gelişmiş tema ayarları başarıyla başlatıldı');
   }
 
   /**
@@ -958,7 +1084,7 @@ class SettingsPanel {
       } else {
         // Manuel sıfırla
         // LocalStorage temizle
-        ['themeMode', 'colorTheme', 'contrastLevel', 'fontSizePercent', 'reducedMotion'].forEach(key => {
+        ['themeMode', 'colorTheme', 'contrastLevel', 'fontSizePercent', 'reducedMotion', 'enableTimeBasedTheme', 'enableSkyAnimation'].forEach(key => {
           localStorage.removeItem(key);
         });
         
@@ -998,6 +1124,20 @@ class SettingsPanel {
         document.documentElement.classList.remove('reduced-motion');
         const reducedMotionToggle = document.getElementById('reducedMotionToggle');
         if (reducedMotionToggle) reducedMotionToggle.checked = false;
+        
+        // 6. Saat bazlı tema ayarını sıfırla - varsayılan: false
+        const timeBasedThemeToggle = document.getElementById('timeBasedThemeToggle');
+        if (timeBasedThemeToggle) timeBasedThemeToggle.checked = false;
+        
+        // 7. Gökyüzü animasyonu ayarını sıfırla - varsayılan: false
+        const skyAnimationToggle = document.getElementById('skyAnimationToggle');
+        if (skyAnimationToggle) skyAnimationToggle.checked = false;
+        
+        // Gökyüzü konteynerını kaldır
+        const skyContainer = document.querySelector('.sky-animation-container');
+        if (skyContainer) {
+          skyContainer.remove();
+        }
       }
       
       // Başarı mesajı
