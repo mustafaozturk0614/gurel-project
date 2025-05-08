@@ -30,10 +30,9 @@ class ThemeManager {
       fontSizePercent: 100, // Yüzde olarak font boyutu
       reducedMotion: false, // Azaltılmış hareket
       dayStartHour: 6,  // Otomatik tema için gündüz başlangıç saati
-      dayEndHour: 18,   // Otomatik tema için gündüz bitiş saati
-      enableTimeBasedTheme: false, // Saate göre otomatik tema değişimi
-      enableSkyAnimation: false, // Gökyüzü animasyonu
-      debug: false      // Debug modu
+      dayEndHour: 19,   // Otomatik tema için gündüz bitiş saati (19:00'a güncellendi)
+      debug: false,      // Debug modu
+      animatedTransitions: true // Zarif geçişler için animasyon desteği
     };
     
     // Kullanıcı ayarları ve varsayılanları birleştir
@@ -51,6 +50,9 @@ class ThemeManager {
     
     // Olay dinleyicileri
     this.eventListeners = [];
+    
+    // Mevcut tema mod durumu
+    this.currentThemeMode = '';
     
     // İnitialize
     this.init();
@@ -83,16 +85,6 @@ class ThemeManager {
     
     // Azaltılmış hareket ayarını kontrol et
     this.applyReducedMotion(this.settings.reducedMotion);
-
-    // Gökyüzü animasyonunu başlat (eğer etkinse)
-    if (this.settings.enableSkyAnimation) {
-      this.initSkyAnimation();
-    }
-    
-    // Saate göre otomatik tema değişimini başlat (eğer etkinse)
-    if (this.settings.enableTimeBasedTheme) {
-      this.initTimeBasedTheme();
-    }
     
     // Global erişim için window nesnesine ekle
     window.themeManager = this;
@@ -271,28 +263,25 @@ class ThemeManager {
    * @param {string} mode - Tema modu ('light', 'dark', 'auto', 'system')
    */
   setThemeMode(mode) {
-    // Geçerli bir tema modu mu kontrol et
+    // Geçerli bir mod mu?
     if (!['light', 'dark', 'auto', 'system'].includes(mode)) {
-      console.error(`Geçersiz tema modu: ${mode}`);
+      console.warn(`Geçersiz tema modu: ${mode}`);
       return false;
     }
     
-    // Temayı değiştir
+    // Mevcut değerle aynı mı?
+    if (this.settings.themeMode === mode) return true;
+    
+    // Ayarı güncelle
     this.settings.themeMode = mode;
     
-    // Tema modunu uygula
+    // Modu uygula
     this.initThemeMode();
     
     // Ayarları kaydet
     this.saveSettings();
     
-    // Gökyüzü animasyonunu güncelle (etkinse)
-    if (this.settings.enableSkyAnimation) {
-      this.updateSkyAnimation();
-    }
-    
-    // Tema modu değiştirildiğini bildir
-    this.emit('themeModeChanged', mode);
+    // Tema değişimini bildir
     this.log(`Tema modu değiştirildi: ${mode}`);
     
     return true;
@@ -338,8 +327,19 @@ class ThemeManager {
    * @param {string} mode - Uygulanacak tema ('light', 'dark')
    */
   applyThemeMode(mode) {
+    const previousMode = this.currentThemeMode || document.documentElement.getAttribute('data-theme') || 'light';
+    
+    // Mevcut modu güncelle
+    this.currentThemeMode = mode;
+    
+    // Tema geçişi öncesi hazırlık
+    if (this.settings.animatedTransitions && !this.mediaQueries.reducedMotion.matches) {
+      this.beforeThemeChange(previousMode, mode);
+    }
+    
     // data-theme özniteliğini ayarla
     document.documentElement.setAttribute('data-theme', mode);
+    document.documentElement.setAttribute('data-previous-theme', previousMode);
     
     // body sınıfları
     document.body.classList.toggle('dark-mode', mode === 'dark');
@@ -350,6 +350,122 @@ class ThemeManager {
     
     // Meta tema rengini güncelle (mobil tarayıcı rengi)
     this.updateMetaThemeColor(mode);
+    
+    // Tema geçişi sonrası efektleri
+    if (this.settings.animatedTransitions && !this.mediaQueries.reducedMotion.matches) {
+      this.afterThemeChange(previousMode, mode);
+    }
+    
+    // Screen reader için temayla ilgili duyuru yap
+    this.announceThemeChange(mode);
+  }
+  
+  /**
+   * Tema değişimi öncesi hazırlık yapar
+   * @param {string} previousMode - Önceki tema modu
+   * @param {string} newMode - Yeni tema modu
+   */
+  beforeThemeChange(previousMode, newMode) {
+    // İlk yükleme ise sadece tema-geçiş sınıfı ekle
+    if (!previousMode || previousMode === newMode) {
+      return;
+    }
+    
+    // Geçiş animasyonu için body'e geçiş sınıfı ekle
+    document.body.classList.add('theme-is-changing');
+    
+    // Ayrık tema geçiş tipi belirle (light->dark veya dark->light)
+    const transitionDirection = 
+      previousMode === 'light' && newMode === 'dark' ? 'to-dark' :
+      previousMode === 'dark' && newMode === 'light' ? 'to-light' : '';
+    
+    if (transitionDirection) {
+      document.documentElement.setAttribute('data-theme-transition', transitionDirection);
+    }
+    
+    // Sayfa elementlerine kademeli geçiş için hazırlık
+    if (transitionDirection === 'to-dark') {
+      document.body.style.animation = 'theme-transition-light-to-dark 0.5s forwards';
+    } else if (transitionDirection === 'to-light') {
+      document.body.style.animation = 'theme-transition-dark-to-light 0.5s forwards';
+    }
+    
+    // Geçiş öncesi olayını bildir
+    this.emit('beforeThemeChange', { previousMode, newMode, direction: transitionDirection });
+  }
+  
+  /**
+   * Tema değişimi sonrası efektler uygular
+   * @param {string} previousMode - Önceki tema modu
+   * @param {string} newMode - Yeni tema modu
+   */
+  afterThemeChange(previousMode, newMode) {
+    if (!previousMode || previousMode === newMode) {
+      return;
+    }
+    
+    // Zamanlayıcı ile tema değişim sınıfını kaldır
+    setTimeout(() => {
+      document.body.classList.remove('theme-is-changing');
+      document.documentElement.removeAttribute('data-theme-transition');
+      document.body.style.animation = '';
+      
+      // Özel geçiş tamamlandı olayını bildir
+      this.emit('themeTransitionComplete', { previousMode, newMode });
+    }, 500); // Geçiş süresi (CSS'deki değerle eşleşmeli)
+    
+    // Animasyonlu elementlere etki ekleme
+    this.animateElementsOnThemeChange(newMode);
+  }
+  
+  /**
+   * Tema değişiminde elementlere animasyon efekti uygular
+   * @param {string} mode - Yeni tema modu 
+   */
+  animateElementsOnThemeChange(mode) {
+    // Animasyon efekti uygulanacak elementler
+    const animatableElements = [
+      'header', '.card', '.btn-primary', '.hero-section', 
+      '.feature-box', '.nav-item', '.sidebar'
+    ].join(',');
+    
+    const elements = document.querySelectorAll(animatableElements);
+    
+    // Elementlere kademeli olarak animasyon sınıfları ekle
+    elements.forEach((element, index) => {
+      // Varsa önceki animasyon sınıflarını temizle
+      element.classList.remove('animate-fade-in', 'animate-slide-up', 'animate-scale-in');
+      
+      // Gecikmeli olarak yeni sınıf ekle
+      setTimeout(() => {
+        // Element türüne göre farklı animasyon seç
+        if (element.tagName === 'HEADER' || element.classList.contains('hero-section')) {
+          element.classList.add('animate-fade-in');
+        } else if (element.classList.contains('card') || element.classList.contains('feature-box')) {
+          element.classList.add('animate-scale-in');
+        } else {
+          element.classList.add('animate-slide-up');
+        }
+      }, 50 + (index * 20)); // Kademeli etki için her element için artarak gecikme
+    });
+  }
+  
+  /**
+   * Ekran okuyucular için tema değişimini duyurur
+   * @param {string} mode - Tema modu
+   */
+  announceThemeChange(mode) {
+    let announcer = document.getElementById('themeAnnouncer');
+    
+    if (!announcer) {
+      announcer = document.createElement('div');
+      announcer.id = 'themeAnnouncer';
+      announcer.setAttribute('aria-live', 'polite');
+      document.body.appendChild(announcer);
+    }
+    
+    const modeText = mode === 'dark' ? 'karanlık' : 'aydınlık';
+    announcer.textContent = `Tema ${modeText} moda geçti.`;
   }
   
   /**
@@ -739,113 +855,248 @@ class ThemeManager {
       console.log('[ThemeManager]', ...args);
     }
   }
-
-  /**
-   * Gökyüzü Animasyonu ve Otomatik Tema Değişimi
-   */
-  initSkyAnimation() {
-    this.log('Gökyüzü animasyonu başlatılıyor...');
-    
-    // Mevcut gökyüzü konteynerını kontrol et
-    let skyContainer = document.querySelector('.sky-animation-container');
-    
-    if (skyContainer) {
-      this.log('Var olan gökyüzü animasyon konteynerı güncelleniyor...');
-      skyContainer.innerHTML = ''; // İçeriğini temizle
-    } else {
-      // Gökyüzü animasyon konteynerını oluştur
-      skyContainer = document.createElement('div');
-      skyContainer.className = 'sky-animation-container';
-      
-      // Sayfaya ekle
-      document.body.appendChild(skyContainer);
-    }
-    
-    // Güneş elementi
-    const sun = document.createElement('div');
-    sun.className = 'sun';
-    
-    // Ay elementi
-    const moon = document.createElement('div');
-    moon.className = 'moon';
-    
-    // Yıldızlar konteynerı
-    const stars = document.createElement('div');
-    stars.className = 'stars';
-    
-    // Rastgele yıldızlar ekle
-    for(let i = 0; i < 50; i++) {
-      const star = document.createElement('div');
-      star.className = 'star';
-      star.style.width = `${Math.random() * 3 + 1}px`;
-      star.style.height = star.style.width;
-      star.style.top = `${Math.random() * 100}%`;
-      star.style.left = `${Math.random() * 100}%`;
-      star.style.animationDelay = `${Math.random() * 4}s`;
-      stars.appendChild(star);
-    }
-    
-    // Elementleri konteynerımıza ekleyelim
-    skyContainer.appendChild(sun);
-    skyContainer.appendChild(moon);
-    skyContainer.appendChild(stars);
-    
-    // İlk yükleme için mevcut temaya göre animasyon durumunu ayarla
-    this.updateSkyAnimation();
-    
-    this.log('Gökyüzü animasyonu başarıyla başlatıldı');
-  }
-
-  /**
-   * Tema değişikliğine göre gökyüzü animasyonunu güncelle
-   */
-  updateSkyAnimation() {
-    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-    
-    // Geçiş sınıfını ekle
-    document.documentElement.classList.add('theme-transition');
-    
-    // Geçiş tamamlandıktan sonra sınıfı kaldır
-    setTimeout(() => {
-      document.documentElement.classList.remove('theme-transition');
-    }, 1000);
-    
-    this.log(`Gökyüzü animasyonu güncellendi. Tema: ${currentTheme}`);
-  }
-
-  /**
-   * Saate göre otomatik tema değişimi
-   */
-  initTimeBasedTheme() {
-    const checkTime = () => {
-      const currentHour = new Date().getHours();
-      
-      // Gündüz saatleri içindeyse açık mod, değilse koyu mod
-      if (currentHour >= this.settings.dayStartHour && currentHour < this.settings.dayEndHour) {
-        if (document.documentElement.getAttribute('data-theme') !== 'light') {
-          this.setThemeMode('light');
-          this.log(`Saat bazlı tema değişimi: Gündüz saati (${currentHour}), açık tema uygulandı`);
-        }
-      } else {
-        if (document.documentElement.getAttribute('data-theme') !== 'dark') {
-          this.setThemeMode('dark');
-          this.log(`Saat bazlı tema değişimi: Gece saati (${currentHour}), koyu tema uygulandı`);
-        }
-      }
-    };
-    
-    // Başlangıçta kontrol et
-    checkTime();
-    
-    // Her saat başı kontrol et
-    setInterval(checkTime, 3600000); // 1 saat = 3600000 ms
-    
-    this.log('Saat bazlı otomatik tema değişimi başlatıldı');
-  }
 }
 
 // Global erişim için
 window.ThemeManager = ThemeManager;
 
 // Export
-export default ThemeManager; 
+export default ThemeManager;
+
+// Global theme işlevleri (applyThemeMode fonksiyonu eklendi)
+function applyThemeMode(mode) {
+  // Temayı document elementine uygula
+  document.documentElement.setAttribute('data-theme', mode);
+  document.body.classList.toggle('dark-mode', mode === 'dark');
+  document.body.classList.toggle('light-mode', mode === 'light');
+  
+  // Tema değişim olayını tetikle (diğer bileşenlerin haberdar olması için)
+  const themeChangeEvent = new CustomEvent('themeChanged', {
+    detail: { theme: mode, source: 'auto' }
+  });
+  document.dispatchEvent(themeChangeEvent);
+  
+  // Güncellenmiş tema için önizleme animasyonlarını tetikle
+  const previews = document.querySelectorAll('.theme-preview');
+  previews.forEach(preview => {
+    preview.classList.remove('light-anim', 'dark-anim');
+    setTimeout(() => {
+      preview.classList.add(mode === 'dark' ? 'dark-anim' : 'light-anim');
+    }, 50);
+  });
+  
+  // Güneş/ay görünürlüğünü güncelle
+  const suns = document.querySelectorAll('.sun');
+  const moons = document.querySelectorAll('.moon');
+  
+  suns.forEach(sun => {
+    sun.style.opacity = mode === 'light' ? '1' : '0.2';
+    sun.style.transform = mode === 'light' 
+      ? 'translateX(-50%) scale(1.1) rotate(-5deg)' 
+      : 'translateX(-60%) scale(0.8) rotate(10deg)';
+  });
+  
+  moons.forEach(moon => {
+    moon.style.opacity = mode === 'dark' ? '1' : '0.2';
+    moon.style.transform = mode === 'dark'
+      ? 'translateX(-50%) scale(1.1) rotate(-5deg)'
+      : 'translateX(-60%) scale(0.8) rotate(-10deg)';
+  });
+}
+
+// Güneş-Ay tema geçişi için işleyici
+document.addEventListener('DOMContentLoaded', function() {
+  const themeToggle = document.querySelector('.theme-toggle');
+  const container = document.querySelector('.sun-moon-container');
+  
+  if (themeToggle && container) {
+    // Sayfa yüklendiğinde mevcut temaya göre görünümü ayarla
+    const currentTheme = document.body.getAttribute('data-theme') || 'light';
+    if (currentTheme === 'dark') {
+      document.body.setAttribute('data-theme', 'dark');
+    }
+    
+    // Parçacık efektleri oluşturma fonksiyonu
+    function createParticles() {
+      const particles = document.querySelector('.particles');
+      if (!particles) return;
+      
+      particles.innerHTML = '';
+      
+      // 12 adet parçacık oluştur
+      for (let i = 0; i < 12; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        
+        // Rastgele x ve y değerleri atayarak parçacıkların farklı yönlere gitmesini sağla
+        const x = (Math.random() - 0.5);
+        const y = (Math.random() - 0.5);
+        
+        particle.style.setProperty('--x', x);
+        particle.style.setProperty('--y', y);
+        
+        particles.appendChild(particle);
+      }
+    }
+    
+    // Tema geçişi için tıklama olayı
+    themeToggle.addEventListener('click', function() {
+      const isDark = document.body.getAttribute('data-theme') === 'dark';
+      
+      // Animasyon sınıflarını ekle
+      container.classList.add(isDark ? 'animate-dark-to-light' : 'animate-light-to-dark');
+      
+      // Parçacık efektlerini oluştur
+      createParticles();
+      
+      // Temayı değiştir
+      document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      
+      // Tema değişim olayını tetikle
+      const themeChangeEvent = new CustomEvent('themeChanged', {
+        detail: { theme: isDark ? 'light' : 'dark' }
+      });
+      document.dispatchEvent(themeChangeEvent);
+      
+      // Animasyon bittiğinde sınıfları kaldır
+      setTimeout(() => {
+        container.classList.remove('animate-dark-to-light', 'animate-light-to-dark');
+      }, 1000);
+    });
+    
+    // Tema değiştiğinde dışarıdan tetiklendiğinde animasyonu güncelle
+    document.addEventListener('themeChanged', function(e) {
+      if (e.detail && e.detail.source !== 'toggle') {
+        // Güneş/ay görünümünü temaya göre güncelle
+        const isDark = e.detail.theme === 'dark';
+        if (isDark) {
+          document.body.setAttribute('data-theme', 'dark');
+        } else {
+          document.body.setAttribute('data-theme', 'light');
+        }
+      }
+    });
+  }
+});
+
+// Kontrol düğmeleri için olay dinleyicileri
+document.querySelectorAll('.theme-preview-control').forEach(button => {
+  button.addEventListener('click', function() {
+    const effect = this.getAttribute('data-effect');
+    const preview = this.closest('.theme-preview');
+    
+    // Efekti ekle/kaldır
+    if (effect === 'rain') {
+      preview.classList.toggle('rain-effect');
+    } else if (effect === 'snow') {
+      preview.classList.toggle('snow-effect');
+    } else if (effect === 'meteor') {
+      // Meteor efekti tek seferlik
+      preview.classList.add('meteor-shower');
+      setTimeout(() => {
+        preview.classList.remove('meteor-shower');
+      }, 2000);
+    }
+  });
+});
+
+// Mouse takip efekti için
+const preview = document.querySelector('.theme-preview.mouse-follow');
+if (preview) {
+  preview.addEventListener('mousemove', function(e) {
+    const rect = this.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left; 
+    const mouseY = e.clientY - rect.top;
+    
+    // Fare pozisyonuna göre güneş/ay konumunu ayarla
+    const sun = this.querySelector('.sun');
+    const moon = this.querySelector('.moon');
+    
+    if (sun && window.getComputedStyle(sun).opacity > 0) {
+      const moveX = (mouseX / rect.width - 0.5) * 10;
+      const moveY = (mouseY / rect.height - 0.5) * 5;
+      sun.style.transform = `translateX(calc(-50% + ${moveX}px)) translateY(${moveY}px) scale(1.15) rotate(-8deg)`;
+    }
+    
+    if (moon && window.getComputedStyle(moon).opacity > 0) {
+      const moveX = (mouseX / rect.width - 0.5) * 10;
+      const moveY = (mouseY / rect.height - 0.5) * 5;
+      moon.style.transform = `translateX(calc(-50% + ${moveX}px)) translateY(${moveY}px) scale(1.15) rotate(-10deg)`;
+    }
+  });
+}
+
+// Yağmur ve kar oluşturucu
+function createWeatherElements() {
+  const rain = document.querySelector('.theme-preview .rain');
+  const snow = document.querySelector('.theme-preview .snow');
+  
+  if (rain) {
+    for (let i = 0; i < 20; i++) {
+      const raindrop = document.createElement('div');
+      raindrop.className = 'raindrop';
+      raindrop.style.left = `${Math.random() * 100}%`;
+      raindrop.style.animationDelay = `${Math.random() * 1}s`;
+      rain.appendChild(raindrop);
+    }
+  }
+  
+  if (snow) {
+    for (let i = 0; i < 15; i++) {
+      const snowflake = document.createElement('div');
+      snowflake.className = 'snowflake';
+      snowflake.style.left = `${Math.random() * 100}%`;
+      snowflake.style.animationDelay = `${Math.random() * 5}s`;
+      snow.appendChild(snowflake);
+    }
+  }
+}
+
+// Sayfa yüklendiğinde hava efektlerini oluştur
+document.addEventListener('DOMContentLoaded', createWeatherElements);
+
+// Otomatik tema kontrolü
+function checkAutoTheme() {
+  const now = new Date();
+  const hour = now.getHours();
+  const isNight = hour >= 19 || hour < 6;
+  
+  // Önizleme güncelleme
+  const autoPreview = document.querySelector('.theme-preview.auto-anim');
+  if (autoPreview) {
+    if (isNight) {
+      autoPreview.classList.add('night-mode');
+    } else {
+      autoPreview.classList.remove('night-mode');
+    }
+    
+    // Saat göstergesi güncelleme
+    const timeIndicator = autoPreview.querySelector('.time-indicator');
+    if (timeIndicator) {
+      const formattedHour = now.getHours().toString().padStart(2, '0');
+      const formattedMinute = now.getMinutes().toString().padStart(2, '0');
+      timeIndicator.textContent = `${formattedHour}:${formattedMinute}`;
+    }
+  }
+  
+  // Otomatik tema seçiliyse, ana tema modunu güncelle
+  const autoThemeRadio = document.querySelector('.theme-radio[value="auto"]:checked');
+  if (autoThemeRadio) {
+    applyThemeMode(isNight ? 'dark' : 'light');
+  }
+}
+
+// Sayfa yüklendiğinde başlangıç temasını ayarla ve düzenli aralıklarla kontrol et
+document.addEventListener('DOMContentLoaded', () => {
+  // Başlangıçta otomatik tema seçili olsun
+  const autoThemeRadio = document.querySelector('.theme-radio[value="auto"]');
+  if (autoThemeRadio) {
+    autoThemeRadio.checked = true;
+  }
+  
+  // İlk kontrolü yap
+  checkAutoTheme();
+  
+  // Her dakika kontrol et
+  setInterval(checkAutoTheme, 60000);
+});

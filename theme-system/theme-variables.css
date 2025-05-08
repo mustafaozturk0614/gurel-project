@@ -93,11 +93,11 @@
   --container-xxl: 1320px;
   
   /* Ayarlar Panel Değişkenleri */
-  --settings-panel-width: 320px;
+  --settings-panel-width: 280px;
   --settings-panel-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
   --settings-panel-border: 1px solid var(--border-color);
-  --settings-toggle-size: 48px;
-  --settings-toggle-icon-size: 24px;
+  --settings-toggle-size: 42px;
+  --settings-toggle-icon-size: 20px;
   --settings-transition-duration: 0.3s;
   --settings-option-hover-bg: rgba(var(--primary-rgb), 0.08);
   --settings-option-active-bg: rgba(var(--primary-rgb), 0.12);
@@ -482,113 +482,170 @@ p, .text-base {
 /* =========================================
  * 8. Geçiş ve Animasyon Stilleri
  * =========================================*/
-
-/* Tema Geçiş Efektleri */
-.theme-transition {
-  transition: background-color 0.3s ease, color 0.3s ease;
+:root {
+  /* Geçiş Süreleri */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  --transition-extra-slow: 0.8s ease;
+  
+  /* Geçiş Özellikleri */
+  --transition-property-common: color, background-color, border-color, box-shadow, transform;
+  --transition-property-colors: color, background-color, border-color;
+  --transition-property-opacity: opacity;
+  --transition-property-shadow: box-shadow;
+  --transition-property-transform: transform;
+  
+  /* Zamanlama Fonksiyonları */
+  --timing-ease: ease;
+  --timing-ease-in: ease-in;
+  --timing-ease-out: ease-out;
+  --timing-ease-in-out: ease-in-out;
+  --timing-spring: cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  --timing-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --timing-smooth: cubic-bezier(0.4, 0.0, 0.2, 1);
+  
+  /* Tema Geçiş Ayarları */
+  --theme-transition-duration: 0.5s;
+  --theme-transition-timing: var(--timing-smooth);
 }
 
+/* Ana Tema Geçiş Stili - Yeni ve geliştirilmiş */
+.theme-transition {
+  transition-property: color, background-color, border-color, box-shadow, transform, opacity, filter;
+  transition-duration: var(--theme-transition-duration);
+  transition-timing-function: var(--theme-transition-timing);
+}
+
+/* Kademeli element geçişleri için */
+.theme-transition * {
+  transition-property: color, background-color, border-color, box-shadow, opacity, transform;
+  transition-duration: var(--theme-transition-duration);
+  transition-timing-function: var(--theme-transition-timing);
+}
+
+/* Özel element türleri için geçişler */
+.theme-transition h1, .theme-transition h2, .theme-transition h3,
+.theme-transition h4, .theme-transition h5, .theme-transition h6 {
+  transition-delay: 0.05s;
+}
+
+.theme-transition p, .theme-transition span, .theme-transition a {
+  transition-delay: 0.08s;
+}
+
+.theme-transition button, .theme-transition .btn, .theme-transition input, 
+.theme-transition select, .theme-transition textarea {
+  transition-delay: 0.12s;
+  transition-duration: calc(var(--theme-transition-duration) * 1.2);
+}
+
+.theme-transition img, .theme-transition svg, .theme-transition .icon {
+  transition-property: filter, opacity, transform, box-shadow;
+  transition-delay: 0.15s;
+  transition-duration: calc(var(--theme-transition-duration) * 1.3);
+}
+
+/* Gölge geçişleri */
+.theme-transition .card, .theme-transition .shadow-transition {
+  transition-property: box-shadow, transform, background-color;
+  transition-duration: calc(var(--theme-transition-duration) * 1.2);
+  transition-timing-function: var(--timing-spring);
+}
+
+/* Kesintisiz arka plan geçişleri */
+.theme-transition body, 
+.theme-transition header,
+.theme-transition footer,
+.theme-transition main,
+.theme-transition section {
+  transition-property: background-color, background, background-image, color;
+  transition-duration: calc(var(--theme-transition-duration) * 1.5);
+}
+
+/* Tema modu geçişlerinde ekstra yumuşak efektler */
+html[data-theme="dark"] .theme-transition {
+  transition-timing-function: var(--timing-ease-out);
+}
+
+html[data-theme="light"] .theme-transition {
+  transition-timing-function: var(--timing-ease-in);
+}
+
+/* Animasyon tanımlamaları */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-up {
+  from { transform: translateY(10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes scale-in {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes theme-transition-light-to-dark {
+  0% { 
+    filter: brightness(1);
+    background-color: var(--background); 
+  }
+  100% { 
+    filter: brightness(0.95);
+    background-color: var(--background); 
+  }
+}
+
+@keyframes theme-transition-dark-to-light {
+  0% { 
+    filter: brightness(1);
+    background-color: var(--background); 
+  }
+  100% { 
+    filter: brightness(1.05);
+    background-color: var(--background); 
+  }
+}
+
+/* Yardımcı animasyon sınıfları */
+.animate-fade-in {
+  animation: fade-in var(--transition-normal) var(--timing-smooth) forwards;
+}
+
+.animate-slide-up {
+  animation: slide-up var(--transition-normal) var(--timing-smooth) forwards;
+}
+
+.animate-scale-in {
+  animation: scale-in var(--transition-normal) var(--timing-smooth) forwards;
+}
+
+/* Özelleştirilmiş geçişler */
 .transition-colors {
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  transition-property: var(--transition-property-colors);
+  transition-duration: var(--theme-transition-duration);
+  transition-timing-function: var(--theme-transition-timing);
 }
 
 .transition-opacity {
-  transition: opacity 0.3s ease;
+  transition-property: var(--transition-property-opacity);
+  transition-duration: var(--theme-transition-duration);
+  transition-timing-function: var(--theme-transition-timing);
 }
 
 .transition-shadow {
-  transition: box-shadow 0.3s ease;
+  transition-property: var(--transition-property-shadow);
+  transition-duration: var(--theme-transition-duration);
+  transition-timing-function: var(--timing-spring);
 }
 
 .transition-transform {
-  transition: transform 0.3s ease;
-}
-
-/* Kesintisiz Tema Geçişleri */
-.theme-transition * {
-  transition: background-color 1s ease, color 1s ease, border-color 1s ease, box-shadow 1s ease !important;
-}
-
-/* Gökyüzü Animasyon Alanı */
-.sky-animation-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: -1;
-  overflow: hidden;
-}
-
-/* Güneş */
-.sun {
-  position: absolute;
-  width: 60px;
-  height: 60px;
-  background: linear-gradient(to right, #f9d423, #ff4e50);
-  border-radius: 50%;
-  box-shadow: 0 0 40px rgba(255, 177, 66, 0.7);
-  transform: translateY(120%);
-  transition: transform 2s cubic-bezier(0.33, 1, 0.68, 1);
-}
-
-/* Ay */
-.moon {
-  position: absolute;
-  width: 50px;
-  height: 50px;
-  background: linear-gradient(to right, #e0e0e0, #b0c4de);
-  border-radius: 50%;
-  box-shadow: 0 0 20px rgba(200, 200, 255, 0.5);
-  transform: translateY(120%);
-  transition: transform 2s cubic-bezier(0.33, 1, 0.68, 1);
-}
-
-/* Yıldızlar */
-.stars {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  transition: opacity 2s ease;
-}
-
-.star {
-  position: absolute;
-  background-color: white;
-  border-radius: 50%;
-  animation: twinkle 4s infinite;
-}
-
-/* Açık Mod - Güneş Görünür */
-[data-theme="light"] .sun {
-  transform: translate(80px, 80px);
-}
-
-[data-theme="light"] .moon,
-[data-theme="light"] .stars {
-  opacity: 0;
-}
-
-/* Koyu Mod - Ay ve Yıldızlar Görünür */
-[data-theme="dark"] .moon {
-  transform: translate(80px, 80px);
-}
-
-[data-theme="dark"] .stars {
-  opacity: 1;
-}
-
-[data-theme="dark"] .sun {
-  transform: translateY(120%);
-}
-
-/* Yıldız Animasyonu */
-@keyframes twinkle {
-  0% { opacity: 0.2; }
-  50% { opacity: 1; }
-  100% { opacity: 0.2; }
+  transition-property: var(--transition-property-transform);
+  transition-duration: var(--theme-transition-duration);
+  transition-timing-function: var(--timing-bounce);
 }
 
 /* =========================================

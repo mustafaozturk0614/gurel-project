@@ -1,7 +1,7 @@
 /* Gürel Yönetim - CSS Reset ve Temel Değişkenler */
 
 /* Tema CSS dosyasını içeri aktarma - tüm tema değişkenleri buradan gelir */
-@import url('themes.css');
+@import url('theme-system/theme-variables.css');
 
 /* Body stilleri */
 body {

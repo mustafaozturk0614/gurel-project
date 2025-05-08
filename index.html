@@ -1862,7 +1862,40 @@
         }, 5000);
     </script>
 
+    <div class="theme-toggle-wrapper">
+      <button class="theme-toggle" aria-label="Tema Değiştir">
+        <div class="sun-moon-container">
+          <div class="sun"></div>
+          <div class="moon"></div>
+          <div class="particles"></div>
+        </div>
+      </button>
+    </div>
 
+    <div class="theme-preview" data-system-theme="light" data-color-theme="blue">
+      <!-- Mevcut içerik... -->
+      
+      <!-- Yeni elementler -->
+      <div class="rain">
+        <!-- JavaScript ile yağmur damlaları eklenecek -->
+      </div>
+      <div class="snow">
+        <!-- JavaScript ile kar taneleri eklenecek -->
+      </div>
+      <div class="planet planet-1"></div>
+      <div class="planet planet-2"></div>
+      <div class="meteor"></div>
+      
+      <!-- Kontrol arayüzü -->
+      <div class="theme-preview-toggle">
+        <span class="icon">⟳</span>
+      </div>
+      <div class="theme-preview-controls">
+        <button class="theme-preview-control" data-effect="rain">💧</button>
+        <button class="theme-preview-control" data-effect="snow">❄️</button>
+        <button class="theme-preview-control" data-effect="meteor">☄️</button>
+      </div>
+    </div>
 
 </body>
 </html>

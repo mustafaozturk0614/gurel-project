@@ -1,0 +1,310 @@
+/**
+ * Tema Geçiş Stilleri - Gürel Yönetim
+ * Sürüm: 1.0.0
+ * 
+ * Bu dosya, tema değişimleri sırasında yumuşak ve zarif geçişler sağlayan 
+ * CSS tanımlarını içerir. Tema modu ve renk teması değişimlerinde daha 
+ * şık bir kullanıcı deneyimi oluşturmak için özelleştirilmiş animasyonlar sunar.
+ */
+
+/* =========================================
+ * Temel Geçiş Ayarları
+ * =========================================*/
+:root {
+  --transition-base-duration: 0.5s;
+  --transition-smooth-timing: cubic-bezier(0.4, 0.0, 0.2, 1);
+  --transition-accent-timing: cubic-bezier(0.17, 0.67, 0.83, 0.67);
+  --transition-spring-timing: cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  --transition-bounce-timing: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* =========================================
+ * Global Tema Geçiş Sınıfı
+ * =========================================*/
+.theme-transition * {
+  transition-property: color, background-color, border-color, text-shadow, box-shadow, outline-color, fill, stroke;
+  transition-duration: var(--transition-base-duration);
+  transition-timing-function: var(--transition-smooth-timing);
+}
+
+/* Tema modu değişimi sırasında özel durum */
+body.theme-is-changing,
+body.theme-is-changing * {
+  transition-duration: var(--transition-base-duration) !important;
+}
+
+/* =========================================
+ * Element Türlerine Göre Özel Geçişler
+ * =========================================*/
+
+/* Metinler ve başlıklar */
+.theme-transition h1, 
+.theme-transition h2, 
+.theme-transition h3,
+.theme-transition h4, 
+.theme-transition h5, 
+.theme-transition h6,
+.theme-transition p,
+.theme-transition span,
+.theme-transition a {
+  transition-property: color, text-shadow, opacity, transform;
+  transition-timing-function: var(--transition-smooth-timing);
+}
+
+/* Butonlar ve etkileşimli öğeler */
+.theme-transition button,
+.theme-transition .btn,
+.theme-transition input,
+.theme-transition select,
+.theme-transition textarea,
+.theme-transition .interactive-element {
+  transition-property: color, background-color, border-color, box-shadow, transform, opacity;
+  transition-timing-function: var(--transition-accent-timing);
+}
+
+/* Kartlar ve konteynerler */
+.theme-transition .card,
+.theme-transition .container,
+.theme-transition .box,
+.theme-transition .panel,
+.theme-transition nav,
+.theme-transition .sidebar {
+  transition-property: background-color, border-color, box-shadow, transform;
+  transition-duration: calc(var(--transition-base-duration) * 1.2);
+  transition-timing-function: var(--transition-smooth-timing);
+}
+
+/* İkonlar ve görseller */
+.theme-transition img,
+.theme-transition svg,
+.theme-transition .icon,
+.theme-transition .image {
+  transition-property: filter, opacity, transform;
+  transition-duration: calc(var(--transition-base-duration) * 1.3);
+  transition-timing-function: var(--transition-accent-timing);
+}
+
+/* =========================================
+ * Özel Durum Geçişleri
+ * =========================================*/
+
+/* Aydınlık temadan karanlık temaya geçiş */
+html[data-theme="dark"][data-previous-theme="light"] .theme-transition,
+html[data-theme-transition="to-dark"] .theme-transition {
+  transition-timing-function: var(--transition-smooth-timing);
+}
+
+/* Karanlık temadan aydınlık temaya geçiş */
+html[data-theme="light"][data-previous-theme="dark"] .theme-transition,
+html[data-theme-transition="to-light"] .theme-transition {
+  transition-timing-function: var(--transition-accent-timing);
+}
+
+/* =========================================
+ * Animasyon Tanımlamaları
+ * =========================================*/
+
+/* Genel amaçlı animasyonlar */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes scaleUp {
+  from { transform: scale(0.95); opacity: 0.7; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes slideInBottom {
+  from { transform: translateY(10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideInLeft {
+  from { transform: translateX(-10px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(10px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+/* Tema değişimi özel animasyonları */
+@keyframes themePulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+@keyframes colorShift {
+  0% { filter: saturate(0.8) brightness(1); }
+  50% { filter: saturate(1.2) brightness(1.05); }
+  100% { filter: saturate(1) brightness(1); }
+}
+
+@keyframes shadowPulse {
+  0% { box-shadow: 0 0 0 rgba(var(--primary-rgb), 0); }
+  50% { box-shadow: 0 0 15px rgba(var(--primary-rgb), 0.3); }
+  100% { box-shadow: 0 0 0 rgba(var(--primary-rgb), 0); }
+}
+
+/* Light → Dark geçiş animasyonu */
+@keyframes lightToDark {
+  0% { 
+    filter: brightness(1) contrast(1);
+    background-color: var(--background);
+  }
+  100% { 
+    filter: brightness(0.9) contrast(1.1);
+    background-color: var(--background);
+  }
+}
+
+/* Dark → Light geçiş animasyonu */
+@keyframes darkToLight {
+  0% { 
+    filter: brightness(1) contrast(1);
+    background-color: var(--background);
+  }
+  100% { 
+    filter: brightness(1.1) contrast(0.95);
+    background-color: var(--background);
+  }
+}
+
+/* =========================================
+ * Tema Değişimi Animasyon Sınıfları
+ * =========================================*/
+
+/* Geçiş animasyonları */
+html[data-theme-transition="to-dark"] body {
+  animation: lightToDark 0.5s forwards;
+}
+
+html[data-theme-transition="to-light"] body {
+  animation: darkToLight 0.5s forwards;
+}
+
+/* Ana sayfayı etkilemeden temaya özel animasyonlar */
+.theme-transition .theme-animated-container {
+  animation: fadeIn 0.5s var(--transition-smooth-timing) forwards;
+}
+
+.theme-transition .card.theme-animated,
+.theme-transition .panel.theme-animated {
+  animation: scaleUp 0.6s var(--transition-spring-timing) forwards;
+}
+
+.theme-transition .btn.theme-animated,
+.theme-transition button.theme-animated {
+  animation: colorShift 0.7s var(--transition-accent-timing) forwards;
+}
+
+.theme-transition .interactive-element.theme-animated {
+  animation: shadowPulse 1s var(--transition-bounce-timing) forwards;
+}
+
+/* Kademeli animasyon sınıfları */
+.theme-transition .animate-fade-in {
+  animation: fadeIn var(--transition-base-duration) var(--transition-smooth-timing) forwards;
+}
+
+.theme-transition .animate-scale-in {
+  animation: scaleUp var(--transition-base-duration) var(--transition-spring-timing) forwards;
+}
+
+.theme-transition .animate-slide-up {
+  animation: slideInBottom var(--transition-base-duration) var(--transition-smooth-timing) forwards;
+}
+
+.theme-transition .animate-slide-in-left {
+  animation: slideInLeft var(--transition-base-duration) var(--transition-smooth-timing) forwards;
+}
+
+.theme-transition .animate-slide-in-right {
+  animation: slideInRight var(--transition-base-duration) var(--transition-smooth-timing) forwards;
+}
+
+.theme-transition .animate-pulse {
+  animation: themePulse 0.7s var(--transition-spring-timing) forwards;
+}
+
+/* =========================================
+ * Gecikme Varyasyonları
+ * =========================================*/
+:root {
+  --delay-smallest: 0.05s;
+  --delay-small: 0.1s;
+  --delay-medium: 0.15s;
+  --delay-large: 0.2s;
+  --delay-largest: 0.3s;
+}
+
+.delay-1 { transition-delay: var(--delay-smallest) !important; }
+.delay-2 { transition-delay: var(--delay-small) !important; }
+.delay-3 { transition-delay: var(--delay-medium) !important; }
+.delay-4 { transition-delay: var(--delay-large) !important; }
+.delay-5 { transition-delay: var(--delay-largest) !important; }
+
+/* Kademeli element animasyonları için */
+.stagger-animation > *:nth-child(1) { transition-delay: calc(var(--delay-smallest) * 1); }
+.stagger-animation > *:nth-child(2) { transition-delay: calc(var(--delay-smallest) * 2); }
+.stagger-animation > *:nth-child(3) { transition-delay: calc(var(--delay-smallest) * 3); }
+.stagger-animation > *:nth-child(4) { transition-delay: calc(var(--delay-smallest) * 4); }
+.stagger-animation > *:nth-child(5) { transition-delay: calc(var(--delay-smallest) * 5); }
+.stagger-animation > *:nth-child(6) { transition-delay: calc(var(--delay-smallest) * 6); }
+.stagger-animation > *:nth-child(7) { transition-delay: calc(var(--delay-smallest) * 7); }
+.stagger-animation > *:nth-child(8) { transition-delay: calc(var(--delay-smallest) * 8); }
+.stagger-animation > *:nth-child(9) { transition-delay: calc(var(--delay-smallest) * 9); }
+.stagger-animation > *:nth-child(10) { transition-delay: calc(var(--delay-smallest) * 10); }
+
+/* =========================================
+ * Erişilebilirlik Uyumluluğu
+ * =========================================*/
+
+/* Azaltılmış hareket tercihi */
+@media (prefers-reduced-motion: reduce) {
+  .theme-transition,
+  .theme-transition *,
+  [class*="animate-"],
+  [class*="transition-"] {
+    transition-duration: 0.001s !important;
+    animation-duration: 0.001s !important;
+    transition-delay: 0s !important;
+    animation-delay: 0s !important;
+  }
+  
+  body.theme-is-changing {
+    animation: none !important;
+  }
+}
+
+/* HTML data özniteliği ile azaltılmış hareket */
+html[data-reduced-motion="true"] .theme-transition,
+html[data-reduced-motion="true"] .theme-transition *,
+html[data-reduced-motion="true"] [class*="animate-"],
+html[data-reduced-motion="true"] [class*="transition-"] {
+  transition-duration: 0.001s !important;
+  animation-duration: 0.001s !important;
+  transition-delay: 0s !important;
+  animation-delay: 0s !important;
+}
+
+html[data-reduced-motion="true"] body.theme-is-changing {
+  animation: none !important;
+}
+
+/* Yüksek kontrast modu desteği */
+@media (forced-colors: active) {
+  .theme-transition,
+  .theme-transition * {
+    transition: none !important;
+    animation: none !important;
+  }
+} 

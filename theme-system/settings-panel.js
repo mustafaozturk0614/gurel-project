@@ -237,76 +237,100 @@ class SettingsPanel {
     panel.classList.add(this.options.panelPosition || 'right');
     
     // Panel içeriği
-    panel.innerHTML = `
+    const cssClass = '';
+    
+    const panelHTML = `
+      <div class="theme-preview" aria-hidden="true">
+        <div class="sky">
+          <div class="sun">
+            <div class="sun-ray"></div>
+            <div class="sun-ray"></div>
+            <div class="sun-ray"></div>
+            <div class="sun-ray"></div>
+            <div class="sun-ray"></div>
+            <div class="sun-ray"></div>
+            <div class="sun-ray"></div>
+            <div class="sun-ray"></div>
+          </div>
+          <div class="moon"></div>
+          <div class="horizon">
+            <svg viewBox="0 0 120 28" preserveAspectRatio="none"><path d="M0,20 Q30,28 60,20 T120,20 V28 H0Z" fill="#b0b8c9" opacity=".7"/></svg>
+          </div>
+          <div class="cloud"></div>
+          <div class="cloud cloud2"></div>
+          <div class="star star1"></div>
+          <div class="star star2"></div>
+          <div class="star star3"></div>
+          <div class="star star4"></div>
+          <div class="star star5"></div>
+          <div class="star star6"></div>
+          <div class="star star7"></div>
+          <div class="time-indicator">00:00</div>
+          <span class="auto-icon" title="Otomatik Tema">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="16" cy="16" r="12" stroke-dasharray="4 4"/>
+              <path d="M16 8v4M16 20v4M8 16h4M20 16h4"/>
+            </svg>
+          </span>
+        </div>
+      </div>
       <div class="settings-panel-header">
-        <h2 id="settingsPanelTitle" class="settings-panel-title">Tema Ayarları</h2>
-        <button id="settingsPanelClose" class="settings-panel-close" aria-label="Paneli kapat">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <h2 class="settings-panel-title">Tema Ayarları</h2>
+        <button class="settings-panel-close" aria-label="Kapat">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
           </svg>
         </button>
       </div>
       
       <div class="settings-section">
-        <span class="settings-section-title">Tema Modu</span>
+        <div class="settings-section-title">Tema Modu</div>
         <div class="theme-mode-options">
           <div class="theme-mode-option">
-            <input type="radio" id="themeModeLight" name="themeMode" value="light" class="theme-radio">
-            <label for="themeModeLight">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <input type="radio" id="themeLight" name="themeMode" class="theme-radio" value="light">
+            <label for="themeLight">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="12" cy="12" r="5"></circle>
-                <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
               </svg>
-              <span>Açık</span>
+              Açık
             </label>
           </div>
           <div class="theme-mode-option">
-            <input type="radio" id="themeModeDark" name="themeMode" value="dark" class="theme-radio">
-            <label for="themeModeDark">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <input type="radio" id="themeDark" name="themeMode" class="theme-radio" value="dark">
+            <label for="themeDark">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
               </svg>
-              <span>Koyu</span>
+              Koyu
             </label>
           </div>
           <div class="theme-mode-option">
-            <input type="radio" id="themeModeAuto" name="themeMode" value="auto" class="theme-radio">
-            <label for="themeModeAuto">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 6V2M12 22v-4M18 12h4M2 12h4M19.07 5L16 8M8 16l-3.07 3M19.07 19L16 16M8 8 4.93 5"></path>
-              </svg>
-              <span>Otomatik</span>
+            <input type="radio" id="themeAuto" name="themeMode" class="theme-radio" value="auto">
+            <label for="themeAuto">
+              <div class="auto-theme-icon">
+                <div class="sun-moon-icon sun-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="4"></circle>
+                    <path d="M12 2v2M12 20v2M4 12H2M22 12h-2M6 6l-1-1M19 19l-1-1M18 6l1-1M5 19l1-1"></path>
+                  </svg>
+                </div>
+                <div class="sun-moon-icon moon-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                  </svg>
+                </div>
+              </div>
+              Otomatik
             </label>
-          </div>
-          <div class="theme-mode-option">
-            <input type="radio" id="themeModeSystem" name="themeMode" value="system" class="theme-radio">
-            <label for="themeModeSystem">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                <path d="M8 21h8M12 17v4"></path>
-              </svg>
-              <span>Sistem</span>
-            </label>
-          </div>
-        </div>
-        
-        <div class="theme-advanced-options">
-          <div class="switch-control">
-            <input type="checkbox" id="timeBasedThemeToggle" class="switch-checkbox">
-            <label for="timeBasedThemeToggle" class="switch-label">
-              <span class="switch-inner"></span>
-              <span class="switch-switch"></span>
-            </label>
-            <span class="switch-text">Saat bazlı otomatik tema</span>
-          </div>
-          
-          <div class="switch-control">
-            <input type="checkbox" id="skyAnimationToggle" class="switch-checkbox">
-            <label for="skyAnimationToggle" class="switch-label">
-              <span class="switch-inner"></span>
-              <span class="switch-switch"></span>
-            </label>
-            <span class="switch-text">Gökyüzü animasyonu</span>
           </div>
         </div>
       </div>
@@ -389,6 +413,12 @@ class SettingsPanel {
       </div>
     `;
     
+    // Panel içeriğini ayarla
+    panel.innerHTML = panelHTML;
+
+    // Animasyon fonksiyonu ekle
+    this.initThemePreviewAnimation(panel);
+
     // Kapatma düğmesi
     const applyPanelStyles = () => {
       // Başlangıçta kapalı halde başla
@@ -397,30 +427,99 @@ class SettingsPanel {
       } else {
         panel.style.transform = 'translateX(100%)';
       }
-      
       panel.style.opacity = '0';
       panel.style.visibility = 'hidden';
       panel.style.display = 'none';
       panel.style.pointerEvents = 'none';
     };
-    
     // Paneli body'ye ekle
     document.body.appendChild(panel);
     this.elements.panel = panel;
-    
     // Stilleri uygula
     applyPanelStyles();
-    
     // Kapatma düğmesi olayını ekle
     setTimeout(() => {
-      const closeButton = panel.querySelector('#settingsPanelClose');
+      const closeButton = panel.querySelector('.settings-panel-close');
       if (closeButton) {
         closeButton.addEventListener('click', () => {
-          console.log('Kapatma düğmesine tıklandı');
           this.toggleSettingsPanel(false);
         });
       }
     }, 0);
+  }
+  
+  // Tema önizleme animasyonunu başlatan fonksiyon
+  initThemePreviewAnimation(panel) {
+    const preview = panel.querySelector('.theme-preview');
+    const sun = preview.querySelector('.sun');
+    const moon = preview.querySelector('.moon');
+    const timeIndicator = preview.querySelector('.time-indicator');
+    
+    // Her tema modu için saat göstergesini başlatıcak ve güncelleyecek fonksiyon
+    const updateClock = () => {
+      if (timeIndicator) {
+        const now = new Date();
+        const formattedHour = now.getHours().toString().padStart(2, '0');
+        const formattedMinute = now.getMinutes().toString().padStart(2, '0');
+        timeIndicator.textContent = `${formattedHour}:${formattedMinute}`;
+        
+        // Saate göre gece/gündüz modunu ayarla (otomatik tema için)
+        const hour = now.getHours();
+        const isNight = hour >= 19 || hour < 6;
+        
+        if (isNight) {
+          preview.classList.add('night-mode');
+        } else {
+          preview.classList.remove('night-mode');
+        }
+      }
+    };
+    
+    // Saati başlat
+    updateClock();
+    
+    // Her 60 saniyede bir saati güncelle
+    clearInterval(this._timeUpdateInterval);
+    this._timeUpdateInterval = setInterval(updateClock, 60000);
+    
+    // Tema değişiminde animasyon tetikleme
+    const animate = (mode) => {
+      preview.classList.remove('light-anim', 'dark-anim', 'auto-anim');
+      void preview.offsetWidth; // reflow
+      if (mode === 'light') {
+        preview.classList.add('light-anim');
+      } else if (mode === 'dark') {
+        preview.classList.add('dark-anim');
+      } else if (mode === 'auto') {
+        preview.classList.add('auto-anim');
+      }
+      
+      // Her tema değişikliğinde saati güncelle
+      updateClock();
+    };
+    
+    // İlk yüklemede mevcut temaya göre animasyon
+    let currentTheme = 'light';
+    
+    // ThemeManager veya doküman özniteliğinden tema modunu al
+    if (this.themeManager && this.themeManager.settings) {
+      currentTheme = this.themeManager.settings.themeMode || 'light';
+    } else {
+      currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    }
+    
+    animate(currentTheme);
+    
+    // Tema değişiminde tetikleme
+    this.on('themeModeChanged', animate);
+    
+    // Başlatma olayında tetikleme
+    this.on('initialized', () => animate(currentTheme));
+    
+    // Sayfadan ayrılırken zamanlayıcıyı temizle
+    window.addEventListener('beforeunload', () => {
+      clearInterval(this._timeUpdateInterval);
+    });
   }
   
   /**
@@ -436,11 +535,13 @@ class SettingsPanel {
     toggleButton.setAttribute('aria-label', 'Tema Ayarları');
     
     // Toggle buton ikonu
-    toggleButton.innerHTML = `
-      <svg class="settings-toggle-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12.22 2C12.1 2 11.97 2 11.86 2C11.48 2.02 11.11 2.16 10.81 2.41C10.52 2.65 10.31 2.98 10.23 3.35L9.98 4.25C9.89 4.66 9.67 5.02 9.37 5.3C9.07 5.58 8.69 5.75 8.28 5.8C8.11 5.82 7.94 5.85 7.77 5.88C7.38 5.94 7.01 6.11 6.7 6.36C6.39 6.62 6.16 6.96 6.04 7.34L5.93 7.68C5.81 8.06 5.8 8.47 5.91 8.85C6.02 9.23 6.23 9.57 6.54 9.82C6.85 10.08 7.04 10.43 7.1 10.81C7.12 10.97 7.14 11.14 7.17 11.31C7.22 11.72 7.16 12.13 6.98 12.5C6.81 12.87 6.53 13.17 6.18 13.37C5.83 13.56 5.53 13.85 5.33 14.2C5.13 14.55 5.04 14.95 5.07 15.35L5.11 15.75C5.14 16.16 5.28 16.54 5.53 16.86C5.77 17.18 6.1 17.42 6.48 17.54C6.87 17.66 7.19 17.91 7.41 18.23C7.49 18.34 7.56 18.46 7.63 18.59C7.84 18.97 7.94 19.4 7.92 19.84C7.9 20.27 7.77 20.69 7.54 21.05L7.4 21.27C7.18 21.62 7.07 22.03 7.1 22.44C7.11 22.64 7.17 22.83 7.27 23.01C7.36 23.18 7.5 23.32 7.66 23.42C7.98 23.63 8.36 23.75 8.74 23.75H15.01C15.4 23.75 15.77 23.63 16.1 23.42C16.26 23.32 16.39 23.18 16.49 23.01C16.59 22.83 16.65 22.64 16.66 22.44C16.69 22.03 16.58 21.62 16.36 21.27L16.22 21.05C15.99 20.69 15.86 20.27 15.84 19.84C15.82 19.4 15.92 18.97 16.13 18.59C16.2 18.46 16.27 18.34 16.35 18.23C16.57 17.91 16.89 17.66 17.28 17.54C17.66 17.42 17.99 17.18 18.23 16.86C18.48 16.54 18.62 16.16 18.65 15.75L18.69 15.35C18.72 14.95 18.63 14.55 18.43 14.2C18.23 13.85 17.94 13.56 17.58 13.37C17.23 13.17 16.95 12.87 16.78 12.5C16.6 12.13 16.54 11.72 16.59 11.31C16.62 11.14 16.64 10.97 16.66 10.81C16.72 10.43 16.91 10.08 17.22 9.82C17.53 9.57 17.74 9.23 17.85 8.85C17.96 8.47 17.95 8.06 17.83 7.68L17.72 7.34C17.6 6.96 17.37 6.62 17.05 6.36C16.74 6.11 16.38 5.94 15.99 5.88C15.82 5.85 15.65 5.82 15.48 5.8C15.07 5.75 14.69 5.58 14.39 5.3C14.09 5.02 13.87 4.66 13.78 4.25L13.53 3.35C13.44 2.98 13.24 2.65 12.95 2.41C12.65 2.16 12.28 2.02 11.9 2H12.22Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M12 16C13.6569 16 15 14.6569 15 13C15 11.3431 13.6569 10 12 10C10.3431 10 9 11.3431 9 13C9 14.6569 10.3431 16 12 16Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
+    const toggleHTML = `
+      <button id="settingsToggle" class="settings-toggle" aria-expanded="false" aria-controls="settingsPanel" aria-label="Tema Ayarları">
+        <svg class="settings-toggle-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+      </button>
     `;
     
     // Buton animasyonu ekle
@@ -575,112 +676,6 @@ class SettingsPanel {
     
     // Referansı sakla
     this.elements.themeToggles = themeRadios;
-
-    // Gelişmiş tema ayarları - Saat bazlı tema ve Gökyüzü animasyonu
-    this.initAdvancedThemeOptions();
-  }
-
-  /**
-   * Gelişmiş tema ayarlarını başlatır - Saat bazlı tema ve Gökyüzü animasyonu
-   */
-  initAdvancedThemeOptions() {
-    // Saat bazlı tema toggle butonunu seç
-    const timeBasedThemeToggle = document.getElementById('timeBasedThemeToggle');
-    
-    // Gökyüzü animasyonu toggle butonunu seç
-    const skyAnimationToggle = document.getElementById('skyAnimationToggle');
-    
-    if (!timeBasedThemeToggle || !skyAnimationToggle) {
-      this.log('Gelişmiş tema ayarları butonları bulunamadı!');
-      return;
-    }
-    
-    // ThemeManager varsa ondan ayarları al
-    if (this.themeManager && this.themeManager.settings) {
-      // Saat bazlı tema ayarını al
-      timeBasedThemeToggle.checked = this.themeManager.settings.enableTimeBasedTheme;
-      
-      // Gökyüzü animasyonu ayarını al
-      skyAnimationToggle.checked = this.themeManager.settings.enableSkyAnimation;
-    } else {
-      // ThemeManager yoksa localStorage'dan oku
-      timeBasedThemeToggle.checked = ThemeUtils.getFromStorage('enableTimeBasedTheme') === 'true';
-      skyAnimationToggle.checked = ThemeUtils.getFromStorage('enableSkyAnimation') === 'true';
-    }
-    
-    // Saat bazlı tema toggle değişikliğinde
-    timeBasedThemeToggle.addEventListener('change', () => {
-      const enabled = timeBasedThemeToggle.checked;
-      
-      // ThemeManager ile ayarı değiştir
-      if (this.themeManager) {
-        this.themeManager.settings.enableTimeBasedTheme = enabled;
-        
-        if (enabled) {
-          // Aktifleştirildiğinde hemen başlat
-          this.themeManager.initTimeBasedTheme();
-        }
-        
-        // Ayarı kaydet
-        ThemeUtils.saveToStorage('enableTimeBasedTheme', enabled);
-      } else {
-        // ThemeManager yoksa localStorage'a kaydet
-        ThemeUtils.saveToStorage('enableTimeBasedTheme', enabled);
-        
-        // Ayarın hemen uygulanması için sayfayı yenileme gerekebilir
-        if (enabled) {
-          // Kullanıcıya bilgi verebiliriz
-          ThemeUtils.announceToScreenReader('Saat bazlı tema etkinleştirildi');
-        }
-      }
-      
-      // Log
-      this.log(`Saat bazlı otomatik tema ${enabled ? 'etkinleştirildi' : 'devre dışı bırakıldı'}`);
-      
-      // Olay tetikle
-      this.emit('timeBasedThemeChanged', enabled);
-    });
-    
-    // Gökyüzü animasyonu toggle değişikliğinde
-    skyAnimationToggle.addEventListener('change', () => {
-      const enabled = skyAnimationToggle.checked;
-      
-      // ThemeManager ile ayarı değiştir
-      if (this.themeManager) {
-        this.themeManager.settings.enableSkyAnimation = enabled;
-        
-        if (enabled) {
-          // Aktifleştirildiğinde hemen başlat
-          this.themeManager.initSkyAnimation();
-        } else {
-          // Devre dışı bırakıldığında gökyüzü konteynerını kaldır
-          const skyContainer = document.querySelector('.sky-animation-container');
-          if (skyContainer) {
-            skyContainer.remove();
-          }
-        }
-        
-        // Ayarı kaydet
-        ThemeUtils.saveToStorage('enableSkyAnimation', enabled);
-      } else {
-        // ThemeManager yoksa localStorage'a kaydet
-        ThemeUtils.saveToStorage('enableSkyAnimation', enabled);
-        
-        // Ayarın hemen uygulanması için sayfayı yenileme gerekebilir
-        if (enabled) {
-          // Kullanıcıya bilgi verebiliriz
-          ThemeUtils.announceToScreenReader('Gökyüzü animasyonu etkinleştirildi');
-        }
-      }
-      
-      // Log
-      this.log(`Gökyüzü animasyonu ${enabled ? 'etkinleştirildi' : 'devre dışı bırakıldı'}`);
-      
-      // Olay tetikle
-      this.emit('skyAnimationChanged', enabled);
-    });
-    
-    this.log('Gelişmiş tema ayarları başarıyla başlatıldı');
   }
 
   /**
@@ -1084,7 +1079,7 @@ class SettingsPanel {
       } else {
         // Manuel sıfırla
         // LocalStorage temizle
-        ['themeMode', 'colorTheme', 'contrastLevel', 'fontSizePercent', 'reducedMotion', 'enableTimeBasedTheme', 'enableSkyAnimation'].forEach(key => {
+        ['themeMode', 'colorTheme', 'contrastLevel', 'fontSizePercent', 'reducedMotion'].forEach(key => {
           localStorage.removeItem(key);
         });
         
@@ -1124,20 +1119,6 @@ class SettingsPanel {
         document.documentElement.classList.remove('reduced-motion');
         const reducedMotionToggle = document.getElementById('reducedMotionToggle');
         if (reducedMotionToggle) reducedMotionToggle.checked = false;
-        
-        // 6. Saat bazlı tema ayarını sıfırla - varsayılan: false
-        const timeBasedThemeToggle = document.getElementById('timeBasedThemeToggle');
-        if (timeBasedThemeToggle) timeBasedThemeToggle.checked = false;
-        
-        // 7. Gökyüzü animasyonu ayarını sıfırla - varsayılan: false
-        const skyAnimationToggle = document.getElementById('skyAnimationToggle');
-        if (skyAnimationToggle) skyAnimationToggle.checked = false;
-        
-        // Gökyüzü konteynerını kaldır
-        const skyContainer = document.querySelector('.sky-animation-container');
-        if (skyContainer) {
-          skyContainer.remove();
-        }
       }
       
       // Başarı mesajı
