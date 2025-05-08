@@ -23,8 +23,8 @@
 
     
     <!-- Tema Sistemi CSS -->
-    <link rel="stylesheet" href="themes.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="settings-panel.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="theme-system/theme-variables.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="theme-system/settings-panel.css" media="print" onload="this.media='all'">
     
     <!-- Önbellek yenilemesi için -->
     <script>
@@ -1786,150 +1786,26 @@
         </div>
     </footer>
 
-    <!-- Settings Panel -->
-    <div class="settings-panel floating-settings-panel" id="settingsPanel" role="dialog" aria-labelledby="settingsTitle" aria-describedby="settingsDescription">
-        <div class="settings-header">
-            <h3 id="settingsTitle" data-translate="settings.title">Site Ayarları</h3>
-            <button class="settings-close" id="settingsClose" aria-label="Ayarları kapat"><i class="fas fa-times" aria-hidden="true"></i></button>
-        </div>
+    <!-- Tema sistemini yüklemek için özel script ekleyeceğim -->
+    <script>
+      // Ayarlar butonu ve panelini yeniden oluşturmak için mevcut elementleri temizle
+      window.addEventListener('DOMContentLoaded', function() {
+        // Önce varsa mevcut elementleri temizle
+        const oldPanel = document.getElementById('settingsPanel');
+        if (oldPanel) oldPanel.remove();
         
-        <p id="settingsDescription" class="visually-hidden">Bu panelden site tema rengini, kontrast ayarlarını ve yazı boyutunu değiştirebilirsiniz.</p>
+        const oldToggle = document.getElementById('settingsToggle');
+        if (oldToggle) oldToggle.remove();
         
-        <div class="settings-content">
-            <!-- Theme Mode -->
-            <div class="settings-section">
-                <span id="themeModeLabel" data-translate="settings.themeMode">Tema Modu</span>
-                <div class="theme-mode-options" role="radiogroup" aria-labelledby="themeModeLabel">
-                    <div class="theme-mode-option">
-                        <input type="radio" id="themeAuto" name="themeMode" value="auto" class="theme-radio">
-                        <label for="themeAuto" class="theme-label">
-                            <i class="fas fa-sync" aria-hidden="true"></i>
-                            <span data-translate="settings.themeAuto">Otomatik</span>
-                        </label>
-                    </div>
-                    <div class="theme-mode-option">
-                        <input type="radio" id="themeLight" name="themeMode" value="light" class="theme-radio">
-                        <label for="themeLight" class="theme-label">
-                            <i class="fas fa-sun" aria-hidden="true"></i>
-                            <span data-translate="settings.themeLight">Açık</span>
-                        </label>
-                    </div>
-                    <div class="theme-mode-option">
-                        <input type="radio" id="themeDark" name="themeMode" value="dark" class="theme-radio">
-                        <label for="themeDark" class="theme-label">
-                            <i class="fas fa-moon" aria-hidden="true"></i>
-                            <span data-translate="settings.themeDark">Koyu</span>
-                        </label>
-                    </div>
-                    <div class="theme-mode-option">
-                        <input type="radio" id="themeSystem" name="themeMode" value="system" class="theme-radio">
-                        <label for="themeSystem" class="theme-label">
-                            <i class="fas fa-desktop" aria-hidden="true"></i>
-                            <span data-translate="settings.themeSystem">Sistem</span>
-                        </label>
-                    </div>
-                </div>
-                
-                <!-- Geliştirilmiş tema önizlemesi -->
-                <div class="theme-preview-container">
-                    <h4 class="preview-title">Önizleme</h4>
-                    <!-- Güneş-Ay animasyon önizlemesi -->
-                    <div class="theme-preview">
-                        <div class="theme-preview-sun"></div>
-                        <div class="theme-preview-moon"></div>
-                        <div class="theme-preview-landscape"></div>
-                    </div>
-                    
-                    <!-- Tema gösterge ikonları -->
-                    <div class="theme-indicators">
-                       <div class="theme-indicator" id="lightIndicator">
-                          <i class="fas fa-sun"></i>
-                          <span>Açık Mod</span>
-                       </div>
-                       <div class="theme-indicator" id="darkIndicator">
-                          <i class="fas fa-moon"></i>
-                          <span>Koyu Mod</span>
-                       </div>
-                    </div>
-                    
-                    <div class="theme-preview-frame">
-                        <div class="theme-preview-header">
-                            <div class="preview-logo"></div>
-                            <div class="preview-nav">
-                                <div class="preview-nav-item"></div>
-                                <div class="preview-nav-item"></div>
-                                <div class="preview-nav-item"></div>
-                            </div>
-                        </div>
-                        <div class="theme-preview-content">
-                            <div class="preview-heading"></div>
-                            <div class="preview-text-line"></div>
-                            <div class="preview-text-line"></div>
-                            <div class="preview-button"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Contrast Mode - Kademeli Kontrast -->
-            <div class="settings-section">
-                <span id="contrastLevelLabel" data-translate="settings.contrastLevel">Kontrast Seviyesi</span>
-                <div class="contrast-slider-container">
-                    <input type="range" id="contrastSlider" min="0" max="3" value="0" 
-                           aria-labelledby="contrastLevelLabel" aria-describedby="contrastLevelDescription">
-                    <div class="contrast-levels">
-                        <span class="contrast-level" data-level="0">Normal</span>
-                        <span class="contrast-level" data-level="1">Hafif</span>
-                        <span class="contrast-level" data-level="2">Orta</span>
-                        <span class="contrast-level" data-level="3">Yüksek</span>
-                    </div>
-                    <span id="contrastLevelDescription" class="visually-hidden">Kontrast seviyesini ayarlamak için kaydırıcıyı kullanın</span>
-                </div>
-            </div>
-            
-            <!-- Font Size -->
-            <div class="settings-section">
-                <span id="fontSizeLabel" data-translate="settings.fontSize">Yazı Boyutu</span>
-                <div class="font-size-controls" role="group" aria-labelledby="fontSizeLabel">
-                    <button id="decreaseFontSize" class="font-size-btn" aria-label="Yazı boyutunu küçült"><i class="fas fa-minus" aria-hidden="true"></i></button>
-                    <span id="currentFontSize" aria-live="polite">100%</span>
-                    <button id="increaseFontSize" class="font-size-btn" aria-label="Yazı boyutunu büyüt"><i class="fas fa-plus" aria-hidden="true"></i></button>
-                </div>
-                <div class="font-size-slider">
-                    <input type="range" id="fontSizeSlider" min="80" max="150" value="100" step="10">
-                </div>
-            </div>
-            
-            <!-- Theme Color -->
-            <div class="settings-section">
-                <span id="themeColorLabel" data-translate="settings.themeColor">Tema Rengi</span>
-                <div class="color-options" role="radiogroup" aria-labelledby="themeColorLabel">
-                    <div class="color-option active" style="background-color: #0055a4;" data-color="#0055a4" data-theme="blue" data-name="Mavi" role="radio" aria-checked="true" tabindex="0" aria-label="Mavi tema"></div>
-                    <div class="color-option" style="background-color: #d93025;" data-color="#d93025" data-theme="red" data-name="Kırmızı" role="radio" aria-checked="false" tabindex="0" aria-label="Kırmızı tema"></div>
-                    <div class="color-option" style="background-color: #188038;" data-color="#188038" data-theme="green" data-name="Yeşil" role="radio" aria-checked="false" tabindex="0" aria-label="Yeşil tema"></div>
-                    <div class="color-option" style="background-color: #ea8600;" data-color="#ea8600" data-theme="orange" data-name="Turuncu" role="radio" aria-checked="false" tabindex="0" aria-label="Turuncu tema"></div>
-                    <div class="color-option" style="background-color: #7b1fa2;" data-color="#7b1fa2" data-theme="purple" data-name="Mor" role="radio" aria-checked="false" tabindex="0" aria-label="Mor tema"></div>
-                </div>
-            </div>
-            
-            <!-- Additional info text at the bottom -->
-            <div class="settings-footer">
-                <button id="resetSettings" class="btn btn-sm btn-outline-secondary w-100 mb-2">
-                    <i class="fas fa-undo" aria-hidden="true"></i> Varsayılan Ayarlara Dön
-                </button>
-                <p class="settings-info">
-                    <i class="fas fa-info-circle" aria-hidden="true"></i>
-                    <span data-translate="settings.info">Ayarlarınız otomatik olarak kaydedilir ve bir sonraki ziyaretinizde hatırlanır.</span>
-                </p>
-            </div>
-        </div>
-    </div>
+        console.log('Eski panel elementleri temizlendi, yenileri oluşturulacak.');
+      });
+    </script>
 
-    <!-- Settings Toggle Button -->
-    <button id="settingsToggle" class="settings-toggle fixed-settings-toggle" title="Ayarları Göster" aria-label="Erişilebilirlik ayarlarını aç" aria-expanded="false" aria-controls="settingsPanel">
+    <!-- Eski ayarlar butonu - artık JavaScript tarafından oluşturulacak -->
+    <!-- <button id="settingsToggle" class="settings-toggle fixed-settings-toggle" title="Ayarları Göster" aria-label="Erişilebilirlik ayarlarını aç" aria-expanded="false" aria-controls="settingsPanel">
         <i class="fas fa-cog" aria-hidden="true"></i>
         <span class="visually-hidden">Erişilebilirlik Ayarları</span>
-    </button>
+    </button> -->
     
     <!-- Settings panel overlay -->
     <div class="settings-overlay"></div>
@@ -1943,23 +1819,12 @@
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 
     <!-- Tema ve Ayarlar Sistemi (Sıralama önemli) -->
-    <script src="theme-manager.js"></script>
-    <script src="settings-panel.js"></script>
+    <script type="module" src="theme-system/theme-utils.js"></script>
+    <script type="module" src="theme-system/theme-manager.js"></script>
+    <script type="module" src="theme-system/settings-panel.js"></script>
+    <script type="module" src="theme-system/index.js"></script>
     <script src="header.js?v=1.2"></script>
     <script src="app.js"></script>
-
-    <!-- Sayfa yükleme durumunu kontrol eden script -->
-    <script>
-        // Sayfa yüklendikten sonra body'ye loaded sınıfı ekle
-        window.addEventListener('load', function() {
-            document.body.classList.add('loaded');
-        });
-        
-        // Sayfanın 5 saniye içinde yüklenememesi durumunda da body'ye loaded sınıfı ekle
-        setTimeout(function() {
-            document.body.classList.add('loaded');
-        }, 5000);
-    </script>
 
     <!-- Scroll Indicator -->
     <div class="scroll-indicator">
@@ -1968,14 +1833,7 @@
         </div>
     </div>
 
-    <!-- Sayfa geçiş efekti için container -->
-    <div class="page-transition-container">
-      <div class="page-transition-overlay"></div>
-      <div class="page-transition-overlay reveal"></div>
-      <div class="page-transition-logo">
-        <img src="assets/svg/brands/logo-sy-svg.svg" alt="Gürel Yönetim" width="120" height="40">
-      </div>
-    </div>
+
 
     <!-- Mobil menü için karartma ekranı -->
     <div class="screen-darken"></div>
@@ -2004,11 +1862,7 @@
         }, 5000);
     </script>
 
-    <div class="theme-preview">
-      <div class="theme-preview-sun"></div>
-      <div class="theme-preview-moon"></div>
-      <div class="theme-preview-landscape"></div>
-    </div>
+
 
 </body>
 </html>

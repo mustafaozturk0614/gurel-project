@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gürel Yönetim - Tema Sistemi Demo</title>
+  
+  <!-- Tema CSS dosyası -->
+  <link rel="stylesheet" href="./theme-variables.css">
+  
+  <!-- Panel CSS dosyası -->
+  <link rel="stylesheet" href="./settings-panel.css">
+  
+  <!-- Demo stillemeler -->
+  <style>
+    body {
+      font-family: var(--font-family);
+      background-color: var(--background);
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+      line-height: var(--line-height-normal);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    
+    header {
+      background-color: var(--surface-color);
+      padding: 1.5rem 0;
+      box-shadow: var(--shadow-md);
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 2rem;
+    }
+    
+    header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+    
+    .logo {
+      font-size: var(--font-size-2xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+    
+    .card {
+      background-color: var(--surface-color);
+      border-radius: var(--border-radius-md);
+      box-shadow: var(--shadow-md);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--border-color);
+    }
+    
+    .color-boxes {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    
+    .color-box {
+      padding: 1.5rem;
+      border-radius: var(--border-radius-md);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100px;
+      position: relative;
+    }
+    
+    .color-box::after {
+      content: attr(data-color);
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      font-size: var(--font-size-sm);
+      color: rgba(255, 255, 255, 0.8);
+    }
+    
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--btn-padding-y) var(--btn-padding-x);
+      background-color: var(--primary-color);
+      color: var(--text-on-primary);
+      border-radius: var(--btn-border-radius);
+      font-size: var(--btn-font-size);
+      font-weight: var(--btn-font-weight);
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+      text-decoration: none;
+    }
+    
+    .button:hover {
+      background-color: var(--primary-dark);
+    }
+    
+    .button-outline {
+      background-color: transparent;
+      border: 1px solid var(--primary-color);
+      color: var(--primary-color);
+    }
+    
+    .button-outline:hover {
+      background-color: var(--primary-color);
+      color: var(--text-on-primary);
+    }
+    
+    .button-text {
+      background-color: transparent;
+      color: var(--primary-color);
+      padding: 0;
+    }
+    
+    .button-text:hover {
+      background-color: transparent;
+      color: var(--primary-dark);
+      text-decoration: underline;
+    }
+    
+    .buttons {
+      display: flex;
+      gap: 1rem;
+      margin: 1.5rem 0;
+      flex-wrap: wrap;
+    }
+    
+    footer {
+      margin-top: 2rem;
+      padding: 2rem 0;
+      border-top: 1px solid var(--border-color);
+      color: var(--text-secondary);
+      font-size: var(--font-size-sm);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <a href="#" class="logo">Gürel Yönetim</a>
+      <div>
+        <button class="button button-outline" id="manualThemeToggle">Tema Değiştir</button>
+      </div>
+    </div>
+  </header>
+  
+  <main class="container">
+    <div class="card">
+      <h1>Gürel Yönetim Tema Sistemi</h1>
+      <p>Bu sayfa, yeni tema sistemini test etmek için oluşturulmuştur. Sağ alt köşedeki "Ayarlar" butonuna tıklayarak tema ayarlarını değiştirebilirsiniz.</p>
+      
+      <h3>Tema Özellikleri</h3>
+      <ul>
+        <li>Açık/Koyu/Otomatik/Sistem tema desteği</li>
+        <li>Erişilebilirlik iyileştirmeleri (kontrast, font boyutu)</li>
+        <li>Renk teması varyasyonları</li>
+        <li>Ölçeklenebilir bileşen tasarımı</li>
+        <li>Kolay özelleştirilebilir CSS değişkenleri</li>
+      </ul>
+      
+      <div class="buttons">
+        <button class="button">Ana Buton</button>
+        <button class="button button-outline">Çerçeveli Buton</button>
+        <button class="button button-text">Metin Buton</button>
+      </div>
+    </div>
+    
+    <div class="card">
+      <h2>Renk Teması</h2>
+      <p>Aşağıda sistemin kullandığı temel renkler gösterilmektedir. Renk temasını değiştirerek bu kutucukların renkleri de değişecektir.</p>
+      
+      <div class="color-boxes">
+        <div class="color-box" style="background-color: var(--primary-color);" data-color="Primary"></div>
+        <div class="color-box" style="background-color: var(--primary-dark);" data-color="Primary Dark"></div>
+        <div class="color-box" style="background-color: var(--primary-light);" data-color="Primary Light"></div>
+        <div class="color-box" style="background-color: var(--success-color);" data-color="Success"></div>
+        <div class="color-box" style="background-color: var(--danger-color);" data-color="Danger"></div>
+        <div class="color-box" style="background-color: var(--warning-color);" data-color="Warning"></div>
+        <div class="color-box" style="background-color: var(--info-color);" data-color="Info"></div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <h2>Tipografi</h2>
+      <h1>H1 Başlık</h1>
+      <h2>H2 Başlık</h2>
+      <h3>H3 Başlık</h3>
+      <h4>H4 Başlık</h4>
+      <h5>H5 Başlık</h5>
+      <h6>H6 Başlık</h6>
+      
+      <p>Bu bir paragraf metnidir. Gürel Yönetim gelişmiş tema sistemi sayesinde açık/koyu tema, kontrast ve font boyutu gibi ayarları kolayca değiştirebilirsiniz.</p>
+      
+      <p class="text-sm">Bu küçük metin örneğidir.</p>
+      <p class="text-lg">Bu büyük metin örneğidir.</p>
+      <p class="text-xl">Bu çok büyük metin örneğidir.</p>
+      <p class="font-semibold">Bu yarı kalın metin örneğidir.</p>
+      <p class="font-bold">Bu kalın metin örneğidir.</p>
+    </div>
+  </main>
+  
+  <footer>
+    <div class="container">
+      <p>Gürel Yönetim Tema Sistemi &copy; 2024</p>
+    </div>
+  </footer>
+  
+  <!-- JavaScript modülleri -->
+  <script type="module">
+    import { initThemeSystem, ThemeManager, SettingsPanel } from './index.js';
+    
+    // Tema sistemini başlat
+    const initSystem = async () => {
+      try {
+        const { themeManager, settingsPanel } = await initThemeSystem({
+          themeManagerOptions: {
+            debug: true
+          },
+          settingsPanelOptions: {
+            panelPosition: 'right',
+            debug: true
+          }
+        });
+        
+        // Manuel tema değiştirme butonu
+        const themeToggleBtn = document.getElementById('manualThemeToggle');
+        if (themeToggleBtn) {
+          themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = themeManager.getActiveTheme();
+            themeManager.setThemeMode(currentTheme === 'light' ? 'dark' : 'light');
+          });
+        }
+        
+        // Olay dinleyicileri
+        themeManager.on('themeModeChanged', (mode) => {
+          console.log('Tema modu değişti:', mode);
+        });
+        
+        settingsPanel.on('colorThemeChanged', (data) => {
+          console.log('Renk teması değişti:', data);
+        });
+        
+      } catch (error) {
+        console.error('Tema sistemi başlatılamadı:', error);
+      }
+    };
+    
+    // Başlat
+    initSystem();
+  </script>
+</body>
+</html> 
