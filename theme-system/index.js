@@ -27,7 +27,7 @@ const handleError = (error, component) => {
 
 // Stil dosyalarını dinamik olarak yükle
 function loadThemeStylesheets() {
-  // Ana tema değişkenleri CSS'sini yükle
+  // Ana tema değişkenleri CSS'ini yükle
   if (!document.querySelector('link[href*="theme-variables.css"]')) {
     const themeVariablesLink = document.createElement('link');
     themeVariablesLink.rel = 'stylesheet';
@@ -49,6 +49,14 @@ function loadThemeStylesheets() {
     themeTransitionsLink.rel = 'stylesheet';
     themeTransitionsLink.href = './theme-system/theme-transitions.css';
     document.head.appendChild(themeTransitionsLink);
+  }
+
+  // Tema bileşenleri CSS'ini yükle
+  if (!document.querySelector('link[href*="theme-components.css"]')) {
+    const themeComponentsLink = document.createElement('link');
+    themeComponentsLink.rel = 'stylesheet';
+    themeComponentsLink.href = './theme-system/theme-components.css';
+    document.head.appendChild(themeComponentsLink);
   }
 }
 

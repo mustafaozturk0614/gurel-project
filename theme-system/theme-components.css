@@ -1,0 +1,321 @@
+/**
+ * Gürel Yönetim - Bileşen CSS Kütüphanesi
+ * Sürüm: 1.0.0
+ * 
+ * Bu dosya, tema sistemine uyumlu hazır bileşenlerin CSS tanımlarını içerir.
+ * Tüm bileşenler, theme-variables.css dosyasındaki değişkenleri kullanır.
+ */
+
+/* =========================================
+ * 1. Button Bileşenleri
+ * =========================================*/
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--btn-padding-y) var(--btn-padding-x);
+  font-size: var(--btn-font-size);
+  font-weight: var(--btn-font-weight);
+  line-height: var(--btn-line-height);
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+  border: var(--btn-border-width) solid transparent;
+  border-radius: var(--btn-border-radius);
+  transition: color var(--transition-normal), 
+              background-color var(--transition-normal), 
+              border-color var(--transition-normal), 
+              box-shadow var(--transition-normal);
+}
+
+.btn-primary {
+  color: var(--text-on-primary);
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-dark);
+  border-color: var(--primary-dark);
+}
+
+.btn-secondary {
+  color: var(--text-on-primary);
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+}
+
+.btn-success {
+  color: var(--text-on-primary);
+  background-color: var(--success-color);
+  border-color: var(--success-color);
+}
+
+.btn-danger {
+  color: var(--text-on-primary);
+  background-color: var(--danger-color);
+  border-color: var(--danger-color);
+}
+
+.btn-outline-primary {
+  color: var(--primary-color);
+  background-color: transparent;
+  border-color: var(--primary-color);
+}
+
+.btn-outline-primary:hover {
+  color: var(--text-on-primary);
+  background-color: var(--primary-color);
+}
+
+/* =========================================
+ * 2. Kart Bileşenleri
+ * =========================================*/
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: var(--card-bg);
+  background-clip: border-box;
+  border: var(--card-border-width) solid var(--card-border-color);
+  border-radius: var(--card-border-radius);
+  box-shadow: var(--card-box-shadow);
+  transition: transform var(--transition-normal), 
+              box-shadow var(--transition-normal);
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+
+.card-header {
+  padding: var(--spacing-3) var(--spacing-4);
+  margin-bottom: 0;
+  background-color: var(--background-alt);
+  border-bottom: var(--card-border-width) solid var(--card-border-color);
+}
+
+.card-body {
+  flex: 1 1 auto;
+  padding: var(--card-padding);
+}
+
+.card-footer {
+  padding: var(--spacing-3) var(--spacing-4);
+  background-color: var(--background-alt);
+  border-top: var(--card-border-width) solid var(--card-border-color);
+}
+
+/* =========================================
+ * 3. Form Bileşenleri
+ * =========================================*/
+.form-control {
+  display: block;
+  width: 100%;
+  padding: var(--input-padding-y) var(--input-padding-x);
+  font-size: var(--input-font-size);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--input-line-height);
+  color: var(--input-color);
+  background-color: var(--input-bg);
+  background-clip: padding-box;
+  border: var(--input-border-width) solid var(--input-border-color);
+  border-radius: var(--input-border-radius);
+  transition: border-color var(--transition-normal), 
+              box-shadow var(--transition-normal);
+}
+
+.form-control:focus {
+  color: var(--input-color);
+  background-color: var(--input-bg);
+  border-color: var(--input-focus-border-color);
+  outline: 0;
+  box-shadow: var(--input-focus-box-shadow);
+}
+
+.form-label {
+  margin-bottom: var(--spacing-2);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+}
+
+/* =========================================
+ * 4. Bildirim Bileşenleri
+ * =========================================*/
+.alert {
+  position: relative;
+  padding: var(--spacing-3) var(--spacing-4);
+  margin-bottom: var(--spacing-4);
+  border: 1px solid transparent;
+  border-radius: var(--border-radius-md);
+  transition: opacity var(--transition-normal);
+}
+
+.alert-primary {
+  color: var(--primary-color);
+  background-color: rgba(var(--primary-rgb), 0.1);
+  border-color: rgba(var(--primary-rgb), 0.2);
+}
+
+.alert-success {
+  color: var(--success-color);
+  background-color: rgba(var(--success-rgb), 0.1);
+  border-color: rgba(var(--success-rgb), 0.2);
+}
+
+.alert-danger {
+  color: var(--danger-color);
+  background-color: rgba(var(--danger-rgb), 0.1);
+  border-color: rgba(var(--danger-rgb), 0.2);
+}
+
+.alert-warning {
+  color: var(--warning-color);
+  background-color: rgba(var(--warning-rgb), 0.1);
+  border-color: rgba(var(--warning-rgb), 0.2);
+}
+
+/* =========================================
+ * 5. Gezinme Bileşenleri
+ * =========================================*/
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+.nav-link {
+  display: block;
+  padding: var(--spacing-2) var(--spacing-3);
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color var(--transition-normal);
+}
+
+.nav-link:hover {
+  color: var(--primary-dark);
+}
+
+.nav-tabs {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.nav-tabs .nav-link {
+  margin-bottom: -1px;
+  border: 1px solid transparent;
+  border-top-left-radius: var(--border-radius-md);
+  border-top-right-radius: var(--border-radius-md);
+}
+
+.nav-tabs .nav-link.active {
+  color: var(--text-color);
+  background-color: var(--background);
+  border-color: var(--border-color) var(--border-color) transparent;
+}
+
+/* =========================================
+ * 6. Liste ve Tablo Bileşenleri
+ * =========================================*/
+.list-group {
+  display: flex;
+  flex-direction: column;
+  padding-left: 0;
+  margin-bottom: 0;
+  border-radius: var(--border-radius-md);
+}
+
+.list-group-item {
+  position: relative;
+  display: block;
+  padding: var(--spacing-3) var(--spacing-4);
+  color: var(--text-color);
+  text-decoration: none;
+  background-color: var(--background);
+  border: 1px solid var(--border-color);
+}
+
+.list-group-item:first-child {
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+}
+
+.list-group-item:last-child {
+  border-bottom-right-radius: inherit;
+  border-bottom-left-radius: inherit;
+}
+
+.table {
+  width: 100%;
+  margin-bottom: var(--spacing-4);
+  color: var(--text-color);
+  vertical-align: top;
+  border-color: var(--border-color);
+}
+
+.table > :not(:first-child) {
+  border-top: 2px solid var(--border-color);
+}
+
+.table th {
+  font-weight: var(--font-weight-semibold);
+  text-align: inherit;
+  text-align: -webkit-match-parent;
+}
+
+.table td, 
+.table th {
+  padding: var(--spacing-3);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.table-hover tbody tr:hover {
+  color: var(--text-color);
+  background-color: var(--background-alt);
+}
+
+/* Koyu Tema Modu için Bileşen Ayarlamaları */
+html[data-theme="dark"] .card {
+  background-color: var(--surface-color);
+  border-color: var(--border-color);
+}
+
+html[data-theme="dark"] .btn-outline-primary {
+  color: var(--primary-light);
+  border-color: var(--primary-light);
+}
+
+html[data-theme="dark"] .btn-outline-primary:hover {
+  background-color: var(--primary-light);
+  color: var(--text-on-primary);
+}
+
+html[data-theme="dark"] .form-control {
+  background-color: var(--background-alt);
+  border-color: var(--border-color);
+  color: var(--text-color);
+}
+
+html[data-theme="dark"] .alert {
+  background-color: var(--background-tertiary);
+}
+
+html[data-theme="dark"] .table {
+  color: var(--text-color);
+}
+
+html[data-theme="dark"] .table th {
+  border-color: var(--border-color-light);
+}
+
+html[data-theme="dark"] .list-group-item {
+  background-color: var(--surface-color);
+  border-color: var(--border-color);
+}

@@ -1,7 +1,7 @@
 /**
  * GÜREL YÖNETİM - HEADER SCRIPT
  * Modern, performant header functionality with theme integration
- * Version 3.1 - 2024
+ * Version 4.0 - 2024 - Tema Sistemi ile Entegre
  */
 
 // Güvenlik için IIFE (Immediately Invoked Function Expression)
@@ -290,7 +290,7 @@
     }
     
     /**
-     * Temaya özgü stilleri uygula
+     * Temaya özgü stilleri uygula - güncellenmiş
      */
     updateThemeSpecificStyles() {
       // Mevcut tema modunu ve renk varyasyonlarını al
@@ -303,134 +303,52 @@
       this.state.colorTheme = colorTheme;
       this.state.highContrast = theme === 'highContrast';
       
-      // Transparan durumdayken ek tema davranışları
+      // Tema sistemine bağlı olarak header stillerini otomatik ayarla
+      // - CSS değişkenleri yeni sistemde tanımlandığı için daha az manuel stil ataması gerekiyor
+      // - Genellikle CSS tarafından halledilecek, JavaScript sadece duruma özel ayarlamalar yapacak
+      
       if (this.header.classList.contains('transparent')) {
-        // Transparan durumdaki ek tema ayarları
         this.header.style.backgroundColor = 'transparent';
-        
-        // Link ve butonlara uygulanacak özel stiller
-        this.navLinks.forEach(link => {
-          link.style.color = 'var(--header-text-transparent)';
-          link.style.textShadow = 'var(--header-text-shadow-transparent)';
-        });
-        
-        if (this.logo) {
-          this.logoImage.style.filter = 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5))';
-                }
-            } else {
-        // Scrolled durumdaki tema stillerine geri dön
-        let bgColor;
-        
-        // Tema durumuna göre doğru arkaplan rengini belirle
-        if (theme === 'dark') {
-          bgColor = 'var(--header-bg-dark)';
-        } else if (theme === 'highContrast') {
-          bgColor = 'var(--header-bg-highcontrast)';
-        } else {
-          bgColor = 'var(--header-bg-light)';
-        }
-        
-        // Header arkaplan rengini ayarla
-        this.header.style.backgroundColor = bgColor;
-        
-        // Navbar link stillerini sıfırla
-        this.navLinks.forEach(link => {
-          link.style.color = '';
-          link.style.textShadow = '';
-        });
-        
-        if (this.logo) {
-          this.logoImage.style.filter = '';
-        }
+      } else {
+        // Header arkaplan rengini temaya göre ayarla
+        this.header.style.backgroundColor = `var(--header-bg-${theme})`;
       }
       
-      // Renk varyasyonlarına göre buton stillerini ayarla
+      // CTA buton stilini tema değişkenlerine göre ayarla
       if (this.ctaButton) {
-        // Yüksek kontrast durumunda özel stil
-        if (theme === 'highContrast') {
-          this.ctaButton.style.background = '#ffff00';
-          this.ctaButton.style.color = '#000000';
-          this.ctaButton.style.border = '2px solid #ffffff';
-          this.ctaButton.style.boxShadow = '0 0 0 2px #ffffff';
-        } else {
-          // Renk temasına göre gradient ayarla
-          let gradient, boxShadow;
-          
-          switch (colorTheme) {
-            case 'red':
-              gradient = 'linear-gradient(45deg, var(--error-color), var(--error-light))';
-              boxShadow = 'var(--header-button-shadow)';
-              break;
-            case 'green':
-              gradient = 'linear-gradient(45deg, var(--success-color), var(--success-light))';
-              boxShadow = 'var(--header-button-shadow)';
-              break;
-            case 'orange':
-              gradient = 'linear-gradient(45deg, var(--secondary-color), var(--secondary-light))';
-              boxShadow = 'var(--header-button-shadow)';
-              break;
-            case 'purple':
-              gradient = 'linear-gradient(45deg, var(--purple-600, #7b1fa2), var(--purple-400, #9c27b0))';
-              boxShadow = 'var(--header-button-shadow)';
-              break;
-            case 'teal':
-              gradient = 'linear-gradient(45deg, var(--info-dark), var(--info-color))';
-              boxShadow = 'var(--header-button-shadow)';
-              break;
-            case 'pink':
-              gradient = 'linear-gradient(45deg, #d81b60, #ec407a)';
-              boxShadow = 'var(--header-button-shadow)';
-              break;
-            default: // blue (default)
-              gradient = 'linear-gradient(45deg, var(--primary-500), var(--primary-400))';
-              boxShadow = 'var(--header-button-shadow)';
-          }
-          
-          this.ctaButton.style.background = gradient;
-          this.ctaButton.style.boxShadow = boxShadow;
-          this.ctaButton.style.color = 'var(--header-button-text)';
-          this.ctaButton.style.border = 'none';
-        }
+        // Tema renk varyasyonuna göre buton görünümünü otomatik ayarla
+        this.ctaButton.setAttribute('data-theme-color', colorTheme);
       }
     }
     
     /**
-     * Tema değişikliklerini izle
+     * Tema değişikliklerini izle - güncellenmiş versiyon
      */
     observeThemeChanges() {
-      // Theme değişimini gözlemlemek için MutationObserver
-      const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-          if (mutation.attributeName === 'data-theme') {
+      // MutationObserver aynen kalır
+      
+      // Yeni Tema Sistemi olaylarını dinle
+      document.addEventListener('themeSystemInitialized', (event) => {
+        console.log('Header: Tema sistemi başlatıldı, entegrasyon sağlanıyor...');
+        
+        const { themeManager } = event.detail;
+        if (themeManager) {
+          // Tema değişikliklerini dinle
+          themeManager.on('beforeThemeChange', (data) => {
+            console.log('Header: Tema değişimi başlıyor', data);
+            // Tema değişim başlangıç efektleri
+          });
+          
+          themeManager.on('themeChanged', (data) => {
+            console.log('Header: Tema değişti', data);
+            // Header stillerini ve durumlarını güncelle
             this.updateThemeSpecificStyles();
-          } else if (mutation.attributeName === 'data-color-theme') {
-            this.updateThemeSpecificStyles();
-          } else if (mutation.attributeName === 'data-reduced-motion') {
-            this.state.reducedMotion = document.documentElement.getAttribute('data-reduced-motion') === 'true';
-          }
-        });
-      });
-      
-      // Tema ile ilgili öznitelikleri gözlemle
-      observer.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ['data-theme', 'data-color-theme', 'data-reduced-motion']
-      });
-      
-      // Sistem tercihi değişikliklerini izle
-      const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-      darkModeMediaQuery.addEventListener('change', () => {
-        // Sadece sistemin tercihine göre çalışıyorsa (manuel tema ayarı yoksa)
-        if (!document.documentElement.hasAttribute('data-theme')) {
-          this.updateThemeSpecificStyles();
-        }
-      });
-      
-      // Reduced motion tercihini izle
-      const reducedMotionMediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-      reducedMotionMediaQuery.addEventListener('change', () => {
-        if (!document.documentElement.hasAttribute('data-reduced-motion')) {
-          this.state.reducedMotion = reducedMotionMediaQuery.matches;
+          });
+          
+          // Başlangıç değerlerini ayarla
+          this.state.themeMode = themeManager.getCurrentTheme();
+          this.state.colorTheme = themeManager.getCurrentColorTheme();
+          this.state.reducedMotion = themeManager.isReducedMotionEnabled();
         }
       });
     }

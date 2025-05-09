@@ -1,7 +1,7 @@
 /* =========================================================
    GÜREL YÖNETİM - HEADER VE NAVBAR STİLLERİ
    Modern, Responsive ve Tema Uyumlu Header Bileşeni
-   Versiyon 3.2 - 2024
+   Versiyon 4.0 - 2024 - Tema Sistemi ile Entegre
    ========================================================= */
 
 /* ============================================
@@ -9,12 +9,12 @@
    ============================================ */
 :root {
   /* ---- TEMEL HEADER DEĞİŞKENLERİ ---- */
-  --header-height: 90px;
-    --header-height-scrolled: 70px;
-  --header-height-mini: 55px;
-  --header-logo-height: 80px;
-  --header-logo-height-scrolled: 45px;
-  --header-logo-height-mini: 35px;
+  --header-height: 200px ;
+  --header-height-scrolled: 120px;
+  --header-height-mini: 100px;
+  --header-logo-height: 190px;
+  --header-logo-height-scrolled: 120px;
+  --header-logo-height-mini: 100px;
   --header-transition: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   --header-z-index: 1030;
   
@@ -59,43 +59,28 @@
    TEMEL HEADER STİLLERİ 
    ====================== */
 .patreon-header {
-  --header-box-shadow: var(--header-shadow-light);
-  --header-text-color: var(--header-text-light);
-  --header-text-hover-color: var(--header-text-light-hover);
-  --header-bg-color: var(--header-bg-light);
-  --header-mobile-menu-bg: var(--header-mobile-menu-bg-light);
-  --header-mobile-overlay: var(--header-mobile-overlay-light);
+  --header-bg-color: var(--background-color, #ffffff);
+  --header-text-color: var(--text-color, #333333);
+  --header-shadow: var(--shadow-sm, 0 2px 20px rgba(0, 0, 0, 0.08));
   
-    position: fixed;
-    top: 0;
-    left: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
   right: 0;
   height: var(--header-height);
-    width: 100%;
+  width: 100%;
   z-index: var(--header-z-index);
   transition: transform var(--header-transition),
               height var(--header-transition),
               background-color var(--header-transition),
               box-shadow var(--header-transition),
               opacity 0.2s ease;
-  -webkit-transition: transform var(--header-transition),
-                     height var(--header-transition),
-                     background-color var(--header-transition),
-                     box-shadow var(--header-transition),
-                     opacity 0.2s ease;
   will-change: transform, height, background-color, box-shadow;
-  
-  /* Header ve iç öğeleri için varsayılan metin rengi */
   color: var(--header-text-color);
   
   /* Başlangıçta header gösterilmiyor - JS ile gösterilecek */
   visibility: hidden;
   opacity: 0;
-  
-  /* JavaScript ile görünür yapıldığında fade-in animasyonu */
-  animation-duration: 0.4s;
-  animation-timing-function: ease-out;
-  animation-fill-mode: forwards;
 }
 
 /* Header görünür yapıldığında çalışacak animasyon */
@@ -186,6 +171,7 @@
   background-color: transparent !important;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+  
 }
 
 /* Transparent header içindeki metinlere gölge ekle */
@@ -207,6 +193,7 @@
     height: var(--header-height-scrolled);
   box-shadow: var(--header-box-shadow);
   background-color: var(--header-bg-color) !important;
+  display: flex;
 }
 
 .patreon-header.scrolled .navbar,
@@ -223,7 +210,8 @@
 }
 
 .patreon-header.scrolled .header-logo {
-    height: var(--header-logo-height-scrolled);
+    height: var(--header-logo-height-scrolled) !important;
+    max-height: 125px !important;
 }
 
 /* Mini-Header Durumu (derin scroll) */
@@ -232,7 +220,8 @@
 }
 
 .patreon-header.mini-header .header-logo {
-    height: var(--header-logo-height-mini);
+    height: var(--header-logo-height-mini) !important;
+    max-height: 108px !important;
 }
 
 /* ================================
@@ -264,15 +253,49 @@
   padding: 0.5rem 0;
   margin-right: 1.5rem;
   transition: all var(--header-transition);
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
   z-index: 2; /* Diğer elementlerin üzerinde olması için */
+  position: relative; /* Pozisyon ayarı */
 }
 
 .header-logo {
-  height: var(--header-logo-height);
+  height: var(--header-logo-height) !important;
+  max-height: 220px !important;
+  width: auto !important;
   transition: all var(--header-transition);
   will-change: height, filter;
+  transform-origin: left center;
+  animation: logoZoomEffect 1.5s ease-out;
+  filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2)); /* Logo'ya gölge eklendi */
+}
+
+/* Logo zoom animasyonu */
+@keyframes logoZoomEffect {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.7;
+  }
+  70% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Logo hover efekti - güçlendirildi */
+.navbar-brand:hover .header-logo {
+  transform: scale(1.15); /* Daha büyük ölçek - Önceki: 1.08 */
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3)); /* Hover durumunda daha belirgin gölge */
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Yay efekti ile geçiş */
+}
+
+/* Logo tıklama efekti */
+.navbar-brand:active .header-logo {
+  transform: scale(1.2); /* Tıklandığında daha da büyüt */
+  transition: transform 0.2s ease;
 }
 
 .brand-text {
@@ -286,6 +309,7 @@
     display: flex;
     align-items: center;
     margin-left: auto;
+    
 }
 
 .nav-item {
@@ -298,11 +322,11 @@
   color: var(--header-text-color);
   font-size: 1rem;
   font-weight: 500;
-  padding: 0.7rem 1rem !important;
+
   border-radius: 6px;
   transition: all 0.25s ease-in-out;
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .nav-text {
@@ -359,13 +383,13 @@
   font-weight: 600;
   font-size: 0.95rem;
   color: var(--header-button-text);
-  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+  background: linear-gradient(45deg, var(--primary-color), var(--primary-light));
   border: none;
   border-radius: 30px;
   overflow: hidden;
     transition: all 0.3s ease;
   z-index: 1;
-  box-shadow: var(--header-button-shadow);
+  box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.3);
   margin-left: 1rem;
   
   /* Mouse takibi için değişkenler */
@@ -426,13 +450,13 @@
 
 @keyframes pulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(var(--primary-rgb, 0, 85, 164), 0.6);
+    box-shadow: 0 0 0 0 rgba(var(--primary-rgb), 0.6);
   }
   70% {
-    box-shadow: 0 0 0 12px rgba(var(--primary-rgb, 0, 85, 164), 0);
+    box-shadow: 0 0 0 12px rgba(var(--primary-rgb), 0);
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(var(--primary-rgb, 0, 85, 164), 0);
+    box-shadow: 0 0 0 0 rgba(var(--primary-rgb), 0);
   }
 }
 
@@ -454,50 +478,48 @@
 .scroll-progress-bar {
   height: 100%;
   width: 0;
-  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+  background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
   transition: width 0.05s ease-out;
   will-change: width;
 }
 
 .scroll-progress-bar.glow-effect {
-  box-shadow: 0 0 8px rgba(var(--primary-rgb, 0, 85, 164), 0.7);
+  box-shadow: 0 0 8px rgba(var(--primary-rgb), 0.7);
 }
 
 /* ===============================
    TEMALANDIRMA - DARK MODE
    =============================== */
-[data-theme="dark"] .patreon-header,
-.dark-mode .patreon-header {
-  --header-bg-color: var(--header-bg-dark);
+html[data-theme="dark"] .patreon-header {
   --header-box-shadow: var(--header-shadow-dark);
   --header-text-color: var(--header-text-dark);
   --header-text-hover-color: var(--header-text-dark-hover);
+  --header-bg-color: var(--header-bg-dark);
   --header-mobile-menu-bg: var(--header-mobile-menu-bg-dark);
   --header-mobile-overlay: var(--header-mobile-overlay-dark);
 }
 
-[data-theme="dark"] .navbar-toggler-icon,
-.dark-mode .navbar-toggler-icon {
+html[data-theme="dark"] .navbar-toggler-icon {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
 /* ===============================
    TEMALANDIRMA - YÜKSEK KONTRAST MODU
    =============================== */
-[data-theme="highContrast"] .patreon-header {
-  --header-bg-color: var(--header-bg-highcontrast);
+html[data-theme="highContrast"] .patreon-header {
   --header-box-shadow: var(--header-shadow-highcontrast);
-  --header-text-color: var(--header-text-highcontrast);
-  --header-text-hover-color: var(--header-text-highcontrast-hover);
+  --header-text-color: var(--text-color);
+  --header-text-hover-color: var(--primary-color);
+  --header-bg-color: var(--background);
   --header-mobile-menu-bg: var(--header-mobile-menu-bg-highcontrast);
   --header-mobile-overlay: rgba(0, 0, 0, 0.9);
 }
 
-[data-theme="highContrast"] .navbar-toggler-icon {
+html[data-theme="highContrast"] .navbar-toggler-icon {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
-[data-theme="highContrast"] .header-button {
+html[data-theme="highContrast"] .header-button {
   background: #ffff00 !important;
   color: #000000 !important;
   border: 2px solid #ffffff;
@@ -506,8 +528,8 @@
   box-shadow: 0 0 0 2px #ffffff;
 }
 
-[data-theme="highContrast"] .nav-link:focus,
-[data-theme="highContrast"] .header-button:focus {
+html[data-theme="highContrast"] .nav-link:focus,
+html[data-theme="highContrast"] .header-button:focus {
   outline: 2px solid #ffffff;
   outline-offset: 2px;
 }
@@ -517,15 +539,15 @@
    =============================== */
 /* Mavi Tema (Varsayılan) */
 [data-color-theme="blue"] .header-button,
-.patreon-header .header-button {
-  background: linear-gradient(45deg, var(--primary-500, #0055a4), var(--primary-400, #1a75d1));
-  box-shadow: 0 4px 12px rgba(var(--primary-rgb, 0, 85, 164), 0.3);
+[data-color-theme="default"] .header-button {
+  background: linear-gradient(45deg, var(--primary-color), var(--primary-light));
+  box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.3);
 }
 
 /* Kırmızı Tema */
 [data-color-theme="red"] .header-button {
-  background: linear-gradient(45deg, var(--error-color, #dc3545), var(--error-light, #e05c6a));
-  box-shadow: 0 4px 12px rgba(var(--error-color-rgb, 220, 53, 69), 0.3);
+  background: linear-gradient(45deg, var(--danger-color), var(--danger-color));
+  box-shadow: 0 4px 12px rgba(var(--danger-rgb), 0.3);
 }
 
 /* Yeşil Tema */
@@ -588,12 +610,12 @@
 /* Tablet */
 @media (max-width: 991.98px) {
   :root {
-    --header-height: 80px;
-    --header-height-scrolled: 65px;
-    --header-height-mini: 50px;
-    --header-logo-height: 60px;
-    --header-logo-height-scrolled: 40px;
-    --header-logo-height-mini: 30px;
+    --header-height: 95px;
+    --header-height-scrolled: 75px;
+    --header-height-mini: 60px;
+    --header-logo-height: 180px;
+    --header-logo-height-scrolled: 100px;
+    --header-logo-height-mini: 90px;
   }
   
   .nav-link {
@@ -700,12 +722,12 @@
 /* Mobil */
 @media (max-width: 767.98px) {
   :root {
-    --header-height: 70px;
-    --header-height-scrolled: 60px;
-    --header-height-mini: 45px;
-    --header-logo-height: 50px;
-    --header-logo-height-scrolled: 35px;
-    --header-logo-height-mini: 28px;
+    --header-height: 90px;
+    --header-height-scrolled: 70px;
+    --header-height-mini: 60px;
+    --header-logo-height: 150px;
+    --header-logo-height-scrolled: 90px;
+    --header-logo-height-mini: 70px;
   }
   
   /* Mobil modunda navbar container */
@@ -723,12 +745,12 @@
 /* Küçük Mobil */
 @media (max-width: 575.98px) {
   :root {
-    --header-height: 60px;
-    --header-height-scrolled: 55px;
-    --header-height-mini: 45px;
-    --header-logo-height: 40px;
-    --header-logo-height-scrolled: 32px;
-    --header-logo-height-mini: 25px;
+    --header-height: 85px;
+    --header-height-scrolled: 65px;
+    --header-height-mini: 55px;
+    --header-logo-height: 130px;
+    --header-logo-height-scrolled: 80px;
+    --header-logo-height-mini: 60px;
   }
 }
 
@@ -759,4 +781,91 @@
     height: 60px;
     filter: none !important;
   }
+}
+
+/* Header Marka ve Logo Stillemesi */
+.brand-text-separator {
+  margin-left: 2rem;  /* Boşluğu daha da artırdım */
+  padding-left: 2rem; /* Boşluğu daha da artırdım */
+  border-left: 3px solid rgba(255, 255, 255, 0.7);
+}
+
+.brand-title {
+  font-size: 1.9rem; /* Yazı boyutunu daha da büyüttüm */
+  font-weight: 800;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+  color: #ffffff;
+  letter-spacing: -0.5px;
+}
+
+/* Tema moduna göre otomatik uyum */
+html[data-theme="light"] .brand-text-separator {
+  border-left-color: rgba(var(--primary-rgb), 0.3);
+}
+
+html[data-theme="light"] .brand-title {
+  color: var(--text-color);
+  text-shadow: none;
+}
+
+/* Karanlık temada */
+html[data-theme="dark"] .brand-text-separator {
+  border-left-color: rgba(255, 255, 255, 0.4);
+}
+
+html[data-theme="dark"] .brand-title {
+  color: var(--text-color);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Şeffaf header durumunda */
+.patreon-header.transparent .brand-text-separator {
+  border-left-color: rgba(255, 255, 255, 0.7);
+}
+
+.patreon-header.transparent .brand-title {
+  color: #ffffff;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+}
+
+/* ================================
+   LOGO BOYUTU - DOĞRUDAN KONTROL
+   ================================ */
+.patreon-header .navbar .navbar-brand .header-logo {
+  height: var(--header-logo-height) !important;
+  max-height: 200px !important;
+  width: auto !important;
+  min-height: 80px !important;
+}
+
+.patreon-header.scrolled .navbar .navbar-brand .header-logo {
+  height: var(--header-logo-height-scrolled) !important;
+  max-height: 125px !important;
+  min-height: 60px !important;
+}
+
+.patreon-header.mini-header .navbar .navbar-brand .header-logo {
+  height: var(--header-logo-height-mini) !important;
+  max-height: 108px !important;
+  min-height: 40px !important;
+}
+
+/* Scroll durumunda navigasyon metinleri için koyu renk */
+.patreon-header.scrolled .nav-link,
+.patreon-header.scrolled .nav-icon,
+.patreon-header.scrolled .nav-text {
+  color: var(--text-color) !important;
+  text-shadow: none;
+}
+
+/* Scroll durumunda logo metni için koyu renk */
+.patreon-header.scrolled .brand-title {
+  color: var(--text-color) !important;
+  text-shadow: none;
+}
+
+/* Aktif menü öğesi için özel renk */
+.patreon-header.scrolled .nav-link.active {
+  color: var(--primary-color) !important;
+  font-weight: 600;
 }
