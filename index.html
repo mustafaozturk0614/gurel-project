@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" data-theme="light" data-color-theme="blue">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -211,215 +211,208 @@
                     <div class="scroll-progress-bar"></div>
                 </div>
                 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Menüyü Aç/Kapat">
-                    <span class="toggler-icon"></span>
+                <!-- Mobil için hamburger menü butonu -->
+                <button class="hamburger-menu" aria-label="Mobil Menüyü Aç" aria-expanded="false">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
                 </button>
                 
-                <div class="collapse navbar-collapse" id="mainNav">
-                    
-                    <ul class="navbar-nav">
-                         
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#home" aria-label="Ana Sayfa">
-                                <span class="nav-icon"><i class="fas fa-home"></i></span>
-                                <span class="nav-text" data-translate="nav.home">Ana Sayfa</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#about" aria-label="Hakkımızda">
-                                <span class="nav-icon"><i class="fas fa-info-circle"></i></span>
-                                <span class="nav-text" data-translate="nav.about">Hakkımızda</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#services" aria-label="Hizmetlerimiz">
-                                <span class="nav-icon"><i class="fas fa-concierge-bell"></i></span>
-                                <span class="nav-text" data-translate="nav.services">Hizmetlerimiz</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#contact" aria-label="İletişim">
-                                <span class="nav-icon"><i class="fas fa-envelope"></i></span>
-                                <span class="nav-text" data-translate="nav.contact">İletişim</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#contact" class="btn btn-primary  pulse-animation" aria-label="Bize Ulaşın">
-                                <span class="btn-icon"><i class="fas fa-headset"></i></span>
-                                <span class="btn-text" data-translate="header.get_quote">Bize Ulaşın</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                <!-- Düzeltilmiş navbar-nav yapısı -->
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#home" aria-label="Ana Sayfa">
+                            <span class="nav-icon"><i class="fas fa-home"></i></span>
+                            <span class="nav-text" data-translate="nav.home">Ana Sayfa</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about" aria-label="Hakkımızda">
+                            <span class="nav-icon"><i class="fas fa-info-circle"></i></span>
+                            <span class="nav-text" data-translate="nav.about">Hakkımızda</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#services" aria-label="Hizmetlerimiz">
+                            <span class="nav-icon"><i class="fas fa-concierge-bell"></i></span>
+                            <span class="nav-text" data-translate="nav.services">Hizmetlerimiz</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact" aria-label="İletişim">
+                            <span class="nav-icon"><i class="fas fa-envelope"></i></span>
+                            <span class="nav-text" data-translate="nav.contact">İletişim</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#contact" class="header-button pulse-animation" aria-label="Bize Ulaşın">
+                            <span class="btn-icon"><i class="fas fa-headset"></i></span>
+                            <span class="btn-text" data-translate="header.get_quote">Bize Ulaşın</span>
+                        </a>
+                    </li>
+                </ul>
             </nav>
         </div>
-    </header>
-
-    <!-- Hero Section - daha okunabilir ve kullanıcı dostu -->
-    <section id="home" class="patreon-hero">
-        <div class="hero-video-background">
-            <video muted autoplay playsinline preload="metadata" src="assets/videos/20250405_1356_Blend Video_blend_01jr2sgeepe5bacvv560fftha6.mp4" poster="assets/images/hero-bg.jpg" id="hero-video">
-                <source src="assets/videos/20250405_1356_Blend Video_blend_01jr2sgeepe5bacvv560fftha6.mp4" type="video/mp4" media="(min-width: 992px)">
-                <source src="assets/videos/20250405_1356_Blend Video_blend_01jr2sgeepe5bacvv560fftha6.mp4" type="video/mp4" media="(min-width: 768px)" data-quality="medium">
-                <source src="assets/videos/20250405_1356_Blend Video_blend_01jr2sgeepe5bacvv560fftha6.mp4" type="video/mp4" data-quality="low">
-            </video>
-            <div class="video-overlay"></div>
-        </div>
         
-        <div class="container position-relative">
-            <div class="row align-items-center g-4">
-                <div class="col-lg-6">
-                    <div class="hero-content glass-effect">
-                        <!-- Premium badge tasarımı -->
-                        <div class="hero-badge premium-badge">
-                            <div class="badge-glow"></div>
-                            <span class="badge-icon"><i class="fas fa-shield-alt"></i></span>
-                            <span class="badge-text" data-translate="home.hero.badge">2022'DEN BERİ PROFESYONELLİK</span>
-                        </div>
-                        
-                        <!-- Basitleştirilmiş başlık -->
-                        <h1 class="hero-title fancy-hero-title">
-                            <span class="title-line title-line-gradient" data-translate="home.hero.title_line1">Mülkünüzü</span>
-                            <span class="title-line title-main-line">
-                                <span id="changingWord" class="accent-text" data-translate="home.hero.title_accent">ekonomik</span> 
-                                <span class="title-effect" data-translate="home.hero.title_line2">yönetiyoruz</span>
-                            </span>
-                        </h1>
-                        
-                        <!-- Daha net paragraf -->
-                        <p class="hero-description premium-text" data-translate="home.hero.description">
-                            <i class="fas fa-quote-left quote-icon"></i>
-                            Balıkesir'in 9 bölgesinde %15'e varan yönetim tasarrufu ve şeffaf raporlama ile mülkünüzün değerini artırıyoruz. 7/24 teknik destek hizmetimiz bulunmaktadır.
-                        </p>
-                        
-                        <!-- Daha anlaşılır butonlar -->
-                        <div class="hero-buttons">
-                            <a href="#contact" class="btn btn-primary hero-btn-primary animated-btn">
-                                <span class="btn-text" data-translate="home.hero.btn_discovery">ÜCRETSİZ MALİYET ANALİZİ</span>
-                                <span class="hero-btn-icon"><i class="fas fa-calculator"></i></span>
-                            </a>
-                            <a href="#services" class="btn btn-outline hero-btn-secondary animated-btn">
-                                <span class="btn-text" data-translate="home.hero.btn_services">ÇÖZÜM PAKETLERİMİZ</span>
-                                <span class="hero-btn-icon"><i class="fas fa-check-circle"></i></span>
-                            </a>
-                        </div>
+        <!-- Modern Tam Ekran Mobil Menü -->
+        <div class="mobile-menu-overlay"></div>
+        <div class="mobile-menu">
+            <!-- Kapatma butonu -->
+            <button class="mobile-menu-close" aria-label="Menüyü Kapat">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <!-- Mobil menü logosu -->
+            <div class="mobile-menu-header">
+                <img src="assets/svg/brands/logo-sy-svg.svg" alt="Gürel Yönetim" class="mobile-menu-logo">
+                <h3 class="mobile-menu-title">Gürel Yönetim</h3>
+            </div>
+            
+            <!-- Mobil Navigasyon -->
+            <ul class="mobile-nav">
+                <li class="mobile-nav-item" style="--item-index: 0">
+                    <a href="#home" class="mobile-nav-link active">
+                        <span class="mobile-nav-icon"><i class="fas fa-home"></i></span>
+                        <span class="mobile-nav-text">Ana Sayfa</span>
+                    </a>
+                </li>
+                <li class="mobile-nav-item" style="--item-index: 1">
+                    <a href="#about" class="mobile-nav-link">
+                        <span class="mobile-nav-icon"><i class="fas fa-info-circle"></i></span>
+                        <span class="mobile-nav-text">Hakkımızda</span>
+                    </a>
+                </li>
+                <li class="mobile-nav-item" style="--item-index: 2">
+                    <a href="#services" class="mobile-nav-link">
+                        <span class="mobile-nav-icon"><i class="fas fa-concierge-bell"></i></span>
+                        <span class="mobile-nav-text">Hizmetlerimiz</span>
+                    </a>
+                </li>
+                <li class="mobile-nav-item" style="--item-index: 3">
+                    <a href="#contact" class="mobile-nav-link">
+                        <span class="mobile-nav-icon"><i class="fas fa-envelope"></i></span>
+                        <span class="mobile-nav-text">İletişim</span>
+                    </a>
+                </li>
+            </ul>
+            
+            <!-- Mobil Butonlar -->
+            <div class="mobile-menu-buttons">
+                <a href="#contact" class="mobile-menu-button">
+                    <span class="mobile-menu-button-icon"><i class="fas fa-headset"></i></span>
+                    Bize Ulaşın
+                </a>
+                <a href="tel:+905305556007" class="mobile-menu-button">
+                    <span class="mobile-menu-button-icon"><i class="fas fa-phone-alt"></i></span>
+                    Hemen Arayın
+                </a>
+            </div>
+            
+            <!-- Sosyal Medya Linkleri -->
+            <div class="mobile-social-links">
+                <a href="#" class="mobile-social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="mobile-social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="mobile-social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="mobile-social-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Hero Section - Gürel Yönetim Odaklı Modern Tasarım -->
+    <section id="home" class="hero-section">
+        <div class="hero-bg video-bg">
+            <video autoplay muted loop playsinline>
+                <source src="assets/videos/20250405_1349_Sunrise Modern Complex_storyboard_01jr2s3hqwep79q17t9mpghbxw.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="hero-container">
+            <!-- Sol Taraf: Ana Mesaj ve CTA -->
+            <div class="hero-main">
+                <div class="hero-badge">
+                    <span class="hero-badge-icon"><i class="fas fa-shield-alt"></i></span>
+                    <span>2022'DEN BERİ BALIKESİR'DE</span>
+                </div>
+                
+                <h1 class="hero-title">Gürel Yönetim ile <span class="hero-title-accent">Profesyonel Çözümler</span></h1>
+                <p class="hero-description">Site ve toplu yapı yönetiminde uzman kadromuz ve gelişmiş teknolojik altyapımız ile hizmetinizdeyiz.</p>
+                
+                <div class="hero-features">
+                    <div class="hero-feature">
+                        <span class="feature-icon"><i class="fas fa-headset"></i></span>
+                        <span class="feature-text">7/24 Teknik Destek</span>
+                    </div>
+                    <div class="hero-feature">
+                        <span class="feature-icon"><i class="fas fa-credit-card"></i></span>
+                        <span class="feature-text">Online Ödemeler</span>
+                    </div>
+                    <div class="hero-feature">
+                        <span class="feature-icon"><i class="fas fa-chart-line"></i></span>
+                        <span class="feature-text">Şeffaf Yönetim</span>
                     </div>
                 </div>
                 
-                <div class="col-lg-6">
-                    <!-- Geliştirilmiş 3D kart -->
-                    <div class="hero-3d-card" tabindex="0" role="region" aria-label="Uzmanlaştığımız alanlar">
-                        <div class="hero-3d-card-shine"></div>
-                        <div class="card-3d-wrap">
-                            <div class="card-3d-wrapper">
-                                <div class="card-front">
-                                    <h4 class="section-title service-area-title">
-                                        <span class="service-title-icon"><i class="fas fa-star-of-life"></i></span>
-                                        <span class="service-title-text" data-translate="home.services.expertise_areas">Uzmanlaştığımız Alanlar</span>
-                                    </h4>
-                                    
-                                    <!-- Basitleştirilmiş tabs -->
-                                    <div class="nav-tabs-wrapper mb-4">
-                                        <ul class="nav nav-tabs nav-tabs-improved" id="serviceTabList" role="tablist" aria-label="Hizmet alanları">
-                                            <li class="nav-item" role="presentation">
-                                                <button class="nav-link active" id="site-tab" data-bs-toggle="tab" data-bs-target="#site-services" type="button" role="tab" aria-controls="site-services" aria-selected="true">
-                                                    <i class="fas fa-building me-2"></i> Site Yönetimi
-                                                    <span class="tab-illustration">
-                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M7 21H4V10H1L12 3L23 10H20V21H13V14H11V21H7Z" fill="#555"/>
-                                                        </svg>
-                                                    </span>
-                                                </button>
-                                            </li>
-                                            <li class="nav-item" role="presentation">
-                                                <button class="nav-link fw-bold" id="property-tab" data-bs-toggle="tab" data-bs-target="#property-services" type="button" role="tab" aria-controls="property-services" aria-selected="false">
-                                                    <i class="fas fa-home me-2"></i> Mülk Yönetimi
-                                                    <span class="tab-illustration">
-                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M19 9.3V4H16V6.6L12 3L2 12H5V20H9V14H15V20H19V12H22L19 9.3Z" fill="#555"/>
-                                                        </svg>
-                                                    </span>
-                                                </button>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    
-                                    <div class="tab-content tab-content-improved" id="serviceTabContent">
-                                        <!-- Site Yönetimi Tanıtım-->
-                                        <div class="tab-pane fade show active" id="site-services" role="tabpanel" aria-labelledby="site-tab">
-                                            <div class="row services-grid g-3 justify-content-center">
-                                                <div class="expertise-area-intro">
-                                                    <p class="expertise-highlight"><i class="fas fa-award me-2"></i>Apartman ve sitelerde profesyonel yönetim çözümleri sunuyoruz.</p>
-                                                    <div class="expertise-features">
-                                                        <div class="expertise-feature">
-                                                            <div class="feature-icon"><i class="fas fa-users"></i></div>
-                                                            <div class="feature-content">
-                                                                <h5>Profesyonel Ekip</h5>
-                                                                <p>Uzman kadromuzla site yönetim ihtiyaçlarınızı karşılıyoruz.</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="expertise-feature">
-                                                            <div class="feature-icon"><i class="fas fa-file-invoice"></i></div>
-                                                            <div class="feature-content">
-                                                                <h5>Şeffaf Raporlama</h5>
-                                                                <p>Aylık detaylı raporlar ile hesap şeffaflığı sağlıyoruz.</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="expertise-feature">
-                                                            <div class="feature-icon"><i class="fas fa-percent"></i></div>
-                                                            <div class="feature-content">
-                                                                <h5>Maliyet Tasarrufu</h5>
-                                                                <p>Toplu alım gücüyle %15'e varan tasarruf sağlıyoruz.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="expertise-cta mt-3">
-                                                        <a href="#services" class="btn btn-sm btn-outline-primary">Tüm Hizmetleri Keşfedin</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                                            
-                                        <!-- Mülk Yönetimi Tanıtım -->
-                                        <div class="tab-pane fade" id="property-services" role="tabpanel" aria-labelledby="property-tab">
-                                            <div class="row services-grid g-3 justify-content-center">
-                                                <div class="expertise-area-intro">
-                                                    <p class="expertise-highlight"><i class="fas fa-home me-2"></i>Bireysel ve ticari mülkleriniz için tam kapsamlı yönetim.</p>
-                                                    <div class="expertise-features">
-                                                        <div class="expertise-feature">
-                                                            <div class="feature-icon"><i class="fas fa-key"></i></div>
-                                                            <div class="feature-content">
-                                                                <h5>Kiralama Desteği</h5>
-                                                                <p>Kiracı bulma ve kiraya verme süreçlerini yönetiyoruz.</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="expertise-feature">
-                                                            <div class="feature-icon"><i class="fas fa-tools"></i></div>
-                                                            <div class="feature-content">
-                                                                <h5>Bakım Onarım</h5>
-                                                                <p>Mülkünüzün değerini koruyacak bakım hizmetleri.</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="expertise-feature">
-                                                            <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
-                                                            <div class="feature-content">
-                                                                <h5>Gelir Optimizasyonu</h5>
-                                                                <p>Mülkünüzden maksimum gelir elde etmenizi sağlıyoruz.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="expertise-cta mt-3">
-                                                        <a href="#services" class="btn btn-sm btn-outline-primary">Tüm Hizmetleri Keşfedin</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="hero-cta-buttons">
+                    <a href="#contact" class="hero-cta-button primary">Bizimle İletişime Geçin</a>
+                    <a href="#services" class="hero-cta-button secondary">Hizmetlerimiz</a>
+                </div>
+            </div>
+            
+            <!-- Sağ Taraf: İş Kolları Kartları -->
+            <div class="hero-business-cards">
+                <!-- İş Kolu 1: Apartman ve Site Yönetimi -->
+                <div class="business-card">
+                    <div class="card-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h3 class="card-title">Apartman ve Site Yönetimi</h3>
+                    <div class="card-tags">
+                        <span class="card-tag">Şeffaf Yönetim</span>
+                        <span class="card-tag">7/24 Destek</span>
+                    </div>
+                    <p class="card-description">
+                        Binlerce daire sakinine kaliteli hizmet sunarak, site ve apartman yönetimlerini profesyonel standartlarda gerçekleştiriyoruz. Teknik ve idari tüm süreçleri sizin için yönetiyoruz.
+                    </p>
+                    <div class="card-stats">
+                        <div class="stat">
+                            <div class="stat-value">%98</div>
+                            <div class="stat-label">Müşteri Memnuniyeti</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">7/24</div>
+                            <div class="stat-label">Teknik Destek</div>
                         </div>
                     </div>
+                    <a href="#site-management" class="card-button">
+                        Detaylı Bilgi <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <!-- İş Kolu 2: Mülk Yönetimi -->
+                <div class="business-card">
+                    <div class="card-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h3 class="card-title">Mülk Yönetimi</h3>
+                    <div class="card-tags">
+                        <span class="card-tag">Kiralama</span>
+                        <span class="card-tag">Değerleme</span>
+                    </div>
+                    <p class="card-description">
+                        Mülk sahipleri için özel çözümler sunuyoruz. Kiralama, bakım, onarım ve değerleme hizmetlerimizle gayrimenkulünüzün potansiyelini en üst seviyeye çıkarıyoruz.
+                    </p>
+                    <div class="card-stats">
+                        <div class="stat">
+                            <div class="stat-value">+5yıl</div>
+                            <div class="stat-label">Ortalama Sözleşme</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">Tam</div>
+                            <div class="stat-label">Raporlama</div>
+                        </div>
+                    </div>
+                    <a href="#property-management" class="card-button">
+                        Detaylı Bilgi <i class="fas fa-arrow-right"></i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -612,67 +605,69 @@
                 <p class="section-description mt-4">Müşterilerimizin deneyimlerini dinleyin ve hizmet kalitemizi keşfedin</p>
                                 </div>
             
-            <div class="trustmary-wrapper modern-reviews">
+            <!-- <div class="trustmary-wrapper modern-reviews">
                 <div class="row justify-content-center">
                     <div class="col-lg-12">
-                <div class="trustmary-header mb-4">
-                    <div class="d-flex align-items-center justify-content-center mb-4">
-                        <div class="overall-rating me-4">
-                            <div class="rating-circle bg-primary text-white d-flex align-items-center justify-content-center shadow-lg">
-                                 <span class="rating-value fw-bold fs-3">4.9</span>
-                             </div>
-                         </div>
-                        <div class="rating-stars d-flex flex-column align-items-start">
-                            <div class="stars-container mb-2">
-                             <i class="fas fa-star text-warning"></i>
-                             <i class="fas fa-star text-warning"></i>
-                             <i class="fas fa-star text-warning"></i>
-                             <i class="fas fa-star text-warning"></i>
-                             <i class="fas fa-star text-warning"></i>
+                        <div class="trustmary-header mb-4">
+                            <div class="d-flex align-items-center justify-content-center mb-4">
+                                <div class="overall-rating me-4">
+                                    <div
+                                        class="rating-circle bg-primary text-white d-flex align-items-center justify-content-center shadow-lg">
+                                        <span class="rating-value fw-bold fs-3">4.9</span>
+                                    </div>
+                                </div>
+                                <div class="rating-stars d-flex flex-column align-items-start">
+                                    <div class="stars-container mb-2">
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                    </div>
+                                    <div class="rating-count text-muted">
+                                        <span class="fw-medium">35+ değerlendirme</span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="rating-count text-muted">
-                                <span class="fw-medium">35+ değerlendirme</span>
-                             </div>
-                         </div>
-                     </div>
-                 </div>
-                 
-                 <div class="">
-                <!-- Trustmary Widget -->
-                <script>
-                    // Trustmary widget yükleme hatalarını yakalamak için
-                    (function() {
-                        try {
-                            // Orijinal script içeriği
-                            var trustmaryScript = document.createElement('script');
-                            trustmaryScript.src = "https://widget.trustmary.com/oyGuoLpy1";
-                            trustmaryScript.onerror = function(e) {
-                                console.warn('Trustmary widget yüklenemedi. Çevrimdışı olabilirsiniz veya servis kullanılamıyor olabilir.');
-                                // Hata durumunda alternatif içerik gösterme
-                                document.querySelector('.trustmary-wrapper').innerHTML = 
-                                    '<div class="alert alert-info">'+
-                                    '<p class="mb-0"><i class="fas fa-info-circle me-2"></i>Müşteri yorumları şu anda yüklenemiyor. Lütfen daha sonra tekrar deneyiniz.</p>'+
-                                    '</div>';
-                            };
-                            document.head.appendChild(trustmaryScript);
-                        } catch(err) {
-                            console.warn('Trustmary widget hatası:', err);
-                        }
-                    })();
-                </script>
-                 </div>
-                 
-                 <div class="review-cta text-center mt-5">
-                     <a href="https://g.page/r/CV7ZFrWcbQZXEAI/review" target="_blank" class="btn btn-outline-primary btn-lg me-2">
-                         <i class="fab fa-google me-2"></i>Siz de Değerlendirme Yapın
-                     </a>
-                     <a href="https://g.page/r/CV7ZFrWcbQZXEAI" target="_blank" class="btn btn-primary btn-lg">
-                         <i class="fab fa-google me-2"></i>Bizi Google'da Görüntüleyin
-                     </a>
-                 </div>
+                        </div>
+            
+                        <div class="">
+                            <!-- Trustmary Widget -->
+                            <!-- <script>
+                                
+                                (function () {
+                                    try {
+                                        // Orijinal script içeriği
+                                        var trustmaryScript = document.createElement('script');
+                                        trustmaryScript.src = "https://widget.trustmary.com/oyGuoLpy1";
+                                        trustmaryScript.onerror = function (e) {
+                                            console.warn('Trustmary widget yüklenemedi. Çevrimdışı olabilirsiniz veya servis kullanılamıyor olabilir.');
+                                            // Hata durumunda alternatif içerik gösterme
+                                            document.querySelector('.trustmary-wrapper').innerHTML =
+                                                '<div class="alert alert-info">' +
+                                                '<p class="mb-0"><i class="fas fa-info-circle me-2"></i>Müşteri yorumları şu anda yüklenemiyor. Lütfen daha sonra tekrar deneyiniz.</p>' +
+                                                '</div>';
+                                        };
+                                        document.head.appendChild(trustmaryScript);
+                                    } catch (err) {
+                                        console.warn('Trustmary widget hatası:', err);
+                                    }
+                                })();
+                            </script>
+                        </div>
+            
+                        <div class="review-cta text-center mt-5">
+                            <a href="https://g.page/r/CV7ZFrWcbQZXEAI/review" target="_blank"
+                                class="btn btn-outline-primary btn-lg me-2">
+                                <i class="fab fa-google me-2"></i>Siz de Değerlendirme Yapın
+                            </a>
+                            <a href="https://g.page/r/CV7ZFrWcbQZXEAI" target="_blank" class="btn btn-primary btn-lg">
+                                <i class="fab fa-google me-2"></i>Bizi Google'da Görüntüleyin
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </section>
 

@@ -1,654 +1,390 @@
 /**
- * GÜREL YÖNETİM - HEADER SCRIPT
- * Modern, performant header functionality with theme integration
- * Version 4.0 - 2024 - Tema Sistemi ile Entegre
+ * Gürel Yönetim - Header Bileşeni JS
+ * Versiyon 4.0 - 2023
+ * Yazarlar: Mustafa Öztürk
  */
 
-// Güvenlik için IIFE (Immediately Invoked Function Expression)
-(function() {
-  'use strict';
+document.addEventListener('DOMContentLoaded', function() {
+  initHeader();
+  initMobileMenu();
+  initSectionScrollSpy();
+});
+
+function initHeader() {
+  const header = document.querySelector('.patreon-header');
+  if (!header) return;
   
-  // Hata yakalama ve izleme sistemi
-  function setupErrorHandling() {
-    try {
-    window.addEventListener('error', function(e) {
-        // Eklenti veya tarayıcı uzantısı kaynaklı hataları dikkate alma
-        if (e.filename && (
-          e.filename.includes('contentScript.bundle.js') || 
-          e.filename.includes('chrome-extension')
-        )) {
-          console.debug('Header.js: Extension error ignored:', e.message);
-        e.preventDefault();
-        return true;
-      }
-    });
-} catch (err) {
-      console.debug('Error tracking setup failed:', err);
+  // Scroll olayları
+  window.addEventListener('scroll', handleScroll);
+  
+  // İlk yükleme için header durumunu ayarla
+  setTimeout(() => {
+    handleScroll();
+    header.classList.add('visible');
+  }, 100);
+  
+  // Scroll progress bar
+  initScrollProgressBar();
+}
+
+// Scroll olaylarını işle
+function handleScroll() {
+  const header = document.querySelector('.patreon-header');
+  if (!header) return;
+  
+  const scrollY = window.scrollY;
+  const threshold = 50;
+  
+  // Aşağı/yukarı scroll tespiti
+  const currentScroll = window.pageYOffset;
+  if (currentScroll <= threshold) {
+    header.classList.remove('scrolled', 'mini-header', 'scroll-up', 'scroll-down');
+    if (header.classList.contains('transparent')) {
+      header.classList.add('transparent');
+    }
+  } else {
+    header.classList.add('scrolled');
+    header.classList.remove('transparent');
+    
+    // Yüksek scroll değerlerinde mini header
+    if (scrollY > 300) {
+      header.classList.add('mini-header');
+    } else {
+      header.classList.remove('mini-header');
+    }
+  }
+}
+
+// Scroll progress bar
+function initScrollProgressBar() {
+  const progressBar = document.querySelector('.scroll-progress-bar');
+  if (!progressBar) return;
+  
+  // Sayfa yüksekliği hesaplama
+  function getDocumentHeight() {
+    return Math.max(
+      document.body.scrollHeight,
+      document.documentElement.scrollHeight,
+      document.body.offsetHeight,
+      document.documentElement.offsetHeight,
+      document.body.clientHeight,
+      document.documentElement.clientHeight
+    );
+  }
+  
+  // Scroll progress güncelleme
+  function updateScrollProgress() {
+    const windowScroll = window.scrollY;
+    const windowHeight = window.innerHeight;
+    const docHeight = getDocumentHeight();
+    
+    const totalScrollable = docHeight - windowHeight;
+    const scrollPercentage = (windowScroll / totalScrollable) * 100;
+    
+    // Progress bar genişliğini güncelle
+    progressBar.style.width = `${scrollPercentage}%`;
+    
+    // İsteğe bağlı glow efekti
+    if (scrollPercentage > 0) {
+      progressBar.classList.add('glow-effect');
+        } else {
+      progressBar.classList.remove('glow-effect');
     }
   }
   
-  // Header bileşeninin tüm işlevselliğini yöneten ana sınıf
-  class HeaderController {
-    constructor() {
-      // DOM Element Referansları
-      this.header = document.querySelector('.patreon-header');
-      if (!this.header) return; // Header yoksa işlemleri durdur
-      
-      this.navbar = this.header.querySelector('.navbar');
-      this.navLinks = this.header.querySelectorAll('.nav-link');
-      this.navIcons = this.header.querySelectorAll('.nav-icon');
-      this.logo = this.header.querySelector('.navbar-brand');
-      this.logoImage = this.header.querySelector('.header-logo');
-      this.scrollProgressBar = this.header.querySelector('.scroll-progress-bar');
-      this.ctaButton = this.header.querySelector('.header-button');
-      this.menuToggler = this.header.querySelector('.navbar-toggler');
-      this.menuCollapse = this.header.querySelector('.navbar-collapse');
-      this.screenDarken = document.querySelector('.screen-darken');
-      
-      // Durum ve Ayarlar
-      this.state = {
-        lastScrollTop: 0,
-        scrollTimer: null,
-        isScrolling: false,
-        scrollDirection: 'none',
-        scrollDepth: 0,
-        themeMode: document.documentElement.getAttribute('data-theme') || 'light',
-        colorTheme: document.documentElement.getAttribute('data-color-theme') || 'blue',
-        highContrast: document.documentElement.getAttribute('data-theme') === 'highContrast',
-        reducedMotion: document.documentElement.getAttribute('data-reduced-motion') === 'true',
-        isMobileMenuOpen: false,
-        isPageLoaded: false
-      };
-      
-      // Sayfanın yüklenme durumunu izle
-      window.addEventListener('load', () => {
-        this.state.isPageLoaded = true;
-        setTimeout(() => this.refreshHeaderState(), 100);
-      });
-      
-      // Başlangıç ayarları
-      this.init();
-    }
-    
-    /**
-     * Başlangıç ayarlarını yap ve event listener'ları ekle
-     */
-    init() {
-      // Header'ı hızlıca görünür yap - FOUC (Flash of Unstyled Content) önlemek için
-      this.header.style.visibility = 'visible';
-      this.header.style.opacity = '1';
-      this.header.classList.add('visible');
+  // Scroll olayı dinleme
+  window.addEventListener('scroll', updateScrollProgress);
+  
+  // İlk yükleme için çağır
+  updateScrollProgress();
+}
 
-      // Başlangıç durumlarını ayarla ve ilk kontrolleri yap
-      this.setInitialState();
+// Mobil menüyü başlat
+function initMobileMenu() {
+  const hamburgerBtn = document.querySelector('.hamburger-menu');
+  const mobileMenu = document.querySelector('.mobile-menu');
+  const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
+  const mobileMenuCloseBtn = document.querySelector('.mobile-menu-close');
+  const mobileMenuLinks = document.querySelectorAll('.mobile-nav-link');
+  
+  if (!hamburgerBtn || !mobileMenu || !mobileMenuOverlay) return;
+  
+  // Hamburger butonu tıklama
+  hamburgerBtn.addEventListener('click', toggleMobileMenu);
+  
+  // Overlay tıklama ile kapatma
+  mobileMenuOverlay.addEventListener('click', closeMobileMenu);
+  
+  // Kapatma butonu
+  if (mobileMenuCloseBtn) {
+    mobileMenuCloseBtn.addEventListener('click', closeMobileMenu);
+  }
+  
+  // Mobile menü linkleri ile kapatma ve ilgili bölüme scroll yapma
+  mobileMenuLinks.forEach(link => {
+    link.addEventListener('click', function(event) {
+      // Eğer link bir anchor (section) ise
+      const href = this.getAttribute('href');
       
-      // Event listener'ları ekle
-      this.setupEventListeners();
+      // Animasyon için sınıf ekleme
+      this.classList.add('clicked');
       
-      // Tema değişikliklerini izlemeyi başlat
-      this.observeThemeChanges();
-      
-      // Scroll spy'ı başlat
-      this.initScrollSpy();
-      
-      // Etkileşimleri kur
-      this.setupInteractions();
-    }
-    
-    /**
-     * Başlangıç durumlarını ayarla
-     */
-    setInitialState() {
-      // Sayfanın ilk yüklenmesinde mevcut scroll durumunu kontrol et
-      const initialScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      
-      // DOM yüklendikten sonra header görünürlüğünü kesinleştirmek için kısa gecikme
-      requestAnimationFrame(() => {
-        if (initialScrollTop > 10) {
-          // Scroll 0'dan büyükse, sayfa yenilendiğinde bile scroll durumunda görünsün
-          this.header.classList.add('scrolled');
-          this.header.classList.remove('transparent');
+      if (href && href.startsWith('#')) {
+        event.preventDefault(); // Varsayılan davranışı engelle
+        
+        const targetSection = document.querySelector(href);
+        
+        if (targetSection) {
+          // Menüyü kapat
+          closeMobileMenu();
           
-          // Header arkaplan rengi
-          const theme = document.documentElement.getAttribute('data-theme') || 'light';
-          const bgColor = theme === 'dark' ? 'var(--header-bg-dark)' : 
-                          theme === 'highContrast' ? 'var(--header-bg-highcontrast)' : 
-                          'var(--header-bg-light)';
-          this.header.style.backgroundColor = bgColor;
-          
-          // Derin scroll durumu
-          if (initialScrollTop > 300) {
-            this.header.classList.add('mini-header');
-          }
-            } else {
-          // Sayfa başındaysa transparan göster
-          this.header.classList.add('transparent');
-          this.header.classList.remove('scrolled', 'mini-header');
-          
-          // Header tamamen transparan
-          this.header.style.backgroundColor = 'transparent';
-          
-          // Link ve butonlara transparan stiller
-          this.navLinks.forEach(link => {
-            link.style.color = 'var(--header-text-transparent)';
-            link.style.textShadow = 'var(--header-text-shadow-transparent)';
-          });
-          
-          if (this.logo) {
-            this.logoImage.style.filter = 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5))';
-          }
-        }
-        
-        // Progress bar'ı güncelle
-        this.updateProgressBar();
-        
-        // Son scroll pozisyonunu kaydet
-        this.state.lastScrollTop = initialScrollTop;
-        
-        // Header görünürlüğünü garantile
-        this.header.style.visibility = 'visible';
-        this.header.style.opacity = '1';
-        this.header.classList.add('visible');
-      });
-    }
-    
-    /**
-     * Header durumunu mevcut sayfaya göre yenile
-     */
-    refreshHeaderState() {
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      this.handleScrollEvents(scrollTop);
-    }
-    
-    /**
-     * Tüm gerekli event listener'ları ekle
-     */
-    setupEventListeners() {
-      // Scroll event listener
-      window.addEventListener('scroll', this.throttle(() => {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        this.handleScrollEvents(scrollTop);
-      }, 10)); // 10ms throttle ile performansı artır
-      
-      // Resize event listener
-      window.addEventListener('resize', this.debounce(() => {
-        this.refreshHeaderState();
-      }, 150)); // 150ms debounce ile performansı artır
-    }
-    
-    /**
-     * Tüm scroll olaylarını işle
-     */
-    handleScrollEvents(scrollTop) {
-      // Header durumunu güncelle
-      this.updateHeaderState(scrollTop);
-      
-      // Scroll yönünü belirle ve header pozisyonunu güncelle
-      this.updateScrollDirection(scrollTop);
-      
-      // Progress bar'ı güncelle
-      this.updateProgressBar();
-      
-      // Scroll spy güncelle
-      this.checkActiveSection();
-    }
-    
-    /**
-     * Header durumunu scroll derinliğine göre güncelle
-     */
-    updateHeaderState(scrollTop) {
-      // Sayfanın en başında - transparent durum
-      if (scrollTop <= 10) {
-        this.header.classList.add('transparent');
-        this.header.classList.remove('scrolled', 'mini-header');
-        this.header.style.backgroundColor = 'transparent';
-        this.state.scrollDepth = 0;
-        
-        // Link ve butonlara transparan stiller
-        this.navLinks.forEach(link => {
-          link.style.color = 'var(--header-text-transparent)';
-          link.style.textShadow = 'var(--header-text-shadow-transparent)';
-        });
-        
-        if (this.logo) {
-          this.logoImage.style.filter = 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5))';
-            }
-        } else {
-        // Sayfa kaydırıldı - scrolled durumu
-        this.header.classList.remove('transparent');
-        this.header.classList.add('scrolled');
-        
-        // Doğrudan header'a arkaplan rengi uygula - mevcut temaya göre
-        this.updateThemeSpecificStyles();
-        
-        this.state.scrollDepth = scrollTop;
-        
-        // Derin scroll durumunda mini header'a geç
-        if (scrollTop > 600) {
-          this.header.classList.add('mini-header');
-        } else {
-          this.header.classList.remove('mini-header');
-        }
-      }
-    }
-    
-    /**
-     * Scroll yönünü ve header'ın gösterilme/gizlenme durumunu güncelle
-     */
-    updateScrollDirection(scrollTop) {
-      const scrollDelta = Math.abs(scrollTop - this.state.lastScrollTop);
-      const scrollingDown = scrollTop > this.state.lastScrollTop;
-      
-      // Scroll hızına göre animasyon süresini ayarla
-      if (scrollDelta > 30) {
-        this.header.style.transition = 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)';
-      } else {
-        this.header.style.transition = 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
-      }
-      
-      // En tepedeyse her zaman göster, scroll durumunda da headerı görünür tut
-      if (scrollTop <= 10) {
-        this.header.classList.remove('scroll-down', 'scroll-up');
-      } else {
-        // Header'ı her zaman görünür tutmak için scroll-up sınıfını ekle, scroll-down sınıfını kaldır
-        this.header.classList.add('scroll-up');
-        this.header.classList.remove('scroll-down');
-        this.state.scrollDirection = scrollingDown ? 'down' : 'up';
-      }
-      
-      // Son scroll pozisyonunu kaydet
-      this.state.lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-      
-      // Scroll durduktan sonra stil geçişlerini sıfırla
-      clearTimeout(this.state.scrollTimer);
-      this.state.scrollTimer = setTimeout(() => {
-        this.header.style.transition = 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
-      }, 200);
-    }
-    
-    /**
-     * Progress bar durumunu güncelle
-     */
-    updateProgressBar() {
-      if (!this.scrollProgressBar) return;
-      
-      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const scrolled = (winScroll / height) * 100;
-      
-      // Değeri güncelle ve animasyonla değiştir
-      requestAnimationFrame(() => {
-        this.scrollProgressBar.style.width = `${scrolled}%`;
-        
-        // Tamamlanmaya yaklaştıkça efekt ekle
-        if (scrolled > 90) {
-          this.scrollProgressBar.classList.add('glow-effect');
-        } else {
-          this.scrollProgressBar.classList.remove('glow-effect');
-        }
-      });
-    }
-    
-    /**
-     * Temaya özgü stilleri uygula - güncellenmiş
-     */
-    updateThemeSpecificStyles() {
-      // Mevcut tema modunu ve renk varyasyonlarını al
-      const theme = document.documentElement.getAttribute('data-theme') || 
-                    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-      
-      const colorTheme = document.documentElement.getAttribute('data-color-theme') || 'blue';
-      
-      this.state.themeMode = theme;
-      this.state.colorTheme = colorTheme;
-      this.state.highContrast = theme === 'highContrast';
-      
-      // Tema sistemine bağlı olarak header stillerini otomatik ayarla
-      // - CSS değişkenleri yeni sistemde tanımlandığı için daha az manuel stil ataması gerekiyor
-      // - Genellikle CSS tarafından halledilecek, JavaScript sadece duruma özel ayarlamalar yapacak
-      
-      if (this.header.classList.contains('transparent')) {
-        this.header.style.backgroundColor = 'transparent';
-      } else {
-        // Header arkaplan rengini temaya göre ayarla
-        this.header.style.backgroundColor = `var(--header-bg-${theme})`;
-      }
-      
-      // CTA buton stilini tema değişkenlerine göre ayarla
-      if (this.ctaButton) {
-        // Tema renk varyasyonuna göre buton görünümünü otomatik ayarla
-        this.ctaButton.setAttribute('data-theme-color', colorTheme);
-      }
-    }
-    
-    /**
-     * Tema değişikliklerini izle - güncellenmiş versiyon
-     */
-    observeThemeChanges() {
-      // MutationObserver aynen kalır
-      
-      // Yeni Tema Sistemi olaylarını dinle
-      document.addEventListener('themeSystemInitialized', (event) => {
-        console.log('Header: Tema sistemi başlatıldı, entegrasyon sağlanıyor...');
-        
-        const { themeManager } = event.detail;
-        if (themeManager) {
-          // Tema değişikliklerini dinle
-          themeManager.on('beforeThemeChange', (data) => {
-            console.log('Header: Tema değişimi başlıyor', data);
-            // Tema değişim başlangıç efektleri
-          });
-          
-          themeManager.on('themeChanged', (data) => {
-            console.log('Header: Tema değişti', data);
-            // Header stillerini ve durumlarını güncelle
-            this.updateThemeSpecificStyles();
-          });
-          
-          // Başlangıç değerlerini ayarla
-          this.state.themeMode = themeManager.getCurrentTheme();
-          this.state.colorTheme = themeManager.getCurrentColorTheme();
-          this.state.reducedMotion = themeManager.isReducedMotionEnabled();
-        }
-      });
-    }
-    
-    /**
-     * Scroll Spy fonksiyonu - aktif bölümü tespit et ve menüyü güncelle 
-     */
-    initScrollSpy() {
-      // İlk yüklemede aktif bölümü kontrol et
-      this.checkActiveSection();
-    }
-    
-    /**
-     * Aktif bölümü kontrol et ve ilgili menü öğesini işaretle
-     */
-    checkActiveSection() {
-      const sections = document.querySelectorAll('section[id]');
-      if (!sections.length || !this.navLinks.length) return;
-      
-      const scrollPosition = window.scrollY + 100; // Offset için biraz boşluk
-      
-      let currentSectionId = null;
-      let lastSectionTop = 0;
-      
-      // Her bölümü kontrol et
-      sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.offsetHeight;
-        const sectionId = section.getAttribute('id');
-        
-        // Scroll pozisyonu bölüm içindeyse veya son bölümse
-        if ((scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) || 
-            (sectionTop > lastSectionTop && !currentSectionId)) {
-          currentSectionId = sectionId;
-          lastSectionTop = sectionTop;
-        }
-      });
-      
-      // Eğer herhangi bir bölüm aktif değilse, sayfanın en üstündeyse ilk bölümü seç
-      if (!currentSectionId && sections.length > 0 && scrollPosition < sections[0].offsetTop) {
-        currentSectionId = sections[0].getAttribute('id');
-      }
-      
-      // Tüm linklerden active sınıfını kaldır
-      this.navLinks.forEach(link => link.classList.remove('active'));
-      
-      // Aktif bölüm varsa, ilgili menü öğesine active sınıfı ekle
-      if (currentSectionId) {
-        const activeLink = document.querySelector(`.nav-link[href="#${currentSectionId}"]`);
-        if (activeLink) activeLink.classList.add('active');
-      }
-    }
-    
-    /**
-     * Tüm etkileşimleri ayarla
-     */
-    setupInteractions() {
-      this.setupMenuInteractions();
-      this.setupLogoInteractions();
-      this.setupMobileMenuInteractions();
-      this.setupHeaderButtonInteractions();
-    }
-    
-    /**
-     * Menü öğeleri etkileşimlerini ayarla
-     */
-    setupMenuInteractions() {
-      // Reduced motion tercihini kontrol et
-      const useReducedMotion = this.state.reducedMotion || 
-                              window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      
-      this.navLinks.forEach(link => {
-        // Hover efektleri - reduced motion desteği ile
-        link.addEventListener('mouseenter', () => {
-          if (!useReducedMotion) {
-            link.style.transform = 'translateY(-2px)';
+          // Kısa bir gecikme ile scrollu gerçekleştir (menü kapanma animasyonu için)
+          setTimeout(() => {
+            // Offset hesaplama (header height göz önünde bulundurarak)
+            const headerHeight = document.querySelector('.patreon-header').offsetHeight;
+            const targetOffset = targetSection.getBoundingClientRect().top + window.pageYOffset - headerHeight;
             
-            const icon = link.querySelector('.nav-icon');
-            if (icon) {
-              icon.style.transform = 'scale(1.1)';
-            }
-          }
-        });
-        
-        link.addEventListener('mouseleave', () => {
-          link.style.transform = '';
-          
-          const icon = link.querySelector('.nav-icon');
-          if (icon) {
-            icon.style.transform = '';
-          }
-        });
-        
-        // Tıklama yönetimi - sayfa içi linkler için smooth scroll
-        link.addEventListener('click', (e) => {
-          const href = link.getAttribute('href');
-          if (href && href.startsWith('#')) {
-            e.preventDefault();
+            // Smooth scroll
+            window.scrollTo({
+              top: targetOffset,
+              behavior: 'smooth'
+            });
             
-            const targetId = href.substring(1);
-            const targetElement = document.getElementById(targetId);
-            
-            if (targetElement) {
-              // Aktif sınıfı ekle
-              this.navLinks.forEach(l => l.classList.remove('active'));
-              link.classList.add('active');
-              
-              // Mobil menüyü kapat
-              if (window.innerWidth < 1200 && this.menuToggler && 
-                  this.menuToggler.getAttribute('aria-expanded') === 'true') {
-                setTimeout(() => this.menuToggler.click(), 150);
-              }
-              
-              // Hedef elemana smooth scroll - reduced motion desteği ile
-              const scrollBehavior = useReducedMotion ? 'auto' : 'smooth';
-              
-              window.scrollTo({
-                top: targetElement.offsetTop - 80, // Header yüksekliği için offset
-                behavior: scrollBehavior
-              });
-            }
-          }
-        });
-      });
-    }
-    
-    /**
-     * Logo etkileşimlerini ayarla
-     */
-    setupLogoInteractions() {
-      if (!this.logo || !this.logoImage) return;
-      
-      // Reduced motion tercihini kontrol et
-      const useReducedMotion = this.state.reducedMotion || 
-                              window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      
-      this.logo.addEventListener('mouseenter', () => {
-        if (!useReducedMotion) {
-          this.logoImage.style.transform = 'scale(1.05)';
-          this.logoImage.style.filter = 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))';
+            // Gezinme geçmişini güncelle
+            history.pushState(null, null, href);
+          }, 400);
         }
-      });
-      
-      this.logo.addEventListener('mouseleave', () => {
-        this.logoImage.style.transform = '';
-        this.logoImage.style.filter = '';
-      });
-      
-      // Logo tıklandığında sayfanın başına git
-      this.logo.addEventListener('click', (e) => {
-        // Eğer link href="#" ise preventDefault yap
-        if (this.logo.getAttribute('href') === '#') {
-          e.preventDefault();
-          
-          // Hedef elemana smooth scroll - reduced motion desteği ile
-          const scrollBehavior = useReducedMotion ? 'auto' : 'smooth';
-          
-          window.scrollTo({
-            top: 0,
-            behavior: scrollBehavior
-          });
-        }
-      });
-    }
-    
-    /**
-     * Mobil menü etkileşimlerini ayarla
-     */
-    setupMobileMenuInteractions() {
-      if (!this.menuToggler || !this.menuCollapse) return;
-      
-      // Menü açma/kapama durumlarını yönet
-      this.menuToggler.addEventListener('click', () => {
-        const isExpanded = this.menuToggler.getAttribute('aria-expanded') === 'true';
-        
-        if (isExpanded) {
-          // Menü kapanıyor
-          if (this.screenDarken) this.screenDarken.classList.remove('active');
-          document.body.classList.remove('menu-open');
-          this.state.isMobileMenuOpen = false;
-            } else {
-          // Menü açılıyor
-          if (this.screenDarken) this.screenDarken.classList.add('active');
-          document.body.classList.add('menu-open');
-          this.state.isMobileMenuOpen = true;
-        }
-      });
-      
-      // Karartma overlay'ine tıklandığında menüyü kapat
-      if (this.screenDarken) {
-        this.screenDarken.addEventListener('click', () => {
-          if (this.menuToggler && this.menuToggler.getAttribute('aria-expanded') === 'true') {
-            this.menuToggler.click();
-            }
-        });
-    }
-    
-      // ESC tuşuna basıldığında menüyü kapat
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && this.state.isMobileMenuOpen) {
-          if (this.menuToggler && this.menuToggler.getAttribute('aria-expanded') === 'true') {
-            this.menuToggler.click();
-          }
-        }
-      });
-    }
-    
-    /**
-     * Header buton etkileşimlerini ayarla
-     */
-    setupHeaderButtonInteractions() {
-      if (!this.ctaButton) return;
-      
-      // Reduced motion tercihini kontrol et
-      const useReducedMotion = this.state.reducedMotion || 
-                              window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      
-      if (useReducedMotion) {
-        // Reduced motion durumunda animasyon efektlerini devre dışı bırak
-        return;
-      }
-      
-      // Mouse takibi efekti
-      this.ctaButton.addEventListener('mousemove', (e) => {
-        const rect = this.ctaButton.getBoundingClientRect();
-        const x = ((e.clientX - rect.left) / rect.width) * 100;
-        const y = ((e.clientY - rect.top) / rect.height) * 100;
-        
-        this.ctaButton.style.setProperty('--x-pos', x + '%');
-        this.ctaButton.style.setProperty('--y-pos', y + '%');
-      });
-      
-      // Tıklama dalgası efekti
-      this.ctaButton.addEventListener('click', (e) => {
-        const circle = document.createElement('span');
-        const radius = Math.max(this.ctaButton.clientWidth, this.ctaButton.clientHeight);
-        
-        circle.style.width = circle.style.height = `${radius}px`;
-        circle.style.left = `${e.clientX - this.ctaButton.getBoundingClientRect().left - radius/2}px`;
-        circle.style.top = `${e.clientY - this.ctaButton.getBoundingClientRect().top - radius/2}px`;
-        circle.classList.add('ripple');
-        
-        // Önceki ripple efektini temizle
-        const oldRipple = this.ctaButton.querySelector('.ripple');
-        if (oldRipple) oldRipple.remove();
-        
-        this.ctaButton.appendChild(circle);
-        
-        // Animasyon tamamlandıktan sonra temizle
+      } else {
+        // Normal link ise sadece menüyü kapat
         setTimeout(() => {
-          circle.remove();
+          closeMobileMenu();
+        }, 300);
+      }
+    });
+  });
+  
+  // Ekran boyutu değişimini izle
+  window.addEventListener('resize', function() {
+    if (window.innerWidth > 1000) {
+      closeMobileMenu();
+    }
+  });
+  
+  // ESC tuşu ile menüyü kapatma
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeMobileMenu();
+    }
+  });
+  
+  // HTML'e overflow-hidden ekleyen yardımcı fonksiyon
+  function toggleBodyScroll(disableScroll) {
+    if (disableScroll) {
+      document.documentElement.classList.add('mobile-menu-open');
+      document.body.classList.add('mobile-menu-open');
+    } else {
+      document.documentElement.classList.remove('mobile-menu-open');
+      document.body.classList.remove('mobile-menu-open');
+    }
+  }
+  
+  // Mobil menüyü aç/kapat
+  function toggleMobileMenu() {
+    if (mobileMenu.classList.contains('active')) {
+      closeMobileMenu();
+    } else {
+      openMobileMenu();
+    }
+  }
+  
+  // Mobil menüyü aç
+  function openMobileMenu() {
+    hamburgerBtn.classList.add('active');
+    hamburgerBtn.setAttribute('aria-expanded', 'true');
+    
+    // Önce overlay'i göster
+    mobileMenuOverlay.classList.add('active');
+    
+    // Scroll'u devre dışı bırak - sayfa kaymayı önle
+    toggleBodyScroll(true);
+    
+    // Sonra menüyü göster - 10ms gecikme ekleyerek CSS geçişinin düzgün çalışmasını sağla
+    setTimeout(() => {
+      mobileMenu.classList.add('active');
+      
+      // Animasyonlar için index ekle
+      const navItems = document.querySelectorAll('.mobile-nav-item');
+      navItems.forEach((item, index) => {
+        item.style.setProperty('--item-index', index);
+      });
+      
+      // Animasyon tamamlandıktan sonra ARIA atributeleri güncelle
+      setTimeout(() => {
+        mobileMenu.setAttribute('aria-hidden', 'false');
+      }, 500);
+    }, 10);
+  }
+  
+  // Mobil menüyü kapat
+  function closeMobileMenu() {
+    hamburgerBtn.classList.remove('active');
+    hamburgerBtn.setAttribute('aria-expanded', 'false');
+    
+    // Önce menüyü gizle
+    mobileMenu.classList.remove('active');
+    
+    // Scroll'u tekrar etkinleştir
+    toggleBodyScroll(false);
+    
+    // Overlay'i animasyon tamamlandıktan sonra gizle
+    setTimeout(() => {
+      mobileMenuOverlay.classList.remove('active');
+    }, 300);
+    
+    // ARIA atributeleri hemen güncelle
+    mobileMenu.setAttribute('aria-hidden', 'true');
+    
+    // Link tıklama animasyonlarını temizle
+    mobileMenuLinks.forEach(link => {
+      link.classList.remove('clicked');
+    });
+  }
+}
+
+// Aktif menü öğesini güncelleme (Mobil ve Normal menü için)
+function updateActiveNavItem() {
+  // Tüm section elementlerini al
+  const sections = document.querySelectorAll('section[id]');
+  
+  // Scroll pozisyonu al
+  const scrollY = window.pageYOffset;
+  
+  // Header yüksekliğini al (offset hesaplamak için)
+  const headerHeight = document.querySelector('.patreon-header')?.offsetHeight || 100;
+  
+  // Aktif bir bölüm var mı kontrolü
+  let hasActiveSection = false;
+  
+  // Her section için kontrol et
+  sections.forEach(current => {
+    const sectionHeight = current.offsetHeight;
+    const sectionTop = current.offsetTop - headerHeight - 100; // Header yüksekliği ve ek tolerans için çıkarma
+    const sectionId = current.getAttribute('id');
+    
+    // Bu section görünür alanda mı?
+    if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+      hasActiveSection = true;
+      
+      // Desktop nav item
+      document.querySelectorAll('.navbar-nav .nav-link').forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${sectionId}`) {
+          link.classList.add('active');
+        }
+      });
+      
+      // Mobil nav item
+      document.querySelectorAll('.mobile-nav-link').forEach(link => {
+        link.classList.remove('active', 'section-active');
+        if (link.getAttribute('href') === `#${sectionId}`) {
+          link.classList.add('active', 'section-active');
+        }
+      });
+    }
+  });
+  
+  // Eğer aktif section yoksa ve sayfanın en üstündeyse
+  if (!hasActiveSection && scrollY <= 100) {
+    // İlk menü elemanını aktif et veya home/anasayfa elemanını bul
+    const homeLink = document.querySelector('.navbar-nav .nav-link[href="#home"], .navbar-nav .nav-link[href="#"]');
+    const mobilHomeLink = document.querySelector('.mobile-nav-link[href="#home"], .mobile-nav-link[href="#"]');
+    
+    if (homeLink) homeLink.classList.add('active');
+    if (mobilHomeLink) mobilHomeLink.classList.add('active', 'section-active');
+  }
+}
+
+// Sayfadaki section'ları izleme ve aktif menü öğelerini güncelleme
+function initSectionScrollSpy() {
+  // Sayfa yüklendiğinde aktif öğeyi kontrol et
+  updateActiveNavItem();
+  
+  // Scroll olayını dinle
+  window.addEventListener('scroll', function() {
+    updateActiveNavItem();
+  });
+  
+  // Sayfa yüklendiğinde URL hash kontrolü
+  if (window.location.hash) {
+    const targetSection = document.querySelector(window.location.hash);
+    
+    if (targetSection) {
+      setTimeout(() => {
+        const headerHeight = document.querySelector('.patreon-header')?.offsetHeight || 100;
+        const targetOffset = targetSection.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+        
+        window.scrollTo({
+          top: targetOffset,
+          behavior: 'smooth'
+        });
+      }, 500);
+    }
+  }
+}
+
+// Dil değiştirme fonksiyonu
+function changeLang(lang) {
+  // Dil değiştirme mantığını buraya ekleyebilirsiniz
+  console.log(`Dil '${lang}' olarak değiştirildi`);
+}
+
+// Header üzerindeki butonlar için ripple efekti
+document.addEventListener('DOMContentLoaded', function() {
+  const buttons = document.querySelectorAll('.header-button');
+  
+  buttons.forEach(button => {
+    button.addEventListener('click', function(e) {
+      const rect = button.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      const ripple = document.createElement('span');
+      ripple.classList.add('ripple');
+      ripple.style.left = x + 'px';
+      ripple.style.top = y + 'px';
+      
+      button.appendChild(ripple);
+      
+      // Temizlik
+        setTimeout(() => {
+        ripple.remove();
         }, 600);
       });
       
-      // Sayfaya ilk yüklendiğinde dikkat çekmek için
-      setTimeout(() => {
-        this.ctaButton.classList.add('pulse-animation');
-        
-        // 5 saniye sonra pulsing'i durdur
-        setTimeout(() => {
-          this.ctaButton.classList.remove('pulse-animation');
-        }, 5000);
-      }, 2000);
-    }
-    
-    /**
-     * Throttle fonksiyonu - performans optimizasyonu için
-     */
-    throttle(callback, delay) {
-      let lastCall = 0;
-      return function(...args) {
-        const now = new Date().getTime();
-        if (now - lastCall < delay) {
-          return;
-        }
-        lastCall = now;
-        return callback(...args);
-      };
-    }
-    
-    /**
-     * Debounce fonksiyonu - performans optimizasyonu için
-     */
-    debounce(callback, delay) {
-      let timeout;
-      return function(...args) {
-        clearTimeout(timeout);
-        timeout = setTimeout(() => callback(...args), delay);
-      };
-    }
-  }
-  
-  // DOM yüklendiğinde header kontrolcüsünü başlat
-  document.addEventListener('DOMContentLoaded', function() {
-    setupErrorHandling();
-    
-    // Header kontrolcüsünü başlat
-    const headerController = new HeaderController();
-    
-    // Global olarak erişilebilir olması için
-    window.headerController = headerController;
+    // Mouse hareketi ile interaktif ışık efekti
+    button.addEventListener('mousemove', function(e) {
+      const rect = button.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      button.style.setProperty('--x-pos', x + 'px');
+      button.style.setProperty('--y-pos', y + 'px');
+    });
   });
-})(); 
+});
+
+// Logo hover durumunda ses efekti
+document.addEventListener('DOMContentLoaded', function() {
+  const logo = document.querySelector('.header-logo');
+  if (!logo) return;
+  
+  // Hover durumunu algıla
+  logo.addEventListener('mouseenter', function() {
+    // Hover sesi - isteğe bağlı
+    /* 
+    const hoverSound = new Audio('assets/sounds/hover.mp3');
+    hoverSound.volume = 0.1;
+    hoverSound.play();
+    */
+  });
+}); 

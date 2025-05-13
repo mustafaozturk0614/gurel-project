@@ -1,7 +1,7 @@
 /**
  * Tema Sistemi Yardımcı İşlevleri
  * Bu modül, tema sistemi için gerekli yardımcı işlevleri içerir.
- * Version: 1.0.0
+ * Version: 1.2.0
  */
 
 const ThemeUtils = {
@@ -80,6 +80,25 @@ const ThemeUtils = {
   },
   
   /**
+   * Tema değişkenlerinin bir listesini alır
+   * @param {string} prefix - Değişken ön eki (örn: '--primary')
+   * @returns {Object} - Değişken adı ve değerlerini içeren nesne
+   */
+  getThemeVariables(prefix = '') {
+    const variables = {};
+    const styles = getComputedStyle(document.documentElement);
+    
+    for (let i = 0; i < styles.length; i++) {
+      const prop = styles[i];
+      if (prop.startsWith('--') && (!prefix || prop.startsWith(prefix))) {
+        variables[prop] = styles.getPropertyValue(prop).trim();
+      }
+    }
+    
+    return variables;
+  },
+  
+  /**
    * HEX renk kodunu RGB değerlerine dönüştürür
    * @param {string} hex - HEX renk kodu (ör: #FF5733)
    * @returns {Object|null} - RGB değerleri {r, g, b} veya null
@@ -117,6 +136,20 @@ const ThemeUtils = {
   },
   
   /**
+   * RGB değerlerini HEX rengine dönüştürür
+   * @param {Object} rgb - RGB değerleri {r, g, b}
+   * @returns {string} - HEX renk kodu
+   */
+  rgbToHex(rgb) {
+    const toHex = (value) => {
+      const hex = Math.max(0, Math.min(255, Math.round(value))).toString(16);
+      return hex.length === 1 ? '0' + hex : hex;
+    };
+    
+    return `#${toHex(rgb.r)}${toHex(rgb.g)}${toHex(rgb.b)}`;
+  },
+  
+  /**
    * Rastgele HEX renk kodu oluşturur
    * @returns {string} - Rastgele HEX renk kodu
    */
@@ -149,6 +182,25 @@ const ThemeUtils = {
    */
   prefersReducedMotion() {
     return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  },
+  
+  /**
+   * Kullanıcının azaltılmış veri kullanımı tercihini kontrol eder
+   * @returns {boolean} - Azaltılmış veri kullanımı tercih ediliyor mu?
+   */
+  prefersReducedData() {
+    return window.matchMedia && window.matchMedia('(prefers-reduced-data: reduce)').matches;
+  },
+  
+  /**
+   * Yüksek kontrast mod tercihini kontrol eder
+   * @returns {boolean} - Yüksek kontrast mod aktif mi?
+   */
+  prefersHighContrast() {
+    return window.matchMedia && (
+      window.matchMedia('(prefers-contrast: more)').matches ||
+      window.matchMedia('(forced-colors: active)').matches
+    );
   },
   
   /**
@@ -258,11 +310,60 @@ const ThemeUtils = {
     b = Math.max(0, Math.min(255, b));
     
     // RGB'yi HEX'e dönüştür
-    const rHex = Math.round(r).toString(16).padStart(2, '0');
-    const gHex = Math.round(g).toString(16).padStart(2, '0');
-    const bHex = Math.round(b).toString(16).padStart(2, '0');
+    return this.rgbToHex({r, g, b});
+  },
+  
+  /**
+   * İki renk arasında karışım oluşturur (theme-variables.css color-mix ile uyumlu)
+   * @param {string} color1 - İlk renk (HEX formatı)
+   * @param {string} color2 - İkinci renk (HEX formatı)
+   * @param {number} ratio - Karışım oranı (0-100 arası, birinci renk yüzdesi)
+   * @returns {string} - Karışım rengi (HEX formatı)
+   */
+  mixColors(color1, color2, ratio = 50) {
+    const rgb1 = this.hexToRgb(color1);
+    const rgb2 = this.hexToRgb(color2);
     
-    return `#${rHex}${gHex}${bHex}`;
+    if (!rgb1 || !rgb2) return color1;
+    
+    // Karışım oranını 0-1 aralığına dönüştür
+    const weight = Math.max(0, Math.min(100, ratio)) / 100;
+    
+    // Renkleri karıştır
+    const r = Math.round(rgb1.r * weight + rgb2.r * (1 - weight));
+    const g = Math.round(rgb1.g * weight + rgb2.g * (1 - weight));
+    const b = Math.round(rgb1.b * weight + rgb2.b * (1 - weight));
+    
+    return this.rgbToHex({r, g, b});
+  },
+  
+  /**
+   * Renk tonları üretir (açık ve koyu tonlar)
+   * @param {string} baseColor - Temel renk (HEX formatı)
+   * @param {number} steps - Üretilecek ton adımı sayısı
+   * @returns {Object} - Açık ve koyu tonlar {lighter: [], darker: []}
+   */
+  generateColorShades(baseColor, steps = 5) {
+    const shades = {
+      lighter: [],
+      darker: []
+    };
+    
+    const stepSize = 100 / steps;
+    
+    // Açık tonlar
+    for (let i = 1; i <= steps; i++) {
+      const amount = Math.round(stepSize * i);
+      shades.lighter.push(this.adjustColor(baseColor, amount));
+    }
+    
+    // Koyu tonlar
+    for (let i = 1; i <= steps; i++) {
+      const amount = Math.round(-stepSize * i);
+      shades.darker.push(this.adjustColor(baseColor, amount));
+    }
+    
+    return shades;
   },
   
   /**
@@ -300,6 +401,43 @@ const ThemeUtils = {
   },
   
   /**
+   * CSS dosyasını yükler (theme-variables.css, theme-animations.css vb.)
+   * @param {string} fileName - CSS dosya adı
+   * @returns {Promise} - Dosya yükleme işlemi
+   */
+  loadThemeStylesheet(fileName) {
+    // Zaten yüklü mü kontrol et
+    const isLoaded = Array.from(document.querySelectorAll('link[rel="stylesheet"]'))
+      .some(link => link.href.includes(fileName));
+    
+    if (isLoaded) {
+      return Promise.resolve();
+    }
+    
+    // Dosya yolunu oluştur
+    const path = fileName.includes('/') ? fileName : `./theme-system/${fileName}`;
+    
+    // Yükle
+    return this.loadFile(path, 'css');
+  },
+  
+  /**
+   * Eleman görünür olup olmadığını kontrol eder
+   * @param {Element} element - Kontrol edilecek element
+   * @returns {boolean} - Element görünür mü?
+   */
+  isElementVisible(element) {
+    if (!element) return false;
+    
+    const style = window.getComputedStyle(element);
+    return style.display !== 'none' && 
+           style.visibility !== 'hidden' && 
+           style.opacity !== '0' &&
+           element.offsetWidth > 0 &&
+           element.offsetHeight > 0;
+  },
+  
+  /**
    * Erişilebilirlik için fokus tuzağı oluşturur
    * @param {Element} container - Fokus tuzağı için container element
    * @returns {Object} - Fokus tuzağı işlevleri
@@ -311,7 +449,7 @@ const ThemeUtils = {
         container.querySelectorAll(
           'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
         )
-      ).filter(el => !el.hasAttribute('disabled'));
+      ).filter(el => !el.hasAttribute('disabled') && this.isElementVisible(el));
     };
     
     // Aktif fokus elementini takip et
@@ -396,6 +534,46 @@ const ThemeUtils = {
       focusNext,
       focusPrev
     };
+  },
+  
+  /**
+   * Öğenin tıklanabilir alan boyutunu artırarak mobil kullanımı iyileştirir
+   * @param {Element} element - Hedef element
+   * @param {number} padding - Eklencek padding (piksel)
+   */
+  enhanceTouchTarget(element) {
+    if (!element) return;
+    
+    // Geçerli stili koru
+    const currentStyle = window.getComputedStyle(element);
+    const originalPadding = {
+      top: parseInt(currentStyle.paddingTop) || 0,
+      right: parseInt(currentStyle.paddingRight) || 0,
+      bottom: parseInt(currentStyle.paddingBottom) || 0,
+      left: parseInt(currentStyle.paddingLeft) || 0
+    };
+    
+    // Tema değişkenlerinden minimum tıklama alanı boyutunu al
+    const minTouchSize = parseInt(this.getCssVariable('--touch-target-size') || '44');
+    
+    // Element boyutunu ölç
+    const rect = element.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    
+    // Gerekli ekstra padding hesapla
+    const extraPaddingX = Math.max(0, minTouchSize - width) / 2;
+    const extraPaddingY = Math.max(0, minTouchSize - height) / 2;
+    
+    // Dokunmatik cihaz tespiti
+    if (window.matchMedia('(pointer: coarse)').matches && (extraPaddingX > 0 || extraPaddingY > 0)) {
+      // Padding ekle
+      element.style.padding = `${originalPadding.top + extraPaddingY}px ${originalPadding.right + extraPaddingX}px ${originalPadding.bottom + extraPaddingY}px ${originalPadding.left + extraPaddingX}px`;
+      
+      // Orijinal boyutu koru
+      element.style.margin = `-${extraPaddingY}px -${extraPaddingX}px`;
+      element.classList.add('enhanced-touch-target');
+    }
   }
 };
 

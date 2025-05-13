@@ -7,304 +7,715 @@
  * şık bir kullanıcı deneyimi oluşturmak için özelleştirilmiş animasyonlar sunar.
  */
 
-/* =========================================
- * Temel Geçiş Ayarları
- * =========================================*/
-:root {
-  --transition-base-duration: 0.5s;
-  --transition-smooth-timing: cubic-bezier(0.4, 0.0, 0.2, 1);
-  --transition-accent-timing: cubic-bezier(0.17, 0.67, 0.83, 0.67);
-  --transition-spring-timing: cubic-bezier(0.68, -0.55, 0.27, 1.55);
-  --transition-bounce-timing: cubic-bezier(0.34, 1.56, 0.64, 1);
+/* =========================================================
+   GÜREL YÖNETİM - TEMA GEÇİŞLERİ VE ANİMASYONLAR
+   Bu dosya, tema değişkenleri kullanan geçiş ve animasyon tanımlarını içerir
+   Versiyon 2.0 - 2024
+   ========================================================= */
+
+/* ===========================================
+   GENEL GEÇİŞLER
+   =========================================== */
+.transition-base {
+  transition: var(--transition-base);
 }
 
-/* =========================================
- * Global Tema Geçiş Sınıfı
- * =========================================*/
-.theme-transition * {
-  transition-property: color, background-color, border-color, text-shadow, box-shadow, outline-color, fill, stroke;
-  transition-duration: var(--transition-base-duration);
-  transition-timing-function: var(--transition-smooth-timing);
+.transition-colors {
+  transition: var(--transition-color);
 }
 
-/* Tema modu değişimi sırasında özel durum */
-body.theme-is-changing,
-body.theme-is-changing * {
-  transition-duration: var(--transition-base-duration) !important;
+.transition-transform {
+  transition: var(--transition-transform);
 }
 
-/* =========================================
- * Element Türlerine Göre Özel Geçişler
- * =========================================*/
-
-/* Metinler ve başlıklar */
-.theme-transition h1, 
-.theme-transition h2, 
-.theme-transition h3,
-.theme-transition h4, 
-.theme-transition h5, 
-.theme-transition h6,
-.theme-transition p,
-.theme-transition span,
-.theme-transition a {
-  transition-property: color, text-shadow, opacity, transform;
-  transition-timing-function: var(--transition-smooth-timing);
+.transition-opacity {
+  transition: var(--transition-opacity);
 }
 
-/* Butonlar ve etkileşimli öğeler */
-.theme-transition button,
-.theme-transition .btn,
-.theme-transition input,
-.theme-transition select,
-.theme-transition textarea,
-.theme-transition .interactive-element {
-  transition-property: color, background-color, border-color, box-shadow, transform, opacity;
-  transition-timing-function: var(--transition-accent-timing);
+.transition-shadow {
+  transition: var(--transition-shadow);
 }
 
-/* Kartlar ve konteynerler */
-.theme-transition .card,
-.theme-transition .container,
-.theme-transition .box,
-.theme-transition .panel,
-.theme-transition nav,
-.theme-transition .sidebar {
-  transition-property: background-color, border-color, box-shadow, transform;
-  transition-duration: calc(var(--transition-base-duration) * 1.2);
-  transition-timing-function: var(--transition-smooth-timing);
+.transition-border {
+  transition: var(--transition-border);
 }
 
-/* İkonlar ve görseller */
-.theme-transition img,
-.theme-transition svg,
-.theme-transition .icon,
-.theme-transition .image {
-  transition-property: filter, opacity, transform;
-  transition-duration: calc(var(--transition-base-duration) * 1.3);
-  transition-timing-function: var(--transition-accent-timing);
+/* Hızlı Geçişler */
+.transition-fast {
+  transition: var(--transition-fast);
 }
 
-/* =========================================
- * Özel Durum Geçişleri
- * =========================================*/
-
-/* Aydınlık temadan karanlık temaya geçiş */
-html[data-theme="dark"][data-previous-theme="light"] .theme-transition,
-html[data-theme-transition="to-dark"] .theme-transition {
-  transition-timing-function: var(--transition-smooth-timing);
+/* Yavaş Geçişler */
+.transition-slow {
+  transition: var(--transition-slow);
 }
 
-/* Karanlık temadan aydınlık temaya geçiş */
-html[data-theme="light"][data-previous-theme="dark"] .theme-transition,
-html[data-theme-transition="to-light"] .theme-transition {
-  transition-timing-function: var(--transition-accent-timing);
+/* Özel Geçiş Süreleri */
+.transition-duration-fastest {
+  transition-duration: var(--transition-duration-fastest);
 }
 
-/* =========================================
- * Animasyon Tanımlamaları
- * =========================================*/
-
-/* Genel amaçlı animasyonlar */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+.transition-duration-fast {
+  transition-duration: var(--transition-duration-fast);
 }
 
-@keyframes fadeOut {
-  from { opacity: 1; }
-  to { opacity: 0; }
+.transition-duration-base {
+  transition-duration: var(--transition-duration);
 }
 
-@keyframes scaleUp {
-  from { transform: scale(0.95); opacity: 0.7; }
-  to { transform: scale(1); opacity: 1; }
+.transition-duration-slow {
+  transition-duration: var(--transition-duration-slow);
 }
 
-@keyframes slideInBottom {
-  from { transform: translateY(10px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+.transition-duration-slower {
+  transition-duration: var(--transition-duration-slower);
 }
 
-@keyframes slideInLeft {
-  from { transform: translateX(-10px); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
+/* Zamanlama Fonksiyonları */
+.transition-ease {
+  transition-timing-function: var(--transition-timing-ease);
 }
 
-@keyframes slideInRight {
-  from { transform: translateX(10px); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
+.transition-ease-in {
+  transition-timing-function: var(--transition-timing-ease-in);
 }
 
-/* Tema değişimi özel animasyonları */
-@keyframes themePulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.02); }
-  100% { transform: scale(1); }
+.transition-ease-out {
+  transition-timing-function: var(--transition-timing-ease-out);
 }
 
-@keyframes colorShift {
-  0% { filter: saturate(0.8) brightness(1); }
-  50% { filter: saturate(1.2) brightness(1.05); }
-  100% { filter: saturate(1) brightness(1); }
+.transition-ease-in-out {
+  transition-timing-function: var(--transition-timing-ease-in-out);
 }
 
-@keyframes shadowPulse {
-  0% { box-shadow: 0 0 0 rgba(var(--primary-rgb), 0); }
-  50% { box-shadow: 0 0 15px rgba(var(--primary-rgb), 0.3); }
-  100% { box-shadow: 0 0 0 rgba(var(--primary-rgb), 0); }
+.transition-linear {
+  transition-timing-function: var(--transition-timing-linear);
 }
 
-/* Light → Dark geçiş animasyonu */
-@keyframes lightToDark {
-  0% { 
-    filter: brightness(1) contrast(1);
-    background-color: var(--background);
+.transition-bounce {
+  transition-timing-function: var(--transition-timing-bounce);
+}
+
+/* ===========================================
+   ANİMASYONLAR
+   =========================================== */
+/* Fade Animasyonları */
+@keyframes fade-in {
+  from {
+    opacity: 0;
   }
-  100% { 
-    filter: brightness(0.9) contrast(1.1);
-    background-color: var(--background);
+  to {
+    opacity: 1;
   }
 }
 
-/* Dark → Light geçiş animasyonu */
-@keyframes darkToLight {
-  0% { 
-    filter: brightness(1) contrast(1);
-    background-color: var(--background);
+@keyframes fade-out {
+  from {
+    opacity: 1;
   }
-  100% { 
-    filter: brightness(1.1) contrast(0.95);
-    background-color: var(--background);
+  to {
+    opacity: 0;
   }
 }
 
-/* =========================================
- * Tema Değişimi Animasyon Sınıfları
- * =========================================*/
-
-/* Geçiş animasyonları */
-html[data-theme-transition="to-dark"] body {
-  animation: lightToDark 0.5s forwards;
+.fade-in {
+  animation-name: fade-in;
+  animation-duration: var(--animation-duration-fast);
+  animation-timing-function: var(--animation-timing-ease);
+  animation-fill-mode: both;
 }
 
-html[data-theme-transition="to-light"] body {
-  animation: darkToLight 0.5s forwards;
+.fade-out {
+  animation-name: fade-out;
+  animation-duration: var(--animation-duration-fast);
+  animation-timing-function: var(--animation-timing-ease);
+  animation-fill-mode: both;
 }
 
-/* Ana sayfayı etkilemeden temaya özel animasyonlar */
-.theme-transition .theme-animated-container {
-  animation: fadeIn 0.5s var(--transition-smooth-timing) forwards;
+/* Slide Animasyonları */
+@keyframes slide-in-right {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
 
-.theme-transition .card.theme-animated,
-.theme-transition .panel.theme-animated {
-  animation: scaleUp 0.6s var(--transition-spring-timing) forwards;
+@keyframes slide-out-right {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
 }
 
-.theme-transition .btn.theme-animated,
-.theme-transition button.theme-animated {
-  animation: colorShift 0.7s var(--transition-accent-timing) forwards;
+@keyframes slide-in-left {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
 
-.theme-transition .interactive-element.theme-animated {
-  animation: shadowPulse 1s var(--transition-bounce-timing) forwards;
+@keyframes slide-out-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
 }
 
-/* Kademeli animasyon sınıfları */
-.theme-transition .animate-fade-in {
-  animation: fadeIn var(--transition-base-duration) var(--transition-smooth-timing) forwards;
+@keyframes slide-in-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
 }
 
-.theme-transition .animate-scale-in {
-  animation: scaleUp var(--transition-base-duration) var(--transition-spring-timing) forwards;
+@keyframes slide-out-up {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-100%);
+  }
 }
 
-.theme-transition .animate-slide-up {
-  animation: slideInBottom var(--transition-base-duration) var(--transition-smooth-timing) forwards;
+@keyframes slide-in-down {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
 }
 
-.theme-transition .animate-slide-in-left {
-  animation: slideInLeft var(--transition-base-duration) var(--transition-smooth-timing) forwards;
+@keyframes slide-out-down {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
+  }
 }
 
-.theme-transition .animate-slide-in-right {
-  animation: slideInRight var(--transition-base-duration) var(--transition-smooth-timing) forwards;
+.slide-in-right {
+  animation-name: slide-in-right;
+  animation-duration: var(--animation-duration);
+  animation-timing-function: var(--animation-timing-ease-out);
+  animation-fill-mode: both;
 }
 
-.theme-transition .animate-pulse {
-  animation: themePulse 0.7s var(--transition-spring-timing) forwards;
+.slide-out-right {
+  animation-name: slide-out-right;
+  animation-duration: var(--animation-duration);
+  animation-timing-function: var(--animation-timing-ease-in);
+  animation-fill-mode: both;
 }
 
-/* =========================================
- * Gecikme Varyasyonları
- * =========================================*/
-:root {
-  --delay-smallest: 0.05s;
-  --delay-small: 0.1s;
-  --delay-medium: 0.15s;
-  --delay-large: 0.2s;
-  --delay-largest: 0.3s;
+.slide-in-left {
+  animation-name: slide-in-left;
+  animation-duration: var(--animation-duration);
+  animation-timing-function: var(--animation-timing-ease-out);
+  animation-fill-mode: both;
 }
 
-.delay-1 { transition-delay: var(--delay-smallest) !important; }
-.delay-2 { transition-delay: var(--delay-small) !important; }
-.delay-3 { transition-delay: var(--delay-medium) !important; }
-.delay-4 { transition-delay: var(--delay-large) !important; }
-.delay-5 { transition-delay: var(--delay-largest) !important; }
+.slide-out-left {
+  animation-name: slide-out-left;
+  animation-duration: var(--animation-duration);
+  animation-timing-function: var(--animation-timing-ease-in);
+  animation-fill-mode: both;
+}
 
-/* Kademeli element animasyonları için */
-.stagger-animation > *:nth-child(1) { transition-delay: calc(var(--delay-smallest) * 1); }
-.stagger-animation > *:nth-child(2) { transition-delay: calc(var(--delay-smallest) * 2); }
-.stagger-animation > *:nth-child(3) { transition-delay: calc(var(--delay-smallest) * 3); }
-.stagger-animation > *:nth-child(4) { transition-delay: calc(var(--delay-smallest) * 4); }
-.stagger-animation > *:nth-child(5) { transition-delay: calc(var(--delay-smallest) * 5); }
-.stagger-animation > *:nth-child(6) { transition-delay: calc(var(--delay-smallest) * 6); }
-.stagger-animation > *:nth-child(7) { transition-delay: calc(var(--delay-smallest) * 7); }
-.stagger-animation > *:nth-child(8) { transition-delay: calc(var(--delay-smallest) * 8); }
-.stagger-animation > *:nth-child(9) { transition-delay: calc(var(--delay-smallest) * 9); }
-.stagger-animation > *:nth-child(10) { transition-delay: calc(var(--delay-smallest) * 10); }
+.slide-in-up {
+  animation-name: slide-in-up;
+  animation-duration: var(--animation-duration);
+  animation-timing-function: var(--animation-timing-ease-out);
+  animation-fill-mode: both;
+}
 
-/* =========================================
- * Erişilebilirlik Uyumluluğu
- * =========================================*/
+.slide-out-up {
+  animation-name: slide-out-up;
+  animation-duration: var(--animation-duration);
+  animation-timing-function: var(--animation-timing-ease-in);
+  animation-fill-mode: both;
+}
 
-/* Azaltılmış hareket tercihi */
-@media (prefers-reduced-motion: reduce) {
-  .theme-transition,
-  .theme-transition *,
-  [class*="animate-"],
-  [class*="transition-"] {
-    transition-duration: 0.001s !important;
-    animation-duration: 0.001s !important;
-    transition-delay: 0s !important;
-    animation-delay: 0s !important;
+.slide-in-down {
+  animation-name: slide-in-down;
+  animation-duration: var(--animation-duration);
+  animation-timing-function: var(--animation-timing-ease-out);
+  animation-fill-mode: both;
+}
+
+.slide-out-down {
+  animation-name: slide-out-down;
+  animation-duration: var(--animation-duration);
+  animation-timing-function: var(--animation-timing-ease-in);
+  animation-fill-mode: both;
+}
+
+/* Zoom Animasyonları */
+@keyframes zoom-in {
+  from {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes zoom-out {
+  from {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.zoom-in {
+  animation-name: zoom-in;
+  animation-duration: var(--animation-duration);
+  animation-timing-function: var(--animation-timing-ease);
+  animation-fill-mode: both;
+}
+
+.zoom-out {
+  animation-name: zoom-out;
+  animation-duration: var(--animation-duration);
+  animation-timing-function: var(--animation-timing-ease);
+  animation-fill-mode: both;
+}
+
+/* Bounce Animasyonları */
+@keyframes bounce {
+  from,
+  20%,
+  53%,
+  to {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    transform: translate3d(0, 0, 0);
+  }
+
+  40%,
+  43% {
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    transform: translate3d(0, -30px, 0) scaleY(1.1);
+  }
+
+  70% {
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    transform: translate3d(0, -15px, 0) scaleY(1.05);
+  }
+
+  80% {
+    transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    transform: translate3d(0, 0, 0) scaleY(0.95);
+  }
+
+  90% {
+    transform: translate3d(0, -4px, 0) scaleY(1.02);
+  }
+}
+
+.bounce {
+  animation-name: bounce;
+  animation-duration: var(--animation-duration);
+  transform-origin: center bottom;
+  animation-fill-mode: both;
+}
+
+/* Flash Animasyonu */
+@keyframes flash {
+  from,
+  50%,
+  to {
+    opacity: 1;
+  }
+
+  25%,
+  75% {
+    opacity: 0;
+  }
+}
+
+.flash {
+  animation-name: flash;
+  animation-duration: var(--animation-duration);
+  animation-fill-mode: both;
+}
+
+/* Shake Animasyonu */
+@keyframes shake {
+  from,
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translate3d(-10px, 0, 0);
+  }
+
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translate3d(10px, 0, 0);
+  }
+}
+
+.shake {
+  animation-name: shake;
+  animation-duration: var(--animation-duration);
+  animation-fill-mode: both;
+}
+
+/* Pulse Animasyonu */
+@keyframes pulse {
+  from {
+    transform: scale3d(1, 1, 1);
+  }
+
+  50% {
+    transform: scale3d(1.05, 1.05, 1.05);
+  }
+
+  to {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+.pulse {
+  animation-name: pulse;
+  animation-duration: var(--animation-duration);
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: both;
+}
+
+/* ===========================================
+   TEMA GEÇİŞLERİ
+   =========================================== */
+/* Tema değişikliklerinde geçiş efekti */
+.theme-transition {
+  transition: background-color var(--transition-duration-slow) ease,
+              color var(--transition-duration-slow) ease,
+              border-color var(--transition-duration) ease,
+              box-shadow var(--transition-duration) ease;
+}
+
+/* Tema değiştir düğmesi */
+.theme-toggle {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.theme-toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.theme-toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--gray-400);
+  transition: var(--transition-base);
+  border-radius: 34px;
+}
+
+.theme-toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: var(--white);
+  transition: var(--transition-base);
+  border-radius: 50%;
+}
+
+input:checked + .theme-toggle-slider {
+  background-color: var(--primary-color);
+}
+
+input:focus + .theme-toggle-slider {
+  box-shadow: 0 0 1px var(--primary-color);
+}
+
+input:checked + .theme-toggle-slider:before {
+  transform: translateX(26px);
+}
+
+/* ===========================================
+   SAYFA GEÇİŞLERİ
+   =========================================== */
+/* Sayfa geçişi animasyonları */
+.page-transition-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.page-transition-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity var(--transition-duration) ease,
+              transform var(--transition-duration) ease;
+}
+
+.page-transition-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-transition-exit-active {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity var(--transition-duration) ease,
+              transform var(--transition-duration) ease;
+}
+
+/* ===========================================
+   MODAL GEÇİŞLERİ
+   =========================================== */
+/* Modal geçiş animasyonları */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(var(--black-rgb), 0.5);
+  opacity: 0;
+  transition: opacity var(--transition-duration) ease;
+  z-index: var(--z-index-modal-backdrop);
+}
+
+.modal-backdrop.show {
+  opacity: 1;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--z-index-modal);
+  visibility: hidden;
+}
+
+.modal.show {
+  visibility: visible;
+}
+
+.modal-dialog {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  margin: 1.75rem auto;
+  background-color: var(--card-bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  transform: scale(0.9);
+  transition: transform var(--transition-duration) ease-out,
+              opacity var(--transition-duration) ease-out;
+}
+
+.modal.show .modal-dialog {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ===========================================
+   HOVER VE FOKUSLANMABİLİR ÖĞELER
+   =========================================== */
+/* Hover efektleri */
+.hover-lift {
+  transition: transform var(--transition-duration) var(--transition-timing-ease-out);
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+}
+
+.hover-shadow {
+  transition: box-shadow var(--transition-duration) var(--transition-timing-ease);
+}
+
+.hover-shadow:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+.hover-grow {
+  transition: transform var(--transition-duration) var(--transition-timing-ease);
+}
+
+.hover-grow:hover {
+  transform: scale(1.05);
+}
+
+/* Focusable elemanlar */
+.focus-visible-outline:focus-visible {
+  outline: var(--focus-visible-outline);
+  outline-offset: 2px;
+}
+
+/* ===========================================
+   İNTERAKTİF ELEMANLAR
+   =========================================== */
+/* Tıklanabilir elemanlar */
+.clickable {
+  cursor: pointer;
+  transition: transform var(--transition-duration-fast) var(--transition-timing-ease);
+}
+
+.clickable:active {
+  transform: scale(0.98);
+}
+
+/* ===========================================
+   LOADER / SPINNER
+   =========================================== */
+@keyframes spinner-border {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner-border {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  vertical-align: text-bottom;
+  border: 0.25rem solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spinner-border var(--animation-duration) linear infinite;
+}
+
+.spinner-border-sm {
+  width: 1rem;
+  height: 1rem;
+  border-width: 0.2rem;
+}
+
+@keyframes spinner-grow {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.spinner-grow {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  vertical-align: text-bottom;
+  background-color: currentColor;
+  border-radius: 50%;
+  opacity: 0;
+  animation: spinner-grow var(--animation-duration) linear infinite;
+}
+
+.spinner-grow-sm {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* ===========================================
+   PROGRESS BAR
+   =========================================== */
+.progress {
+  display: flex;
+  height: 1rem;
+  overflow: hidden;
+  background-color: var(--gray-200);
+  border-radius: var(--border-radius);
+}
+
+.progress-bar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  color: var(--white);
+  text-align: center;
+  white-space: nowrap;
+  background-color: var(--primary-color);
+  transition: width var(--transition-duration) ease;
+}
+
+@keyframes progress-bar-stripes {
+  from {
+    background-position: 1rem 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+
+.progress-bar-striped {
+  background-image: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.15) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0.15) 75%,
+    transparent 75%,
+    transparent
+  );
+  background-size: 1rem 1rem;
+}
+
+.progress-bar-animated {
+  animation: progress-bar-stripes 1s linear infinite;
+}
+
+/* ===========================================
+   AZALTILMIŞ HAREKET MODU
+   =========================================== */
+@media (prefers-reduced-motion) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
   
-  body.theme-is-changing {
-    animation: none !important;
-  }
-}
-
-/* HTML data özniteliği ile azaltılmış hareket */
-html[data-reduced-motion="true"] .theme-transition,
-html[data-reduced-motion="true"] .theme-transition *,
-html[data-reduced-motion="true"] [class*="animate-"],
-html[data-reduced-motion="true"] [class*="transition-"] {
-  transition-duration: 0.001s !important;
-  animation-duration: 0.001s !important;
-  transition-delay: 0s !important;
-  animation-delay: 0s !important;
-}
-
-html[data-reduced-motion="true"] body.theme-is-changing {
-  animation: none !important;
-}
-
-/* Yüksek kontrast modu desteği */
-@media (forced-colors: active) {
-  .theme-transition,
-  .theme-transition * {
-    transition: none !important;
-    animation: none !important;
+  .animation-paused {
+    animation-play-state: paused !important;
   }
 } 

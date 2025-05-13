@@ -1,37 +1,37 @@
 /**
  * Tema Yöneticisi - Gürel Yönetim
- * Sürüm: 4.0.0
+ * Sürüm: 4.1.0
  * 
  * Sitenin tema ve görünüm ayarlarını yöneten sınıf.
  * Bu sınıf, kullanıcı tema tercihlerini yönetir, localStorage'a kaydeder 
- * ve HTML elementlerine uygular.
+ * ve HTML elementlerine CSS değişkenleri aracılığıyla uygular.
  */
 
 import ThemeUtils from './theme-utils.js';
 
 class ThemeManager {
   constructor(options = {}) {
-    // Renk değerleri
+    // Renk değerleri - theme-variables.css ile senkronize
     this.colorValues = {
-      blue: '#0055a4',
-      red: '#d93025',
-      green: '#188038',
-      orange: '#ea8600',
-      purple: '#7b1fa2',
-      teal: '#009688',
-      pink: '#e91e63'
+      blue: '#0055a4',    // Varsayılan ana renk
+      green: '#188038',   // Çevre dostu tema
+      red: '#d93025',     // Uyarı/hata temaları için
+      orange: '#ea8600',  // Sıcak turuncu tema
+      purple: '#7b1fa2',  // Yaratıcılık teması
+      teal: '#009688',    // Ferah tema
+      pink: '#e91e63'     // Modern tema
     };
     
     // Varsayılan ayarlar
     this.defaults = {
-      themeMode: 'auto', // 'light', 'dark', 'auto', 'system'
-      colorTheme: 'blue', // 'blue', 'red', 'green', 'orange', 'purple', 'teal', 'pink'
-      contrastLevel: 0, // 0-3 (normal, hafif, orta, yüksek)
-      fontSizePercent: 100, // Yüzde olarak font boyutu
-      reducedMotion: false, // Azaltılmış hareket
-      dayStartHour: 6,  // Otomatik tema için gündüz başlangıç saati
-      dayEndHour: 19,   // Otomatik tema için gündüz bitiş saati (19:00'a güncellendi)
-      debug: false,      // Debug modu
+      themeMode: 'system',      // 'light', 'dark', 'auto', 'system'
+      colorTheme: 'blue',       // Anarenk teması (yukarıdaki renklerden biri)
+      contrastLevel: 0,         // 0-3 (normal, hafif, orta, yüksek)
+      fontSizePercent: 100,     // Yüzde olarak font boyutu
+      reducedMotion: false,     // Azaltılmış hareket
+      dayStartHour: 6,          // Otomatik tema için gündüz başlangıç saati
+      dayEndHour: 19,           // Otomatik tema için gündüz bitiş saati
+      debug: false,             // Debug modu
       animatedTransitions: true // Zarif geçişler için animasyon desteği
     };
     
@@ -49,7 +49,7 @@ class ThemeManager {
     };
     
     // Olay dinleyicileri
-    this.eventListeners = [];
+    this.eventListeners = {};
     
     // Mevcut tema mod durumu
     this.currentThemeMode = '';
@@ -65,7 +65,7 @@ class ThemeManager {
     // LocalStorage'dan ayarları yükle
     this.loadSettings();
     
-    // Tema değişiminde geçiş efekti ekle
+    // Tema değişiminde geçiş efekti ekle (theme-animations.css ile uyumlu)
     document.documentElement.classList.add('theme-transition');
     
     // Olay dinleyicilerini oluştur
@@ -212,7 +212,7 @@ class ThemeManager {
   
   /**
    * Tema modunu başlatır
-   */
+   */""
   initThemeMode() {
     const mode = this.settings.themeMode;
     
@@ -373,6 +373,7 @@ class ThemeManager {
     
     // Geçiş animasyonu için body'e geçiş sınıfı ekle
     document.body.classList.add('theme-is-changing');
+    document.body.classList.add('theme-transition-active');
     
     // Ayrık tema geçiş tipi belirle (light->dark veya dark->light)
     const transitionDirection = 
@@ -383,11 +384,11 @@ class ThemeManager {
       document.documentElement.setAttribute('data-theme-transition', transitionDirection);
     }
     
-    // Sayfa elementlerine kademeli geçiş için hazırlık
+    // Theme-animations.css ile uyumlu animasyonlar kullan
     if (transitionDirection === 'to-dark') {
-      document.body.style.animation = 'theme-transition-light-to-dark 0.5s forwards';
+      document.body.style.animation = 'theme-transition-light-to-dark var(--anim-duration-normal) var(--anim-timing-ease-in-out) forwards';
     } else if (transitionDirection === 'to-light') {
-      document.body.style.animation = 'theme-transition-dark-to-light 0.5s forwards';
+      document.body.style.animation = 'theme-transition-dark-to-light var(--anim-duration-normal) var(--anim-timing-ease-in-out) forwards';
     }
     
     // Geçiş öncesi olayını bildir
@@ -404,15 +405,20 @@ class ThemeManager {
       return;
     }
     
+    // theme-animations.css değişkenleriyle uyumlu gecikme süresi
+    const animDuration = getComputedStyle(document.documentElement).getPropertyValue('--anim-duration-normal').trim() || '0.3s';
+    const delayMs = parseFloat(animDuration) * 1000 || 300;
+    
     // Zamanlayıcı ile tema değişim sınıfını kaldır
     setTimeout(() => {
       document.body.classList.remove('theme-is-changing');
+      document.body.classList.remove('theme-transition-active');
       document.documentElement.removeAttribute('data-theme-transition');
       document.body.style.animation = '';
       
       // Özel geçiş tamamlandı olayını bildir
       this.emit('themeTransitionComplete', { previousMode, newMode });
-    }, 500); // Geçiş süresi (CSS'deki değerle eşleşmeli)
+    }, delayMs);
     
     // Animasyonlu elementlere etki ekleme
     this.animateElementsOnThemeChange(newMode);
@@ -423,10 +429,14 @@ class ThemeManager {
    * @param {string} mode - Yeni tema modu 
    */
   animateElementsOnThemeChange(mode) {
-    // Animasyon efekti uygulanacak elementler
+    // CSS değişkenlerinden gecikme değerlerini al
+    const baseDelay = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--anim-delay-sm').trim() || '0.1s') * 1000;
+    
+    // Animasyon efekti uygulanacak elementler - theme-components.css ile uyumlu
     const animatableElements = [
       'header', '.card', '.btn-primary', '.hero-section', 
-      '.feature-box', '.nav-item', '.sidebar'
+      '.feature-box', '.nav-item', '.sidebar', '.timeline-container',
+      '.accordion', '.pagination', '.breadcrumb', '.stepper'
     ].join(',');
     
     const elements = document.querySelectorAll(animatableElements);
@@ -436,17 +446,17 @@ class ThemeManager {
       // Varsa önceki animasyon sınıflarını temizle
       element.classList.remove('animate-fade-in', 'animate-slide-up', 'animate-scale-in');
       
-      // Gecikmeli olarak yeni sınıf ekle
+      // theme-animations.css ile uyumlu sınıfları ekle
       setTimeout(() => {
         // Element türüne göre farklı animasyon seç
         if (element.tagName === 'HEADER' || element.classList.contains('hero-section')) {
-          element.classList.add('animate-fade-in');
+          element.classList.add('fade-in');
         } else if (element.classList.contains('card') || element.classList.contains('feature-box')) {
-          element.classList.add('animate-scale-in');
+          element.classList.add('zoom-in');
         } else {
-          element.classList.add('animate-slide-up');
+          element.classList.add('slide-in-up');
         }
-      }, 50 + (index * 20)); // Kademeli etki için her element için artarak gecikme
+      }, baseDelay + (index * 20)); // Kademeli etki için her element için artarak gecikme
     });
   }
   
@@ -510,13 +520,17 @@ class ThemeManager {
     // data-color-theme özniteliğini ayarla
     document.documentElement.setAttribute('data-color-theme', colorTheme);
     
-    // CSS değişkenlerini güncelle
+    // CSS değişkenlerini güncelle - theme-variables.css ile uyumlu
     ThemeUtils.setCssVariable('--primary-color', colorHex);
     
     // RGB değerlerini de güncelle
     const rgb = ThemeUtils.hexToRgb(colorHex);
     if (rgb) {
       ThemeUtils.setCssVariable('--primary-rgb', ThemeUtils.rgbToString(rgb));
+      
+      // Renk tonu varyasyonlarını hesapla
+      ThemeUtils.setCssVariable('--primary-light', ThemeUtils.adjustColor(colorHex, 30)); 
+      ThemeUtils.setCssVariable('--primary-dark', ThemeUtils.adjustColor(colorHex, -20));
     }
     
     // Meta tema rengini güncelle
@@ -692,8 +706,12 @@ class ThemeManager {
     
     if (enabled) {
       document.documentElement.classList.add('reduced-motion');
+      
+      // theme-animations.css ile uyumlu yardımcı sınıfları ekle
+      document.documentElement.classList.add('prefers-reduced-motion');
     } else {
       document.documentElement.classList.remove('reduced-motion');
+      document.documentElement.classList.remove('prefers-reduced-motion');
     }
   }
   
@@ -904,80 +922,7 @@ function applyThemeMode(mode) {
   });
 }
 
-// Güneş-Ay tema geçişi için işleyici
-document.addEventListener('DOMContentLoaded', function() {
-  const themeToggle = document.querySelector('.theme-toggle');
-  const container = document.querySelector('.sun-moon-container');
-  
-  if (themeToggle && container) {
-    // Sayfa yüklendiğinde mevcut temaya göre görünümü ayarla
-    const currentTheme = document.body.getAttribute('data-theme') || 'light';
-    if (currentTheme === 'dark') {
-      document.body.setAttribute('data-theme', 'dark');
-    }
-    
-    // Parçacık efektleri oluşturma fonksiyonu
-    function createParticles() {
-      const particles = document.querySelector('.particles');
-      if (!particles) return;
-      
-      particles.innerHTML = '';
-      
-      // 12 adet parçacık oluştur
-      for (let i = 0; i < 12; i++) {
-        const particle = document.createElement('div');
-        particle.classList.add('particle');
-        
-        // Rastgele x ve y değerleri atayarak parçacıkların farklı yönlere gitmesini sağla
-        const x = (Math.random() - 0.5);
-        const y = (Math.random() - 0.5);
-        
-        particle.style.setProperty('--x', x);
-        particle.style.setProperty('--y', y);
-        
-        particles.appendChild(particle);
-      }
-    }
-    
-    // Tema geçişi için tıklama olayı
-    themeToggle.addEventListener('click', function() {
-      const isDark = document.body.getAttribute('data-theme') === 'dark';
-      
-      // Animasyon sınıflarını ekle
-      container.classList.add(isDark ? 'animate-dark-to-light' : 'animate-light-to-dark');
-      
-      // Parçacık efektlerini oluştur
-      createParticles();
-      
-      // Temayı değiştir
-      document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
-      
-      // Tema değişim olayını tetikle
-      const themeChangeEvent = new CustomEvent('themeChanged', {
-        detail: { theme: isDark ? 'light' : 'dark' }
-      });
-      document.dispatchEvent(themeChangeEvent);
-      
-      // Animasyon bittiğinde sınıfları kaldır
-      setTimeout(() => {
-        container.classList.remove('animate-dark-to-light', 'animate-light-to-dark');
-      }, 1000);
-    });
-    
-    // Tema değiştiğinde dışarıdan tetiklendiğinde animasyonu güncelle
-    document.addEventListener('themeChanged', function(e) {
-      if (e.detail && e.detail.source !== 'toggle') {
-        // Güneş/ay görünümünü temaya göre güncelle
-        const isDark = e.detail.theme === 'dark';
-        if (isDark) {
-          document.body.setAttribute('data-theme', 'dark');
-        } else {
-          document.body.setAttribute('data-theme', 'light');
-        }
-      }
-    });
-  }
-});
+
 
 // Kontrol düğmeleri için olay dinleyicileri
 document.querySelectorAll('.theme-preview-control').forEach(button => {

@@ -6,73 +6,140 @@
  * Tüm bileşenler, theme-variables.css dosyasındaki değişkenleri kullanır.
  */
 
-/* =========================================
- * 1. Button Bileşenleri
- * =========================================*/
+/* =========================================================
+   GÜREL YÖNETİM - TEMA BİLEŞENLERİ
+   Bu dosya, ana tema değişkenlerini kullanan bileşen stilleri içerir
+   Versiyon 2.0 - 2024
+   ========================================================= */
+
+/* ===========================================
+   BUTONLAR
+   =========================================== */
 .btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--btn-padding-y) var(--btn-padding-x);
-  font-size: var(--btn-font-size);
-  font-weight: var(--btn-font-weight);
-  line-height: var(--btn-line-height);
+  display: inline-block;
+  font-weight: var(--font-weight-medium);
+  color: var(--text-color);
   text-align: center;
-  text-decoration: none;
   vertical-align: middle;
   cursor: pointer;
   user-select: none;
-  border: var(--btn-border-width) solid transparent;
+  background-color: transparent;
+  border: var(--border-width) solid transparent;
+  padding: var(--btn-padding-y) var(--btn-padding-x);
+  font-size: var(--btn-font-size);
+  line-height: var(--btn-line-height);
   border-radius: var(--btn-border-radius);
-  transition: color var(--transition-normal), 
-              background-color var(--transition-normal), 
-              border-color var(--transition-normal), 
-              box-shadow var(--transition-normal);
+  transition: var(--btn-transition);
+  box-shadow: var(--btn-box-shadow);
 }
 
+.btn:focus, 
+.btn:active:focus {
+  outline: var(--focus-outline);
+  box-shadow: 0 0 0 var(--focus-ring-width) rgba(var(--primary-color-rgb), var(--focus-ring-opacity));
+}
+
+.btn:disabled,
+.btn.disabled {
+  opacity: var(--btn-disabled-opacity);
+  pointer-events: none;
+}
+
+.btn-sm {
+  padding: var(--btn-padding-y-sm) var(--btn-padding-x-sm);
+  font-size: var(--btn-font-size-sm);
+  border-radius: var(--border-radius-sm);
+}
+
+.btn-lg {
+  padding: var(--btn-padding-y-lg) var(--btn-padding-x-lg);
+  font-size: var(--btn-font-size-lg);
+  border-radius: var(--border-radius-lg);
+}
+
+/* Temel Buton Çeşitleri */
 .btn-primary {
-  color: var(--text-on-primary);
+  color: var(--white);
   background-color: var(--primary-color);
   border-color: var(--primary-color);
 }
 
 .btn-primary:hover {
-  background-color: var(--primary-dark);
-  border-color: var(--primary-dark);
+  background-color: color-mix(in srgb, var(--primary-color) 85%, black);
+  border-color: color-mix(in srgb, var(--primary-color) 85%, black);
 }
 
 .btn-secondary {
-  color: var(--text-on-primary);
+  color: var(--white);
   background-color: var(--secondary-color);
   border-color: var(--secondary-color);
 }
 
+.btn-secondary:hover {
+  background-color: color-mix(in srgb, var(--secondary-color) 85%, black);
+  border-color: color-mix(in srgb, var(--secondary-color) 85%, black);
+}
+
 .btn-success {
-  color: var(--text-on-primary);
+  color: var(--white);
   background-color: var(--success-color);
   border-color: var(--success-color);
 }
 
+.btn-success:hover {
+  background-color: color-mix(in srgb, var(--success-color) 85%, black);
+  border-color: color-mix(in srgb, var(--success-color) 85%, black);
+}
+
 .btn-danger {
-  color: var(--text-on-primary);
+  color: var(--white);
   background-color: var(--danger-color);
   border-color: var(--danger-color);
 }
 
+.btn-danger:hover {
+  background-color: color-mix(in srgb, var(--danger-color) 85%, black);
+  border-color: color-mix(in srgb, var(--danger-color) 85%, black);
+}
+
 .btn-outline-primary {
   color: var(--primary-color);
-  background-color: transparent;
   border-color: var(--primary-color);
 }
 
 .btn-outline-primary:hover {
-  color: var(--text-on-primary);
+  color: var(--white);
   background-color: var(--primary-color);
+  border-color: var(--primary-color);
 }
 
-/* =========================================
- * 2. Kart Bileşenleri
- * =========================================*/
+.btn-outline-secondary {
+  color: var(--secondary-color);
+  border-color: var(--secondary-color);
+}
+
+.btn-outline-secondary:hover {
+  color: var(--white);
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+}
+
+.btn-link {
+  color: var(--link-color);
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.btn-link:hover {
+  color: var(--link-hover-color);
+  text-decoration: underline;
+}
+
+/* ===========================================
+   KARTLAR
+   =========================================== */
 .card {
   position: relative;
   display: flex;
@@ -81,39 +148,96 @@
   word-wrap: break-word;
   background-color: var(--card-bg);
   background-clip: border-box;
-  border: var(--card-border-width) solid var(--card-border-color);
+  border: var(--card-border-width) solid var(--border-color);
   border-radius: var(--card-border-radius);
   box-shadow: var(--card-box-shadow);
-  transition: transform var(--transition-normal), 
-              box-shadow var(--transition-normal);
+  transition: var(--card-transition);
 }
 
 .card:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-lg);
-}
-
-.card-header {
-  padding: var(--spacing-3) var(--spacing-4);
-  margin-bottom: 0;
-  background-color: var(--background-alt);
-  border-bottom: var(--card-border-width) solid var(--card-border-color);
+  box-shadow: var(--card-hover-box-shadow);
 }
 
 .card-body {
   flex: 1 1 auto;
-  padding: var(--card-padding);
+  padding: var(--card-spacer-y) var(--card-spacer-x);
+}
+
+.card-title {
+  margin-bottom: var(--spacer-2);
+  font-size: var(--h5-font-size);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-color);
+}
+
+.card-subtitle {
+  margin-top: calc(-1 * var(--spacer-1));
+  margin-bottom: var(--spacer-2);
+  font-size: var(--font-size-sm);
+  color: var(--text-color-secondary);
+}
+
+.card-text {
+  color: var(--text-color);
+  margin-bottom: var(--spacer-3);
+}
+
+.card-text:last-child {
+  margin-bottom: 0;
+}
+
+.card-header {
+  padding: var(--spacer-2) var(--card-spacer-x);
+  margin-bottom: 0;
+  background-color: var(--bg-color-secondary);
+  border-bottom: var(--card-border-width) solid var(--border-color);
+}
+
+.card-header:first-child {
+  border-radius: calc(var(--card-border-radius) - var(--card-border-width)) calc(var(--card-border-radius) - var(--card-border-width)) 0 0;
 }
 
 .card-footer {
-  padding: var(--spacing-3) var(--spacing-4);
-  background-color: var(--background-alt);
-  border-top: var(--card-border-width) solid var(--card-border-color);
+  padding: var(--spacer-2) var(--card-spacer-x);
+  background-color: var(--bg-color-secondary);
+  border-top: var(--card-border-width) solid var(--border-color);
 }
 
-/* =========================================
- * 3. Form Bileşenleri
- * =========================================*/
+.card-footer:last-child {
+  border-radius: 0 0 calc(var(--card-border-radius) - var(--card-border-width)) calc(var(--card-border-radius) - var(--card-border-width));
+}
+
+/* Kart Varyasyonları */
+.card-primary {
+  border-top: var(--border-width-thick) solid var(--primary-color);
+}
+
+.card-success {
+  border-top: var(--border-width-thick) solid var(--success-color);
+}
+
+.card-danger {
+  border-top: var(--border-width-thick) solid var(--danger-color);
+}
+
+.card-warning {
+  border-top: var(--border-width-thick) solid var(--warning-color);
+}
+
+/* ===========================================
+   FORM ELEMANLARI
+   =========================================== */
+.form-group {
+  margin-bottom: var(--form-group-spacing);
+}
+
+.form-label {
+  display: inline-block;
+  margin-bottom: var(--spacer-1);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-color);
+}
+
 .form-control {
   display: block;
   width: 100%;
@@ -121,201 +245,317 @@
   font-size: var(--input-font-size);
   font-weight: var(--font-weight-normal);
   line-height: var(--input-line-height);
-  color: var(--input-color);
+  color: var(--input-text);
   background-color: var(--input-bg);
   background-clip: padding-box;
-  border: var(--input-border-width) solid var(--input-border-color);
+  border: var(--border-width) solid var(--input-border);
   border-radius: var(--input-border-radius);
-  transition: border-color var(--transition-normal), 
-              box-shadow var(--transition-normal);
+  transition: var(--input-transition);
 }
 
 .form-control:focus {
-  color: var(--input-color);
-  background-color: var(--input-bg);
-  border-color: var(--input-focus-border-color);
+  color: var(--input-text);
+  background-color: var(--input-focus-bg);
+  border-color: var(--input-focus-border);
   outline: 0;
   box-shadow: var(--input-focus-box-shadow);
 }
 
-.form-label {
-  margin-bottom: var(--spacing-2);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  color: var(--text-secondary);
+.form-control::placeholder {
+  color: var(--input-placeholder);
+  opacity: 1;
 }
 
-/* =========================================
- * 4. Bildirim Bileşenleri
- * =========================================*/
+.form-control:disabled, 
+.form-control[readonly] {
+  background-color: var(--input-disabled-bg);
+  color: var(--input-disabled-text);
+  opacity: 1;
+}
+
+.form-control-sm {
+  padding: var(--input-padding-y-sm) var(--input-padding-x-sm);
+  font-size: var(--input-font-size-sm);
+  border-radius: var(--border-radius-sm);
+}
+
+.form-control-lg {
+  padding: var(--input-padding-y-lg) var(--input-padding-x-lg);
+  font-size: var(--input-font-size-lg);
+  border-radius: var(--border-radius-lg);
+}
+
+/* Checkbox ve Radio */
+.form-check {
+  display: block;
+  min-height: var(--spacer-3);
+  padding-left: var(--spacer-3);
+  margin-bottom: var(--spacer-2);
+}
+
+.form-check-input {
+  width: 1em;
+  height: 1em;
+  margin-top: 0.25em;
+  margin-left: -1.5em;
+  background-color: var(--input-bg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  border: var(--border-width) solid var(--input-border);
+  appearance: none;
+  transition: var(--input-transition);
+}
+
+.form-check-input[type=checkbox] {
+  border-radius: var(--border-radius-sm);
+}
+
+.form-check-input[type=radio] {
+  border-radius: var(--border-radius-circle);
+}
+
+.form-check-input:checked {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.form-check-input:focus {
+  border-color: var(--input-focus-border);
+  outline: 0;
+  box-shadow: var(--input-focus-box-shadow);
+}
+
+.form-check-label {
+  color: var(--text-color);
+  margin-bottom: 0;
+}
+
+/* Form Bilgilendirme */
+.form-text {
+  margin-top: var(--spacer-1);
+  font-size: var(--font-size-sm);
+  color: var(--text-color-muted);
+}
+
+/* Geçerlilik Geri Bildirimleri */
+.valid-feedback {
+  display: none;
+  width: 100%;
+  margin-top: var(--spacer-1);
+  font-size: var(--font-size-sm);
+  color: var(--success-color);
+}
+
+.invalid-feedback {
+  display: none;
+  width: 100%;
+  margin-top: var(--spacer-1);
+  font-size: var(--font-size-sm);
+  color: var(--danger-color);
+}
+
+.was-validated .form-control:valid,
+.form-control.is-valid {
+  border-color: var(--success-color);
+  background-color: color-mix(in srgb, var(--success-color) 10%, var(--input-bg));
+}
+
+.was-validated .form-control:invalid,
+.form-control.is-invalid {
+  border-color: var(--danger-color);
+  background-color: color-mix(in srgb, var(--danger-color) 10%, var(--input-bg));
+}
+
+.was-validated .form-control:valid ~ .valid-feedback,
+.form-control.is-valid ~ .valid-feedback {
+  display: block;
+}
+
+.was-validated .form-control:invalid ~ .invalid-feedback,
+.form-control.is-invalid ~ .invalid-feedback {
+  display: block;
+}
+
+/* ===========================================
+   UYARI KUTULARI
+   =========================================== */
 .alert {
   position: relative;
-  padding: var(--spacing-3) var(--spacing-4);
-  margin-bottom: var(--spacing-4);
-  border: 1px solid transparent;
-  border-radius: var(--border-radius-md);
-  transition: opacity var(--transition-normal);
+  padding: var(--alert-padding-y) var(--alert-padding-x);
+  margin-bottom: var(--alert-margin-bottom);
+  border: var(--alert-border-width) solid transparent;
+  border-radius: var(--alert-border-radius);
+  box-shadow: var(--alert-box-shadow);
 }
 
 .alert-primary {
-  color: var(--primary-color);
-  background-color: rgba(var(--primary-rgb), 0.1);
-  border-color: rgba(var(--primary-rgb), 0.2);
+  color: color-mix(in srgb, var(--primary-color) 70%, var(--text-color));
+  background-color: color-mix(in srgb, var(--primary-color) 10%, var(--bg-color));
+  border-color: color-mix(in srgb, var(--primary-color) 25%, var(--border-color));
+}
+
+.alert-secondary {
+  color: color-mix(in srgb, var(--secondary-color) 70%, var(--text-color));
+  background-color: color-mix(in srgb, var(--secondary-color) 10%, var(--bg-color));
+  border-color: color-mix(in srgb, var(--secondary-color) 25%, var(--border-color));
 }
 
 .alert-success {
-  color: var(--success-color);
-  background-color: rgba(var(--success-rgb), 0.1);
-  border-color: rgba(var(--success-rgb), 0.2);
+  color: color-mix(in srgb, var(--success-color) 70%, var(--text-color));
+  background-color: color-mix(in srgb, var(--success-color) 10%, var(--bg-color));
+  border-color: color-mix(in srgb, var(--success-color) 25%, var(--border-color));
 }
 
 .alert-danger {
-  color: var(--danger-color);
-  background-color: rgba(var(--danger-rgb), 0.1);
-  border-color: rgba(var(--danger-rgb), 0.2);
+  color: color-mix(in srgb, var(--danger-color) 70%, var(--text-color));
+  background-color: color-mix(in srgb, var(--danger-color) 10%, var(--bg-color));
+  border-color: color-mix(in srgb, var(--danger-color) 25%, var(--border-color));
 }
 
 .alert-warning {
-  color: var(--warning-color);
-  background-color: rgba(var(--warning-rgb), 0.1);
-  border-color: rgba(var(--warning-rgb), 0.2);
+  color: color-mix(in srgb, var(--warning-color) 70%, var(--text-color));
+  background-color: color-mix(in srgb, var(--warning-color) 10%, var(--bg-color));
+  border-color: color-mix(in srgb, var(--warning-color) 25%, var(--border-color));
 }
 
-/* =========================================
- * 5. Gezinme Bileşenleri
- * =========================================*/
-.nav {
-  display: flex;
-  flex-wrap: wrap;
-  padding-left: 0;
-  margin-bottom: 0;
-  list-style: none;
+.alert-info {
+  color: color-mix(in srgb, var(--info-color) 70%, var(--text-color));
+  background-color: color-mix(in srgb, var(--info-color) 10%, var(--bg-color));
+  border-color: color-mix(in srgb, var(--info-color) 25%, var(--border-color));
 }
 
-.nav-link {
-  display: block;
-  padding: var(--spacing-2) var(--spacing-3);
-  color: var(--primary-color);
-  text-decoration: none;
-  transition: color var(--transition-normal);
+.alert-heading {
+  color: inherit;
+  margin-top: 0;
+  margin-bottom: var(--spacer-1);
 }
 
-.nav-link:hover {
-  color: var(--primary-dark);
+.alert-link {
+  font-weight: var(--font-weight-bold);
+  color: inherit;
+  text-decoration: underline;
 }
 
-.nav-tabs {
-  border-bottom: 1px solid var(--border-color);
-}
-
-.nav-tabs .nav-link {
-  margin-bottom: -1px;
-  border: 1px solid transparent;
-  border-top-left-radius: var(--border-radius-md);
-  border-top-right-radius: var(--border-radius-md);
-}
-
-.nav-tabs .nav-link.active {
-  color: var(--text-color);
-  background-color: var(--background);
-  border-color: var(--border-color) var(--border-color) transparent;
-}
-
-/* =========================================
- * 6. Liste ve Tablo Bileşenleri
- * =========================================*/
-.list-group {
-  display: flex;
-  flex-direction: column;
-  padding-left: 0;
-  margin-bottom: 0;
-  border-radius: var(--border-radius-md);
-}
-
-.list-group-item {
-  position: relative;
-  display: block;
-  padding: var(--spacing-3) var(--spacing-4);
-  color: var(--text-color);
-  text-decoration: none;
-  background-color: var(--background);
-  border: 1px solid var(--border-color);
-}
-
-.list-group-item:first-child {
-  border-top-left-radius: inherit;
-  border-top-right-radius: inherit;
-}
-
-.list-group-item:last-child {
-  border-bottom-right-radius: inherit;
-  border-bottom-left-radius: inherit;
-}
-
+/* ===========================================
+   TABLOLAR
+   =========================================== */
 .table {
   width: 100%;
-  margin-bottom: var(--spacing-4);
+  margin-bottom: var(--spacer-3);
   color: var(--text-color);
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: var(--table-cell-padding-y) var(--table-cell-padding-x);
   vertical-align: top;
-  border-color: var(--border-color);
+  border-top: var(--table-border-width) solid var(--table-border-color);
 }
 
-.table > :not(:first-child) {
-  border-top: 2px solid var(--border-color);
-}
-
-.table th {
+.table thead th {
+  vertical-align: bottom;
+  border-bottom: calc(var(--table-border-width) * 2) solid var(--table-border-color);
   font-weight: var(--font-weight-semibold);
-  text-align: inherit;
-  text-align: -webkit-match-parent;
+  background-color: var(--table-head-bg);
+  color: var(--table-head-color);
 }
 
-.table td, 
-.table th {
-  padding: var(--spacing-3);
-  border-bottom: 1px solid var(--border-color);
+.table tbody + tbody {
+  border-top: calc(var(--table-border-width) * 2) solid var(--table-border-color);
+}
+
+/* Varyasyonlar */
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: var(--table-striped-bg);
 }
 
 .table-hover tbody tr:hover {
-  color: var(--text-color);
-  background-color: var(--background-alt);
+  background-color: var(--table-hover-bg);
 }
 
-/* Koyu Tema Modu için Bileşen Ayarlamaları */
-html[data-theme="dark"] .card {
-  background-color: var(--surface-color);
-  border-color: var(--border-color);
+.table-bordered {
+  border: var(--table-border-width) solid var(--table-border-color);
 }
 
-html[data-theme="dark"] .btn-outline-primary {
-  color: var(--primary-light);
-  border-color: var(--primary-light);
+.table-bordered th,
+.table-bordered td {
+  border: var(--table-border-width) solid var(--table-border-color);
 }
 
-html[data-theme="dark"] .btn-outline-primary:hover {
-  background-color: var(--primary-light);
-  color: var(--text-on-primary);
+.table-borderless th,
+.table-borderless td,
+.table-borderless thead th,
+.table-borderless tbody + tbody {
+  border: 0;
 }
 
-html[data-theme="dark"] .form-control {
-  background-color: var(--background-alt);
-  border-color: var(--border-color);
-  color: var(--text-color);
+.table-responsive {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
-html[data-theme="dark"] .alert {
-  background-color: var(--background-tertiary);
+/* ===========================================
+   YARDIMCI SINIFLAR
+   =========================================== */
+/* Metinle İlgili Yardımcı Sınıflar */
+.text-primary { color: var(--primary-color) !important; }
+.text-secondary { color: var(--secondary-color) !important; }
+.text-success { color: var(--success-color) !important; }
+.text-danger { color: var(--danger-color) !important; }
+.text-warning { color: var(--warning-color) !important; }
+.text-info { color: var(--info-color) !important; }
+.text-light { color: var(--light-color) !important; }
+.text-dark { color: var(--dark-color) !important; }
+.text-muted { color: var(--text-color-muted) !important; }
+
+.bg-primary { background-color: var(--primary-color) !important; }
+.bg-secondary { background-color: var(--secondary-color) !important; }
+.bg-success { background-color: var(--success-color) !important; }
+.bg-danger { background-color: var(--danger-color) !important; }
+.bg-warning { background-color: var(--warning-color) !important; }
+.bg-info { background-color: var(--info-color) !important; }
+.bg-light { background-color: var(--light-color) !important; }
+.bg-dark { background-color: var(--dark-color) !important; }
+
+.border { border: var(--border-width) solid var(--border-color) !important; }
+.border-primary { border-color: var(--primary-color) !important; }
+.border-secondary { border-color: var(--secondary-color) !important; }
+.border-success { border-color: var(--success-color) !important; }
+.border-danger { border-color: var(--danger-color) !important; }
+.border-warning { border-color: var(--warning-color) !important; }
+.border-info { border-color: var(--info-color) !important; }
+.border-light { border-color: var(--light-color) !important; }
+.border-dark { border-color: var(--dark-color) !important; }
+
+.rounded { border-radius: var(--border-radius) !important; }
+.rounded-sm { border-radius: var(--border-radius-sm) !important; }
+.rounded-lg { border-radius: var(--border-radius-lg) !important; }
+.rounded-circle { border-radius: var(--border-radius-circle) !important; }
+.rounded-pill { border-radius: var(--border-radius-pill) !important; }
+
+/* Ekran Okuyucu İçin Yardımcı Sınıflar */
+.sr-only {
+  position: var(--sr-only-position);
+  width: var(--sr-only-width);
+  height: var(--sr-only-height);
+  padding: var(--sr-only-padding);
+  margin: var(--sr-only-width);
+  overflow: var(--sr-only-overflow);
+  clip: var(--sr-only-clip);
+  white-space: var(--sr-only-white-space);
+  border: var(--sr-only-border-width);
 }
 
-html[data-theme="dark"] .table {
-  color: var(--text-color);
-}
-
-html[data-theme="dark"] .table th {
-  border-color: var(--border-color-light);
-}
-
-html[data-theme="dark"] .list-group-item {
-  background-color: var(--surface-color);
-  border-color: var(--border-color);
+.sr-only-focusable:focus,
+.sr-only-focusable:active {
+  position: static;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
 }

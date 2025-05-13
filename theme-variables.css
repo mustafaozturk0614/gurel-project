@@ -1,0 +1,480 @@
+/* =========================================================
+   GÜREL YÖNETİM - TEMA DEĞİŞKENLERİ VE AYARLARI
+   Modern, Responsive ve Erişilebilir Tema Sistemi
+   Versiyon 1.0 - 2024
+   ========================================================= */
+
+/* ===========================================
+   1. KÖK DEĞİŞKENLER (TEMA RENKLERİ VE BİLEŞENLER)
+   =========================================== */
+:root {
+  /* Temel Renkler */
+  --primary-color: #0056b3;
+  --secondary-color: #6c757d;
+  --success-color: #28a745;
+  --info-color: #17a2b8;
+  --warning-color: #ffc107;
+  --danger-color: #dc3545;
+  --light-color: #f8f9fa;
+  --dark-color: #212529;
+  
+  /* Nötr Renkler */
+  --white: #ffffff;
+  --gray-100: #f8f9fa;
+  --gray-200: #e9ecef;
+  --gray-300: #dee2e6;
+  --gray-400: #ced4da;
+  --gray-500: #adb5bd;
+  --gray-600: #6c757d;
+  --gray-700: #495057;
+  --gray-800: #343a40;
+  --gray-900: #212529;
+  --black: #000000;
+  
+  /* Marka Renkleri */
+  --brand-primary: #0056b3;
+  --brand-secondary: #005f73;
+  
+  /* Z-index Değerleri */
+  --z-index-dropdown: 1000;
+  --z-index-sticky: 1020;
+  --z-index-fixed: 1030;
+  --z-index-modal-backdrop: 1040;
+  --z-index-modal: 1050;
+  --z-index-popover: 1060;
+  --z-index-tooltip: 1070;
+  --z-index-toast: 1080;
+  --z-index-header: 1090;
+}
+
+/* ===========================================
+   2. TEMA MODU DEĞİŞKENLERİ
+   =========================================== */
+:root {
+  /* Açık Tema (Varsayılan) */
+  --bg-color: var(--white);
+  --text-color: var(--gray-900);
+  --link-color: var(--primary-color);
+  --link-hover-color: #004494;
+  --border-color: var(--gray-300);
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --card-bg: var(--white);
+  --header-bg: var(--white);
+  --footer-bg: var(--gray-800);
+  --input-bg: var(--white);
+  --input-border: var(--gray-400);
+  --input-text: var(--gray-900);
+}
+
+/* Karanlık Tema */
+[data-theme="dark"] {
+  --bg-color: #121212;
+  --text-color: #e4e6eb;
+  --link-color: #4e9de6;
+  --link-hover-color: #74b3ed;
+  --border-color: #3a3a3a;
+  --shadow-color: rgba(0, 0, 0, 0.5);
+  --card-bg: #1e1e1e;
+  --header-bg: #1e1e1e;
+  --footer-bg: #0a0a0a;
+  --input-bg: #2d2d2d;
+  --input-border: #444444;
+  --input-text: #e4e6eb;
+}
+
+/* Yüksek Kontrast Tema */
+[data-theme="high-contrast"] {
+  --bg-color: #000000;
+  --text-color: #ffffff;
+  --link-color: #ffff00;
+  --link-hover-color: #00ffff;
+  --border-color: #ffffff;
+  --shadow-color: rgba(255, 255, 255, 0.5);
+  --card-bg: #000000;
+  --header-bg: #000000;
+  --footer-bg: #000000;
+  --input-bg: #000000;
+  --input-border: #ffffff;
+  --input-text: #ffffff;
+}
+
+/* ===========================================
+   3. RENK TEMA VARYASYONLARI
+   =========================================== */
+:root[data-color-theme="blue"] {
+  --primary-color: #0056b3;
+  --brand-primary: #0056b3;
+  --brand-secondary: #0277bd;
+}
+
+:root[data-color-theme="green"] {
+  --primary-color: #2e7d32;
+  --brand-primary: #2e7d32;
+  --brand-secondary: #388e3c;
+}
+
+:root[data-color-theme="red"] {
+  --primary-color: #c62828;
+  --brand-primary: #c62828;
+  --brand-secondary: #d32f2f;
+}
+
+:root[data-color-theme="orange"] {
+  --primary-color: #ef6c00;
+  --brand-primary: #ef6c00;
+  --brand-secondary: #f57c00;
+}
+
+:root[data-color-theme="purple"] {
+  --primary-color: #6a1b9a;
+  --brand-primary: #6a1b9a;
+  --brand-secondary: #7b1fa2;
+}
+
+:root[data-color-theme="turkuaz"] {
+  --primary-color: #00838f;
+  --brand-primary: #00838f;
+  --brand-secondary: #0097a7;
+}
+
+:root[data-color-theme="pembe"] {
+  --primary-color: #c2185b;
+  --brand-primary: #c2185b;
+  --brand-secondary: #d81b60;
+}
+
+/* ===========================================
+   4. ERİŞİLEBİLİRLİK DEĞİŞKENLERİ
+   =========================================== */
+:root {
+  /* Font Boyutları */
+  --font-size-base: 1rem;  /* 16px */
+  --font-size-sm: 0.875rem;  /* 14px */
+  --font-size-lg: 1.125rem;  /* 18px */
+  --font-size-xl: 1.25rem;   /* 20px */
+  --font-size-xxl: 1.5rem;   /* 24px */
+  
+  /* Hareket/Animasyon ayarları */
+  --transition-speed: 0.3s;
+  --transition-function: ease-in-out;
+  
+  /* Kontrast ayarları */
+  --focus-ring-color: #007bff;
+  --focus-ring-width: 0.25rem;
+  --focus-ring-opacity: 0.25;
+}
+
+/* Azaltılmış Hareket Modu */
+[data-reduced-motion="true"] {
+  --transition-speed: 0s;
+  --transition-function: none;
+}
+
+/* Metin Boyutu Erişilebilirlik Modu */
+[data-font-size="large"] {
+  --font-size-base: 1.125rem;  /* 18px */
+  --font-size-sm: 1rem;      /* 16px */
+  --font-size-lg: 1.25rem;   /* 20px */
+  --font-size-xl: 1.5rem;    /* 24px */
+  --font-size-xxl: 1.75rem;  /* 28px */
+}
+
+[data-font-size="extra-large"] {
+  --font-size-base: 1.25rem;   /* 20px */
+  --font-size-sm: 1.125rem;  /* 18px */
+  --font-size-lg: 1.5rem;    /* 24px */
+  --font-size-xl: 1.75rem;   /* 28px */
+  --font-size-xxl: 2rem;     /* 32px */
+}
+
+/* ===========================================
+   5. TİPOGRAFİ SİSTEMİ
+   =========================================== */
+:root {
+  /* Font Ailesi */
+  --font-family-base: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  --font-family-heading: 'Poppins', 'Helvetica Neue', Arial, sans-serif;
+  --font-family-monospace: 'Roboto Mono', Consolas, monospace;
+  
+  /* Font Ağırlıkları */
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  
+  /* Başlık Boyutları */
+  --h1-font-size: 2.5rem;    /* 40px */
+  --h2-font-size: 2rem;      /* 32px */
+  --h3-font-size: 1.75rem;   /* 28px */
+  --h4-font-size: 1.5rem;    /* 24px */
+  --h5-font-size: 1.25rem;   /* 20px */
+  --h6-font-size: 1rem;      /* 16px */
+  
+  /* Satır Yükseklikleri */
+  --line-height-tight: 1.25;
+  --line-height-base: 1.5;
+  --line-height-loose: 1.75;
+  
+  /* Geniş Font Aralığı (Accessibility) */
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide: 0.05em;
+  --letter-spacing-wider: 0.1em;
+}
+
+/* ===========================================
+   6. BOŞLUK VE MESAFE SİSTEMİ
+   =========================================== */
+:root {
+  /* Temel Birim */
+  --spacer: 1rem;  /* 16px */
+  
+  /* Kenarlar İçin Boşluklar */
+  --spacer-0: 0;
+  --spacer-1: calc(var(--spacer) * 0.25);  /* 4px */
+  --spacer-2: calc(var(--spacer) * 0.5);   /* 8px */
+  --spacer-3: var(--spacer);               /* 16px */
+  --spacer-4: calc(var(--spacer) * 1.5);   /* 24px */
+  --spacer-5: calc(var(--spacer) * 3);     /* 48px */
+  --spacer-6: calc(var(--spacer) * 4.5);   /* 72px */
+  --spacer-7: calc(var(--spacer) * 6);     /* 96px */
+  
+  /* Bileşenler Arası Boşluklar */
+  --section-spacing: var(--spacer-6);      /* 72px */
+  --section-spacing-sm: var(--spacer-5);   /* 48px */
+  --card-spacing: var(--spacer-4);         /* 24px */
+  --card-spacing-sm: var(--spacer-3);      /* 16px */
+  
+  /* Yuvarlaklık Değerleri */
+  --border-radius-sm: 0.25rem;  /* 4px */
+  --border-radius: 0.375rem;    /* 6px */
+  --border-radius-lg: 0.5rem;   /* 8px */
+  --border-radius-xl: 1rem;     /* 16px */
+  --border-radius-pill: 50rem;
+  --border-radius-circle: 50%;
+}
+
+/* ===========================================
+   7. GÖLGE VE YÜKSELTME EFEKTLERİ
+   =========================================== */
+:root {
+  /* Gölgeler */
+  --shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  --shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175);
+  
+  /* Koyu Tema Gölgeleri */
+  --shadow-dark-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.5);
+  --shadow-dark: 0 0.5rem 1rem rgba(0, 0, 0, 0.65);
+  --shadow-dark-lg: 0 1rem 3rem rgba(0, 0, 0, 0.75);
+  
+  /* Yükseltme Seviyeleri */
+  --elevation-0: none;
+  --elevation-1: var(--shadow-sm);
+  --elevation-2: var(--shadow);
+  --elevation-3: var(--shadow-lg);
+  
+  /* Kenar Kalınlıkları */
+  --border-width: 1px;
+  --border-width-thick: 2px;
+  --border-width-thicker: 3px;
+}
+
+/* ===========================================
+   8. GEÇİŞ VE ANİMASYON STİLLERİ
+   =========================================== */
+:root {
+  /* Geçiş Süreleri */
+  --transition-duration-fast: 150ms;
+  --transition-duration: 300ms;
+  --transition-duration-slow: 500ms;
+  
+  /* Geçiş Zamanlama Fonksiyonları */
+  --transition-timing-ease: ease;
+  --transition-timing-ease-in: ease-in;
+  --transition-timing-ease-out: ease-out;
+  --transition-timing-ease-in-out: ease-in-out;
+  --transition-timing-linear: linear;
+  
+  /* Hazır Geçiş Kombinasyonları */
+  --transition-base: all var(--transition-duration) var(--transition-timing-ease-in-out);
+  --transition-fast: all var(--transition-duration-fast) var(--transition-timing-ease-in-out);
+  --transition-slow: all var(--transition-duration-slow) var(--transition-timing-ease-in-out);
+  
+  /* Animasyon Süreleri */
+  --animation-duration-fast: 300ms;
+  --animation-duration: 1000ms;
+  --animation-duration-slow: 2000ms;
+}
+
+/* ===========================================
+   9. DUYARLI TASARIM (RESPONSIVE) AYARLARI
+   =========================================== */
+:root {
+  /* Ekran Genişlik Kırılım Noktaları */
+  --breakpoint-xs: 0;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --breakpoint-xxl: 1400px;
+  
+  /* Kapsayıcı Genişlikleri */
+  --container-max-width-sm: 540px;
+  --container-max-width-md: 720px;
+  --container-max-width-lg: 960px;
+  --container-max-width-xl: 1140px;
+  --container-max-width-xxl: 1320px;
+  
+  /* Izgara Sistemi */
+  --grid-columns: 12;
+  --grid-gutter-width: 1.5rem;
+  
+  /* Responsive Font Boyutları */
+  --responsive-font-modifier: 1;
+}
+
+/* Mobil Cihazlar İçin Responsive Değişkenler */
+@media (max-width: 576px) {
+  :root {
+    --responsive-font-modifier: 0.85;
+    --h1-font-size: calc(2rem * var(--responsive-font-modifier));
+    --h2-font-size: calc(1.75rem * var(--responsive-font-modifier));
+    --section-spacing: var(--spacer-5);
+  }
+}
+
+/* Tablet Cihazlar İçin Responsive Değişkenler */
+@media (min-width: 577px) and (max-width: 992px) {
+  :root {
+    --responsive-font-modifier: 0.9;
+    --section-spacing: var(--spacer-5);
+  }
+}
+
+/* ===========================================
+   10. BİLEŞEN TEMEL STİLLERİ
+   =========================================== */
+:root {
+  /* Buton Stilleri */
+  --btn-padding-y: 0.5rem;
+  --btn-padding-x: 1rem;
+  --btn-font-size: var(--font-size-base);
+  --btn-border-radius: var(--border-radius);
+  --btn-transition: var(--transition-base);
+  --btn-focus-width: 0.25rem;
+  
+  /* Form Elemanları */
+  --input-padding-y: 0.5rem;
+  --input-padding-x: 0.75rem;
+  --input-font-size: var(--font-size-base);
+  --input-line-height: 1.5;
+  --input-border-radius: var(--border-radius);
+  --input-focus-width: 0.2rem;
+  --input-focus-box-shadow: 0 0 0 var(--input-focus-width) rgba(var(--primary-color-rgb), 0.25);
+  
+  /* Kartlar */
+  --card-border-width: var(--border-width);
+  --card-border-radius: var(--border-radius);
+  --card-spacer-y: var(--spacer-3);
+  --card-spacer-x: var(--spacer-3);
+  --card-box-shadow: var(--shadow);
+  
+  /* Alert/Bildirim Kutuları */
+  --alert-padding-y: var(--spacer-2);
+  --alert-padding-x: var(--spacer-3);
+  --alert-border-radius: var(--border-radius);
+  --alert-margin-bottom: var(--spacer-3);
+}
+
+/* ===========================================
+   11. RTL DİL DESTEĞİ
+   =========================================== */
+[dir="rtl"] {
+  --text-align: right;
+  --float-start: right;
+  --float-end: left;
+  --margin-start: var(--margin-right);
+  --margin-end: var(--margin-left);
+  --padding-start: var(--padding-right);
+  --padding-end: var(--padding-left);
+  --border-start: var(--border-right);
+  --border-end: var(--border-left);
+}
+
+/* ===========================================
+   12. SİSTEM TEMA ENTEGRASYONU
+   =========================================== */
+@media (prefers-color-scheme: dark) {
+  :root[data-theme="system"] {
+    /* Sistem karanlık tema tercihi varsa otomatik olarak karanlık tema değişkenlerini uygula */
+    --bg-color: #121212;
+    --text-color: #e4e6eb;
+    --link-color: #4e9de6;
+    --link-hover-color: #74b3ed;
+    --border-color: #3a3a3a;
+    --shadow-color: rgba(0, 0, 0, 0.5);
+    --card-bg: #1e1e1e;
+    --header-bg: #1e1e1e;
+    --footer-bg: #0a0a0a;
+    --input-bg: #2d2d2d;
+    --input-border: #444444;
+    --input-text: #e4e6eb;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root[data-theme="system"] {
+    /* Sistem açık tema tercihi varsa otomatik olarak açık tema değişkenlerini uygula */
+    /* Varsayılan değişkenler zaten açık temayı temsil ettiği için bu kısmı boş bırakabilirsiniz */
+  }
+}
+
+/* ===========================================
+   13. ÖZEL DURUMLAR 
+   =========================================== */
+/* Yazdırma Stili Değişkenleri */
+@media print {
+  :root {
+    --bg-color: white;
+    --text-color: black;
+    --link-color: #000099;
+    --border-color: #dddddd;
+    --shadow-color: none;
+    --transition-duration: 0s;
+    --transition-duration-fast: 0s;
+    --transition-duration-slow: 0s;
+  }
+}
+
+/* ===========================================
+   14. YARDIMCI SINIFLAR
+   =========================================== */
+:root {
+  /* Opaklık Değerleri */
+  --opacity-0: 0;
+  --opacity-25: 0.25;
+  --opacity-50: 0.5;
+  --opacity-75: 0.75;
+  --opacity-100: 1;
+  
+  /* Pozisyon Değerleri */
+  --position-start: 0;
+  --position-end: 0;
+  --position-top: 0;
+  --position-bottom: 0;
+  
+  /* Görünürlük Değerleri */
+  --visibility-visible: visible;
+  --visibility-hidden: hidden;
+  
+  /* Metin Hizalama Değerleri */
+  --text-align-start: left;
+  --text-align-center: center;
+  --text-align-end: right;
+  
+  /* Görüntü Ölçeklendirme Değerleri */
+  --object-fit-cover: cover;
+  --object-fit-contain: contain;
+  --object-fit-fill: fill;
+} 

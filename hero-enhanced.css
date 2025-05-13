@@ -1,1364 +1,993 @@
-/* Enhanced Hero Section Styles - Gürel Yönetim */
+/* =========================================================
+   GÜREL YÖNETİM - MODERN HERO COMPONENT
+   Gelişmiş Hero Bileşeni için CSS
+   Versiyon 4.3 - 2024 - Eleman Dağılımı ve Video Düzeltildi
+   ========================================================= */
 
-/* ----- Genel Değişkenler ve Reusable Stiller ----- */
+/* ============================================
+   HERO DEĞİŞKENLERİ (THEME UYUMLU)
+   ============================================ */
 :root {
-    /* themes.css değişkenlerine referans verilmiş lokal hero css değişkenleri */
-    --primary-rgb: var(--primary-rgb, 0, 82, 204);
-    --secondary-rgb: var(--secondary-rgb, 0, 150, 136);
-    --glass-bg-color: rgba(35, 45, 60, 0.2);
-    --glass-bg-hover: rgba(35, 45, 60, 0.4);
-    --text-color: var(--text-on-primary, rgba(255, 255, 255, 0.9));
-    --text-color-secondary: var(--text-secondary, rgba(255, 255, 255, 0.7));
-    --border-color: rgba(255, 255, 255, 0.125);
-    --border-hover: rgba(255, 255, 255, 0.12);
-    --card-radius: var(--border-radius-lg, 12px);
-    --shadow-default: var(--box-shadow-md, 0 10px 25px rgba(0, 0, 0, 0.08));
-    --shadow-hover: var(--box-shadow-lg, 0 15px 30px rgba(0, 0, 0, 0.12));
-    --transition-default: var(--transition-normal, all 0.4s cubic-bezier(0.22, 1, 0.36, 1));
-    --transition-fast: var(--transition-fast, all 0.3s ease);
-}
+  /* Temel Renkler - Tema ile uyumlu */
+  --hero-background: linear-gradient(135deg, var(--background-gradient-start, #f0f4f8), var(--background-gradient-end, #e5ebf2));
+  --hero-overlay: rgba(var(--primary-rgb, 0, 85, 164), 0.05);
+  --hero-text-color: var(--text-color, #333);
+  --hero-accent-color: var(--primary-color, #0055a4);
+  --hero-muted-color: var(--text-muted, #6c757d);
   
-/* ----- Erişilebilirlik için Odak Durumları ----- */
-:focus {
-    outline: 3px solid var(--color-primary);
-    outline-offset: 2px;
+  /* Kart Stilleri */
+  --card-background: rgba(255, 255, 255, 0.95);
+  --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  --card-radius: 16px;
+  --card-padding: 2rem;
+  --card-border: 1px solid rgba(var(--primary-rgb), 0.1);
+  --card-accent: var(--primary-color, #0055a4);
+  
+  /* Animasyon ve Geçişler */
+  --hero-transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  --card-transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  
+  /* Metin Boyutları */
+  --hero-title-size: 3.2rem;
+  --hero-title-size-mobile: 2.2rem;
+  --hero-subtitle-size: 1.25rem;
+  --hero-subtitle-size-mobile: 1.05rem;
 }
 
-:focus:not(:focus-visible) {
-    outline: none;
-}
-
-:focus-visible {
-    outline: 3px solid var(--color-primary);
-    outline-offset: 2px;
-    box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.5);
-}
-
-/* ----- Temel Hero Container Stilleri ----- */
-.hero-content.glass-effect {
-    background: var(--glass-bg-color);
-    backdrop-filter: blur(12px) saturate(180%);
-    border: 1px solid var(--border-color);
-    border-radius: var(--card-radius);
-    padding: 2rem;
-    box-shadow: var(--shadow-default);
-    transition: var(--transition-default);
+/* ============================================
+   HERO ANA KONTEYNIR
+   ============================================ */
+.hero-section {
     position: relative;
-    overflow: hidden;
-    height: 100%;
+  min-height: 92vh;
+  width: 100%;
     display: flex;
-    flex-direction: column;
     justify-content: center;
-    will-change: transform, box-shadow;
-    transform: perspective(1000px) rotateX(2deg);
+  align-items: center;
+  overflow: hidden;
+  padding: 9rem 0 6rem;
+  z-index: 1;
 }
 
-.hero-content.glass-effect::after {
+/* ============================================
+   HERO ARKA PLAN
+   ============================================ */
+.hero-bg {
+    position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-color: var(--primary-color);
+  background-position: center;
+  background-size: cover;
+}
+
+.hero-bg::after {
     content: '';
     position: absolute;
-    inset: 0;
-    border-radius: var(--card-radius);
-    padding: 1px;
-    background: linear-gradient(
-        to bottom right, 
-        transparent, 
-        rgba(255, 255, 255, 0.1), 
-        transparent
-    );
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    will-change: opacity;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom,
+    rgba(0,0,0,0.2) 0%,     /* Daha az koyu üst */
+    rgba(0,0,0,0.15) 20%,   /* Daha az koyu orta-üst */
+    rgba(0,0,0,0.08) 60%,   /* Daha az koyu orta */
+    rgba(0,0,0,0.2) 100%);  /* Daha az koyu alt */
+  z-index: 1;
+  transition: background 2s ease-out; /* Yumuşak geçiş ekle */
 }
 
-.hero-content.glass-effect:hover::after {
-    opacity: 1;
+/* ============================================
+   VIDEO ARKA PLAN - DÜZELTME
+   ============================================ */
+.hero-bg.video-bg {
+  background-color: rgba(0, 0, 0, 0.15); /* Daha az koyu arka plan */
+  transition: background-color 1.8s ease-out; /* Daha uzun geçiş süresi */
 }
 
-.hero-content.glass-effect::before {
-    content: '';
+.hero-bg.video-bg video {
     position: absolute;
-    width: 200%;
-    height: 200%;
-    top: -50%;
-    left: -50%;
-    background: radial-gradient(
-    circle at center,
-    rgba(255, 255, 255, 0.8) 0%,
-    rgba(255, 255, 255, 0) 70%
-    );
-    opacity: 0;
-    transform: scale(0.5);
-    animation: pulse 15s infinite;
-}
-  
-.hero-content.glass-effect:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-hover);
-    border-color: var(--border-hover);
-    background: var(--glass-bg-hover);
-}
-  
-.hero-content.glass-effect:hover::before {
-    opacity: 0.4;
-}
-  
-/* ----- Işık Efekti ----- */
-.hero-light-effect {
-    position: absolute;
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 70%);
-    pointer-events: none;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  top: 50%;
+  left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 0;
-    animation: light-fade 1.5s ease-out forwards;
-    will-change: transform, opacity;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.8; /* Daha yüksek opaklık (daha görünür) */
+  filter: brightness(0.85) contrast(1.08) saturate(1.05); /* Daha doğal görünüm */
+  transition: opacity 2s ease-out, filter 2s ease-out; /* Daha uzun ve yumuşak geçişler */
+  z-index: -1;
 }
 
-/* ----- Premium Badge Tasarımı ----- */
-.hero-badge.premium-badge {
-    display: inline-flex;
-    align-items: center;
-    background: rgba(var(--primary-rgb), 0.15);
-    border-radius: 30px;
-    padding: 0.4rem 1rem;
-    margin-bottom: 1.2rem;
+/* Video yüklendikten sonra fadeIn efekti - yumuşatıldı */
+.video-loaded .hero-bg.video-bg video {
+  opacity: 0.85;
+}
+
+/* Dark modda video daha görünür olsun - yumuşatıldı */
+html[data-theme="dark"] .hero-bg.video-bg video {
+  opacity: 0.75; /* Karanlık modda daha görünür */
+  filter: brightness(0.65) contrast(1.1) saturate(0.95) blur(0px); /* Daha doğal ve bulanıklık yok */
+  transition: opacity 2.5s ease-out, filter 2.5s ease-out; /* Daha uzun geçiş */
+}
+
+/* ============================================
+   İÇERİK KONTEYNERI
+   ============================================ */
+.hero-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
     position: relative;
-    overflow: hidden;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3rem;
+  margin-top: 30px;
 }
 
-.badge-icon {
-    background: rgba(255, 255, 255, 0.08);
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 8px;
-    font-size: 0.7rem;
-    color: var(--text-color);
+
+/* ============================================
+   ANA METİN ALANI
+   ============================================ */
+.hero-main {
+  flex: 1 1 500px;
+  max-width: 650px;
+  animation: fadeInLeft 1s ease forwards;
 }
 
-.badge-text {
-    font-size: 0.7rem;
-    font-weight: var(--font-weight-semibold, 600);
-    letter-spacing: 0.03em;
-    color: var(--text-color);
-    text-transform: uppercase;
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
 }
 
-/* ----- Hero Title Geliştirilmiş Tasarım ----- */
-.fancy-hero-title {
-    font-size: clamp(2.2rem, 4vw, 3.2rem);
-    font-weight: var(--font-weight-bold, 800);
-    line-height: 1.2;
-    margin-bottom: 1.2rem;
-    transition: var(--transition-fast);
-    z-index: 1;
+.hero-badge:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+.hero-badge-icon {
+  margin-right: 0.5rem;
+}
+
+.hero-title {
+  font-size: var(--hero-title-size);
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  animation-delay: 0.2s;
+}
+
+.hero-title-accent {
+  color: var(--accent-color, #f8c100);
     position: relative;
+  display: inline-block;
 }
 
-.title-line-gradient,
-.title-effect {
-    color: var(--text-on-primary, #ffffff);
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
-    position: relative;
-    display: inline-block;
-    transition: var(--transition-fast);
-}
-  
-.title-line-gradient {
-    padding-bottom: 5px;
-}
-
-.title-main-line {
-    display: block;
-    position: relative;
-    margin-top: 8px;
-}
-
-.title-effect::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 2px;
-    bottom: -4px;
-    left: 0;
-    background: linear-gradient(
-        90deg,
-        rgba(255, 255, 255, 0.2),
-        rgba(255, 255, 255, 0.4),
-        rgba(255, 255, 255, 0.2)
-    );
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.fancy-hero-title:hover .title-effect::after {
-    transform: scaleX(1);
-}
-
-  /* ----- Neon Accent Text ----- */
-.accent-text {
-    color: #ffffff;
-    text-shadow: 0 0 5px #00c3ff, 0 0 10px #00c3ff, 0 0 15px #00c3ff;
-    animation: neonPulse 2s infinite alternate;
-}
-
-/* ----- Hero Description Stilleri ----- */
-.hero-description.premium-text {
-    font-size: clamp(0.95rem, 1.3vw, 1.05rem);
+.hero-subtitle {
+  font-size: var(--hero-subtitle-size);
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 2rem;
+  max-width: 600px;
     line-height: 1.6;
-    color: #ffffff;
-    position: relative;
-    padding-left: 1.5rem;
-    margin-bottom: 1.5rem;
-    transition: var(--transition-fast);
-    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-    font-weight: 400;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  animation-delay: 0.4s;
 }
 
-.quote-icon {
-    position: absolute;
-    left: 0;
-    top: 2px;
-    font-size: 1.2rem;
-    color: var(--text-color-secondary);
-    transition: var(--transition-fast);
-}
-
-.hero-content:hover .hero-description.premium-text {
-    transform: translateX(3px);
-    color: rgba(255, 255, 255, 0.95);
-}
-
-.hero-content:hover .quote-icon {
-    transform: translateY(-2px);
-    color: rgba(255, 255, 255, 0.5);
-}
-
-/* ----- Bölge Göstergeleri ----- */
-.region-indicators {
+.hero-features {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 0.5rem;
-    margin-bottom: 1.8rem;
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    padding: 0.8rem 0.5rem;
+  gap: 1.25rem;
+  margin: 1.75rem 0;
 }
 
-.region-indicator {
+.hero-feature {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    text-align: center;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    flex: 1;
-    min-width: 80px;
-    background: transparent;
-    padding: 0.5rem;
-    border-radius: 6px;
+  gap: 0.75rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 0.75rem 1.25rem;
+  border-radius: 2rem;
+  transition: all 0.3s ease;
 }
 
-.region-indicator:hover {
+.hero-feature:hover {
+  background: rgba(255, 255, 255, 0.2);
     transform: translateY(-2px);
-    background: rgba(255, 255, 255, 0.04);
-}
-
-.region-icon {
-    font-size: 1rem;
-    color: var(--text-color-secondary);
-    margin-bottom: 0.4rem;
-    transition: var(--transition-fast);
-}
-
-.region-indicator:hover .region-icon {
-    color: #ffffff;
-    transform: scale(1.1);
-}
-
-.region-count {
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: #fff;
-    line-height: 1;
-    margin-bottom: 0.3rem;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
-}
-
-.region-text {
-    font-size: 0.75rem;
-    color: var(--text-color-secondary);
-    font-weight: 500;
-}
-
-/* ----- Buton Geliştirmeleri ----- */
-.hero-buttons {
-    display: flex;
-    gap: 0.8rem;
-    margin-top: 0.5rem;
-}
-
-.animated-btn {
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    z-index: 1;
-    white-space: nowrap;
-    will-change: transform, box-shadow;
-}
-
-.animated-btn:focus-visible {
-    outline: 3px solid #007bff;
-    outline-offset: 2px;
-    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
-    transform: translateY(-2px);
-  }
-  
-  .animated-btn:hover {
-    transform: translateY(-2px);
-}
-
-.hero-btn-primary.animated-btn {
-    background: rgba(0, 82, 204, 0.85);
-    color: #fff;
-    font-weight: 600;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 5px 15px rgba(0, 82, 204, 0.4);
-    padding: 10px 20px;
-    letter-spacing: 0.3px;
-    border-radius: 6px;
-    overflow: hidden;
-    position: relative;
-    z-index: 1;
-    border: none;
-}
-
-.hero-btn-secondary.animated-btn {
-    background: rgba(255, 255, 255, 0.15);
-    color: #fff;
-    font-weight: 500;
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    padding: 9px 18px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-    letter-spacing: 0.3px;
-    border-radius: 6px;
-}
-
-  .hero-btn-primary.animated-btn:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-    transition: all 0.6s;
-    z-index: -1;
-  }
-  
-  .hero-btn-primary.animated-btn:hover:before {
-    left: 100%;
-}
-
-.hero-btn-primary.animated-btn:hover {
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
-    background: rgba(0, 82, 204, 0.75);
-}
-
-.hero-btn-secondary.animated-btn:hover {
-    background-color: rgba(255, 255, 255, 0.12);
-    border-color: rgba(255, 255, 255, 0.25);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
-}
-
-/* Buton pulse efekti */
-.hero-btn-primary.animated-btn::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 120%;
-    height: 120%;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
-    z-index: -1;
-    transform: translate(-50%, -50%) scale(0);
-    opacity: 0;
-    transition: transform 0.6s, opacity 0.6s;
-}
-
-.hero-btn-primary.animated-btn:hover::after {
-    transform: translate(-50%, -50%) scale(1);
-    opacity:.0;
-    animation: pulse 1.5s infinite;
-}
-
-.hero-btn-icon {
-    transition: transform 0.3s ease;
-    margin-left: 6px;
-    font-size: 0.9rem;
-}
-
-.animated-btn:hover .hero-btn-icon {
-    transform: translateX(3px);
-}
-
-  /* ----- Hero 3D Kart Tasarımı ----- */
-.hero-3d-card {
-    position: relative;
-    background: transparent;
-    border-radius: 15px;
-    padding: 2.5rem;
-    border: none;
-    box-shadow: none;
-    transition: var(--transition-default);
-    transform-style: preserve-3d;
-    perspective: 1200px;
-    overflow: hidden;
-    z-index: 1;
-    isolation: isolate;
-    backdrop-filter: none;
-    will-change: transform;
-}
-
-.hero-3d-card::before,
-.hero-3d-card::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    transition: opacity 0.6s ease;
-}
-
-.hero-3d-card::before {
-    z-index: -2;
-    background: radial-gradient(
-        circle at 50% 0%, 
-        rgba(var(--primary-rgb), 0.05),
-        transparent 70%
-    );
-}
-
-.hero-3d-card::after {
-    display: none;
-}
-
-.hero-3d-card:hover {
-    transform: translateY(-8px) rotateX(2deg) rotateY(2deg);
-    box-shadow: none;
-}
-
-/* Service Area Title gizleme */
-.service-area-title {
-    display: none;
-}
-
-.hero-3d-card:hover::before,
-.hero-3d-card:hover::after {
-    opacity: 0.5;
-}
-
-/* 3D Kart İçeriği Animasyon */
-.card-3d-wrap {
-    position: relative;
-    transition: transform 0.4s ease;
-    transform-style: preserve-3d;
-}
-
-.hero-3d-card:hover .card-3d-wrap,
-.hero-3d-card:hover .tab-content-improved {
-    transform: translateZ(15px);
-}
-
-.card-3d-wrapper {
-    position: relative;
-    transform-style: preserve-3d;
-}
-
-.card-front {
-    position: relative;
-    z-index: 2;
-    transform-style: preserve-3d;
-}
-
-/* Başlık ikonunu gizleme */
-.service-title-icon {
-    display: none;
-}
-
-.nav-tabs-wrapper {
-    position: relative;
-    transform: translateZ(5px);
-}
-
-.tab-content-improved {
-    position: relative;
-    transform: translateZ(5px);
-    transition: transform 0.3s ease;
-}
-
-/* Işık Efekti */
-.hero-3d-card-shine {
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(
-        circle at 50% 50%,
-        rgba(255, 255, 255, 0.1),
-        transparent 40%
-    );
-    transform: rotate(30deg);
-    opacity: 0;
-    pointer-events: none;
-    z-index: 1;
-    transition: opacity 0.4s ease, transform 1s ease;
-}
-
-.hero-3d-card:hover .hero-3d-card-shine {
-    opacity: 1;
-    transform: rotate(60deg);
-}
-
-/* ----- Service Card Stili ----- */
-.service-card {
-    background: rgba(25, 35, 50, 0.5);
-    border-radius: 10px;
-    padding: 20px;
-    position: relative;
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    transition: var(--transition-fast);
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    overflow: hidden;
-    backdrop-filter: blur(5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-    z-index: 1;
-}
-
-.service-card:hover, 
-.service-card:focus {
-    transform: translateY(-5px);
-    background: rgba(25, 35, 50, 0.6);
-    border-color: rgba(255, 255, 255, 0.12);
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
-}
-  
-  .service-card::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 10px;
-    padding: 1px;
-    background: linear-gradient(
-      to bottom right, 
-      transparent, 
-      rgba(255, 255, 255, 0.1), 
-      transparent
-    );
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    will-change: opacity;
-  }
-  
-  .service-card:hover::after {
-    opacity: 1;
-}
-
-.service-card .card-logo {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 2;
-}
-
-.service-card .service-logo {
-    width: 35px;
-    height: auto;
-    opacity: 0.8;
-    transition: var(--transition-fast);
-}
-
-.service-card:hover .service-logo {
-    opacity: 1;
-    transform: scale(1.05);
-}
-
-.service-card .logo-label {
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--text-color-secondary);
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 3px;
-    padding: 2px 5px;
-    margin-left: 5px;
-    letter-spacing: 0.05em;
-}
-
-.service-card .service-icon {
-    font-size: 28px;
-    color: var(--text-color-secondary);
-    margin-bottom: 15px;
-    transition: var(--transition-fast);
-}
-
-.service-card:hover .service-icon {
-    color: #fff;
-    transform: translateY(-3px);
-}
-
-.service-card .service-title {
-    font-size: 18px;
-    font-weight: 700;
-    color: #fff;
-    margin-bottom: 10px;
-}
-
-.service-card .service-description {
-    color: var(--text-color-secondary);
-    font-size: 14px;
-    margin-bottom: 15px;
-    line-height: 1.4;
-}
-
-.service-card .service-badges {
-    margin-bottom: 15px;
-}
-
-.service-card .badge {
-    padding: 5px 10px;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.03em;
-    border-radius: 30px;
-}
-
-.service-card.tilt {
-    transform-style: preserve-3d;
-    perspective: 1000px;
-    will-change: transform;
-}
-
-.service-card.tilt:hover {
-    transform: translateY(-5px) rotateX(2deg) rotateY(2deg);
-}
-
-.service-card .btn {
-    margin-top: auto;
-    align-self: flex-start;
-    font-size: 13px;
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    padding: 6px 12px;
-    border-radius: 5px;
-    transition: var(--transition-fast);
-    color: var(--text-color);
-}
-
-.service-card .btn:hover {
-    background: rgba(255, 255, 255, 0.25);
-    color: #fff;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-/* ----- Patreon Hero Stilleri ----- */
-.patreon-hero {
-    position: relative;
-    padding: 8rem 0 6rem;
-    overflow: hidden;
-    background: linear-gradient(135deg, rgba(0, 82, 204, 0.9), rgba(0, 150, 136, 0.7), rgba(25, 118, 210, 0.8));
-    background-size: 300% 300%;
-    animation: gradientFlow 15s ease infinite;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1;
-    transform-style: preserve-3d;
-    perspective: 1000px;
-}
-
-.patreon-hero::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: 
-        radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 10%),
-        radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.1) 0%, transparent 20%);
-    opacity: 0.6;
-    z-index: 1;
-}
-
-.hero-video-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    z-index: 0;
-    transform: translateZ(0);
-    will-change: transform;
-}
-
-.hero-video-background video {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    transform: translate(-50%, -50%) scale(1.05);
-    object-fit: cover;
-    z-index: -1;
-    filter: brightness(0.7);
-    will-change: transform;
-    transition: transform 0.2s ease;
-}
-
-.video-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        to bottom,
-        rgba(15, 23, 42, 0.8),
-        rgba(15, 23, 42, 0.7)
-    );
-    z-index: 1;
-}
-
-  /* Paralaks efekti */
-.patreon-hero.parallax-active .hero-video-background {
-    transform: translateY(var(--parallax-offset, 0)) scale(1.05);
-    transition: transform 0.1s ease-out;
-}
-
-.patreon-hero.parallax-active .hero-content.glass-effect {
-    transform: translateY(calc(var(--parallax-offset, 0) * 0.4));
-    transition: transform 0.1s ease-out;
-}
-
-.patreon-hero.parallax-active .hero-3d-card {
-    transform: translateY(calc(var(--parallax-offset, 0) * 0.2));
-    transition: transform 0.1s ease-out;
-}
-
-  /* ----- Animasyonlar ----- */
-  @keyframes pulse {
-    0% { opacity: 0; transform: scale(0.5); }
-    50% { opacity: 0.2; transform: scale(1); }
-    100% { opacity: 0; transform: scale(0.5); }
-  }
-  
-  @keyframes neonPulse {
-    from { text-shadow: 0 0 5px #00c3ff, 0 0 10px #00c3ff; }
-    to { text-shadow: 0 0 10px #00c3ff, 0 0 20px #00c3ff, 0 0 30px #00c3ff; }
-  }
-  
-  @keyframes light-fade {
-    0% { transform: translate(-50%, -50%) scale(0); opacity: 0.25; }
-    100% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
-  }
-  
-  @keyframes gradientFlow {
-    0% { background-position: 0% 50% }
-    50% { background-position: 100% 50% }
-    100% { background-position: 0% 50% }
-  }
-  
-  /* ----- Media Queries ----- */
-@media (max-width: 992px) {
-    .hero-content.glass-effect,
-    .hero-3d-card {
-        padding: 1.5rem;
-        margin-bottom: 1.5rem;
-    }
-    
-    .hero-buttons {
-        flex-direction: column;
-    }
-    
-    .hero-buttons .btn {
-        width: 100%;
-    }
-    
-    .patreon-hero {
-        padding-top: 90px;
-        min-height: auto;
-        padding-bottom: 60px;
-    }
-}
-
-@media (max-width: 768px) {
-    .fancy-hero-title {
-        text-align: center;
-        font-size: 2rem;
-    }
-    
-    .hero-description.premium-text {
-        text-align: center;
-        padding-left: 0;
-        padding-top: 1.5rem;
-    }
-    
-    .quote-icon {
-        top: 0;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-    
-    .service-card {
-      margin-bottom: 20px;
-    }
-    
-    .service-card .badge {
-      font-size: 10px;
-      padding: 4px 8px;
-    }
-    
-    .service-card .btn {
-      padding: 5px 10px;
-      font-size: 12px;
-    }
-  }
-  
-@media (max-width: 480px) {
-    .fancy-hero-title {
-        font-size: 1.8rem;
-    }
-    
-    .hero-description.premium-text {
-        font-size: 0.9rem;
-    }
-    
-    .hero-badge.premium-badge {
-        width: 100%;
-        justify-content: center;
-}
-
-    .service-card {
-        text-align: center;
-    }
-    
-    .service-card .card-logo {
-      position: static;
-      margin-bottom: 15px;
-      justify-content: center;
-    }
-    
-    .service-card .service-badges,
-    .service-card .btn {
-      margin-left: auto;
-      margin-right: auto;
-      align-self: center;
-    }
-    
-    .service-card .service-icon {
-      margin-left: auto;
-      margin-right: auto;
-    }
-  }
-  
-  /* ----- Feature Detection ve Fallback Düzenlemeleri ----- */
-  @supports not (backdrop-filter: blur(5px)) {
-    .hero-content.glass-effect {
-      background: rgba(35, 45, 60, 0.85);
-    }
-    
-    .hero-3d-card,
-    .service-card {
-      background: rgba(25, 35, 50, 0.85);
-    }
-  }
-  
-  @supports not ((-webkit-mask-composite: xor) or (mask-composite: exclude)) {
-    .hero-content.glass-effect::after,
-    .hero-3d-card::after,
-    .service-card::after {
-        display: none;
-    }
-    
-    .hero-content.glass-effect,
-    .hero-3d-card,
-    .service-card {
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    
-    .hero-content.glass-effect:hover,
-    .hero-3d-card:hover,
-    .service-card:hover {
-      border-color: rgba(255, 255, 255, 0.2);
-    }
-  }
-  
-  @supports not (transform-style: preserve-3d) {
-.hero-3d-card,
-    .service-card.tilt {
-      transform: none !important;
-    }
-    
-    .hero-3d-card:hover,
-    .service-card.tilt:hover {
-      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
-    }
-  }
-  
-  /* Animasyon Performans İyileştirmeleri */
-@media (prefers-reduced-motion: reduce) {
-    .hero-3d-card,
-    .hero-3d-card::before,
-    .hero-3d-card::after,
-    .hero-3d-card-shine,
-    .card-3d-wrap,
-    .tab-content-improved,
-    .hero-content.glass-effect,
-    .hero-light-effect,
-    .hero-btn-primary.animated-btn,
-    .hero-btn-secondary.animated-btn,
-    .hero-video-background video,
-    .fancy-hero-title .title-effect::after,
-    .fancy-hero-title .accent-text,
-    .hero-content .quote-icon,
-    .hero-content .hero-description.premium-text {
-        transition: none !important;
-        transform: none !important;
-      animation: none !important;
-        will-change: auto !important;
-    }
-    
-    .hero-btn-primary.animated-btn::after,
-    .hero-content.glass-effect::after,
-    .hero-content.glass-effect::before,
-    .hero-3d-card::after {
-        display: none !important;
-    }
-  }
-  
-  /* Print media için tarayıcı uyumluluğu */
-@media print {
-    .patreon-hero {
-        background: #ffffff !important;
-        color: #000000 !important;
-        min-height: auto !important;
-        padding: 20px 0 !important;
-    }
-    
-    .hero-video-background,
-    .hero-light-effect,
-    .hero-content.glass-effect::after,
-    .hero-content.glass-effect::before,
-    .hero-3d-card::after,
-    .badge-glow,
-    .hero-btn-primary.animated-btn::after {
-        display: none !important;
-    }
-    
-    .hero-content.glass-effect,
-    .hero-3d-card {
-        background: transparent !important;
-        box-shadow: none !important;
-        border: 1px solid #cccccc !important;
-        transform: none !important;
-        padding: 15px !important;
-    }
-    
-    .fancy-hero-title,
-    .hero-description.premium-text,
-    .hero-buttons .btn {
-        color: #000000 !important;
-        text-shadow: none !important;
-    }
-    
-    .accent-text {
-        background: #f0f0f0 !important;
-        color: #0057a9 !important;
-        padding: 0 5px !important;
-    }
-    
-    .hero-buttons {
-        margin-top: 20px !important;
-    }
-    
-    .hero-buttons .btn {
-        border: 1px solid #333333 !important;
-        background: transparent !important;
-        width: auto !important;
-        display: inline-block !important;
-        margin-right: 10px !important;
-    }
-}
-
-/* ----- Uzmanlaştığımız Alanlar Bölümü ----- */
-.expertise-area-intro {
-    background: rgba(35, 45, 60, 0.75);
-    backdrop-filter: blur(10px);
-    border-radius: var(--card-radius, 12px);
-    padding: 1.5rem;
-    color: #fff;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    transition: var(--transition-fast);
-}
-
-.expertise-area-intro:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: translateY(-3px);
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
-}
-
-.expertise-highlight {
-    display: inline-flex;
-    align-items: center;
-    background: rgba(var(--primary-rgb), 0.15);
-    border-radius: 30px;
-    padding: 0.4rem 1.2rem;
-    margin-bottom: 1.5rem;
-        position: relative;
-    overflow: hidden;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: white;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(var(--primary-rgb), 0.2);
-    transition: var(--transition-fast);
-}
-
-.expertise-highlight::before {
-    content: '';
-        position: absolute;
-    top: 0;
-    left: -100%;
-        width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.8s ease;
-    z-index: 0;
-}
-
-.expertise-highlight:hover::before {
-    left: 100%;
-}
-
-.expertise-highlight i {
-    color: white;
-    margin-right: 8px;
-    background: rgba(var(--primary-rgb), 0.6);
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.8rem;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-}
-
-.expertise-highlight:hover {
-    background: rgba(var(--primary-rgb), 0.25);
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-}
-
-.expertise-features {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.2rem;
-    margin-top: 1.5rem;
-}
-
-.expertise-feature {
-    display: flex;
-    align-items: flex-start;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 1rem;
-    border-radius: 8px;
-    transition: var(--transition-fast);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.expertise-feature:hover {
-    transform: translateY(-5px);
-    background: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
 .feature-icon {
+  color: var(--primary-color);
+  font-size: 1.1rem;
+}
+
+.feature-text {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-color);
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.hero-actions .btn {
+  padding: 0.85rem 1.75rem;
+  font-weight: 600;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.hero-actions .btn-primary {
+  background: linear-gradient(45deg, var(--primary-color), var(--primary-light));
+  border: none;
+}
+
+.hero-actions .btn-outline {
+    color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  background: transparent;
+}
+
+.hero-actions .btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* ============================================
+   İŞ KARTI ALANI
+   ============================================ */
+.hero-business-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  max-width: 580px;
+  width: 100%;
+  margin-left: 1.5rem;
+  z-index: 3;
+  perspective: 1000px;
+}
+
+.business-card {
+    position: relative;
+  background: rgba(var(--background-rgb, 255, 255, 255), 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 1.25rem;
+  overflow: hidden;
+  padding: 1.75rem;
+  box-shadow: 0 10px 30px -10px rgba(var(--neutral-900-rgb, 0, 0, 0), 0.1), 
+              0 0 1px rgba(var(--neutral-900-rgb, 0, 0, 0), 0.1);
+  transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+  width: 100%;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(var(--primary-rgb, 0, 85, 164), 0.05);
+  transform-origin: center bottom;
+  animation: fadeInRight 1s forwards;
+  animation-delay: 0.3s;
+  opacity: 0;
+}
+
+.business-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+  left: 0;
+    width: 100%;
+    height: 100%;
+  background: linear-gradient(135deg, 
+                rgba(var(--primary-rgb, 0, 85, 164), 0.05) 0%, 
+                rgba(var(--primary-rgb, 0, 85, 164), 0) 60%);
+    z-index: -1;
+  transition: all 0.5s ease;
+  opacity: 0.8;
+}
+
+.business-card:nth-child(1) {
+  animation-delay: 0.2s;
+  background-image: linear-gradient(
+    to bottom right,
+    rgba(var(--background-rgb, 255, 255, 255), 0.9),
+    rgba(var(--background-rgb, 255, 255, 255), 0.8)
+  );
+  border-left: 3px solid var(--primary-color, #0055a4);
+}
+
+.business-card:nth-child(2) {
+  animation-delay: 0.4s;
+  background-image: linear-gradient(
+    to bottom right,
+    rgba(var(--background-rgb, 255, 255, 255), 0.9),
+    rgba(var(--background-rgb, 255, 255, 255), 0.8)
+  );
+  border-left: 3px solid var(--secondary-color, #ea8600);
+}
+
+.business-card:hover {
+  transform: translateY(-8px) rotateX(5deg);
+  box-shadow: 0 20px 40px -15px rgba(var(--neutral-900-rgb, 0, 0, 0), 0.15),
+              0 0 15px rgba(var(--primary-rgb, 0, 85, 164), 0.1);
+}
+
+.business-card:hover::before {
+  opacity: 1;
+}
+
+.business-card:active {
+  transform: translateY(-2px);
+}
+
+.card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--primary-color, #0055a4), var(--primary-light, #0078f0));
+  color: #fff;
+  font-size: 1.5rem;
+  margin-bottom: 1.25rem;
+    position: relative;
+  transition: all 0.4s ease;
+  box-shadow: 0 10px 15px -5px rgba(var(--primary-rgb, 0, 85, 164), 0.3);
+}
+
+.business-card:nth-child(2) .card-icon {
+  background: linear-gradient(135deg, var(--secondary-color, #ea8600), var(--secondary-light, #ffaa33));
+  box-shadow: 0 10px 15px -5px rgba(var(--secondary-rgb, 234, 134, 0), 0.3);
+}
+
+.business-card:hover .card-icon {
+  transform: scale(1.1) translateY(-5px);
+}
+
+.card-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-color, #333);
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+  line-height: 1.3;
+    position: relative;
+}
+
+.card-description {
+  color: var(--text-muted, #6c757d);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+  transition: all 0.3s ease;
+  flex-grow: 1;
+}
+
+.card-stats {
+  display: flex;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(var(--neutral-500-rgb, 0, 0, 0), 0.1);
+}
+
+.stat {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    background: rgba(0, 82, 204, 1);
-    margin-right: 1rem;
+    flex-direction: column;
+  align-items: flex-start;
+  transition: all 0.3s ease;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.stat:hover {
+  background-color: rgba(var(--neutral-300-rgb, 0, 0, 0), 0.05);
+  transform: translateY(-2px);
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-color, #0055a4);
+  transition: all 0.3s ease;
+  background: var(--primary-gradient, linear-gradient(135deg, var(--primary-color, #0055a4), var(--primary-light, #0078f0)));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.business-card:nth-child(2) .stat-value {
+  color: var(--secondary-color, #ea8600);
+  background: var(--secondary-gradient, linear-gradient(135deg, var(--secondary-color, #ea8600), var(--secondary-light, #ffaa33)));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--text-muted, #6c757d);
+  transition: all 0.3s ease;
+  margin-top: 0.25rem;
+}
+
+.card-button {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.8rem 1.5rem;
+  border-radius: 50px;
+  background: rgba(var(--primary-rgb, 0, 85, 164), 0.05);
+  color: var(--primary-color, #0055a4);
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.business-card:nth-child(2) .card-button {
+  background: rgba(var(--secondary-rgb, 234, 134, 0), 0.05);
+  color: var(--secondary-color, #ea8600);
+}
+
+.card-button:hover {
+  background: var(--primary-color, #0055a4);
+    color: #fff;
+  transform: translateY(-2px);
+}
+
+.business-card:nth-child(2) .card-button:hover {
+  background: var(--secondary-color, #ea8600);
+    color: #fff;
+}
+
+.card-button i {
+  transition: transform 0.3s ease;
+}
+
+.card-button:hover i {
+  transform: translateX(4px);
+}
+
+/* Dark mode için kart düzenlemeleri */
+html[data-theme="dark"] .business-card {
+  background-color: rgba(var(--neutral-800-rgb, 42, 42, 42), 0.85);
+  border-color: rgba(var(--primary-rgb, 0, 85, 164), 0.1);
+}
+
+html[data-theme="dark"] .business-card:nth-child(2) {
+  border-color: rgba(var(--secondary-rgb, 234, 134, 0), 0.1);
+}
+
+html[data-theme="dark"] .card-title {
+  color: var(--text-light, #f8f9fa);
+}
+
+html[data-theme="dark"] .card-description {
+  color: var(--text-muted-light, #c2c7d0);
+}
+
+html[data-theme="dark"] .stat-label {
+  color: var(--text-muted-light, #c2c7d0);
+}
+
+/* Kart içerisine gelecek yeni etiketler */
+.card-tag {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+  background: rgba(var(--primary-rgb, 0, 85, 164), 0.1);
+  color: var(--primary-color, #0055a4);
+  transition: all 0.3s ease;
+}
+
+.business-card:nth-child(2) .card-tag {
+  background: rgba(var(--secondary-rgb, 234, 134, 0), 0.1);
+  color: var(--secondary-color, #ea8600);
+}
+
+.card-tag:hover {
+  background: rgba(var(--primary-rgb, 0, 85, 164), 0.2);
+  transform: translateY(-2px);
+}
+
+.business-card:nth-child(2) .card-tag:hover {
+  background: rgba(var(--secondary-rgb, 234, 134, 0), 0.2);
+}
+
+html[data-theme="dark"] .card-tag {
+  background: rgba(var(--primary-rgb, 0, 85, 164), 0.2);
+  color: var(--primary-light, #0078f0);
+}
+
+html[data-theme="dark"] .business-card:nth-child(2) .card-tag {
+  background: rgba(var(--secondary-rgb, 234, 134, 0), 0.2);
+  color: var(--secondary-light, #ffaa33);
+}
+
+/* Mobil düzenlemeler için daha kompakt kart yapısı */
+@media (max-width: 991.98px) {
+  .hero-business-cards {
+    margin-left: 0;
+    margin-top: 2rem;
+    max-width: 100%;
+    gap: 1rem;
+  }
+  
+  .business-card {
+    padding: 1.5rem;
+    min-height: auto;
+  }
+  
+  .card-stats {
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .hero-business-cards {
+    gap: 1rem;
+  }
+  
+  .business-card {
+    padding: 1.25rem;
+    min-height: auto;
+  }
+  
+  .card-icon {
+    width: 48px;
+    height: 48px;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  
+  .card-title {
     font-size: 1.2rem;
-    color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    flex-shrink: 0;
-    transition: var(--transition-fast);
-}
-
-.expertise-feature:hover .feature-icon {
-    transform: scale(1.1) rotate(10deg);
-    box-shadow: 0 6px 12px rgba(0, 82, 204, 0.4);
-    animation: pulse-icon 1.5s infinite alternate;
-}
-
-.feature-content {
-    flex: 1;
-}
-
-.feature-content h5 {
-    margin: 0 0 0.5rem;
-    font-size: 1rem;
-    font-weight: 600;
-    color: #fff;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-.feature-content p {
-    margin: 0;
+    margin-bottom: 0.75rem;
+  }
+  
+  .card-description {
     font-size: 0.9rem;
-    opacity: 1;
-    color: rgba(255, 255, 255, 0.85);
-    line-height: 1.4;
-}
-
-.expertise-cta {
-    text-align: center;
-    margin-top: 1.5rem;
-}
-
-.expertise-cta .btn {
-    transition: var(--transition-default);
-    border-width: 1px;
-    font-weight: 600;
-    background: rgba(0, 82, 204, 0.85);
-    color: #fff;
-    border-color: transparent;
-    padding: 0.5rem 1.2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .card-stats {
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+  
+  .stat-value {
+    font-size: 1.3rem;
+  }
+  
+  .card-button {
+    padding: 0.7rem 1.25rem;
     font-size: 0.85rem;
-    border-radius: 6px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 5px 15px rgba(0, 82, 204, 0.4);
+  }
 }
 
-.expertise-cta .btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
-    background: rgba(0, 82, 204, 0.75);
+/* ============================================
+   TEMA DESTEĞİ - DARK MODE
+   ============================================ */
+html[data-theme="dark"] .hero-bg::after {
+  background: linear-gradient(to bottom,
+    rgba(0,0,0,0.25) 0%,    /* Koyu ama çok koyu değil */
+    rgba(0,0,0,0.2) 20%,    /* Koyu ama çok koyu değil */
+    rgba(0,0,0,0.15) 60%,   /* Koyu ama çok koyu değil */
+    rgba(0,0,0,0.25) 100%); /* Koyu ama çok koyu değil */
+  transition: background 2.5s ease-out; /* Daha uzun geçiş */
 }
 
-@media (max-width: 768px) {
-    .expertise-features {
-        grid-template-columns: 1fr;
-    }
-    
-    .expertise-highlight {
-        font-size: 1rem;
-        text-align: center;
-        border-left: none;
-        border-bottom: 4px solid rgba(var(--primary-rgb), 1);
-    }
-    
-    .expertise-feature {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-    
-    .feature-icon {
-        margin-right: 0;
-        margin-bottom: 0.75rem;
-    }
-    
-    .expertise-cta .btn {
+html[data-theme="dark"] .hero-bg.image-bg {
+  filter: brightness(0.7) saturate(0.8);
+}
+
+/* ============================================
+   ERİŞİLEBİLİRLİK - YÜKSEK KONTRAST
+   ============================================ */
+html[data-theme="light"] body.contrast-high .business-card,
+html[data-theme="light"] body.contrast-high .hero-title,
+html[data-theme="light"] body.contrast-high .hero-subtitle {
+  color: #000;
+}
+
+html[data-theme="light"] body.contrast-high .hero-highlight::after {
+  background-color: #ffff00;
+}
+
+html[data-theme="light"] body.contrast-high .card-button,
+html[data-theme="light"] body.contrast-high .card-title,
+html[data-theme="light"] body.contrast-high .stat-value {
+  color: #000080;
+  font-weight: 700;
+}
+
+html[data-theme="light"] body.contrast-high .hero-bg::after,
+html[data-theme="light"] body.contrast-high .card-description,
+html[data-theme="light"] body.contrast-high .stat-label {
+  color: #000000;
+  opacity: 1;
+}
+
+/* ============================================
+   AZALTILMIŞ HAREKET TERCİHİ
+   ============================================ */
+html[data-reduced-motion="true"] .hero-main,
+html[data-reduced-motion="true"] .hero-business-cards,
+html[data-reduced-motion="true"] .business-card,
+html[data-reduced-motion="true"] .card-button,
+html[data-reduced-motion="true"] .card-icon,
+html[data-reduced-motion="true"] .hero-actions .btn,
+html[data-reduced-motion="true"] .hero-badge {
+  transition: none;
+  animation: none;
+  transform: none !important;
+}
+
+html[data-reduced-motion="true"] .hero-bg.video-bg video {
+  display: none;
+}
+
+html[data-reduced-motion="true"] .hero-bg.video-bg {
+  background: var(--primary-color);
+}
+
+/* ============================================
+   ANİMASYONLAR
+   ============================================ */
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ============================================
+   DUYARLI TASARIM (RESPONSIVE)
+   ============================================ */
+@media (max-width: 1199.98px) {
+  .hero-title {
+    font-size: 2.8rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 991.98px) {
+  :root {
+    --card-padding: 1.5rem;
+  }
+  
+  .hero-container {
+    flex-direction: column;
+    padding: 0 1.5rem;
+  }
+  
+  .hero-business-cards {
+    margin-left: 0;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+  
+  .business-card {
+    max-width: 260px;
+    min-height: 320px;
+  }
+  
+  .card-stats {
+    margin-bottom: 1.2rem;
+  }
+  
+  .card-button {
+    padding: 0.75rem 1.25rem;
+  }
+  
+  .hero-bg.video-bg video {
+    object-position: center center;
+  }
+  
+  .hero-features {
+    justify-content: center;
+    gap: 0.75rem;
+  }
+  
+  .hero-feature {
+    padding: 0.6rem 1rem;
+  }
+  
+  .hero-cta-buttons {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .hero-section {
+    padding-top: 8rem;
+    min-height: auto;
+  }
+  
+  .hero-title {
+    font-size: var(--hero-title-size-mobile);
+    margin-bottom: 1rem;
+  }
+  
+  .hero-subtitle {
+    font-size: var(--hero-subtitle-size-mobile);
+    margin-bottom: 1.5rem;
+  }
+  
+  .hero-features {
+    margin-bottom: 1.5rem;
+  }
+  
+  .hero-business-cards {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  
+  .business-card {
+    max-width: 100%;
         width: 100%;
-    }
+    min-height: auto;
+  }
+  
+  .hero-bg.video-bg {
+    background: var(--primary-color);
+  }
+  
+  .hero-bg.video-bg video {
+    object-position: center 30%;
+  }
+  
+  .card-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .card-title {
+    font-size: 1.3rem;
+  }
+  
+  .card-description {
+    font-size: 0.95rem;
+  }
+  
+  .card-stats {
+    flex-direction: row;
+  }
+  
+  .stat-value {
+    font-size: 1.8rem;
+  }
+  
+  .hero-feature {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.85rem;
+  }
+  
+  .feature-icon {
+    font-size: 0.9rem;
+  }
+  
+  .feature-text {
+    font-size: 0.85rem;
+  }
+  
+  .hero-cta-buttons {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.75rem;
+  }
+  
+  .hero-cta-button {
+    width: 100%;
+    padding: 0.8rem 1.25rem;
+  }
 }
 
-@media (max-width: 480px) {
-    .expertise-area-intro {
+@media (max-width: 575.98px) {
+  .hero-section {
+    padding: 5rem 0 3rem;
+  }
+  
+  .hero-title {
+    font-size: 2rem;
+  }
+  
+  .hero-subtitle {
+        font-size: 1rem;
+    }
+    
+  .card-stats {
+        flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .stat-value {
+    font-size: 1.6rem;
+  }
+  
+  .business-card {
     padding: 1rem;
     }
     
-    .expertise-highlight {
-        padding: 8px 12px;
+  .card-button {
+    padding: 0.65rem 1rem;
         font-size: 0.9rem;
     }
     
-    .feature-content h5 {
-        font-size: 0.95rem;
-    }
-    
-    .feature-content p {
-        font-size: 0.8rem;
-    }
-}
-
-/* Orta büyüklükteki ekranlar için */
-@media (min-width: 768px) and (max-width: 991px) {
-    .expertise-features {
-        grid-template-columns: repeat(2, 1fr); /* 2 sütun */
-    }
-}
-
-/* Tab iyileştirmeleri */
-.nav-tabs-improved {
-    display: flex;
-    flex-wrap: wrap; /* Küçük ekranlarda sarmaya izin ver */
-    gap: 0.5rem;
-    border-bottom: none;
-}
-
-.nav-tabs-improved .nav-link {
-    padding: 0.6rem 1rem;
-    border-radius: 0.5rem; /* Daha yuvarlak köşeler */
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: white;
-    transition: all 0.3s ease;
-}
-
-.nav-tabs-improved .nav-link.active {
-    background: linear-gradient(135deg, rgba(0, 82, 204, 0.7), rgba(0, 150, 136, 0.5));
-    border-color: rgba(255, 255, 255, 0.2);
-    color: white;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-    transform: translateY(-2px);
-}
-
-.nav-tabs-improved .nav-link:hover:not(.active) {
-    background: rgba(255, 255, 255, 0.15);
-    transform: translateY(-1px);
-}
-
-/* Odak durumları için net belirteçler */
-.nav-link:focus-visible,
-.expertise-feature:focus-visible,
-.btn:focus-visible {
-    outline: 3px solid #ffffff;
-    outline-offset: 2px;
-    box-shadow: 0 0 0 3px rgba(0, 82, 204, 0.6);
-}
-
-/* Yüksek kontrast modu için iyileştirmeler */
-@media (forced-colors: active) {
-    .expertise-highlight,
-    .expertise-feature,
-    .feature-icon,
-    .expertise-cta .btn {
-        border: 2px solid currentColor;
-    }
-}
-
-/* Kart efektleri */
-.expertise-area-intro::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    border-radius: var(--card-radius, 12px);
-    background: linear-gradient(135deg, 
-        rgba(0, 82, 204, 0.4),
-        rgba(0, 150, 136, 0.3),
-        rgba(0, 82, 204, 0.4));
-    opacity: 0.3;
-    filter: blur(20px);
-    transform: translateZ(-10px);
-    pointer-events: none;
-}
-
-/* Daha ilgi çekici simge animasyonları */
-.expertise-feature:hover .feature-icon {
-    transform: scale(1.1) rotate(10deg);
-    box-shadow: 0 6px 12px rgba(0, 82, 204, 0.4);
-    animation: pulse-icon 1.5s infinite alternate;
-}
-
-@keyframes pulse-icon {
-    from { box-shadow: 0 0 5px rgba(0, 82, 204, 0.4), 0 0 10px rgba(0, 82, 204, 0.2); }
-    to { box-shadow: 0 0 10px rgba(0, 82, 204, 0.6), 0 0 20px rgba(0, 82, 204, 0.3); }
-}
-
-.nav-tabs-improved .nav-link i {
-    margin-right: 8px;
-    font-size: 1rem;
-    transition: transform 0.3s ease;
-    color: rgba(255, 255, 255, 0.8);
-}
-
-.nav-tabs-improved .nav-link:hover i,
-.nav-tabs-improved .nav-link.active i {
-    transform: translateY(-2px);
-    color: white;
-}
-
-.tab-illustration {
-    opacity: 0.7;
-    margin-left: 6px;
-    display: inline-flex;
-    align-items: center;
-    transition: all 0.3s ease;
-}
-
-.nav-tabs-improved .nav-link:hover .tab-illustration,
-.nav-tabs-improved .nav-link.active .tab-illustration {
-    opacity: 1;
-    transform: scale(1.1);
-}
-
-.tab-illustration svg {
-    width: 18px;
-    height: 18px;
-}
-
-.nav-tabs-improved .nav-link.active .tab-illustration svg path {
-    fill: white;
-}
-
-.nav-tabs-improved .nav-link::before {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: white;
-    transition: width 0.3s ease;
-}
-
-.nav-tabs-improved .nav-link:hover::before,
-.nav-tabs-improved .nav-link.active::before {
+  .hero-actions {
+    flex-direction: column;
+  }
+  
+  .hero-actions .btn {
     width: 100%;
+    text-align: center;
+  }
+}
+
+/* ============================================
+   BASKI AYARLARI
+   ============================================ */
+@media print {
+  .hero-section {
+    min-height: auto;
+    padding: 2rem 0;
+    background: #fff !important;
+  }
+  
+  .hero-bg {
+    display: none;
+  }
+  
+  .hero-container {
+    flex-direction: column;
+  }
+  
+  .hero-title, .hero-subtitle, .hero-feature {
+    color: #000 !important;
+    text-shadow: none !important;
+  }
+  
+  .business-card {
+    break-inside: avoid;
+    background: #fff !important;
+    box-shadow: none !important;
+    border: 1px solid #ddd !important;
+  }
+  
+  .card-button {
+    display: none;
+  }
+}
+
+/* Tema değişim geçişleri yumuşatıldı */
+.theme-transition .hero-bg.video-bg video,
+.theme-transition .hero-bg::after {
+  transition: all 3s ease-out !important; /* Tema değişimlerinde çok daha uzun geçiş */
+}
+
+/* Renk tema geçişleri - yumuşatıldı */
+[data-color-theme] .hero-bg::after,
+[data-color-theme] .hero-bg.video-bg video {
+  transition: all 2.5s cubic-bezier(0.19, 1, 0.22, 1); /* Özel easing fonksiyonu */
+}
+
+/* CTA butonları modernleştirildi */
+.hero-cta-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.hero-cta-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.9rem 1.75rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+    font-size: 1rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.hero-cta-button.primary {
+  background: var(--primary-color);
+    color: white;
+  box-shadow: 0 4px 15px rgba(var(--primary-rgb), 0.2);
+}
+
+.hero-cta-button.primary:hover {
+  background: var(--primary-dark, #0046a1);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(var(--primary-rgb), 0.3);
+}
+
+.hero-cta-button.secondary {
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--text-color);
+  border: 1px solid rgba(var(--primary-rgb), 0.2);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.hero-cta-button.secondary:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+  border-color: rgba(var(--primary-rgb), 0.3);
+}
+
+/* Hero ana başlık ve açıklama için stil güncellemeleri */
+.hero-description {
+  font-size: 1.1rem;
+  color: var(--text-color);
+  max-width: 550px;
+  margin-top: 1rem;
+  line-height: 1.5;
+  opacity: 0.9;
+}
+
+/* Site yönetim kartı için özel stillemeler */
+.business-card.site-management {
+  border-top: 4px solid var(--primary-color);
+}
+
+/* Güvenlik hizmetleri kartı için özel stillemeler */
+.business-card.security-services {
+  border-top: 4px solid var(--secondary-color, #e63946);
 }

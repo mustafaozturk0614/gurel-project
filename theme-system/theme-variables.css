@@ -33,8 +33,8 @@
   --primary-dark: #00448e;
   
   /* Yardımcı Renkler */
-  --secondary-color: #6c757d;
-  --secondary-rgb: 108, 117, 125;
+  --secondary-color: #ea8600; /* Turuncu renk için güncellendi - Site markası ile uyumlu */
+  --secondary-rgb: 234, 134, 0; /* Turuncu RGB değerlerine güncellendi */
   --success-color: #28a745;
   --success-rgb: 40, 167, 69;
   --danger-color: #dc3545;
@@ -160,6 +160,58 @@
   /* Mobil Menü Değişkenleri */
   --header-mobile-menu-bg: var(--surface-color);
   --header-mobile-overlay: rgba(0, 0, 0, 0.3);
+  
+  /* ---- HERO BÖLÜMÜ DEĞİŞKENLERİ ---- */
+  /* Hero Yapısal Değişkenleri */
+  --hero-height: 750px;
+  --hero-mobile-height: 100vh;
+  --hero-padding: 6rem 0;
+  --hero-container-max-width: var(--container-xxl);
+  --hero-container-padding: 15px;
+  --hero-split-ratio: 55% 45%;
+  
+  /* Hero İki Kolon Yapısı (Mobil ve Tablet için) */
+  --hero-mobile-split-ratio: 1fr;
+  --hero-tablet-split-ratio: 1fr;
+  
+  /* Hero Görsel ve Arkaplan Değişkenleri */
+  --hero-bg-image: url('../assets/images/hero-bg.jpg');
+  --hero-bg-overlay: linear-gradient(135deg, rgba(var(--primary-rgb), 0.85), rgba(var(--secondary-rgb), 0.75));
+  --hero-bg-overlay-dark: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(var(--primary-rgb), 0.85));
+  --hero-bg-overlay-high-contrast: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.85));
+  
+  /* Hero İçerik Stilleri */
+  --hero-text-color: var(--white);
+  --hero-title-size: 3.5rem;
+  --hero-title-size-tablet: 3rem;
+  --hero-title-size-mobile: 2.5rem;
+  --hero-subtitle-size: 1.5rem;
+  --hero-subtitle-size-tablet: 1.25rem;
+  --hero-subtitle-size-mobile: 1.1rem;
+  --hero-text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  
+  /* Hero İş Kolları Kart Stilleri */
+  --hero-card-bg-light: rgba(255, 255, 255, 0.85);
+  --hero-card-bg-dark: rgba(30, 30, 35, 0.85);
+  --hero-card-bg-high-contrast: rgba(0, 0, 0, 0.95);
+  --hero-card-radius: 1.25rem;
+  --hero-card-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  --hero-card-shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.15);
+  --hero-card-border-size: 5px;
+  --hero-card-border-size-high-contrast: 8px;
+  --hero-card-transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  
+  /* Hero Rozet (Badge) Stilleri */
+  --hero-badge-bg: rgba(var(--primary-rgb), 0.15);
+  --hero-badge-bg-dark: rgba(var(--primary-rgb), 0.25);
+  --hero-badge-text: var(--primary-color);
+  --hero-badge-text-dark: var(--primary-light);
+  --hero-badge-border-radius: 2rem;
+  
+  /* Hero Animasyon Zamanlamaları */
+  --hero-animation-delay-main: 0.3s;
+  --hero-animation-delay-cards: 0.5s;
+  --hero-animation-duration: 1s;
 }
 
 /* =========================================
@@ -181,6 +233,9 @@ html[data-theme="light"] {
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
   --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.05);
   --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.05);
+  
+  
+   
 }
 
 /* Koyu Tema */
@@ -710,12 +765,57 @@ html[data-theme="light"] .theme-transition {
  * 9. Duyarlı Tasarım (Responsive) Ayarları
  * =========================================*/
 :root {
+  /* Ekran Genişlik Kırılım Noktaları */
   --breakpoint-xs: 0;
   --breakpoint-sm: 576px;
   --breakpoint-md: 768px;
   --breakpoint-lg: 992px;
   --breakpoint-xl: 1200px;
   --breakpoint-xxl: 1400px;
+  
+  /* Kapsayıcı Genişlikleri */
+  --container-max-width-sm: 540px;
+  --container-max-width-md: 720px;
+  --container-max-width-lg: 960px;
+  --container-max-width-xl: 1140px;
+  --container-max-width-xxl: 1320px;
+  
+  /* Izgara Sistemi */
+  --grid-columns: 12;
+  --grid-gutter-width: 1.5rem;
+  
+  /* Responsive Font Boyutları */
+  --responsive-font-modifier: 1;
+  
+  /* Mobil Menü Değişkenleri */
+  --mobile-menu-width: 280px;
+  --mobile-menu-bg: var(--bg-color);
+  --mobile-menu-text: var(--text-color);
+  --mobile-menu-shadow: var(--shadow-lg);
+  --mobile-menu-z-index: 1100;
+  --hamburger-size: 24px;
+  --hamburger-color: var(--text-color);
+  --hamburger-active-color: var(--primary-color);
+}
+
+/* Mobil Cihazlar İçin Responsive Değişkenler */
+@media (max-width: 576px) {
+  :root {
+    --responsive-font-modifier: 0.85;
+    --h1-font-size: calc(2rem * var(--responsive-font-modifier));
+    --h2-font-size: calc(1.75rem * var(--responsive-font-modifier));
+    --section-spacing: var(--spacer-5);
+    --mobile-menu-width: 100%;
+  }
+}
+
+/* Tablet Cihazlar İçin Responsive Değişkenler */
+@media (min-width: 577px) and (max-width: 992px) {
+  :root {
+    --responsive-font-modifier: 0.9;
+    --section-spacing: var(--spacer-5);
+    --mobile-menu-width: 320px;
+  }
 }
 
 /* =========================================
