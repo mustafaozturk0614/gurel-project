@@ -1,13 +1,15 @@
 /**
  * Gürel Yönetim - Header Bileşeni JS
- * Versiyon 4.0 - 2023
+ * Versiyon 4.0 - 2024
  * Yazarlar: Mustafa Öztürk
+ * Tema Sistemine Tam Entegre
  */
 
 document.addEventListener('DOMContentLoaded', function() {
   initHeader();
   initMobileMenu();
   initSectionScrollSpy();
+  listenForThemeChanges(); // Tema değişikliklerini dinle
 });
 
 function initHeader() {
@@ -25,6 +27,76 @@ function initHeader() {
   
   // Scroll progress bar
   initScrollProgressBar();
+}
+
+// Tema değişikliklerini dinle
+function listenForThemeChanges() {
+  // Tema modu değişikliklerini takip et (light, dark, highContrast)
+  document.addEventListener('themeChanged', function(e) {
+    const newTheme = e.detail.theme;
+    
+    // Header bileşenlerini yeni temaya göre güncelle
+    updateHeaderForTheme(newTheme);
+  });
+  
+  // Renk teması değişikliklerini takip et (blue, red, green vb.)
+  document.addEventListener('colorThemeChanged', function(e) {
+    const newColorTheme = e.detail.colorTheme;
+    
+    // Renk temasına göre header butonlarını güncelle
+    updateHeaderForColorTheme(newColorTheme);
+  });
+  
+  // Erişilebilirlik tercihlerini takip et
+  document.addEventListener('accessibilityChanged', function(e) {
+    const preferences = e.detail;
+    
+    // Erişilebilirlik tercihlerine göre header'ı güncelle
+    updateHeaderForAccessibility(preferences);
+  });
+  
+  // İlk yükleme için mevcut tema bilgilerini al
+  const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+  const currentColorTheme = document.documentElement.getAttribute('data-color-theme') || 'default';
+  
+  // İlk yükleme tema uygulamaları
+  updateHeaderForTheme(currentTheme);
+  updateHeaderForColorTheme(currentColorTheme);
+}
+
+// Temaya göre header'ı güncelleme
+function updateHeaderForTheme(theme) {
+  const header = document.querySelector('.patreon-header');
+  if (!header) return;
+  
+  // Tema tabanlı CSS değişkenlerini JS ile set etmeye gerek yok
+  // Bunlar CSS'de data-theme attribute seçicileri ile otomatik uygulanacak
+  
+  // Tema bazlı özel işlemler (gerekli ise)
+  if (theme === 'dark') {
+    // Karanlık mod özel işlemleri
+  } else if (theme === 'highContrast') {
+    // Yüksek kontrast modu özel işlemleri
+  } else {
+    // Light tema (varsayılan) özel işlemleri
+  }
+}
+
+// Renk temasına göre header'ı güncelleme
+function updateHeaderForColorTheme(colorTheme) {
+  // Renk teması değişikliği - özel JS işlemleri gerekirse
+}
+
+// Erişilebilirlik tercihlerine göre header'ı güncelleme
+function updateHeaderForAccessibility(preferences) {
+  const reducedMotion = preferences.reducedMotion || false;
+  
+  // Azaltılmış hareket tercihlerini uygula
+  if (reducedMotion) {
+    document.documentElement.setAttribute('data-reduced-motion', 'true');
+  } else {
+    document.documentElement.removeAttribute('data-reduced-motion');
+  }
 }
 
 // Scroll olaylarını işle
@@ -344,6 +416,9 @@ document.addEventListener('DOMContentLoaded', function() {
   
   buttons.forEach(button => {
     button.addEventListener('click', function(e) {
+      // Azaltılmış hareket tercihi varsa efekti devre dışı bırak
+      if (document.documentElement.getAttribute('data-reduced-motion') === 'true') return;
+      
       const rect = button.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
@@ -356,13 +431,16 @@ document.addEventListener('DOMContentLoaded', function() {
       button.appendChild(ripple);
       
       // Temizlik
-        setTimeout(() => {
+      setTimeout(() => {
         ripple.remove();
-        }, 600);
-      });
-      
+      }, 600);
+    });
+    
     // Mouse hareketi ile interaktif ışık efekti
     button.addEventListener('mousemove', function(e) {
+      // Azaltılmış hareket tercihi varsa efekti devre dışı bırak
+      if (document.documentElement.getAttribute('data-reduced-motion') === 'true') return;
+      
       const rect = button.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;

@@ -1,7 +1,7 @@
 /**
  * Tema Sistemi Yardımcı İşlevleri
  * Bu modül, tema sistemi için gerekli yardımcı işlevleri içerir.
- * Version: 1.2.0
+ * Version: 2.0.0
  */
 
 const ThemeUtils = {
@@ -574,6 +574,222 @@ const ThemeUtils = {
       element.style.margin = `-${extraPaddingY}px -${extraPaddingX}px`;
       element.classList.add('enhanced-touch-target');
     }
+  },
+  
+  /**
+   * HSL renk değerlerini RGB'ye dönüştürür
+   * @param {number} h - Hue (0-360)
+   * @param {number} s - Saturation (0-100)
+   * @param {number} l - Lightness (0-100)
+   * @returns {Object} - RGB değerleri {r, g, b}
+   */
+  hslToRgb(h, s, l) {
+    s /= 100;
+    l /= 100;
+    const k = n => (n + h / 30) % 12;
+    const a = s * Math.min(l, 1 - l);
+    const f = n =>
+      l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
+    return {
+      r: Math.round(255 * f(0)),
+      g: Math.round(255 * f(8)),
+      b: Math.round(255 * f(4))
+    };
+  },
+  
+  /**
+   * RGB renk değerlerini HSL'ye dönüştürür
+   * @param {Object} rgb - RGB değerleri {r, g, b}
+   * @returns {Object} - HSL değerleri {h, s, l}
+   */
+  rgbToHsl(rgb) {
+    let r = rgb.r / 255;
+    let g = rgb.g / 255;
+    let b = rgb.b / 255;
+    
+    const max = Math.max(r, g, b);
+    const min = Math.min(r, g, b);
+    let h, s, l = (max + min) / 2;
+
+    if (max === min) {
+      h = s = 0;
+    } else {
+      const d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      
+      switch (max) {
+        case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+        case g: h = (b - r) / d + 2; break;
+        case b: h = (r - g) / d + 4; break;
+      }
+      h /= 6;
+    }
+
+    return {
+      h: Math.round(h * 360),
+      s: Math.round(s * 100),
+      l: Math.round(l * 100)
+    };
+  },
+  
+  /**
+   * Renk paleti oluşturur
+   * @param {string} baseColor - Ana renk (HEX)
+   * @param {number} steps - Ton adımı sayısı
+   * @returns {Object} - Renk paleti
+   */
+  generateColorPalette(baseColor, steps = 10) {
+    const rgb = this.hexToRgb(baseColor);
+    const hsl = this.rgbToHsl(rgb);
+    const palette = {
+      base: baseColor,
+      shades: [],
+      tints: [],
+      analogous: [],
+      complementary: null,
+      triadic: []
+    };
+
+    // Koyu tonlar
+    for (let i = 1; i <= steps; i++) {
+      const l = Math.max(0, hsl.l - (i * (hsl.l / steps)));
+      const rgb = this.hslToRgb(hsl.h, hsl.s, l);
+      palette.shades.push(this.rgbToHex(rgb));
+    }
+
+    // Açık tonlar
+    for (let i = 1; i <= steps; i++) {
+      const l = Math.min(100, hsl.l + (i * ((100 - hsl.l) / steps)));
+      const rgb = this.hslToRgb(hsl.h, hsl.s, l);
+      palette.tints.push(this.rgbToHex(rgb));
+    }
+
+    // Analog renkler
+    const analogousAngles = [30, -30];
+    analogousAngles.forEach(angle => {
+      const h = (hsl.h + angle + 360) % 360;
+      const rgb = this.hslToRgb(h, hsl.s, hsl.l);
+      palette.analogous.push(this.rgbToHex(rgb));
+    });
+
+    // Tamamlayıcı renk
+    const complementaryH = (hsl.h + 180) % 360;
+    const complementaryRgb = this.hslToRgb(complementaryH, hsl.s, hsl.l);
+    palette.complementary = this.rgbToHex(complementaryRgb);
+
+    // Üçlü renk şeması
+    const triadicAngles = [120, 240];
+    triadicAngles.forEach(angle => {
+      const h = (hsl.h + angle) % 360;
+      const rgb = this.hslToRgb(h, hsl.s, hsl.l);
+      palette.triadic.push(this.rgbToHex(rgb));
+    });
+
+    return palette;
+  },
+  
+  /**
+   * Renk erişilebilirlik kontrolü
+   * @param {string} foreground - Ön plan rengi (HEX)
+   * @param {string} background - Arka plan rengi (HEX)
+   * @returns {Object} - Erişilebilirlik bilgileri
+   */
+  checkColorAccessibility(foreground, background) {
+    const ratio = this.calculateContrastRatio(foreground, background);
+    
+    return {
+      ratio,
+      AALarge: ratio >= 3,
+      AANormal: ratio >= 4.5,
+      AAALarge: ratio >= 4.5,
+      AAANormal: ratio >= 7
+    };
+  },
+  
+  /**
+   * Tema geçiş animasyonlarını yönetir
+   * @param {Element} element - Animasyon uygulanacak element
+   * @param {string} animation - Animasyon adı
+   * @param {Object} options - Animasyon seçenekleri
+   */
+  animate(element, animation, options = {}) {
+    const defaults = {
+      duration: 300,
+      easing: 'ease-in-out',
+      fill: 'forwards'
+    };
+
+    const settings = { ...defaults, ...options };
+    
+    element.style.animation = 'none';
+    element.offsetHeight; // Reflow
+    element.style.animation = `${animation} ${settings.duration}ms ${settings.easing} ${settings.fill}`;
+
+    return new Promise(resolve => {
+      element.addEventListener('animationend', function handler() {
+        element.removeEventListener('animationend', handler);
+        resolve();
+      });
+    });
+  },
+  
+  /**
+   * RTL desteği için yön kontrolü
+   * @returns {boolean} - RTL modu aktif mi?
+   */
+  isRTL() {
+    return document.dir === 'rtl' || 
+           document.documentElement.getAttribute('dir') === 'rtl' ||
+           window.getComputedStyle(document.documentElement).direction === 'rtl';
+  },
+  
+  /**
+   * Tema değişkenlerini dışa aktarır
+   * @param {string} format - Çıktı formatı ('css', 'scss', 'json')
+   * @returns {string} - Dışa aktarılan tema değişkenleri
+   */
+  exportThemeVariables(format = 'css') {
+    const variables = this.getThemeVariables();
+    
+    switch (format) {
+      case 'scss':
+        return Object.entries(variables)
+          .map(([key, value]) => `$${key.slice(2)}: ${value};`)
+          .join('\n');
+      
+      case 'json':
+        return JSON.stringify(variables, null, 2);
+      
+      default: // css
+        return Object.entries(variables)
+          .map(([key, value]) => `${key}: ${value};`)
+          .join('\n');
+    }
+  },
+  
+  /**
+   * Tema önizlemesi oluşturur
+   * @param {string} theme - Tema adı
+   * @param {Object} colors - Tema renkleri
+   * @returns {HTMLElement} - Önizleme elementi
+   */
+  createThemePreview(theme, colors) {
+    const preview = document.createElement('div');
+    preview.className = 'theme-preview';
+    preview.setAttribute('data-theme', theme);
+    
+    const style = document.createElement('style');
+    style.textContent = `
+      .theme-preview[data-theme="${theme}"] {
+        --primary-color: ${colors.primary};
+        --secondary-color: ${colors.secondary};
+        --background-color: ${colors.background};
+        --text-color: ${colors.text};
+      }
+    `;
+    
+    document.head.appendChild(style);
+    return preview;
   }
 };
 

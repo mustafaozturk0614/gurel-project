@@ -13,7 +13,7 @@
   background-color: var(--surface-color);
   color: var(--text-color);
   box-shadow: var(--shadow-lg), 0 0 20px rgba(0,0,0,0.1);
-  z-index: var(--z-index-modal);
+  z-index: var(--z-settings-panel);
   overflow-y: auto;
   padding: 1.25rem;
   display: flex;
@@ -524,7 +524,7 @@
   border-radius: 50%;
   box-shadow: var(--shadow-md), 0 4px 15px rgba(var(--primary-rgb), 0.25);
   cursor: pointer;
-  z-index: calc(var(--z-index-modal) - 1);
+  z-index: var(--z-settings-toggle);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -829,7 +829,7 @@
   border-radius: 50% !important;
   box-shadow: var(--shadow-md), 0 4px 15px rgba(var(--primary-rgb), 0.25) !important;
   cursor: pointer !important;
-  z-index: calc(var(--z-index-modal) - 1) !important;
+  z-index: var(--z-settings-toggle) !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -852,7 +852,7 @@
   background-color: var(--surface-color) !important;
   color: var(--text-color) !important;
   box-shadow: var(--shadow-lg), 0 0 20px rgba(0,0,0,0.1) !important;
-  z-index: var(--z-index-modal) !important;
+  z-index: var(--z-settings-panel) !important;
   overflow-y: auto !important;
   display: flex !important;
   flex-direction: column !important;
@@ -1647,4 +1647,10 @@
 .theme-preview.auto-anim:not(.night-mode) .star {
   opacity: 0;
   transition: opacity 2s ease;
+}
+
+/* Override header stacking context - settings panel her zaman en üstte olsun */
+.settings-panel,
+#settingsPanel.settings-panel {
+  z-index: 9999 !important;
 } 

@@ -10,14 +10,14 @@
 :root {
   box-sizing: border-box;
   /* ---- TEMEL HEADER DEĞİŞKENLERİ ---- */
-  --header-height: 160px;
+  --header-height: 140px;
   --header-height-scrolled: 120px;
   --header-height-mini: 100px;
-  --header-logo-height: 80px;
-  --header-logo-height-scrolled: 60px;
+  --header-logo-height: 160px;
+  --header-logo-height-scrolled: 100px;
   --header-logo-height-mini: 100px;
   --header-transition: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  --header-z-index: 1030;
+  --header-z-index: var(--z-index-header, 1090);
   
   /* ---- ARKAPLAN DEĞİŞKENLERİ - THEMES.CSS ENTEGRASYONU ---- */
   --header-bg-transparent: transparent;
@@ -42,24 +42,24 @@
   --header-text-shadow-transparent: 0 1px 2px rgba(0, 0, 0, 0.5);
   
   /* ---- HEADER BUTTON DEĞİŞKENLERİ ---- */
-  --header-button-bg: var(--button-primary-bg, #0055a4);
+  --header-button-bg: var(--primary-color, #0055a4);
   --header-button-text: var(--button-primary-text, #ffffff);
   --header-button-hover-bg: var(--button-primary-hover-bg, #003c80);
   --header-button-shadow: var(--shadow-md, 0 4px 12px rgba(0, 85, 164, 0.2));
   --header-button-hover-shadow: var(--shadow-lg, 0 6px 16px rgba(0, 85, 164, 0.3));
   
   /* ---- HEADER RENK DEĞİŞKENLERİ ---- */
-  --header-bg-color: var(--white, #ffffff);
-  --header-shadow: var(--shadow, 0 0.5rem 1rem rgba(0, 0, 0, 0.15));
+  --header-bg-color: var(--surface-color, #ffffff);
+  --header-shadow: var(--shadow-sm, 0 0.5rem 1rem rgba(0, 0, 0, 0.15));
   --header-text-color: var(--text-color, #212529);
   --header-link-color: var(--link-color, #0056b3);
   --header-link-hover-color: var(--link-hover-color, #004494);
-  --header-border-color: var(--gray-300, #dee2e6);
+  --header-border-color: var(--border-color, #dee2e6);
   
   /* ---- HEADER TRANSPARENT MOD ---- */
   --header-transparent-bg: rgba(255, 255, 255, 0.9);
-  --header-transparent-text: var(--white, #ffffff);
-  --header-transparent-link: var(--white, #ffffff);
+  --header-transparent-text: var(--text-on-dark, #ffffff);
+  --header-transparent-link: var(--text-on-dark, #ffffff);
   --header-transparent-hover: var(--gray-200, #e9ecef);
 
   /* ---- MOBİL HAMBURGER MENÜ VE RESPONSIVE AYARLAR ---- */
@@ -75,21 +75,21 @@
 
 /* Karanlık Mod Header Değişkenleri */
 [data-theme="dark"] {
-  --header-bg-color: var(--header-bg, #1e1e1e);
+  --header-bg-color: var(--surface-color, #1e1e1e);
   --header-text-color: var(--text-color, #e4e6eb);
   --header-link-color: var(--link-color, #4e9de6);
   --header-link-hover-color: var(--link-hover-color, #74b3ed);
   --header-border-color: var(--border-color, #3a3a3a);
-  --header-shadow: var(--shadow-dark, 0 0.5rem 1rem rgba(0, 0, 0, 0.65));
+  --header-shadow: var(--shadow-md, 0 0.5rem 1rem rgba(0, 0, 0, 0.65));
   --header-transparent-bg: rgba(18, 18, 18, 0.9);
-  --header-transparent-text: var(--text-color, #e4e6eb);
+  --header-transparent-text: var(--text-on-dark, #e4e6eb);
   --header-transparent-link: var(--link-color, #4e9de6);
   --header-transparent-hover: var(--gray-600, #6c757d);
 }
 
 /* Yüksek Kontrast Mod Header Değişkenleri */
 [data-theme="high-contrast"] {
-  --header-bg-color: var(--bg-color, #000000);
+  --header-bg-color: var(--surface-color, #000000);
   --header-text-color: var(--text-color, #ffffff);
   --header-link-color: var(--link-color, #ffff00);
   --header-link-hover-color: var(--link-hover-color, #00ffff);
@@ -109,7 +109,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  z-index: var(--z-index-header, 1090);
+  z-index: var(--header-z-index);
   background-color: var(--header-bg-color);
   box-shadow: var(--header-shadow);
   transition: var(--transition-base, all 0.3s ease-in-out);
@@ -266,14 +266,56 @@
   background-color: rgba(255, 255, 255, 0.1);
 }
 
+/* Aktif menü öğesi - Daha belirgin stil */
 .nav-link.active {
-  color: var(--primary-color, #0056b3);
+  color: var(--primary-color, #0056b3) !important;
   font-weight: var(--font-weight-semibold, 600);
+  background-color: var(--primary-light-alpha, rgba(var(--primary-rgb, 0, 85, 164), 0.1));
+  box-shadow: 0 2px 8px rgba(var(--primary-rgb, 0, 85, 164), 0.2);
+  border-bottom: 2px solid var(--primary-color, #0056b3);
+  transform: translateY(-2px);
+  border-radius: 6px;
+  transition: all 0.3s ease;
 }
 
-.transparent .nav-link.active {
-  color: var(--white, #ffffff);
-  background-color: rgba(255, 255, 255, 0.2);
+.nav-link.active:hover {
+  transform: translateY(-2px);
+  background-color: var(--primary-light-alpha-hover, rgba(var(--primary-rgb, 0, 85, 164), 0.15));
+  color: var(--primary-color, #0056b3) !important;
+}
+
+/* Light tema aktif menü - yüksek kontrast */
+html[data-theme="light"] .nav-link.active {
+  color: var(--primary-dark, #00376d) !important;
+  box-shadow: 0 2px 8px rgba(var(--primary-rgb, 0, 85, 164), 0.25);
+}
+
+/* Dark tema aktif menü - yüksek kontrast */
+html[data-theme="dark"] .nav-link.active {
+  color: var(--primary-light, #4c9aff) !important;
+  background-color: rgba(var(--primary-rgb, 0, 85, 164), 0.25);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(var(--primary-rgb, 0, 85, 164), 0.5);
+  border-bottom-color: var(--primary-light, #4c9aff);
+}
+
+/* Yüksek kontrast tema için belirgin aktif menü */
+html[data-theme="highContrast"] .nav-link.active {
+  color: var(--accent-color-high-contrast, #ffff00) !important;
+  background-color: #000000;
+  border: 2px solid var(--accent-color-high-contrast, #ffff00);
+  box-shadow: 0 0 0 1px var(--accent-color-high-contrast, #ffff00);
+  font-weight: var(--font-weight-bold, 700);
+  text-decoration: underline;
+}
+
+/* Transparent header için aktif menü */
+.patreon-header.transparent .nav-link.active {
+  color: #ffffff !important;
+  background-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  border-bottom-color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease;
 }
 
 .nav-icon {
@@ -800,24 +842,90 @@
 
 .nav-link:hover {
   color: var(--header-text-hover-color);
-  transform: translateY(-2px);
+  background-color: var(--background-alt, rgba(0, 0, 0, 0.05));
 }
 
 /* Transparent header'da nav-link hover efekti */
 .patreon-header.transparent .nav-link:hover {
-  color: var(--header-text-transparent-hover) !important;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+  color: var(--header-transparent-hover, #ffffff) !important;
+  background-color: rgba(255, 255, 255, 0.15);
 }
 
-/* Aktif menü öğesi */
-.nav-link.active {
-  color: var(--primary-color);
-  font-weight: 600;
+/* Aktif menü öğesi için aktif gösterge - pulse animasyonu */
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--primary-color, #0056b3);
+  animation: pulse-dot 1.5s infinite;
+  box-shadow: 0 0 0 rgba(var(--primary-rgb, 0, 85, 164), 0.4);
 }
 
-.patreon-header.transparent .nav-link.active {
+@keyframes pulse-dot {
+  0% {
+    box-shadow: 0 0 0 0 rgba(var(--primary-rgb, 0, 85, 164), 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(var(--primary-rgb, 0, 85, 164), 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(var(--primary-rgb, 0, 85, 164), 0);
+  }
+}
+
+/* Dark tema için pulse renk değişimi */
+html[data-theme="dark"] .nav-link.active::after {
+  background-color: var(--primary-light, #4c9aff);
+  animation: pulse-dot-dark 1.5s infinite;
+}
+
+@keyframes pulse-dot-dark {
+  0% {
+    box-shadow: 0 0 0 0 rgba(76, 154, 255, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(76, 154, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(76, 154, 255, 0);
+  }
+}
+
+/* Yüksek kontrast tema için pulse rengini değiştir */
+html[data-theme="highContrast"] .nav-link.active::after {
+  background-color: var(--accent-color-high-contrast, #ffff00);
+  box-shadow: 0 0 0 2px #000000;
+  top: 2px;
+  right: 2px;
+  width: 8px;
+  height: 8px;
+}
+
+/* Aktif menü hover efektlerini düzelt */
+.nav-link.active:hover {
+  transform: translateY(-2px);
+  background-color: var(--primary-light-alpha-hover, rgba(var(--primary-rgb, 0, 85, 164), 0.15));
+  color: var(--primary-color, #0056b3) !important;
+}
+
+html[data-theme="dark"] .nav-link.active:hover {
+  color: var(--primary-light, #4c9aff) !important;
+  background-color: rgba(var(--primary-rgb, 0, 85, 164), 0.3);
+}
+
+/* Transparent için hover efektlerini düzelt */
+.patreon-header.transparent .nav-link:hover {
+  color: var(--header-transparent-hover, #ffffff) !important;
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.patreon-header.transparent .nav-link.active:hover {
   color: #ffffff !important;
-  text-shadow: 0 0 8px rgba(var(--primary-rgb, 0, 85, 164), 0.6);
+  background-color: rgba(255, 255, 255, 0.35);
 }
 
 /* Nav İkonları */
@@ -934,7 +1042,7 @@
   width: 100%;
   height: 3px;
   background: transparent;
-  z-index: 9999;
+  z-index: var(--z-elevate, 1);
   overflow: hidden;
   opacity: 0.8;
 }
@@ -955,34 +1063,34 @@
    TEMALANDIRMA - DARK MODE
    =============================== */
 html[data-theme="dark"] .patreon-header {
-  --header-box-shadow: var(--header-shadow-dark);
-  --header-text-color: var(--header-text-dark);
-  --header-text-hover-color: var(--header-text-dark-hover);
-  --header-bg-color: var(--header-bg-dark);
+  --header-box-shadow: var(--shadow-md, 0 4px 15px rgba(0, 0, 0, 0.3));
+  --header-text-color: var(--text-color, #e4e6eb);
+  --header-text-hover-color: var(--text-on-dark-hover, #ffffff);
+  --header-bg-color: var(--surface-color, #1e1e1e);
 }
 
 /* ===============================
    TEMALANDIRMA - YÜKSEK KONTRAST MODU
    =============================== */
 html[data-theme="highContrast"] .patreon-header {
-  --header-box-shadow: var(--header-shadow-highcontrast);
-  --header-text-color: var(--text-color);
-  --header-text-hover-color: var(--primary-color);
-  --header-bg-color: var(--background);
+  --header-box-shadow: var(--shadow-high-contrast, 0 0 0 2px #ffffff);
+  --header-text-color: var(--text-color, #ffffff);
+  --header-text-hover-color: var(--accent-color-high-contrast, #ffff00);
+  --header-bg-color: var(--surface-color, #000000);
 }
 
 html[data-theme="highContrast"] .header-button {
-  background: #ffff00 !important;
-  color: #000000 !important;
-  border: 2px solid #ffffff;
+  background: var(--accent-color-high-contrast, #ffff00) !important;
+  color: var(--text-on-accent-high-contrast, #000000) !important;
+  border: 2px solid var(--border-color-high-contrast, #ffffff);
   text-shadow: none !important;
-  font-weight: 700;
+  font-weight: var(--font-weight-bold, 700);
   box-shadow: 0 0 0 2px #ffffff;
 }
 
 html[data-theme="highContrast"] .nav-link:focus,
 html[data-theme="highContrast"] .header-button:focus {
-  outline: 2px solid #ffffff;
+  outline: 2px solid var(--focus-outline-color-high-contrast, #ffffff);
   outline-offset: 2px;
 }
 
@@ -992,44 +1100,44 @@ html[data-theme="highContrast"] .header-button:focus {
 /* Mavi Tema (Varsayılan) */
 [data-color-theme="blue"] .header-button,
 [data-color-theme="default"] .header-button {
-  background: linear-gradient(45deg, var(--primary-color), var(--primary-light));
-  box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.3);
+  background: linear-gradient(45deg, var(--primary-color, #0055a4), var(--primary-light, #1a7fd1));
+  box-shadow: 0 4px 12px rgba(var(--primary-rgb, 0, 85, 164), 0.3);
 }
 
 /* Kırmızı Tema */
 [data-color-theme="red"] .header-button {
-  background: linear-gradient(45deg, var(--danger-color), var(--danger-color));
-  box-shadow: 0 4px 12px rgba(var(--danger-rgb), 0.3);
+  background: linear-gradient(45deg, var(--danger-color, #dc3545), var(--danger-light, #e05d6c));
+  box-shadow: 0 4px 12px rgba(var(--danger-rgb, 220, 53, 69), 0.3);
 }
 
 /* Yeşil Tema */
 [data-color-theme="green"] .header-button {
-  background: linear-gradient(45deg, var(--success-color, #28a745), var(--success-light, #5dd879));
-  box-shadow: 0 4px 12px rgba(var(--success-color-rgb, 40, 167, 69), 0.3);
+  background: linear-gradient(45deg, var(--success-color, #28a745), var(--success-light, #48c767));
+  box-shadow: 0 4px 12px rgba(var(--success-rgb, 40, 167, 69), 0.3);
 }
 
 /* Turuncu Tema */
 [data-color-theme="orange"] .header-button {
-  background: linear-gradient(45deg, var(--secondary-color, #ea8600), var(--secondary-light, #ffaa33));
-  box-shadow: 0 4px 12px rgba(var(--secondary-color-rgb, 234, 134, 0), 0.3);
+  background: linear-gradient(45deg, var(--warning-color, #fd7e14), var(--warning-light, #fd9843));
+  box-shadow: 0 4px 12px rgba(var(--warning-rgb, 253, 126, 20), 0.3);
 }
 
 /* Mor Tema */
 [data-color-theme="purple"] .header-button {
-  background: linear-gradient(45deg, var(--purple-600, #7b1fa2), var(--purple-400, #9c27b0));
-  box-shadow: 0 4px 12px rgba(123, 31, 162, 0.3);
+  background: linear-gradient(45deg, var(--purple-color, #6f42c1), var(--purple-light, #8c68d6));
+  box-shadow: 0 4px 12px rgba(var(--purple-rgb, 111, 66, 193), 0.3);
 }
 
 /* Turkuaz Tema */
 [data-color-theme="teal"] .header-button {
-  background: linear-gradient(45deg, var(--info-dark, #117a8b), var(--info-color, #17a2b8));
-  box-shadow: 0 4px 12px rgba(23, 162, 184, 0.3);
+  background: linear-gradient(45deg, var(--info-color, #17a2b8), var(--info-light, #3bb9cd));
+  box-shadow: 0 4px 12px rgba(var(--info-rgb, 23, 162, 184), 0.3);
 }
 
 /* Pembe Tema */
 [data-color-theme="pink"] .header-button {
-  background: linear-gradient(45deg, #d81b60, #ec407a);
-  box-shadow: 0 4px 12px rgba(216, 27, 96, 0.3);
+  background: linear-gradient(45deg, var(--pink-color, #e83e8c), var(--pink-light, #ed65a4));
+  box-shadow: 0 4px 12px rgba(var(--pink-rgb, 232, 62, 140), 0.3);
 }
 
 /* ===============================
@@ -1194,7 +1302,7 @@ body.mobile-menu-open {
   height: 40px; /* Daha büyük boyut */
   position: relative;
   cursor: pointer;
-  z-index: 9999;
+  z-index: var(--z-settings-toggle, 1100);
   margin-left: auto;
   background: transparent;
   border: none;
@@ -1294,7 +1402,7 @@ body.mobile-menu-open {
   background-color: rgba(var(--primary-rgb, 0, 85, 164), 0.15); /* Tema uyumlu overlay */
   backdrop-filter: blur(8px); /* Daha yoğun bulanıklık */
   -webkit-backdrop-filter: blur(8px); /* Safari desteği */
-  z-index: 1090;
+  z-index: var(--z-modalBackdrop, 1090);
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.4s var(--timing-smooth, ease-in-out), visibility 0.4s var(--timing-smooth, ease-in-out);
@@ -1315,7 +1423,7 @@ body.mobile-menu-open {
   max-width: var(--mobile-menu-width, 100%);
   height: 100vh;
   background-color: var(--background, #fff);
-  z-index: 1095;
+  z-index: var(--z-settings-panel, 1110);
   box-shadow: var(--shadow-lg, 0 0 50px rgba(0, 0, 0, 0.25));
   transition: transform 0.5s var(--timing-smooth, cubic-bezier(0.77, 0, 0.175, 1));
   overflow-y: auto;
@@ -1405,11 +1513,12 @@ body.mobile-menu-open {
 }
 
 .mobile-nav-link.active {
-  color: var(--text-on-primary, #fff);
-  font-weight: var(--font-weight-semibold, 600);
+  color: var(--text-on-primary, #fff) !important;
+  font-weight: var(--font-weight-bold, 700);
   background: linear-gradient(45deg, var(--primary-color, #0056b3), var(--primary-light, #3378bc));
   box-shadow: var(--shadow-md, 0 8px 15px rgba(var(--primary-rgb, 0, 85, 164), 0.25));
-  border-left-color: var(--white, #fff);
+  border-radius: var(--border-radius-md, 8px);
+  padding: 0.75rem 1rem;
 }
 
 .mobile-nav-icon {
@@ -1636,7 +1745,7 @@ html[data-theme="dark"] .mobile-menu-close:hover {
 
 .mobile-menu-title {
   font-size: 1.6rem;
-  font-weight: 700;
+  font-weight: var(--font-weight-bold, 700);
   color: var(--mobile-menu-text);
   margin: 0;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -1745,4 +1854,19 @@ html[data-theme="dark"] .mobile-menu-close:hover {
     max-width: 100%;
     padding: 6rem min(10%, 4rem) 3rem;
   }
+}
+
+/* Basitleştirilmiş Animasyonlar - Erişilebilirlik Uyumlu */
+@media (prefers-reduced-motion: reduce) {
+  .patreon-header *,
+  .mobile-menu * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+[data-reduced-motion="true"] .patreon-header *,
+[data-reduced-motion="true"] .mobile-menu * {
+  transition: none !important;
+  animation: none !important;
 }

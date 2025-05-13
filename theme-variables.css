@@ -45,6 +45,8 @@
   --z-index-tooltip: 1070;
   --z-index-toast: 1080;
   --z-index-header: 1090;
+  --z-settings-toggle: 1100; /* Ayarlar butonu için z-index */
+  --z-settings-panel: 1110; /* Ayarlar paneli için z-index */
 }
 
 /* ===========================================

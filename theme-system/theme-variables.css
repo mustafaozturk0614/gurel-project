@@ -26,8 +26,80 @@
  * 1. Kök Değişkenler (Tema Renkleri ve Bileşenler)
  * =========================================*/
 :root {
+  /* HSL Renk Sistemi */
+  --primary-hue: 210;
+  --primary-saturation: 100%;
+  --primary-lightness: 32%;
+  
+  /* Ana Renkler - HSL Tabanlı */
+  --primary-color: hsl(var(--primary-hue), var(--primary-saturation), var(--primary-lightness));
+  --primary-50: hsl(var(--primary-hue), var(--primary-saturation), 95%);
+  --primary-100: hsl(var(--primary-hue), var(--primary-saturation), 90%);
+  --primary-200: hsl(var(--primary-hue), var(--primary-saturation), 80%);
+  --primary-300: hsl(var(--primary-hue), var(--primary-saturation), 70%);
+  --primary-400: hsl(var(--primary-hue), var(--primary-saturation), 60%);
+  --primary-500: hsl(var(--primary-hue), var(--primary-saturation), 50%);
+  --primary-600: hsl(var(--primary-hue), var(--primary-saturation), 40%);
+  --primary-700: hsl(var(--primary-hue), var(--primary-saturation), 30%);
+  --primary-800: hsl(var(--primary-hue), var(--primary-saturation), 20%);
+  --primary-900: hsl(var(--primary-hue), var(--primary-saturation), 10%);
+
+  /* Semantic Renkler */
+  --success-hue: 142;
+  --error-hue: 354;
+  --warning-hue: 45;
+  --info-hue: 200;
+
+  --success-color: hsl(var(--success-hue), 76%, 36%);
+  --error-color: hsl(var(--error-hue), 70%, 45%);
+  --warning-color: hsl(var(--warning-hue), 100%, 50%);
+  --info-color: hsl(var(--info-hue), 65%, 45%);
+
+  /* Erişilebilirlik Değişkenleri */
+  --focus-ring-color: hsl(var(--primary-hue), var(--primary-saturation), 50%, 0.5);
+  --focus-ring-width: 3px;
+  --focus-ring-offset: 2px;
+  
+  /* WCAG Kontrast Oranları */
+  --min-contrast-ratio: 4.5;
+  --preferred-contrast-ratio: 7;
+  --max-contrast-ratio: 21;
+
+  /* Responsive Container Değerleri */
+  --container-max-width-xs: 100%;
+  --container-max-width-sm: min(540px, 100% - 3rem);
+  --container-max-width-md: min(720px, 100% - 4rem);
+  --container-max-width-lg: min(960px, 100% - 5rem);
+  --container-max-width-xl: min(1140px, 100% - 6rem);
+  --container-max-width-2xl: min(1320px, 100% - 8rem);
+
+  /* Aspect Ratio Değişkenleri */
+  --aspect-square: 1;
+  --aspect-video: 16/9;
+  --aspect-cinema: 21/9;
+  --aspect-portrait: 3/4;
+
+  /* Z-index Katmanları - Geliştirilmiş */
+  --z-negative: -1;
+  --z-elevate: 1;
+  --z-drawer: 200;
+  --z-dropdown: 400;
+  --z-sticky: 600;
+  --z-fixed: 700;
+  --z-modalBackdrop: 800;
+  --z-settings-toggle: 850; /* Setting butonu için yeni z-index */
+  --z-modal: 900;
+  --z-settings-panel: 950; /* Setting panel için yeni z-index */
+  --z-popover: 1000;
+  --z-tooltip: 1100;
+  --z-toast: 1200;
+  
+  /* Klavye Navigasyon Değişkenleri */
+  --focus-visible-box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-color);
+  --focus-visible-outline: none;
+  --focus-visible-offset: var(--focus-ring-offset);
+  
   /* Ana Renkler */
-  --primary-color: #0055a4;
   --primary-rgb: 0, 85, 164;
   --primary-light: #3378bc;
   --primary-dark: #00448e;
@@ -35,13 +107,9 @@
   /* Yardımcı Renkler */
   --secondary-color: #ea8600; /* Turuncu renk için güncellendi - Site markası ile uyumlu */
   --secondary-rgb: 234, 134, 0; /* Turuncu RGB değerlerine güncellendi */
-  --success-color: #28a745;
   --success-rgb: 40, 167, 69;
-  --danger-color: #dc3545;
   --danger-rgb: 220, 53, 69;
-  --warning-color: #ffc107;
   --warning-rgb: 255, 193, 7;
-  --info-color: #17a2b8;
   --info-rgb: 23, 162, 184;
   
   /* Nötr Renkler */
@@ -75,33 +143,6 @@
   --border-radius-lg: 0.5rem;
   --border-radius-xl: 1rem;
   --border-radius-pill: 50rem;
-  
-  /* z-index Katmanları */
-  --z-index-dropdown: 1000;
-  --z-index-sticky: 1020;
-  --z-index-fixed: 1030;
-  --z-index-modal-backdrop: 1040;
-  --z-index-modal: 1050;
-  --z-index-popover: 1060;
-  --z-index-tooltip: 1070;
-  
-  /* Konteyner Genişlikleri */
-  --container-sm: 540px;
-  --container-md: 720px;
-  --container-lg: 960px;
-  --container-xl: 1140px;
-  --container-xxl: 1320px;
-  
-  /* Ayarlar Panel Değişkenleri */
-  --settings-panel-width: 280px;
-  --settings-panel-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
-  --settings-panel-border: 1px solid var(--border-color);
-  --settings-toggle-size: 42px;
-  --settings-toggle-icon-size: 20px;
-  --settings-transition-duration: 0.3s;
-  --settings-option-hover-bg: rgba(var(--primary-rgb), 0.08);
-  --settings-option-active-bg: rgba(var(--primary-rgb), 0.12);
-  --settings-separator: var(--border-color-light);
   
   /* Buton Varyasyon Değişkenleri */
   --btn-hover-brightness: 0.85;
@@ -596,225 +637,293 @@ p, .text-base {
  * 8. Geçiş ve Animasyon Stilleri
  * =========================================*/
 :root {
-  /* Geçiş Süreleri */
-  --transition-fast: 0.15s ease;
-  --transition-normal: 0.3s ease;
-  --transition-slow: 0.5s ease;
-  --transition-extra-slow: 0.8s ease;
-  
-  /* Geçiş Özellikleri */
-  --transition-property-common: color, background-color, border-color, box-shadow, transform;
-  --transition-property-colors: color, background-color, border-color;
-  --transition-property-opacity: opacity;
-  --transition-property-shadow: box-shadow;
-  --transition-property-transform: transform;
+  /* Temel Animasyon Değişkenleri */
+  --animation-duration-fast: 150ms;
+  --animation-duration-normal: 300ms;
+  --animation-duration-slow: 500ms;
+  --animation-duration-slower: 800ms;
   
   /* Zamanlama Fonksiyonları */
-  --timing-ease: ease;
-  --timing-ease-in: ease-in;
-  --timing-ease-out: ease-out;
-  --timing-ease-in-out: ease-in-out;
-  --timing-spring: cubic-bezier(0.68, -0.55, 0.27, 1.55);
-  --timing-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --timing-smooth: cubic-bezier(0.4, 0.0, 0.2, 1);
+  --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --ease-elastic: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  
+  /* Özel Animasyon Eğrileri */
+  --ease-emphasis: cubic-bezier(0.2, 0, 0, 1);
+  --ease-emphasis-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-emphasis-out: cubic-bezier(0.16, 1, 0.3, 1);
+  
+  /* Geçiş Kombinasyonları */
+  --transition-transform: transform var(--animation-duration-normal) var(--ease-default);
+  --transition-opacity: opacity var(--animation-duration-normal) var(--ease-default);
+  --transition-colors: background-color var(--animation-duration-normal) var(--ease-default),
+                      border-color var(--animation-duration-normal) var(--ease-default),
+                      color var(--animation-duration-normal) var(--ease-default);
+  --transition-shadow: box-shadow var(--animation-duration-normal) var(--ease-default);
+  --transition-all: all var(--animation-duration-normal) var(--ease-default);
+  
+  /* Animasyon Keyframe Değişkenleri */
+  --rotate-360: rotate(360deg);
+  --scale-up: scale(1.1);
+  --scale-down: scale(0.9);
+  --translate-up: translateY(-10px);
+  --translate-down: translateY(10px);
+  --translate-left: translateX(-10px);
+  --translate-right: translateX(10px);
+  
+  /* Özel Animasyon Değişkenleri */
+  --animation-fade-in: fade-in var(--animation-duration-normal) var(--ease-default);
+  --animation-fade-out: fade-out var(--animation-duration-normal) var(--ease-default);
+  --animation-slide-in: slide-in var(--animation-duration-normal) var(--ease-emphasis-out);
+  --animation-slide-out: slide-out var(--animation-duration-normal) var(--ease-emphasis-in);
+  --animation-scale-in: scale-in var(--animation-duration-normal) var(--ease-bounce);
+  --animation-scale-out: scale-out var(--animation-duration-normal) var(--ease-bounce);
+  --animation-rotate: rotate var(--animation-duration-slower) linear infinite;
+  --animation-bounce: bounce var(--animation-duration-normal) var(--ease-bounce) infinite;
   
   /* Tema Geçiş Ayarları */
-  --theme-transition-duration: 0.5s;
-  --theme-transition-timing: var(--timing-smooth);
+  --theme-transition-duration: var(--animation-duration-slow);
+  --theme-transition-timing: var(--ease-emphasis);
 }
 
-/* Ana Tema Geçiş Stili - Yeni ve geliştirilmiş */
-.theme-transition {
-  transition-property: color, background-color, border-color, box-shadow, transform, opacity, filter;
-  transition-duration: var(--theme-transition-duration);
-  transition-timing-function: var(--theme-transition-timing);
-}
-
-/* Kademeli element geçişleri için */
-.theme-transition * {
-  transition-property: color, background-color, border-color, box-shadow, opacity, transform;
-  transition-duration: var(--theme-transition-duration);
-  transition-timing-function: var(--theme-transition-timing);
-}
-
-/* Özel element türleri için geçişler */
-.theme-transition h1, .theme-transition h2, .theme-transition h3,
-.theme-transition h4, .theme-transition h5, .theme-transition h6 {
-  transition-delay: 0.05s;
-}
-
-.theme-transition p, .theme-transition span, .theme-transition a {
-  transition-delay: 0.08s;
-}
-
-.theme-transition button, .theme-transition .btn, .theme-transition input, 
-.theme-transition select, .theme-transition textarea {
-  transition-delay: 0.12s;
-  transition-duration: calc(var(--theme-transition-duration) * 1.2);
-}
-
-.theme-transition img, .theme-transition svg, .theme-transition .icon {
-  transition-property: filter, opacity, transform, box-shadow;
-  transition-delay: 0.15s;
-  transition-duration: calc(var(--theme-transition-duration) * 1.3);
-}
-
-/* Gölge geçişleri */
-.theme-transition .card, .theme-transition .shadow-transition {
-  transition-property: box-shadow, transform, background-color;
-  transition-duration: calc(var(--theme-transition-duration) * 1.2);
-  transition-timing-function: var(--timing-spring);
-}
-
-/* Kesintisiz arka plan geçişleri */
-.theme-transition body, 
-.theme-transition header,
-.theme-transition footer,
-.theme-transition main,
-.theme-transition section {
-  transition-property: background-color, background, background-image, color;
-  transition-duration: calc(var(--theme-transition-duration) * 1.5);
-}
-
-/* Tema modu geçişlerinde ekstra yumuşak efektler */
-html[data-theme="dark"] .theme-transition {
-  transition-timing-function: var(--timing-ease-out);
-}
-
-html[data-theme="light"] .theme-transition {
-  transition-timing-function: var(--timing-ease-in);
-}
-
-/* Animasyon tanımlamaları */
+/* Temel Animasyon Keyframe'leri */
 @keyframes fade-in {
   from { opacity: 0; }
   to { opacity: 1; }
 }
 
-@keyframes slide-up {
-  from { transform: translateY(10px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+@keyframes fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes slide-in {
+  from { 
+    transform: var(--translate-down);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-out {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: var(--translate-up);
+    opacity: 0;
+  }
 }
 
 @keyframes scale-in {
-  from { transform: scale(0.95); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-
-@keyframes theme-transition-light-to-dark {
-  0% { 
-    filter: brightness(1);
-    background-color: var(--background); 
+  from {
+    transform: var(--scale-down);
+    opacity: 0;
   }
-  100% { 
-    filter: brightness(0.95);
-    background-color: var(--background); 
+  to {
+    transform: scale(1);
+    opacity: 1;
   }
 }
 
-@keyframes theme-transition-dark-to-light {
-  0% { 
-    filter: brightness(1);
-    background-color: var(--background); 
+@keyframes scale-out {
+  from {
+    transform: scale(1);
+    opacity: 1;
   }
-  100% { 
-    filter: brightness(1.05);
-    background-color: var(--background); 
+  to {
+    transform: var(--scale-down);
+    opacity: 0;
   }
 }
 
-/* Yardımcı animasyon sınıfları */
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: var(--rotate-360); }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: var(--translate-up); }
+}
+
+/* Animasyon Yardımcı Sınıfları */
 .animate-fade-in {
-  animation: fade-in var(--transition-normal) var(--timing-smooth) forwards;
+  animation: var(--animation-fade-in);
 }
 
-.animate-slide-up {
-  animation: slide-up var(--transition-normal) var(--timing-smooth) forwards;
+.animate-fade-out {
+  animation: var(--animation-fade-out);
+}
+
+.animate-slide-in {
+  animation: var(--animation-slide-in);
+}
+
+.animate-slide-out {
+  animation: var(--animation-slide-out);
 }
 
 .animate-scale-in {
-  animation: scale-in var(--transition-normal) var(--timing-smooth) forwards;
+  animation: var(--animation-scale-in);
 }
 
-/* Özelleştirilmiş geçişler */
-.transition-colors {
-  transition-property: var(--transition-property-colors);
-  transition-duration: var(--theme-transition-duration);
-  transition-timing-function: var(--theme-transition-timing);
+.animate-scale-out {
+  animation: var(--animation-scale-out);
+}
+
+.animate-rotate {
+  animation: var(--animation-rotate);
+}
+
+.animate-bounce {
+  animation: var(--animation-bounce);
+}
+
+/* Geçiş Yardımcı Sınıfları */
+.transition-transform {
+  transition: var(--transition-transform);
 }
 
 .transition-opacity {
-  transition-property: var(--transition-property-opacity);
-  transition-duration: var(--theme-transition-duration);
-  transition-timing-function: var(--theme-transition-timing);
+  transition: var(--transition-opacity);
+}
+
+.transition-colors {
+  transition: var(--transition-colors);
 }
 
 .transition-shadow {
-  transition-property: var(--transition-property-shadow);
-  transition-duration: var(--theme-transition-duration);
-  transition-timing-function: var(--timing-spring);
+  transition: var(--transition-shadow);
 }
 
-.transition-transform {
-  transition-property: var(--transition-property-transform);
-  transition-duration: var(--theme-transition-duration);
-  transition-timing-function: var(--timing-bounce);
+.transition-all {
+  transition: var(--transition-all);
 }
 
 /* =========================================
  * 9. Duyarlı Tasarım (Responsive) Ayarları
  * =========================================*/
 :root {
-  /* Ekran Genişlik Kırılım Noktaları */
+  /* Ekran Genişlik Kırılım Noktaları - Modern Değerler */
   --breakpoint-xs: 0;
-  --breakpoint-sm: 576px;
+  --breakpoint-sm: 640px;  /* 576px yerine */
   --breakpoint-md: 768px;
-  --breakpoint-lg: 992px;
-  --breakpoint-xl: 1200px;
-  --breakpoint-xxl: 1400px;
+  --breakpoint-lg: 1024px; /* 992px yerine */
+  --breakpoint-xl: 1280px; /* 1200px yerine */
+  --breakpoint-2xl: 1536px; /* 1400px yerine */
   
-  /* Kapsayıcı Genişlikleri */
-  --container-max-width-sm: 540px;
-  --container-max-width-md: 720px;
-  --container-max-width-lg: 960px;
-  --container-max-width-xl: 1140px;
-  --container-max-width-xxl: 1320px;
+  /* Mobil Öncelikli Grid Sistemi */
+  --grid-columns-mobile: 4;
+  --grid-columns-tablet: 8;
+  --grid-columns-desktop: 12;
+  --grid-gap-mobile: 1rem;
+  --grid-gap-tablet: 1.5rem;
+  --grid-gap-desktop: 2rem;
   
-  /* Izgara Sistemi */
-  --grid-columns: 12;
-  --grid-gutter-width: 1.5rem;
+  /* Responsive Tipografi */
+  --font-size-fluid-base: clamp(1rem, 2vw, 1.125rem);
+  --font-size-fluid-lg: clamp(1.125rem, 3vw, 1.25rem);
+  --font-size-fluid-xl: clamp(1.25rem, 4vw, 1.5rem);
+  --font-size-fluid-2xl: clamp(1.5rem, 5vw, 2rem);
+  --font-size-fluid-3xl: clamp(2rem, 6vw, 3rem);
   
-  /* Responsive Font Boyutları */
-  --responsive-font-modifier: 1;
-  
-  /* Mobil Menü Değişkenleri */
-  --mobile-menu-width: 280px;
-  --mobile-menu-bg: var(--bg-color);
-  --mobile-menu-text: var(--text-color);
-  --mobile-menu-shadow: var(--shadow-lg);
-  --mobile-menu-z-index: 1100;
-  --hamburger-size: 24px;
-  --hamburger-color: var(--text-color);
-  --hamburger-active-color: var(--primary-color);
+  /* Responsive Boşluklar */
+  --spacing-fluid-sm: clamp(0.5rem, 2vw, 1rem);
+  --spacing-fluid-md: clamp(1rem, 3vw, 2rem);
+  --spacing-fluid-lg: clamp(2rem, 4vw, 4rem);
+  --spacing-fluid-xl: clamp(3rem, 5vw, 6rem);
 }
 
-/* Mobil Cihazlar İçin Responsive Değişkenler */
-@media (max-width: 576px) {
+/* Mobil Cihazlar */
+@media (max-width: 639px) {
   :root {
-    --responsive-font-modifier: 0.85;
-    --h1-font-size: calc(2rem * var(--responsive-font-modifier));
-    --h2-font-size: calc(1.75rem * var(--responsive-font-modifier));
-    --section-spacing: var(--spacer-5);
-    --mobile-menu-width: 100%;
+    /* Mobil Font Boyutları */
+    --font-size-base: 14px;
+    --line-height-base: 1.4;
+    
+    /* Mobil Boşluklar */
+    --section-spacing: var(--spacing-fluid-md);
+    --component-spacing: var(--spacing-fluid-sm);
+    
+    /* Mobil Header */
+    --header-height: 60px;
+    --header-padding: 0.5rem;
+    
+    /* Mobil Butonlar */
+    --btn-padding-y: 0.5rem;
+    --btn-padding-x: 1rem;
+    --btn-font-size: 14px;
+    
+    /* Mobil Kartlar */
+    --card-padding: 1rem;
+    --card-border-radius: 0.5rem;
   }
 }
 
-/* Tablet Cihazlar İçin Responsive Değişkenler */
-@media (min-width: 577px) and (max-width: 992px) {
+/* Tablet Cihazlar */
+@media (min-width: 640px) and (max-width: 1023px) {
   :root {
-    --responsive-font-modifier: 0.9;
-    --section-spacing: var(--spacer-5);
-    --mobile-menu-width: 320px;
+    /* Tablet Font Boyutları */
+    --font-size-base: 15px;
+    --line-height-base: 1.5;
+    
+    /* Tablet Boşluklar */
+    --section-spacing: var(--spacing-fluid-lg);
+    --component-spacing: var(--spacing-fluid-md);
+    
+    /* Tablet Grid */
+    --grid-columns: var(--grid-columns-tablet);
+    --grid-gap: var(--grid-gap-tablet);
+  }
+}
+
+/* Masaüstü ve Büyük Ekranlar */
+@media (min-width: 1024px) {
+  :root {
+    /* Masaüstü Font Boyutları */
+    --font-size-base: 16px;
+    --line-height-base: 1.5;
+    
+    /* Masaüstü Boşluklar */
+    --section-spacing: var(--spacing-fluid-xl);
+    --component-spacing: var(--spacing-fluid-lg);
+    
+    /* Masaüstü Grid */
+    --grid-columns: var(--grid-columns-desktop);
+    --grid-gap: var(--grid-gap-desktop);
+  }
+}
+
+/* Retina ve Yüksek DPI Ekranlar */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  :root {
+    --border-width: 0.5px;
+    --shadow-sharpness: 0.5px;
+  }
+}
+
+/* Karanlık Mod ve Yüksek Kontrast İyileştirmeleri */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --shadow-strength: 0.8;
+    --shadow-color: 0, 0, 0;
+  }
+}
+
+/* Geniş Renk Gamı Ekranlar */
+@media (color-gamut: p3) {
+  :root {
+    --primary-color: color(display-p3 0 0.33 0.64);
+    --success-color: color(display-p3 0.15 0.65 0.27);
+    --error-color: color(display-p3 0.86 0.21 0.27);
   }
 }
 
@@ -1003,4 +1112,36 @@ html[data-theme="dark"] {
   --header-text-dark-hover: var(--primary-light);
   --header-mobile-menu-bg: var(--surface-color);
   --header-mobile-overlay: rgba(0, 0, 0, 0.7);
+}
+
+/* Erişilebilirlik İyileştirmeleri */
+:focus-visible {
+  outline: var(--focus-visible-outline);
+  box-shadow: var(--focus-visible-box-shadow);
+  outline-offset: var(--focus-visible-offset);
+}
+
+/* Screen Reader Only Sınıfı - Geliştirilmiş */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+  -webkit-clip-path: inset(50%);
+  clip-path: inset(50%);
+}
+
+/* Reduced Motion İyileştirmeleri */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --animation-duration: 0.01ms !important;
+    --animation-iteration-count: 1 !important;
+    --transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 } 
