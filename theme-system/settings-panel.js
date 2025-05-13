@@ -647,6 +647,25 @@ class SettingsPanel {
       selectedRadio.checked = true;
     }
     
+    // Eğer mevcut mod "auto" ise zamanlayıcıyı başlat
+    if (currentThemeMode === 'auto') {
+      this.startAutoModeTimeCheck();
+      
+      // Başlangıçta saate göre tema modunu ayarla
+      const currentHour = new Date().getHours();
+      const isDark = (currentHour >= 19 || currentHour < 7);
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      
+      // Eğer tema günün saatine göre uygun değilse değiştir
+      if ((isDark && currentTheme !== 'dark') || (!isDark && currentTheme !== 'light')) {
+        document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+        document.body.classList.toggle('dark-mode', isDark);
+        
+        // Debug bilgisi
+        this.log(`Otomatik mod (başlangıç): Tema ${isDark ? 'koyu' : 'açık'} moda ayarlandı (Saat: ${currentHour})`);
+      }
+    }
+    
     // Olay dinleyicileri ekle
     themeRadios.forEach(radio => {
       radio.addEventListener('change', () => {
@@ -702,6 +721,9 @@ class SettingsPanel {
         document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
         document.body.classList.toggle('dark-mode', isDark);
         ThemeUtils.saveToStorage('themeMode', 'auto');
+        
+        // Otomatik mod için saat değişimini dinleyecek zamanlayıcı başlat
+        this.startAutoModeTimeCheck();
         break;
       }
       case 'system': {
@@ -724,6 +746,51 @@ class SettingsPanel {
     
     // Erişilebilirlik için bildiri
     ThemeUtils.announceToScreenReader(`${this.capitalizeFirstLetter(mode)} tema etkinleştirildi`);
+  }
+  
+  /**
+   * Otomatik mod için saat değişimini kontrol eden zamanlayıcıyı başlatır
+   * Bu fonksiyon, saate bağlı tema değişimi için gerekli
+   */
+  startAutoModeTimeCheck() {
+    // Önceki zamanlayıcıyı temizle
+    if (this._autoModeTimeChecker) {
+      clearInterval(this._autoModeTimeChecker);
+    }
+    
+    // Her dakika kontrol et
+    this._autoModeTimeChecker = setInterval(() => {
+      // Eğer aktif mod otomatik değilse zamanlayıcıyı durdur
+      const currentMode = ThemeUtils.getFromStorage('themeMode');
+      if (currentMode !== 'auto') {
+        clearInterval(this._autoModeTimeChecker);
+        this._autoModeTimeChecker = null;
+        return;
+      }
+      
+      // Şu anki saati kontrol et ve gerekirse tema modunu değiştir
+      const currentHour = new Date().getHours();
+      const isDark = (currentHour >= 19 || currentHour < 7);
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      
+      // Eğer tema günün saatine göre uygun değilse değiştir
+      if ((isDark && currentTheme !== 'dark') || (!isDark && currentTheme !== 'light')) {
+        document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+        document.body.classList.toggle('dark-mode', isDark);
+        
+        // UI güncellemeleri
+        this.syncPanelWithDocumentTheme();
+        
+        // Debug bilgisi
+        this.log(`Otomatik mod: Saat değişimine göre tema ${isDark ? 'koyu' : 'açık'} moda ayarlandı (Saat: ${currentHour})`);
+        
+        // Tema değişim olayını tetikle
+        ThemeUtils.dispatchCustomEvent('themeChanged', {
+          oldTheme: isDark ? 'light' : 'dark',
+          newTheme: isDark ? 'dark' : 'light'
+        });
+      }
+    }, 60000); // Her dakika kontrol et
   }
   
   /**
@@ -1576,6 +1643,16 @@ class SettingsPanel {
       
       if (this.elements.toggleButton && this.elements.toggleButton.parentNode) {
         this.elements.toggleButton.parentNode.removeChild(this.elements.toggleButton);
+      }
+      
+      // Zaman ayarlayıcıları temizle
+      if (this._timeUpdateInterval) {
+        clearInterval(this._timeUpdateInterval);
+      }
+      
+      if (this._autoModeTimeChecker) {
+        clearInterval(this._autoModeTimeChecker);
+        this._autoModeTimeChecker = null;
       }
       
       // Olay dinleyicilerini temizle

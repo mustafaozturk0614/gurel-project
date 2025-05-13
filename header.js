@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
   initMobileMenu();
   initSectionScrollSpy();
   listenForThemeChanges(); // Tema değişikliklerini dinle
+  initLogoEffects(); // Logo efektleri
 });
 
 function initHeader() {
@@ -450,6 +451,136 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 });
+
+// Logo için özel efektler
+function initLogoEffects() {
+  const logo = document.querySelector('.header-logo');
+  const brand = document.querySelector('.navbar-brand');
+  
+  if (!logo || !brand) return;
+
+  // Tooltip mesajını ekle
+  brand.setAttribute('data-tooltip', 'Logoyu büyütmek için çift tıklayın');
+
+  // Gelişmiş hover efektleri için mouse takibi
+  brand.addEventListener('mousemove', function(e) {
+    // Reduced motion tercihini kontrol et
+    if (document.documentElement.getAttribute('data-reduced-motion') === 'true') return;
+    
+    const rect = brand.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    
+    // Merkeze göre konumu hesapla (-1 ile 1 arasında değerler)
+    const centerX = mouseX / rect.width * 2 - 1; 
+    const centerY = mouseY / rect.height * 2 - 1;
+    
+    // 3D döndürme efekti - hafif
+    logo.style.transform = `scale(1.15) perspective(800px) rotateY(${centerX * 5}deg) rotateX(${-centerY * 5}deg)`;
+    
+    // Parlaklık ve gölge efektlerini ayarla
+    const distance = Math.sqrt(centerX * centerX + centerY * centerY);
+    const brightness = 1.05 + distance * 0.1; // 1.05 - 1.15 arası
+    
+    logo.style.filter = `drop-shadow(${centerX * 8}px ${centerY * 8}px 12px rgba(0,0,0,0.3)) brightness(${brightness})`;
+  });
+  
+  // Mouse ayrıldığında efektleri sıfırla
+  brand.addEventListener('mouseleave', function() {
+    logo.style.transform = '';
+    logo.style.filter = '';
+  });
+  
+  // Opsiyonel: Logo üzerine çift tıklandığında tam ekran gösterme
+  logo.addEventListener('dblclick', function(e) {
+    e.preventDefault();
+    
+    // Tam ekran logosu için geçici bir overlay oluştur
+    const overlay = document.createElement('div');
+    overlay.className = 'logo-fullscreen-overlay';
+    overlay.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      backdrop-filter: blur(5px);
+    `;
+    
+    // Overlay'a büyük logo ekle
+    const fullLogo = document.createElement('img');
+    fullLogo.src = logo.src;
+    fullLogo.style.cssText = `
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+      transform: scale(0.9);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      filter: drop-shadow(0 8px 25px rgba(0,0,0,0.4));
+    `;
+    
+    // Kapat butonu
+    const closeBtn = document.createElement('button');
+    closeBtn.innerHTML = '&times;';
+    closeBtn.style.cssText = `
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 24px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    `;
+    
+    // Kapatma fonksiyonu
+    const closeOverlay = () => {
+      fullLogo.style.transform = 'scale(0.8)';
+      overlay.style.opacity = '0';
+      setTimeout(() => {
+        document.body.removeChild(overlay);
+      }, 300);
+    };
+    
+    // Overlay'a herhangi bir yere tıklandığında kapat
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) closeOverlay();
+    });
+    
+    // ESC tuşu ile kapatma
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeOverlay();
+    }, { once: true });
+    
+    // Kapat butonuyla kapatma
+    closeBtn.addEventListener('click', closeOverlay);
+    
+    // DOM'a ekle
+    overlay.appendChild(fullLogo);
+    overlay.appendChild(closeBtn);
+    document.body.appendChild(overlay);
+    
+    // Animasyon için timeout
+    setTimeout(() => {
+      overlay.style.opacity = '1';
+      fullLogo.style.transform = 'scale(1)';
+    }, 50);
+  });
+}
 
 // Logo hover durumunda ses efekti
 document.addEventListener('DOMContentLoaded', function() {

@@ -475,6 +475,11 @@ html[data-font-size="xlarge"] {
   --font-size-3xl: 1.875rem;
   --font-size-4xl: 2.25rem;
   --font-size-5xl: 3rem;
+  --font-size-6xl: 4rem;
+  --font-size-7xl: 5rem;
+  --font-size-8xl: 6rem;
+  --font-size-9xl: 7rem;
+  --font-size-10xl: 8rem;
   
   /* Font Ağırlıkları */
   --font-weight-light: 300;
@@ -483,6 +488,9 @@ html[data-font-size="xlarge"] {
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
   --font-weight-extrabold: 800;
+  --font-weight-black: 900;
+  --font-weight-extrablack: 1000;
+
   
   /* Satır Yükseklikleri */
   --line-height-none: 1;
@@ -491,6 +499,7 @@ html[data-font-size="xlarge"] {
   --line-height-normal: 1.5;
   --line-height-relaxed: 1.625;
   --line-height-loose: 2;
+  --line-height-superloose: 3;
   
   /* Harf Aralıkları */
   --letter-spacing-tighter: -0.05em;
@@ -499,6 +508,8 @@ html[data-font-size="xlarge"] {
   --letter-spacing-wide: 0.025em;
   --letter-spacing-wider: 0.05em;
   --letter-spacing-widest: 0.1em;
+  --letter-spacing-superwide: 0.2em;
+  
 }
 
 /* Başlıklar */
