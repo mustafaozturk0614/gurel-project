@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="light" data-color-theme="blue">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GÜREL YÖNETİM - Carousel Örnekleri</title>
+    
+    <!-- Tema CSS'leri -->
+    <link rel="stylesheet" href="theme-system/theme-variables.css">
+    <link rel="stylesheet" href="theme-system/theme.css">
+    
+    <!-- Carousel CSS -->
+    <link rel="stylesheet" href="carousel-slider.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Poppins Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        section {
+            margin-bottom: var(--spacing-7);
+        }
+        
+        .section-title {
+            margin-bottom: var(--spacing-4);
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-light);
+            padding-bottom: var(--spacing-2);
+            display: inline-block;
+        }
+        
+        .tema-kontroller {
+            background-color: var(--surface-color);
+            padding: var(--spacing-3);
+            border-radius: var(--border-radius);
+            position: sticky;
+            top: var(--spacing-3);
+            z-index: 100;
+            box-shadow: var(--shadow-md);
+            margin-bottom: var(--spacing-5);
+        }
+        
+        .controller-group {
+            display: flex;
+            gap: var(--spacing-2);
+            margin-bottom: var(--spacing-3);
+            flex-wrap: wrap;
+        }
+        
+        .controller-label {
+            font-weight: var(--font-weight-medium);
+            margin-bottom: var(--spacing-1);
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="navbar-brand">
+            <img src="assets/logo.png" alt="Gürel Yönetim Logo" onerror="this.src='https://via.placeholder.com/120x40?text=GÜREL'; this.onerror='';">
+            GÜREL YÖNETİM
+        </div>
+        <ul class="navbar-nav">
+            <li class="nav-item"><a href="#" class="nav-link active">Ana Sayfa</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">Hakkımızda</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">Hizmetler</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">İletişim</a></li>
+        </ul>
+    </header>
+
+    <div class="container section-padding">
+        <div class="tema-kontroller">
+            <h3 class="mb-3">Tema Kontrolleri</h3>
+            
+            <div class="controller-group">
+                <div>
+                    <div class="controller-label">Tema Modu</div>
+                    <div class="d-flex gap-2">
+                        <button class="btn" data-theme="light">Açık</button>
+                        <button class="btn" data-theme="dark">Koyu</button>
+                        <button class="btn" data-theme="high-contrast">Yüksek Kontrast</button>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="controller-label">Renk Teması</div>
+                    <div class="d-flex gap-2">
+                        <button class="btn" data-color="blue">Mavi</button>
+                        <button class="btn" data-color="green">Yeşil</button>
+                        <button class="btn" data-color="red">Kırmızı</button>
+                        <button class="btn" data-color="orange">Turuncu</button>
+                        <button class="btn" data-color="purple">Mor</button>
+                        <button class="btn" data-color="turkuaz">Turkuaz</button>
+                        <button class="btn" data-color="pembe">Pembe</button>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="controller-label">Font Boyutu</div>
+                    <div class="d-flex gap-2">
+                        <button class="btn" data-font-size="small">Küçük</button>
+                        <button class="btn" data-font-size="normal">Normal</button>
+                        <button class="btn" data-font-size="large">Büyük</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section>
+            <h2 class="section-title">Standart Carousel</h2>
+            <p class="mb-4">Temel carousel yapısı, tam genişlikte slider içeriği ve buton kontrolleriyle.</p>
+            
+            <div class="carousel" id="carousel-standard">
+                <div class="carousel-inner">
+                    <div class="carousel-slides">
+                        <div class="carousel-slide active">
+                            <div class="carousel-bg" style="background-image: url('https://source.unsplash.com/random/1200x600?istanbul');"></div>
+                            <div class="carousel-content">
+                                <h2 class="carousel-title">İstanbul Manzarası</h2>
+                                <p class="carousel-description">Boğaz'ın eşsiz güzelliğiyle İstanbul'un en güzel manzaralarından birine tanık olun. Tarih, doğa ve şehir bir arada.</p>
+                                <div class="carousel-buttons">
+                                    <a href="#" class="carousel-btn">Detaylı İncele</a>
+                                    <a href="#" class="carousel-btn btn-outline">İletişime Geç</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="carousel-bg" style="background-image: url('https://source.unsplash.com/random/1200x600?ankara');"></div>
+                            <div class="carousel-content">
+                                <h2 class="carousel-title">Ankara'da Yaşam</h2>
+                                <p class="carousel-description">Başkentin modern yüzü ve tarihî dokusunun uyumu. Ankara'nın düzenli yapısı ve kültürel zenginliği.</p>
+                                <div class="carousel-buttons">
+                                    <a href="#" class="carousel-btn">Hemen Keşfet</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="carousel-bg" style="background-image: url('https://source.unsplash.com/random/1200x600?izmir');"></div>
+                            <div class="carousel-content text-left position-bottom">
+                                <h2 class="carousel-title">İzmir Körfezi</h2>
+                                <p class="carousel-description">Ege'nin incisi İzmir, muhteşem körfezi ve benzersiz yaşam tarzıyla dikkat çekiyor.</p>
+                                <div class="carousel-buttons">
+                                    <a href="#" class="carousel-btn">Daha Fazla</a>
+                                    <a href="#" class="carousel-btn btn-outline">İletişime Geç</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="carousel-control prev"><i class="fas fa-chevron-left"></i></button>
+                <button class="carousel-control next"><i class="fas fa-chevron-right"></i></button>
+                
+                <div class="carousel-dots">
+                    <button class="carousel-dot active"></button>
+                    <button class="carousel-dot"></button>
+                    <button class="carousel-dot"></button>
+                </div>
+            </div>
+        </section>
+        
+        <section>
+            <h2 class="section-title">Fade Efektli Carousel</h2>
+            <p class="mb-4">Slaytlar arasında yumuşak geçiş için fade animasyonu kullanır.</p>
+            
+            <div class="carousel fade" id="carousel-fade">
+                <div class="carousel-inner">
+                    <div class="carousel-slides">
+                        <div class="carousel-slide active">
+                            <div class="carousel-bg" style="background-image: url('https://source.unsplash.com/random/1200x600?nature');"></div>
+                            <div class="carousel-content">
+                                <h2 class="carousel-title">Doğa Harikası</h2>
+                                <p class="carousel-description">Doğanın eşsiz güzelliği ve huzur veren atmosferiyle buluşun.</p>
+                                <div class="carousel-buttons">
+                                    <a href="#" class="carousel-btn">Gezi Rehberi</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="carousel-bg" style="background-image: url('https://source.unsplash.com/random/1200x600?mountain');"></div>
+                            <div class="carousel-content">
+                                <h2 class="carousel-title">Dağların Zirvesi</h2>
+                                <p class="carousel-description">Zirvelerde hissedeceğiniz özgürlük ve manzara eşsiz bir deneyim sunuyor.</p>
+                                <div class="carousel-buttons">
+                                    <a href="#" class="carousel-btn">Tırmanış Rotaları</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="carousel-bg" style="background-image: url('https://source.unsplash.com/random/1200x600?beach');"></div>
+                            <div class="carousel-content">
+                                <h2 class="carousel-title">Masmavi Sahiller</h2>
+                                <p class="carousel-description">Tertemiz kumsallar ve turkuaz denizin buluştuğu noktalar.</p>
+                                <div class="carousel-buttons">
+                                    <a href="#" class="carousel-btn">Plaj Rehberi</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="carousel-control prev"><i class="fas fa-chevron-left"></i></button>
+                <button class="carousel-control next"><i class="fas fa-chevron-right"></i></button>
+                
+                <div class="carousel-dots">
+                    <button class="carousel-dot active"></button>
+                    <button class="carousel-dot"></button>
+                    <button class="carousel-dot"></button>
+                </div>
+            </div>
+        </section>
+        
+        <section>
+            <h2 class="section-title">Çoklu Öğe Carousel</h2>
+            <p class="mb-4">Aynı anda birden çok öğeyi gösteren carousel tipi, ürün veya kart listeleri için idealdir.</p>
+            
+            <div class="carousel multi-item items-3" id="carousel-multi">
+                <div class="carousel-inner">
+                    <div class="carousel-slides">
+                        <div class="carousel-slide">
+                            <div class="carousel-bg" style="background-image: url('https://source.unsplash.com/random/600x400?service1');"></div>
+                            <div class="carousel-content">
+                                <h3 class="carousel-title">Web Tasarım</h3>
+                                <p class="carousel-description">Modern ve kullanıcı dostu web siteleri.</p>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="carousel-bg" style="background-image: url('https://source.unsplash.com/random/600x400?service2');"></div>
+                            <div class="carousel-content">
+                                <h3 class="carousel-title">Mobil Uygulama</h3>
+                                <p class="carousel-description">iOS ve Android için özel uygulamalar.</p>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="carousel-bg" style="background-image: url('https://source.unsplash.com/random/600x400?service3');"></div>
+                            <div class="carousel-content">
+                                <h3 class="carousel-title">Dijital Pazarlama</h3>
+                                <p class="carousel-description">Online varlığınızı güçlendiren stratejiler.</p>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="carousel-bg" style="background-image: url('https://source.unsplash.com/random/600x400?service4');"></div>
+                            <div class="carousel-content">
+                                <h3 class="carousel-title">SEO Optimizasyonu</h3>
+                                <p class="carousel-description">Arama motorlarında üst sıralara çıkın.</p>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="carousel-bg" style="background-image: url('https://source.unsplash.com/random/600x400?service5');"></div>
+                            <div class="carousel-content">
+                                <h3 class="carousel-title">İçerik Yönetimi</h3>
+                                <p class="carousel-description">Etkileyici ve değerli içerikler oluşturun.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="carousel-control prev"><i class="fas fa-chevron-left"></i></button>
+                <button class="carousel-control next"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </section>
+        
+        <section>
+            <h2 class="section-title">Küçük Resimli (Thumbnail) Carousel</h2>
+            <p class="mb-4">Ana görselin altında küçük resimlerle gezinmeyi sağlayan carousel tipi.</p>
+            
+            <div class="carousel" id="carousel-thumbnail-main">
+                <div class="carousel-inner">
+                    <div class="carousel-slides">
+                        <div class="carousel-slide active">
+                            <div class="carousel-bg" style="background-image: url('https://source.unsplash.com/random/1200x600?product1');"></div>
+                            <div class="carousel-content text-left">
+                                <h2 class="carousel-title">Ürün Detayları</h2>
+                                <p class="carousel-description">Yüksek kaliteli malzemelerden üretilen ürünlerimiz uzun ömürlü kullanım için tasarlanmıştır.</p>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="carousel-bg" style="background-image: url('https://source.unsplash.com/random/1200x600?product2');"></div>
+                            <div class="carousel-content text-left">
+                                <h2 class="carousel-title">Özel Tasarım</h2>
+                                <p class="carousel-description">Her bir ürün, uzman tasarımcılarımız tarafından ince detaylarla tasarlanmıştır.</p>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="carousel-bg" style="background-image: url('https://source.unsplash.com/random/1200x600?product3');"></div>
+                            <div class="carousel-content text-left">
+                                <h2 class="carousel-title">Dayanıklılık</h2>
+                                <p class="carousel-description">En zorlu koşullarda bile performansını koruyan dayanıklı yapı.</p>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="carousel-bg" style="background-image: url('https://source.unsplash.com/random/1200x600?product4');"></div>
+                            <div class="carousel-content text-left">
+                                <h2 class="carousel-title">Konfor Garantisi</h2>
+                                <p class="carousel-description">Uzun süreli kullanımlarda bile maksimum konfor sağlayan ergonomik tasarım.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="carousel-control prev"><i class="fas fa-chevron-left"></i></button>
+                <button class="carousel-control next"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            
+            <div class="carousel-thumbnails mt-3">
+                <div class="carousel-thumbnail active">
+                    <img src="https://source.unsplash.com/random/300x200?product1" alt="Ürün 1 Küçük Resim">
+                </div>
+                <div class="carousel-thumbnail">
+                    <img src="https://source.unsplash.com/random/300x200?product2" alt="Ürün 2 Küçük Resim">
+                </div>
+                <div class="carousel-thumbnail">
+                    <img src="https://source.unsplash.com/random/300x200?product3" alt="Ürün 3 Küçük Resim">
+                </div>
+                <div class="carousel-thumbnail">
+                    <img src="https://source.unsplash.com/random/300x200?product4" alt="Ürün 4 Küçük Resim">
+                </div>
+            </div>
+        </section>
+        
+        <section>
+            <h2 class="section-title">Kart Carousel</h2>
+            <p class="mb-4">Kart stilinde içeriklerin yer aldığı, bilgi odaklı carousel tipi.</p>
+            
+            <div class="carousel card-carousel" id="carousel-card">
+                <div class="carousel-inner">
+                    <div class="carousel-slides">
+                        <div class="carousel-slide">
+                            <div class="carousel-card">
+                                <div class="carousel-card-img">
+                                    <img src="https://source.unsplash.com/random/600x400?team1" alt="Takım Üyesi 1">
+                                </div>
+                                <div class="carousel-card-body">
+                                    <h3 class="carousel-card-title">Ahmet Yılmaz</h3>
+                                    <p class="carousel-card-text">Kurucu ve CEO</p>
+                                    <p>15 yıllık sektör deneyimi ile şirketimizin vizyonunu belirliyor.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="carousel-card">
+                                <div class="carousel-card-img">
+                                    <img src="https://source.unsplash.com/random/600x400?team2" alt="Takım Üyesi 2">
+                                </div>
+                                <div class="carousel-card-body">
+                                    <h3 class="carousel-card-title">Ayşe Kaya</h3>
+                                    <p class="carousel-card-text">Pazarlama Direktörü</p>
+                                    <p>Dijital pazarlama stratejileri konusunda uzman ekibimizin lideri.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="carousel-card">
+                                <div class="carousel-card-img">
+                                    <img src="https://source.unsplash.com/random/600x400?team3" alt="Takım Üyesi 3">
+                                </div>
+                                <div class="carousel-card-body">
+                                    <h3 class="carousel-card-title">Mehmet Demir</h3>
+                                    <p class="carousel-card-text">Baş Tasarımcı</p>
+                                    <p>Kullanıcı deneyimini öne çıkaran tasarımların arkasındaki yaratıcı isim.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="carousel-card">
+                                <div class="carousel-card-img">
+                                    <img src="https://source.unsplash.com/random/600x400?team4" alt="Takım Üyesi 4">
+                                </div>
+                                <div class="carousel-card-body">
+                                    <h3 class="carousel-card-title">Zeynep Aydın</h3>
+                                    <p class="carousel-card-text">Geliştirme Lideri</p>
+                                    <p>En son teknolojileri kullanarak yenilikçi çözümler üreten ekibin başındaki isim.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="carousel-control prev"><i class="fas fa-chevron-left"></i></button>
+                <button class="carousel-control next"><i class="fas fa-chevron-right"></i></button>
+                
+                <div class="carousel-dots">
+                    <button class="carousel-dot active"></button>
+                    <button class="carousel-dot"></button>
+                    <button class="carousel-dot"></button>
+                    <button class="carousel-dot"></button>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <footer class="bg-dark py-3">
+        <div class="container">
+            <div class="text-center text-light">
+                <p>© 2024 GÜREL YÖNETİM. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Tema değiştirme fonksiyonları
+        document.querySelectorAll('[data-theme]').forEach(button => {
+            button.addEventListener('click', function() {
+                const theme = this.getAttribute('data-theme');
+                document.documentElement.setAttribute('data-theme', theme);
+                
+                // Aktif düğme stilini güncelle
+                document.querySelectorAll('[data-theme]').forEach(btn => btn.classList.remove('btn-primary'));
+                this.classList.add('btn-primary');
+            });
+        });
+        
+        document.querySelectorAll('[data-color]').forEach(button => {
+            button.addEventListener('click', function() {
+                const color = this.getAttribute('data-color');
+                document.documentElement.setAttribute('data-color-theme', color);
+                
+                // Aktif düğme stilini güncelle
+                document.querySelectorAll('[data-color]').forEach(btn => btn.classList.remove('btn-primary'));
+                this.classList.add('btn-primary');
+            });
+        });
+        
+        document.querySelectorAll('[data-font-size]').forEach(button => {
+            button.addEventListener('click', function() {
+                const fontSize = this.getAttribute('data-font-size');
+                if (fontSize === 'normal') {
+                    document.documentElement.removeAttribute('data-font-size');
+                } else {
+                    document.documentElement.setAttribute('data-font-size', fontSize);
+                }
+                
+                // Aktif düğme stilini güncelle
+                document.querySelectorAll('[data-font-size]').forEach(btn => btn.classList.remove('btn-primary'));
+                this.classList.add('btn-primary');
+            });
+        });
+        
+        // Carousel işlevselliği
+        class Carousel {
+            constructor(element) {
+                this.carousel = element;
+                this.slides = this.carousel.querySelectorAll('.carousel-slide');
+                this.prevBtn = this.carousel.querySelector('.carousel-control.prev');
+                this.nextBtn = this.carousel.querySelector('.carousel-control.next');
+                this.dots = this.carousel.querySelectorAll('.carousel-dot');
+                this.currentIndex = 0;
+                this.totalSlides = this.slides.length;
+                this.isMultiItem = this.carousel.classList.contains('multi-item');
+                this.slidesPerView = this.isMultiItem ? (
+                    this.carousel.classList.contains('items-2') ? 2 :
+                    this.carousel.classList.contains('items-4') ? 4 : 3
+                ) : 1;
+                
+                this.init();
+            }
+            
+            init() {
+                if (this.prevBtn) {
+                    this.prevBtn.addEventListener('click', () => this.goToPrev());
+                }
+                
+                if (this.nextBtn) {
+                    this.nextBtn.addEventListener('click', () => this.goToNext());
+                }
+                
+                if (this.dots.length) {
+                    this.dots.forEach((dot, index) => {
+                        dot.addEventListener('click', () => this.goToSlide(index));
+                    });
+                }
+                
+                // Thumbnail carousel için özel işlevsellik
+                if (this.carousel.id === 'carousel-thumbnail-main') {
+                    const thumbnails = document.querySelectorAll('.carousel-thumbnail');
+                    thumbnails.forEach((thumb, index) => {
+                        thumb.addEventListener('click', () => {
+                            this.goToSlide(index);
+                            
+                            // Aktif thumbnail'i güncelle
+                            thumbnails.forEach(t => t.classList.remove('active'));
+                            thumb.classList.add('active');
+                        });
+                    });
+                }
+            }
+            
+            goToSlide(index) {
+                if (index < 0) {
+                    index = 0;
+                } else if (index >= this.totalSlides - (this.isMultiItem ? this.slidesPerView - 1 : 0)) {
+                    index = this.totalSlides - (this.isMultiItem ? this.slidesPerView : 1);
+                }
+                
+                this.currentIndex = index;
+                
+                if (this.carousel.classList.contains('fade')) {
+                    // Fade efektli carousel için
+                    this.slides.forEach(slide => slide.classList.remove('active'));
+                    this.slides[index].classList.add('active');
+                } else {
+                    // Normal kaydırmalı carousel için
+                    const translateValue = this.isMultiItem ? 
+                        -index * (100 / this.slidesPerView + (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--carousel-multi-gap')) / this.slidesPerView)) + '%' : 
+                        -index * 100 + '%';
+                    
+                    this.carousel.querySelector('.carousel-slides').style.transform = `translateX(${translateValue})`;
+                }
+                
+                // Dot göstergesini güncelle
+                if (this.dots.length) {
+                    this.dots.forEach((dot, i) => {
+                        dot.classList.toggle('active', i === index);
+                    });
+                }
+                
+                // Thumbnail carousel için thumbnail güncelleme (ana carousel'dan)
+                if (this.carousel.id === 'carousel-thumbnail-main') {
+                    const thumbnails = document.querySelectorAll('.carousel-thumbnail');
+                    thumbnails.forEach((thumb, i) => {
+                        thumb.classList.toggle('active', i === index);
+                    });
+                }
+            }
+            
+            goToNext() {
+                this.goToSlide(this.currentIndex + 1);
+            }
+            
+            goToPrev() {
+                this.goToSlide(this.currentIndex - 1);
+            }
+        }
+        
+        // Tüm carousel'ları başlat
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.carousel').forEach(carousel => {
+                new Carousel(carousel);
+            });
+            
+            // Başlangıçta aktif tema düğmelerini işaretle
+            document.querySelector('[data-theme="light"]').classList.add('btn-primary');
+            document.querySelector('[data-color="blue"]').classList.add('btn-primary');
+            document.querySelector('[data-font-size="normal"]').classList.add('btn-primary');
+        });
+    </script>
+</body>
+</html> 

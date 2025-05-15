@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="light" data-color-theme="blue">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gürel Yönetim - Profesyonel Gayrimenkul Yönetimi</title>
+    <meta name="description" content="Gürel Yönetim ile apartman, site ve gayrimenkul yönetiminde profesyonel çözümler. 20 yıllık tecrübe ve güvenilir hizmet.">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS Dosyaları -->
+    <link rel="stylesheet" href="theme-system/theme-variables.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/utilities.css">
+    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="hero-section.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-container">
+            <!-- Logo -->
+            <a href="index.html" class="logo">
+                <img src="assets/logo.png" alt="Gürel Yönetim Logo" class="logo-img">
+            </a>
+            
+            <!-- Ana Navigasyon -->
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link active">Ana Sayfa</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="javascript:void(0)" class="nav-link dropdown-toggle">
+                            Hizmetlerimiz
+                            <i class="fas fa-chevron-down dropdown-icon"></i>
+                        </a>
+                        <div class="dropdown-menu">
+                            <ul class="dropdown-list">
+                                <li class="dropdown-item">
+                                    <a href="apartman-yonetimi.html" class="dropdown-link">Apartman ve Site Yönetimi</a>
+                                </li>
+                                <li class="dropdown-item">
+                                    <a href="mulk-yonetimi.html" class="dropdown-link">Mülk Yönetimi</a>
+                                </li>
+                                <li class="dropdown-item">
+                                    <a href="teknik-hizmetler.html" class="dropdown-link">Teknik Hizmetler</a>
+                                </li>
+                                <li class="dropdown-item">
+                                    <a href="danismanlik.html" class="dropdown-link">Danışmanlık</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a href="hakkimizda.html" class="nav-link">Hakkımızda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="referanslar.html" class="nav-link">Referanslarımız</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="blog.html" class="nav-link">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="iletisim.html" class="nav-link">İletişim</a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <!-- Header Butonları -->
+            <div class="header-buttons">
+                <a href="musteri-portali.html" class="header-btn header-btn-outline">
+                    <i class="fas fa-user"></i>
+                    Müşteri Portalı
+                </a>
+                <a href="teklif-al.html" class="header-btn header-btn-solid">
+                    <i class="fas fa-file-invoice"></i>
+                    Teklif Al
+                </a>
+                
+                <!-- Tema Değiştirici -->
+                <div class="theme-switcher">
+                    <button class="theme-btn" id="themeToggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+                
+                <!-- Dil Değiştirici -->
+                <div class="lang-switcher">
+                    <button class="lang-btn" id="langToggle">
+                        EN
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Hamburger Menü -->
+            <div class="hamburger" id="hamburgerBtn">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Mobil Menu -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        <ul class="mobile-nav-list">
+            <li class="mobile-nav-item">
+                <a href="index.html" class="mobile-nav-link active">Ana Sayfa</a>
+            </li>
+            <li class="mobile-nav-item">
+                <button class="mobile-dropdown-toggle" id="mobileServicesToggle">
+                    Hizmetlerimiz
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <ul class="mobile-dropdown-menu" id="mobileServicesMenu">
+                    <li class="mobile-dropdown-item">
+                        <a href="apartman-yonetimi.html" class="mobile-dropdown-link">Apartman ve Site Yönetimi</a>
+                    </li>
+                    <li class="mobile-dropdown-item">
+                        <a href="mulk-yonetimi.html" class="mobile-dropdown-link">Mülk Yönetimi</a>
+                    </li>
+                    <li class="mobile-dropdown-item">
+                        <a href="teknik-hizmetler.html" class="mobile-dropdown-link">Teknik Hizmetler</a>
+                    </li>
+                    <li class="mobile-dropdown-item">
+                        <a href="danismanlik.html" class="mobile-dropdown-link">Danışmanlık</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="hakkimizda.html" class="mobile-nav-link">Hakkımızda</a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="referanslar.html" class="mobile-nav-link">Referanslarımız</a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="blog.html" class="mobile-nav-link">Blog</a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="iletisim.html" class="mobile-nav-link">İletişim</a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="musteri-portali.html" class="mobile-nav-link">Müşteri Portalı</a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="teklif-al.html" class="mobile-nav-link">Teklif Al</a>
+            </li>
+        </ul>
+    </div>
+    
+    <!-- HERO SECTION -->
+    <section class="hero-section">
+        <!-- Hero Video Arkaplan -->
+        <div class="hero-video-bg">
+            <video autoplay muted loop playsinline>
+                <source src="assets/videos/cityscape.mp4" type="video/mp4">
+            </video>
+        </div>
+        
+        <!-- Dekoratif Elementler -->
+        <div class="hero-decoration"></div>
+        <div class="hero-decoration-2"></div>
+        
+        <!-- Hero İçeriği -->
+        <div class="hero-container">
+            <!-- Hero Sol Bölüm - Ana Mesaj -->
+            <div class="hero-content">
+                <h1 class="hero-title">Gayrimenkul Yönetiminde <span class="hero-highlight">20 Yıllık Tecrübe</span> ve Güven</h1>
+                <p class="hero-subtitle">Gürel Yönetim olarak, profesyonel ekibimiz ve yenilikçi çözümlerimizle apartman, site ve gayrimenkul yönetiminde güvenilir ortağınız oluyoruz.</p>
+                
+                <div class="hero-cta">
+                    <a href="teklif-al.html" class="hero-btn-primary">
+                        <i class="fas fa-file-invoice"></i>
+                        Teklif Al
+                    </a>
+                    <a href="iletisim.html" class="hero-btn-secondary">
+                        <i class="fas fa-phone-alt"></i>
+                        İletişime Geç
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Hero Sağ Bölüm - İş Kolları -->
+            <div class="hero-split">
+                <!-- İş Kolu 1: Apartman ve Site Yönetimi -->
+                <a href="apartman-yonetimi.html" class="business-panel apartment">
+                    <div class="panel-content">
+                        <i class="fas fa-building panel-icon"></i>
+                        <h2 class="panel-title">Apartman ve Site Yönetimi</h2>
+                        <p class="panel-subtitle">Kapsamlı yönetim sistemi ile bina ve site yönetiminde profesyonel çözümler</p>
+                        <span class="panel-cta">
+                            Detaylı Bilgi
+                            <i class="fas fa-arrow-right"></i>
+                        </span>
+                    </div>
+                </a>
+                
+                <!-- İş Kolu 2: Mülk Yönetimi -->
+                <a href="mulk-yonetimi.html" class="business-panel property">
+                    <div class="panel-content">
+                        <i class="fas fa-home panel-icon"></i>
+                        <h2 class="panel-title">Mülk Yönetimi</h2>
+                        <p class="panel-subtitle">Bireysel ve kurumsal mülk sahiplerine özel, değer artırıcı gayrimenkul yönetimi</p>
+                        <span class="panel-cta">
+                            Detaylı Bilgi
+                            <i class="fas fa-arrow-right"></i>
+                        </span>
+                    </div>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Dalga Şekilli Alt Kenar -->
+        <div class="hero-bg-waves">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" class="shape-fill"></path>
+            </svg>
+        </div>
+    </section>
+    
+    <!-- Diğer Sayfanın İçeriği Buradan Devam Edecek -->
+    
+    <!-- JavaScript -->
+    <script>
+        // Header scroll efekti
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // Mobil menu toggle
+        document.getElementById('hamburgerBtn').addEventListener('click', function() {
+            this.classList.toggle('open');
+            document.getElementById('mobileMenu').classList.toggle('active');
+            document.getElementById('mobileMenuOverlay').classList.toggle('active');
+            document.body.classList.toggle('menu-open');
+        });
+        
+        document.getElementById('mobileMenuOverlay').addEventListener('click', function() {
+            document.getElementById('hamburgerBtn').classList.remove('open');
+            document.getElementById('mobileMenu').classList.remove('active');
+            this.classList.remove('active');
+            document.body.classList.remove('menu-open');
+        });
+        
+        // Mobil dropdown toggle
+        document.getElementById('mobileServicesToggle').addEventListener('click', function() {
+            document.getElementById('mobileServicesMenu').classList.toggle('active');
+        });
+        
+        // Tema değiştirici
+        document.getElementById('themeToggle').addEventListener('click', function() {
+            const htmlElement = document.documentElement;
+            const themeIcon = this.querySelector('i');
+            
+            if (htmlElement.getAttribute('data-theme') === 'dark') {
+                htmlElement.setAttribute('data-theme', 'light');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            } else {
+                htmlElement.setAttribute('data-theme', 'dark');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            }
+        });
+        
+        // Dil değiştirici
+        document.getElementById('langToggle').addEventListener('click', function() {
+            if (this.textContent.trim() === 'EN') {
+                this.textContent = 'TR';
+                // Dil değiştirme mantığı buraya eklenecek
+            } else {
+                this.textContent = 'EN';
+                // Dil değiştirme mantığı buraya eklenecek
+            }
+        });
+    </script>
+</body>
+</html> 

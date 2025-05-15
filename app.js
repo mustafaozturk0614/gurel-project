@@ -322,22 +322,74 @@ function initMapFeatures() {
 
 // 12. TEMA SİSTEMİ ENTEGRASYONU
 function connectThemeSystem() {
-  // Tema değişikliklerini dinle - themeMnanager zaten mevcut
-  document.addEventListener('themeSystemInitialized', () => {
-    console.log('Tema sistemine bağlanıldı');
-    
-    // AppState ile ThemeManager entegrasyonu
+  // Tema sistemi entegrasyonu
+  try {
     if (window.themeManager) {
-      // İlk durumu senkronize et
-      AppState.set('isDarkMode', window.themeManager.getActiveTheme() === 'dark');
+      console.log('Tema sistemi bağlanıyor...');
       
-      // Tema değişimlerini dinle
-      window.themeManager.on('themeChanged', (settings) => {
-        AppState.set('isDarkMode', settings.theme === 'dark');
-        EventBus.publish('themeChanged', settings);
+      // Tema değişikliklerini dinle
+      window.themeManager.on('themeModeChanged', (mode) => {
+        document.body.setAttribute('data-theme-mode', mode);
+        document.documentElement.classList.add('theme-transition');
+        
+        // Geçiş animasyonunu iyileştirmek için
+        setTimeout(() => {
+          document.documentElement.classList.remove('theme-transition');
+        }, 500);
       });
+      
+      // Tema durumunu doğrula ve gerekirse senkronize et
+      const currentThemeMode = window.themeManager.settings.themeMode || 'light';
+      const htmlTheme = document.documentElement.getAttribute('data-theme');
+      
+      // Eğer tema modu ile HTML özniteliği uyumsuzsa, düzelt
+      if (currentThemeMode === 'light' && htmlTheme !== 'light') {
+        window.themeManager.setThemeMode('light');
+      } else if (currentThemeMode === 'dark' && htmlTheme !== 'dark') {
+        window.themeManager.setThemeMode('dark');
+      } else if (currentThemeMode === 'auto') {
+        // Otomatik moddaysak, zamanlama kontrolü yap
+        const currentHour = new Date().getHours();
+        const isDark = (currentHour >= 19 || currentHour < 7);
+        const expectedTheme = isDark ? 'dark' : 'light';
+        
+        if (htmlTheme !== expectedTheme) {
+          window.themeManager.setThemeMode('auto');
+        }
+      }
+      
+      console.log('Tema sistemi başarıyla bağlandı');
+    } else {
+      console.warn('Tema sistemi bulunamadı!');
+      
+      // Tema sistemi yoksa bile temel tema desteği sağla
+      const savedThemeMode = localStorage.getItem('themeMode');
+      if (savedThemeMode === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        document.body.classList.add('dark-mode');
+      }
     }
-  });
+  } catch (error) {
+    console.error('Tema sistemi bağlanırken hata:', error);
+  }
+  
+  // Tema değiştirici butonu varsa, olay ekle
+  const themeToggleBtn = document.getElementById('themeToggleBtn');
+  if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', function() {
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+      
+      // Tema değiştir
+      if (window.themeManager && typeof window.themeManager.setThemeMode === 'function') {
+        window.themeManager.setThemeMode(newTheme);
+      } else {
+        document.documentElement.setAttribute('data-theme', newTheme);
+        document.body.classList.toggle('dark-mode', newTheme === 'dark');
+        localStorage.setItem('themeMode', newTheme);
+      }
+    });
+  }
 }
 
 // 13. YARDIMCI FONKSİYONLAR (ThemeUtils'i kullanarak optimize edildi)
@@ -546,5 +598,431 @@ function initHeroVideo() {
     heroBg.classList.remove('video-bg');
     heroBg.classList.add('image-bg');
     video.style.display = 'none';
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Gelişmiş tab geçişlerini kullan
+  window.useEnhancedTabs = true;
+  
+  // Tab yapısını başlat
+  initHeroTabs();
+  
+  // Yeni kart ve geçiş efektlerini başlat
+  try {
+    console.log('Tab efektleri başlatılıyor...');
+    
+    // Animasyon yardımcılarını hemen başlat
+    addParticleAnimations();
+    initCardEffects();
+    
+    // Gelişmiş geçiş efektlerini tek seferde uygula
+    enhanceTabTransitions();
+    console.log('Gelişmiş tab geçiş efektleri başlatıldı');
+    
+    // İlk açılışta aktif paneldeki kartları animasyonla göster
+    const activePane = document.querySelector('.hero-tab-pane.active');
+    if (activePane) {
+      activePane.style.display = 'block'; // Görünür olduğundan emin ol
+      
+      const cards = activePane.querySelectorAll('.business-card');
+      cards.forEach((card, index) => {
+        // Başlangıçta kartlar görünmez olsun
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px)';
+        
+        // Kademeli olarak kartları göster
+        setTimeout(() => {
+          card.style.transition = 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
+          
+          // Animasyon tamamlandıktan sonra float animasyonunu başlat
+          setTimeout(() => {
+            card.style.animation = 'cardFloatAnimation 8s ease-in-out infinite';
+          }, 800);
+        }, 300 + (index * 150));
+      });
+    }
+  } catch (e) {
+    console.error('Kart ve tab efektleri başlatılırken hata: ', e);
+  
+    // Hata durumunda basit tab yapısını kullan
+    const tabs = document.querySelectorAll('.hero-tab-btn');
+    const panes = document.querySelectorAll('.hero-tab-pane');
+    
+    // İlk aktif olmayan tüm panelleri gizle 
+    panes.forEach(pane => {
+      if (!pane.classList.contains('active')) {
+        pane.style.display = 'none';
+      }
+    });
+    
+    // Basit click listener ekle
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        const target = this.getAttribute('data-tab');
+        
+        tabs.forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+        
+        panes.forEach(p => {
+          p.style.display = 'none';
+          p.classList.remove('active');
+        });
+        
+        document.getElementById(target).style.display = 'block';
+        document.getElementById(target).classList.add('active');
+      });
+    });
+  }
+});
+
+// Kart Mouse Takibi ve 3D Efektleri
+function initCardEffects() {
+  const cards = document.querySelectorAll('.business-card');
+  
+  cards.forEach(card => {
+    // Mouse takibi ile 3D dönüş efekti
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const cardCenterX = rect.left + rect.width / 2;
+      const cardCenterY = rect.top + rect.height / 2;
+      
+      // İmlecin kart merkezine göre konumu
+      const mouseX = e.clientX - cardCenterX;
+      const mouseY = e.clientY - cardCenterY;
+      
+      // Kart eğim açıları hesaplanıyor
+      const rotateY = (mouseX / (rect.width / 2)) * 8; // Max 8 derece
+      const rotateX = -(mouseY / (rect.height / 2)) * 8; // Max 8 derece
+      
+      // Karta 3D dönüş efekti uygula
+      card.style.transform = `perspective(1200px) translateZ(20px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      
+      // Mouse takibi değişkenleri
+      card.style.setProperty('--x', `${(e.offsetX / rect.width) * 100}%`);
+      card.style.setProperty('--y', `${(e.offsetY / rect.height) * 100}%`);
+      
+      // İmlecin takip ettiği parıltı efekti
+      const mouseEffectElem = card.querySelector('.mouse-move-effect');
+      if (mouseEffectElem) {
+        mouseEffectElem.style.opacity = '0.7';
+        mouseEffectElem.style.left = `${e.offsetX}px`;
+        mouseEffectElem.style.top = `${e.offsetY}px`;
+      }
+    });
+    
+    // Mouse karttan çıktığında varsayılan stile dön
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+      
+      // İmleç efektini gizle
+      const mouseEffectElem = card.querySelector('.mouse-move-effect');
+      if (mouseEffectElem) {
+        mouseEffectElem.style.opacity = '0';
+      }
+    });
+    
+    // Mause tıklamasında hafif ölçeklendirme animasyonu
+    card.addEventListener('mousedown', () => {
+      card.style.transform = 'scale(0.98) translateZ(0)';
+    });
+    
+    card.addEventListener('mouseup', () => {
+      card.style.transform = '';
+    });
+    
+    // Card içindeki her öğeye 3D derinlik etkisi ekle
+    const elements = card.querySelectorAll('.card-title, .card-tag, .card-icon-container, .card-button, .card-features li');
+    elements.forEach((el, index) => {
+      // Her element için farklı Z-depth değeri
+      const zDepth = 20 + (index % 3) * 10; // 20, 30, 40px arası
+      el.style.transform = `translateZ(${zDepth}px)`;
+    });
+  });
+  
+  // Dekoratif parçacıklar için rastgele hareket
+  createCardParticles();
+}
+
+// Kart parçacıkları oluşturma ve animasyon
+function createCardParticles() {
+  const particles = document.querySelectorAll('.card-particle');
+  
+  particles.forEach((particle, index) => {
+    // Rastgele konumlar
+    const randX = Math.floor(Math.random() * 80) + 10; // %10-90 arası
+    const randY = Math.floor(Math.random() * 80) + 10; // %10-90 arası
+    const size = Math.floor(Math.random() * 8) + 4; // 4-12px arası
+    const duration = Math.floor(Math.random() * 20) + 10; // 10-30s arası
+    
+    // Stil atamaları
+    particle.style.width = `${size}px`;
+    particle.style.height = `${size}px`;
+    particle.style.left = `${randX}%`;
+    particle.style.top = `${randY}%`;
+    particle.style.opacity = '0.3';
+    particle.style.borderRadius = '50%';
+    particle.style.position = 'absolute';
+    particle.style.background = 'rgba(255, 255, 255, 0.6)';
+    particle.style.filter = 'blur(1px)';
+    particle.style.animation = `floatingParticle ${duration}s infinite ease-in-out`;
+    
+    // İndex'e göre farklı renk ve animasyon gecikmesi
+    if (index % 2 === 0) {
+      particle.style.background = `rgba(var(--primary-rgb), 0.5)`;
+      particle.style.animationDelay = '0s';
+    } else {
+      particle.style.background = `rgba(var(--accent-rgb), 0.5)`;
+      particle.style.animationDelay = '2s';
+    }
+  });
+  
+  // Bağlantı çizgileri
+  const lines = document.querySelectorAll('.connection-line');
+  lines.forEach((line, index) => {
+    // Rastgele konumlar ve boyutlar
+    const randTop = Math.floor(Math.random() * 70) + 15; // %15-85 arası
+    const width = Math.floor(Math.random() * 50) + 50; // 50-100px arası
+    
+    // Stil atamaları
+    line.style.width = `${width}px`;
+    line.style.top = `${randTop}%`;
+    line.style.right = index % 2 === 0 ? '10%' : 'auto';
+    line.style.left = index % 2 === 0 ? 'auto' : '10%';
+  });
+}
+
+// Kayan parçacıklar için CSS animasyon ekleme
+function addParticleAnimations() {
+  // CSS animasyonu ekle
+  if (!document.querySelector('#particle-animation-style')) {
+    const style = document.createElement('style');
+    style.id = 'particle-animation-style';
+    style.textContent = `
+      @keyframes floatingParticle {
+        0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0.2; }
+        25% { transform: translate(15px, -10px) rotate(45deg); opacity: 0.4; }
+        50% { transform: translate(0, -20px) rotate(90deg); opacity: 0.6; }
+        75% { transform: translate(-15px, -10px) rotate(45deg); opacity: 0.4; }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+}
+
+// Tab içeriği geçişlerini animasyonla zenginleştiren fonksiyon
+function enhanceTabTransitions() {
+  // Çift aktivasyonu önlemek için guard
+  if (window.__tabTransitionsEnhanced) return;
+  window.__tabTransitionsEnhanced = true;
+  
+  const tabButtons = document.querySelectorAll('.hero-tab-btn');
+  const tabPanes = document.querySelectorAll('.hero-tab-pane');
+  
+  // İlk başta tüm panelleri gizleyip sadece aktif olanı göster
+  tabPanes.forEach(pane => {
+    if (!pane.classList.contains('active')) {
+      pane.style.display = 'none';
+    } else {
+      pane.style.display = 'block';
+    }
+  });
+  
+  // Tab butonlarını referans olarak saklayacak boş bir dizi
+  const newButtons = [];
+  
+  // Önce mevcut olay dinleyicileri temizle
+  tabButtons.forEach(button => {
+    // Yeni bir klonla değiştirerek eski event listener'ları temizle
+    const newButton = button.cloneNode(true);
+    button.parentNode.replaceChild(newButton, button);
+    
+    // Yeni butonu diziye ekle
+    newButtons.push(newButton);
+    
+    // Yeni click olayı ekle
+    newButton.addEventListener('click', () => {
+      // Aktif tab butonunu güncelle - güncel newButtons dizisini kullan
+      newButtons.forEach(btn => btn.classList.remove('active'));
+      newButton.classList.add('active');
+      
+      // Aktif içeriği göster ve animasyonu tetikle
+      const tabId = newButton.getAttribute('data-tab');
+      
+      // Önce mevcut aktif paneli kapat
+      const currentActive = document.querySelector('.hero-tab-pane.active');
+      if (currentActive) {
+        currentActive.style.opacity = '0';
+        currentActive.style.transform = 'translateY(-20px)';
+        
+        // Mevcut panelin kapanma animasyonu tamamlanınca hedef paneli göster
+        setTimeout(() => {
+          currentActive.classList.remove('active');
+          currentActive.style.display = 'none';
+          
+          // Hedef paneli göster
+          const targetPane = document.getElementById(tabId);
+          if (targetPane) {
+            // Önce görünmez yap ama display: block ile DOM'da göster
+            targetPane.style.opacity = '0';
+            targetPane.style.transform = 'translateY(30px)';
+            targetPane.style.display = 'block';
+            
+            // DOM güncellemesinin tamamlanması için bekle
+            requestAnimationFrame(() => {
+              // Sonra animasyonu başlat
+              targetPane.classList.add('active');
+              targetPane.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+              targetPane.style.opacity = '1';
+              targetPane.style.transform = 'translateY(0)';
+              
+              // Kart animasyonlarını da başlat
+              const cards = targetPane.querySelectorAll('.business-card');
+              cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                
+                setTimeout(() => {
+                  card.style.transition = 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+                  card.style.opacity = '1';
+                  card.style.transform = 'translateY(0)';
+                }, 100 + (index * 100)); // Kart başına 100ms gecikme
+              });
+            });
+          }
+        }, 200); // 200ms'lik kapanma animasyonu
+      }
+    });
+  });
+  
+  // İlk açılışta başlangıç aktiflik durumunu yeniden ayarla
+  const initialActiveTab = document.querySelector('.hero-tab-btn.active') || newButtons[0];
+  const activeTabId = initialActiveTab.getAttribute('data-tab');
+  
+  // İlk açılışta başlangıç aktiflik durumunu düzelt
+  newButtons.forEach(btn => {
+    if (btn.getAttribute('data-tab') === activeTabId) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
+  });
+  
+  console.log('Tab geçişleri geliştirildi (enhanced)');
+}
+
+// Tab yapısını başlatan fonksiyon
+function initHeroTabs() {
+  // Prevent multiple initializations
+  if (window.__heroTabsInitialized) return;
+  window.__heroTabsInitialized = true;
+  try {
+    console.log('Tab yapısı başlatılıyor...');
+    const tabButtons = document.querySelectorAll('.hero-tab-btn');
+    const tabPanes = document.querySelectorAll('.hero-tab-pane');
+    
+    console.log(`${tabButtons.length} adet tab butonu, ${tabPanes.length} adet tab içeriği bulundu`);
+    
+    if (tabButtons.length === 0 || tabPanes.length === 0) {
+      console.error('Tab butonları veya içerikleri bulunamadı!');
+      return;
+    }
+    
+    // İlk olarak tüm tab panellerini gizle ve tab butonlarından active class'ını kaldır
+    tabPanes.forEach(pane => {
+      pane.classList.remove('active');
+      pane.style.display = 'none';
+    });
+    
+    tabButtons.forEach(btn => {
+      btn.classList.remove('active');
+    });
+    
+    // Sayfa yüklendiğinde ilk tab'ı aktif yap (HTML'de belirtilen veya ilk tab)
+    const initialActiveBtn = document.querySelector('.hero-tab-btn.active') || tabButtons[0];
+    initialActiveBtn.classList.add('active'); // Active class'ı ekle
+    
+    const initialActiveTabId = initialActiveBtn.getAttribute('data-tab');
+    console.log(`Başlangıçta aktif tab: ${initialActiveTabId}`);
+    
+    // İlk aktif tab'ı göster
+    const activePane = document.getElementById(initialActiveTabId);
+    if (activePane) {
+      activePane.classList.add('active');
+      activePane.style.display = 'block';
+    } else {
+      console.error(`İlk aktif tab içeriği bulunamadı: #${initialActiveTabId}`);
+    }
+    
+    // enhanceTabTransitions kullanılacaksa, burada click handler'ları eklemeyelim
+    // böylece çift olay işleme olmayacak
+    if (!window.useEnhancedTabs) {
+    // Tab butonlarına click event listener ekle
+    tabButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const tabId = this.getAttribute('data-tab');
+        console.log(`Tab değiştiriliyor: ${tabId}`);
+        
+        // Aktif tab butonunu değiştir
+        tabButtons.forEach(btn => btn.classList.remove('active'));
+        this.classList.add('active');
+        
+        // Aktif tab içeriğini değiştir
+        tabPanes.forEach(pane => {
+          pane.classList.remove('active');
+          pane.style.display = 'none'; // Tüm tab panellerini gizle
+        });
+        
+        const targetPane = document.getElementById(tabId);
+        if (targetPane) {
+          targetPane.classList.add('active');
+          targetPane.style.display = 'block'; // Aktif tab panelini göster
+          
+          // Tab değişikliğinde kart animasyonlarını yeniden başlat
+          const cards = targetPane.querySelectorAll('.business-card');
+          cards.forEach((card, index) => {
+            // Önce kartları gizle
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            
+            // Kısa bir gecikme sonra kartları animasyonla göster
+            setTimeout(() => {
+              card.style.transition = 'all 0.5s cubic-bezier(0.23, 1, 0.32, 1)';
+              card.style.opacity = '1';
+              card.style.transform = 'translateY(0)';
+            }, 50 * (index + 1)); // Her kart için biraz gecikme ekle
+          });
+        } else {
+          console.error(`Tab içeriği bulunamadı: #${tabId}`);
+        }
+      });
+    });
+    }
+    
+    console.log('Tab yapısı başarıyla başlatıldı');
+  } catch (error) {
+    console.error('Tab yapısı başlatılırken hata oluştu:', error);
+  }
+}
+
+// 3D dekoratif öğeleri canlandırmak için
+function initDecoElements() {
+  const decorElements = document.querySelectorAll('.decorative-shape');
+  
+  // Fare hareketi ile şekilleri hareket ettir
+  document.addEventListener('mousemove', (e) => {
+    const moveX = (e.clientX - window.innerWidth / 2) / 50;
+    const moveY = (e.clientY - window.innerHeight / 2) / 50;
+    
+    decorElements.forEach(elem => {
+      // Her elemana biraz farklı hareket ekle
+      if (elem.classList.contains('shape-circle')) {
+        elem.style.transform = `translate(${moveX * -1}px, ${moveY * -1}px) scale(1.05)`;
+      } else if (elem.classList.contains('shape-dots')) {
+        elem.style.transform = `rotate(15deg) translate(${moveX * 1.5}px, ${moveY * 1.5}px)`;
+      }
+    });
   });
 }

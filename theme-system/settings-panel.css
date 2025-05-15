@@ -518,13 +518,13 @@
   right: 20px;
   width: var(--settings-toggle-size, 52px);
   height: var(--settings-toggle-size, 52px);
-  background-color: var(--primary-color);
-  color: var(--text-on-primary);
+  background-color: var(--primary-color, #007bff);
+  color: var(--text-on-primary, #ffffff);
   border: none;
   border-radius: 50%;
   box-shadow: var(--shadow-md), 0 4px 15px rgba(var(--primary-rgb), 0.25);
   cursor: pointer;
-  z-index: var(--z-settings-toggle);
+  z-index: var(--z-settings-toggle, 9999);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -829,7 +829,7 @@
   border-radius: 50% !important;
   box-shadow: var(--shadow-md), 0 4px 15px rgba(var(--primary-rgb), 0.25) !important;
   cursor: pointer !important;
-  z-index: var(--z-settings-toggle) !important;
+  z-index: var(--z-settings-toggle, 9999) !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -1653,4 +1653,8 @@
 .settings-panel,
 #settingsPanel.settings-panel {
   z-index: 9999 !important;
+}
+
+html, body {
+  overflow-x: hidden !important;
 } 

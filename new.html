@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr" data-theme="light" data-color-theme="blue" data-font-size="normal" data-reduced-motion="false">
+<html lang="tr" data-theme="light" data-color-theme="blue">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,54 +19,56 @@
     <!-- CSS Dosyaları - Async olarak yükleniyor -->
     <link rel="stylesheet" href="base.css" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="header.css?v=1.3&t=20240705" media="all">
-    <link rel="stylesheet" href="hero-enhanced.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="hero-split-screen.css" media="print" onload="this.media='all'">
 
     
-    <!-- Tema Sistemi CSS - Öncelikli yükleme ve düzgün sıralama -->
-    <link rel="stylesheet" href="theme-system/theme-variables.css" media="all">
-    <link rel="stylesheet" href="theme-system/theme-transitions.css" media="all">
-
-    <link rel="stylesheet" href="theme-system/theme-components.css" media="all">
-    <link rel="stylesheet" href="theme-system/theme-tabs.css" media="all">
-  
-    <link rel="stylesheet" href="theme-system/settings-panel.css" media="all">
+    <!-- Tema Sistemi CSS -->
+    <link rel="stylesheet" href="theme-system/theme-variables.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="theme-system/settings-panel.css" media="print" onload="this.media='all'">
     
     <!-- Önbellek yenilemesi için -->
     <script>
-        // Dinamik CSS yükleme stratejisi
-        function loadCSS(src, priority = false) {
+        // CSS dosyalarını dinamik olarak yükle
+        function loadCSS(src) {
             var link = document.createElement('link');
             link.rel = 'stylesheet';
             link.href = src;
-            
-            if (priority) {
-                link.media = 'all';
-            } else {
-                link.media = 'print';
-                link.onload = function() { this.media = 'all'; };
-            }
-            
+            link.media = 'print';
+            link.onload = function() { this.media = 'all'; };
             document.head.appendChild(link);
-            return link;
         }
         
-        // JavaScript dosyaları için timestamp ekleme
+        // JavaScript dosyaları için timestamp ekle (önbellek yenilemesi için)
         var timestamp = new Date().getTime();
         document.addEventListener('DOMContentLoaded', function() {
-            // Öncelikli olmayan CSS dosyalarını yükle
-            ['about.css', 'contact.css', 'services.css', 'footer.css'].forEach(file => {
-                loadCSS(file + '?' + timestamp);
-            });
+            // İkincil CSS dosyalarını yükle
+            loadCSS('about.css?' + timestamp);
+            loadCSS('contact.css?' + timestamp);
+            loadCSS('services.css?' + timestamp);
+            loadCSS('footer.css?' + timestamp);
             
-            // Header CSS'i daha verimli yeniden yükleme
-            var newHeaderLink = loadCSS('header.css?v=1.3&t=' + timestamp, true);
+            // Header CSS'i zorla yeniden yükleme
+            var oldHeaderLink = document.querySelector('link[href^="header.css"]');
+            if (oldHeaderLink) {
+                var newHeaderLink = document.createElement('link');
+                newHeaderLink.rel = 'stylesheet';
+                newHeaderLink.href = 'header.css?v=1.3&t=' + timestamp;
+                newHeaderLink.media = 'all';
+                document.head.appendChild(newHeaderLink);
+                
+                // Eski linkleri kaldır
+                setTimeout(function() {
+                    oldHeaderLink.remove();
+                }, 100);
+            }
             
-            // Eski header linkini kaldır
-            setTimeout(() => {
-                document.querySelectorAll('link[href^="header.css"]').forEach(link => {
-                    if (link !== newHeaderLink) link.remove();
-                });
-            }, 100);
+            // Logo boyutlarını düzelt
+            var logoImage = document.querySelector('.header-logo');
+            if (logoImage) {
+                // Inline stili temizle
+                logoImage.removeAttribute('style');
+                console.log('Logo inline stilleri temizlendi');
+            }
         });
     </script>
     
@@ -75,14 +77,13 @@
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap"></noscript>
     
     <!-- Preload kritik görüntüler -->
-    <link rel="preload" href="assets/svg/brands/logo-sy-svg.svg" as="image" fetchpriority="high">
+    <link rel="preload" href="assets/svg/brands/logo-sy-svg.svg" as="image">
     <!-- Kullanılmayan önbellek kaldırıldı -->
     
     <!-- Font Awesome - öncelikli yükleme (settings panel için gerekli) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <!-- Settings CSS - öncelikli yükleme -->
-    <link rel="stylesheet" href="theme-system/settings-panel.css" media="all">
    
     
     <!-- Bootstrap CSS - gecikmeli yükleme -->
@@ -97,8 +98,8 @@
     <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" media="print" onload="this.media='all'">
     
-    <!-- Kritik JavaScript Dosyaları - fetchpriority kullanımı -->
-    <link rel="preload" href="app.js" as="script" fetchpriority="high">
+    <!-- Kritik JavaScript Dosyaları - preload ve öncelikli yükleme -->
+    <link rel="preload" href="app.js" as="script">
     <!-- app.js sayfanın sonuna taşındı -->
     
     <!-- Meta tags for SEO -->
@@ -178,66 +179,10 @@
         #loading {
             animation: hideLoader 0s ease-in 5s forwards;
         }
-
-        /* Koyu tema geçiş animasyonu */
-        .theme-change-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.15);
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-            z-index: 9999;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-
-        html.theme-changing .theme-change-overlay {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .dark-mode-badge {
-            position: fixed;
-            top: 80px;
-            right: 20px;
-            z-index: 1050;
-            background-color: #252525;
-            color: #fff;
-            border: 1px solid #444;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 12px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
-            opacity: 0;
-            transform: translateY(-10px);
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
-
-        html[data-theme="dark"] .dark-mode-badge {
-            opacity: 1;
-            transform: translateY(0);
-        }
     </style>
 
 </head>
-<body data-bs-spy="scroll" data-bs-target=".navbar" data-bs-offset="51" class="shock-active theme-transition">
-    <!-- Tema değişikliğinde geçiş efekti için overlay -->
-    <div class="theme-change-overlay"></div>
-    
-    <!-- Koyu tema modu etkin olduğunda gösterilen badge -->
-    <div class="dark-mode-badge">
-        <i class="fas fa-moon me-1"></i> Koyu Mod
-    </div>
-    
-    <!-- Settings Panel Buton -->
-    <button id="settingsToggle" class="settings-toggle fixed-settings-toggle" title="Ayarları Göster" aria-label="Erişilebilirlik ayarlarını aç" aria-expanded="false" aria-controls="settingsPanel">
-        <i class="fas fa-cog" aria-hidden="true"></i>
-        <span class="visually-hidden">Erişilebilirlik Ayarları</span>
-    </button>
-    
+<body data-bs-spy="scroll" data-bs-target=".navbar" data-bs-offset="51" class="shock-active">
     <!-- Page loader -->
     <div id="loading">
         <div id="loading-center">
@@ -300,6 +245,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="index.html" aria-label="İletişim">
+                            <span class="nav-icon"><i class="fas fa-cog"></i></span>
+                            <span class="nav-text" data-translate="nav.contact">Diğer Tasrımlar</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="#contact" class="header-button pulse-animation" aria-label="Bize Ulaşın">
                             <span class="btn-icon"><i class="fas fa-headset"></i></span>
                             <span class="btn-text" data-translate="header.get_quote">Bize Ulaşın</span>
@@ -325,6 +276,7 @@
             
             <!-- Mobil Navigasyon -->
             <ul class="mobile-nav">
+             
                 <li class="mobile-nav-item" style="--item-index: 0">
                     <a href="#home" class="mobile-nav-link active">
                         <span class="mobile-nav-icon"><i class="fas fa-home"></i></span>
@@ -343,16 +295,16 @@
                         <span class="mobile-nav-text">Hizmetlerimiz</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="index.html" aria-label="İletişim">
-                        <span class="nav-icon"><i class="fas fa-cog"></i></span>
-                        <span class="nav-text" data-translate="nav.contact">Diğer Tasrımlar</span>
-                    </a>
-                </li>
                 <li class="mobile-nav-item" style="--item-index: 3">
                     <a href="#contact" class="mobile-nav-link">
                         <span class="mobile-nav-icon"><i class="fas fa-envelope"></i></span>
                         <span class="mobile-nav-text">İletişim</span>
+                    </a>
+                </li>
+                <li class="mobile-nav-item" style="--item-index: 4">
+                    <a href="index.html" class="mobile-nav-link active">
+                        <span class="mobile-nav-icon"><i class="fas fa-cog"></i></span>
+                        <span class="mobile-nav-text">Diğer Tasarımlar</span>
                     </a>
                 </li>
             </ul>
@@ -379,171 +331,90 @@
         </div>
     </header>
     
-    <!-- Hero Section - Gürel Yönetim Odaklı Modern Tasarım -->
-    <section id="home" class="hero-section theme-section">
-        <div class="hero-bg video-bg">
-            <video autoplay muted loop playsinline>
-                <source src="assets/videos/20250405_1349_Sunrise Modern Complex_storyboard_01jr2s3hqwep79q17t9mpghbxw.mp4" type="video/mp4">
-            </video>
-        </div>
-        <div class="hero-container">
-            <!-- Sol Taraf: Ana Mesaj ve CTA -->
-            <div class="hero-main">
-                <div class="hero-badge">
-                    <span class="hero-badge-icon"><i class="fas fa-shield-alt"></i></span>
-                    <span>2022'DEN BERİ BALIKESİR'DE</span>
+    <!-- Hero Section - Split Screen Tasarımı -->
+    <section id="home" class="hero-section">
+        <div class="hero-split-screen">
+            <!-- Sol Panel - Apartman ve Site Yönetimi -->
+            <div class="split-panel split-panel-left">
+                <div class="split-panel-bg">
+                    <video autoplay muted loop playsinline poster="assets/images/site-yonetimi-poster.jpg">
+                        <source src="assets/videos/20250405_1349_Sunrise Modern Complex_storyboard_01jr2s3hqwep79q17t9mpghbxw.mp4" type="video/mp4">
+                        <img src="assets/images/site-yonetimi-poster.jpg" alt="Apartman ve Site Yönetimi">
+                    </video>
                 </div>
-                
-                <h1 class="hero-title">Gürel Yönetim ile <span class="hero-title-accent">Profesyonel Çözümler</span></h1>
-                <p class="hero-description">Site ve toplu yapı yönetiminde uzman kadromuz ve gelişmiş teknolojik altyapımız ile hizmetinizdeyiz.</p>
-                
-                <div class="hero-features">
-                    <div class="hero-feature">
-                        <span class="feature-icon"><i class="fas fa-headset"></i></span>
-                        <span class="feature-text">7/24 Teknik Destek</span>
+                <div class="split-panel-content">
+                    <div class="hero-badge"><i class="fas fa-shield-alt"></i><span>2022'DEN BERİ BALIKESİR'DE</span></div>
+                    <div class="split-panel-icon"><i class="fas fa-building"></i></div>
+                    <h2 class="split-panel-title">Apartman ve Site Yönetimi</h2>
+                    <p class="split-panel-description">Site ve toplu yapı yönetiminde uzman kadromuz ve gelişmiş teknolojik altyapımız ile binlerce konut sakininin hayatını kolaylaştırıyoruz.</p>
+                    
+                    <div class="split-panel-features">
+                        <div class="split-feature"><i class="fas fa-check-circle"></i><span>7/24 Teknik Destek ve Güvenlik</span></div>
+                        <div class="split-feature"><i class="fas fa-check-circle"></i><span>Şeffaf Mali Yönetim</span></div>
+                        <div class="split-feature"><i class="fas fa-check-circle"></i><span>Online Aidat Takip Sistemi</span></div>
+                        <div class="split-feature"><i class="fas fa-check-circle"></i><span>Profesyonel Taşeron Yönetimi</span></div>
                     </div>
-                    <div class="hero-feature">
-                        <span class="feature-icon"><i class="fas fa-credit-card"></i></span>
-                        <span class="feature-text">Online Ödemeler</span>
-                    </div>
-                    <div class="hero-feature">
-                        <span class="feature-icon"><i class="fas fa-chart-line"></i></span>
-                        <span class="feature-text">Şeffaf Yönetim</span>
-                    </div>
-                </div>
-                
-                <div class="hero-cta-buttons">
-                    <a href="#contact" class="btn btn-primary">Bizimle İletişime Geçin</a>
-                    <a href="#services" class="btn btn-secondary">Hizmetlerimiz</a>
+                    
+                    <a href="#services" class="split-panel-btn">Detaylı Bilgi <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
             
-            <!-- Sağ Taraf: İş Kolları Kartları -->
-            <div class="hero-business-cards">
-                <!-- Tab Menüsü -->
-                <div class="hero-section-label">Çözüm Alanlarımız</div>
-                <div class="hero-tabs">
-                    <button class="hero-tab-btn active" data-tab="tab-site">
-                        <i class="fas fa-building"></i>
-                        <span>Apartman Yönetimi</span>
-                    </button>
-                    <button class="hero-tab-btn" data-tab="tab-mulk">
-                        <i class="fas fa-home"></i>
-                        <span>Mülk Yönetimi</span>
-                    </button>
+            <!-- Sağ Panel - Mülk Yönetimi -->
+            <div class="split-panel split-panel-right">
+                <div class="split-panel-bg">
+                    <video autoplay muted loop playsinline poster="assets/images/mulk-yonetimi-poster.jpg">
+                        <source src="assets/videos/hero.mp4" type="video/mp4">
+                        <img src="assets/images/mulk-yonetimi-poster.jpg" alt="Mülk Yönetimi">
+                    </video>
                 </div>
-                
-                <!-- Tab İçerikleri -->
-                <div class="hero-tabs-content">
-                    <!-- Tab İçeriği: Apartman ve Site Yönetimi -->
-                    <div id="tab-site" class="hero-tab-pane active">
-                        <div class="business-card site-management">
-                            <!-- Dekoratif Elementler -->
-                            <div class="decorative-shape shape-circle"></div>
-                            <div class="decorative-shape shape-dots"></div>
-                            <div class="card-glow"></div>
-                            <div class="mouse-move-effect"></div>
-                            
-                            <!-- Sadeleştirilmiş Kart Başlık Yapısı -->
-                            <div class="card-header">
-                                <i class="fas fa-building card-icon"></i>
-                                <h3 class="card-title">Apartman ve Site Yönetimi</h3>
-                                <div class="card-tags">
-                                    <span class="card-tag"><i class="fas fa-check-circle me-1"></i> Şeffaf Yönetim</span>
-                                    <span class="card-tag"><i class="fas fa-shield-alt me-1"></i> Profesyonel</span>
-                                </div>
-                            </div>
-                            
-                            <div class="card-content">
-                                <p class="card-description">
-                                    Profesyonel site ve toplu konut yönetim hizmetimizle bina sakinlerine güvenli, konforlu ve bakımlı bir yaşam alanı sunuyoruz.
-                                </p>
-
-                                <ul class="card-features">
-                                    <li><i class="fas fa-check-circle"></i> <span>Tam uyum sağlayan resmi yönetim</span></li>
-                                    <li><i class="fas fa-mobile-alt"></i> <span>7/24 mobil uygulama ile şeffaf takip</span></li>
-                                    <li><i class="fas fa-money-bill-wave"></i> <span>Aidat takibi ve tahsilatı</span></li>
-                                    <li><i class="fas fa-tools"></i> <span>Bina bakım ve onarım yönetimi</span></li>
-                                </ul>
-                            </div>
-
-                            <div class="card-actions">
-                                <a href="#services" class="card-button primary">
-                                    Detaylı Bilgi <i class="fas fa-arrow-right"></i>
-                                </a>
-                            </div>
-                            
-                            <!-- Ekstra Dekoratif Elementler -->
-                            <div class="card-decoration"></div>
-                            <div class="card-particle particle-1"></div>
-                            <div class="card-particle particle-2"></div>
-                            <div class="connection-line line-1"></div>
-                        </div>
+                <div class="split-panel-content">
+                    <div class="split-panel-icon"><i class="fas fa-home"></i></div>
+                    <h2 class="split-panel-title">Mülk Yönetimi</h2>
+                    <p class="split-panel-description">Mülk sahipleri için özel çözümler sunuyoruz. Kiralama, bakım, onarım ve değerleme hizmetlerimizle gayrimenkulünüzün potansiyelini en üst seviyeye çıkarıyoruz.</p>
+                    
+                    <div class="split-panel-features">
+                        <div class="split-feature"><i class="fas fa-check-circle"></i><span>Kiracı Bulma ve Sözleşme Yönetimi</span></div>
+                        <div class="split-feature"><i class="fas fa-check-circle"></i><span>Bakım ve Onarım Hizmetleri</span></div>
+                        <div class="split-feature"><i class="fas fa-check-circle"></i><span>Kira Geliri Optimizasyonu</span></div>
+                        <div class="split-feature"><i class="fas fa-check-circle"></i><span>Gayrimenkul Değerleme</span></div>
                     </div>
                     
-                    <!-- Tab İçeriği: Mülk Yönetimi -->
-                    <div id="tab-mulk" class="hero-tab-pane">
-                        <div class="business-card property-management">
-                            <!-- Dekoratif Elementler -->
-                            <div class="decorative-shape shape-circle"></div>
-                            <div class="decorative-shape shape-dots"></div>
-                            <div class="card-glow"></div>
-                            <div class="mouse-move-effect"></div>
-                            
-                            <!-- Sadeleştirilmiş Kart Başlık Yapısı -->
-                            <div class="card-header">
-                                <i class="fas fa-home card-icon"></i>
-                                <h3 class="card-title">Mülk ve Emlak Yönetimi</h3>
-                                <div class="card-tags">
-                                    <span class="card-tag"><i class="fas fa-chart-line me-1"></i> %15 Daha Fazla Getiri</span>
-                                    <span class="card-tag"><i class="fas fa-check-double me-1"></i> Tam Hizmet</span>
-                                </div>
-                            </div>
-                            
-                            <div class="card-content">
-                                <p class="card-description">
-                                    Gayrimenkul yatırımlarınızdan maksimum verim alın. Biz tüm kiralama, bakım ve yönetim süreçlerini üstleniriz.
-                                </p>
-
-                                <ul class="card-features">
-                                    <li><i class="fas fa-user-check"></i> <span>Profesyonel kiracı bulma ve seçimi</span></li>
-                                    <li><i class="fas fa-hand-holding-usd"></i> <span>Kira tahsilatı ve garanti hizmeti</span></li>
-                                    <li><i class="fas fa-wrench"></i> <span>Mülk bakım ve onarım yönetimi</span></li>
-                                    <li><i class="fas fa-balance-scale"></i> <span>Yasal süreçlerin takibi</span></li>
-                                </ul>
-                            </div>
-
-                            <div class="card-actions">
-                                <a href="#property-management" class="card-button primary">
-                                    Detaylı Bilgi <i class="fas fa-arrow-right"></i>
-                                </a>
-                            </div>
-                            
-                            <!-- Ekstra Dekoratif Elementler -->
-                            <div class="card-decoration"></div>
-                            <div class="card-particle particle-1"></div>
-                            <div class="card-particle particle-2"></div>
-                            <div class="connection-line line-1"></div>
-                        </div>
-                    </div>
+                    <a href="#property-management" class="split-panel-btn">Detaylı Bilgi <i class="fas fa-arrow-right"></i></a>
                 </div>
-                
-                <!-- 3D Dekoratif Elementler ve Parçacıklar -->
-                <div class="hero-particles">
-                    <div class="hero-particle" style="top: 10%; left: 20%;"></div>
-                    <div class="hero-particle" style="top: 30%; left: 80%;"></div>
-                    <div class="hero-particle" style="top: 60%; left: 40%;"></div>
-                    <div class="hero-particle" style="top: 80%; left: 90%;"></div>
-                    <div class="hero-particle" style="top: 50%; left: 10%;"></div>
-                </div>
-                <div class="hero-decorative-element floating-element"></div>
-                <div class="hero-connection-line"></div>
+            </div>
+            
+            <!-- Scroll down indicator -->
+            <div class="scroll-down-indicator">
+                <a href="#services" class="scroll-btn">
+                    <span class="mouse">
+                        <span class="wheel"></span>
+                    </span>
+                    <span class="scroll-text">Keşfet</span>
+                    <i class="fas fa-chevron-down"></i>
+                </a>
+            </div>
+            
+            <!-- Yan Gezinme Noktaları -->
+            <div class="hero-side-nav">
+                <a href="#home" class="side-nav-dot active" data-tooltip="Ana Sayfa"></a>
+                <a href="#about" class="side-nav-dot" data-tooltip="Hakkımızda"></a>
+                <a href="#services" class="side-nav-dot" data-tooltip="Hizmetlerimiz"></a>
+                <a href="#contact" class="side-nav-dot" data-tooltip="İletişim"></a>
+            </div>
+            
+            <!-- Hero Particles -->
+            <div class="hero-particles-container">
+                <div class="particle particle-1"></div>
+                <div class="particle particle-2"></div>
+                <div class="particle particle-3"></div>
+                <div class="particle particle-4"></div>
+                <div class="particle particle-5"></div>
             </div>
         </div>
     </section>
 
     <!-- Modern About Us Section -->
-    <section id="about" class="about-section modern-about theme-section">
+    <section id="about" class="about-section modern-about">
         <div class="floating-shapes">
             <div class="shape shape-1"></div>
             <div class="shape shape-2"></div>
@@ -932,7 +803,7 @@
     </section>
 
     <!-- Hizmetlerimiz Bölümü -->
-    <section id="services" class="services-section section-padding bg-light theme-section">
+    <section id="services" class="services-section section-padding bg-light">
         <!-- Arkaplan şekilleri -->
         <div class="bg-shape bg-shape-1"></div>
         <div class="bg-shape bg-shape-2"></div>
@@ -1422,7 +1293,7 @@
    
 
     <!-- İletişim Bölümü -->
-    <section id="contact" class="contact-section theme-section" data-aos="fade-in">
+    <section id="contact" class="contact-section" data-aos="fade-in">
         <div class="contact-overlay-gradient"></div>
         
         <!-- Süsleme parçacıkları -->
@@ -1933,12 +1804,25 @@
 
     <!-- Tema sistemini yüklemek için özel script ekleyeceğim -->
     <script>
-      // Tema sisteminin düzgün yüklenmesini sağlayacak kod
+      // Ayarlar butonu ve panelini yeniden oluşturmak için mevcut elementleri temizle
       window.addEventListener('DOMContentLoaded', function() {
-        console.log('Tema sistemi yükleniyor...');
+        // Önce varsa mevcut elementleri temizle
+        const oldPanel = document.getElementById('settingsPanel');
+        if (oldPanel) oldPanel.remove();
+        
+        const oldToggle = document.getElementById('settingsToggle');
+        if (oldToggle) oldToggle.remove();
+        
+        console.log('Eski panel elementleri temizlendi, yenileri oluşturulacak.');
       });
     </script>
 
+    <!-- Eski ayarlar butonu - artık JavaScript tarafından oluşturulacak -->
+    <!-- <button id="settingsToggle" class="settings-toggle fixed-settings-toggle" title="Ayarları Göster" aria-label="Erişilebilirlik ayarlarını aç" aria-expanded="false" aria-controls="settingsPanel">
+        <i class="fas fa-cog" aria-hidden="true"></i>
+        <span class="visually-hidden">Erişilebilirlik Ayarları</span>
+    </button> -->
+    
     <!-- Settings panel overlay -->
     <div class="settings-overlay"></div>
 
@@ -1995,7 +1879,7 @@
     </script>
 
     <div class="theme-toggle-wrapper">
-      <button class="theme-toggle" aria-label="Tema Değiştir" id="themeToggleBtn">
+      <button class="theme-toggle" aria-label="Tema Değiştir">
         <div class="sun-moon-container">
           <div class="sun"></div>
           <div class="moon"></div>
@@ -2028,6 +1912,31 @@
         <button class="theme-preview-control" data-effect="meteor">☄️</button>
       </div>
     </div>
+
+    <!-- Header'ın şeffaflığını korumak için hero section ayarları -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const header = document.querySelector('.patreon-header');
+            const heroSection = document.querySelector('.hero-section');
+            
+            // Header üstte görünür olacak
+            header.style.zIndex = "1090";
+            
+            // Sayfa yüklendiğinde header şeffaf olsun
+            header.classList.add('transparent');
+            
+            // Scroll olayı
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    header.classList.remove('transparent');
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.add('transparent');
+                    header.classList.remove('scrolled');
+                }
+            });
+        });
+    </script>
 
 </body>
 </html>

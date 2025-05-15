@@ -1,0 +1,608 @@
+/* =========================================================
+   GÜREL YÖNETİM - PARALAKS İNFOGRAFİK HERO
+   Paralaks efektli infografik hero bileşeni için CSS
+   Versiyon 1.0 - 2024
+   ========================================================= */
+
+/* ============================================
+   HERO İNFOGRAFİK DEĞİŞKENLERİ
+   ============================================ */
+:root {
+  /* İnfografik Renkler */
+  --infographic-bg: linear-gradient(135deg, rgba(var(--primary-rgb, 0, 85, 164), 0.05), rgba(var(--primary-rgb, 0, 85, 164), 0.1));
+  --infographic-line-color: var(--primary-color, #0055a4);
+  --infographic-accent: var(--secondary-color, #ea8600);
+  
+  /* İnfografik Bileşen Stilleri */
+  --infographic-item-bg: var(--surface-color, #fff);
+  --infographic-item-border: rgba(var(--primary-rgb, 0, 85, 164), 0.15);
+  --infographic-shadow: var(--shadow-lg, 0 8px 30px rgba(0, 0, 0, 0.12));
+  --infographic-radius: var(--border-radius-lg, 16px);
+  
+  /* Animasyon ve Geçişler */
+  --infographic-transition: all var(--transition-duration, 0.5s) var(--transition-function-special, cubic-bezier(0.16, 1, 0.3, 1));
+  
+  /* Z-index Değerleri */
+  --infographic-base-z: 1;
+  --infographic-item-z: 2;
+  --infographic-hover-z: 3;
+  
+  /* Mesafeler */
+  --infographic-padding: var(--spacing-6, 4rem) 0;
+  --infographic-gap: var(--spacing-6, 3rem);
+  --infographic-item-padding: var(--spacing-4, 2rem);
+}
+
+/* ============================================
+   HERO İNFOGRAFİK ANA KONTEYNIR
+   ============================================ */
+.hero-infographic {
+  position: relative;
+  padding: var(--infographic-padding);
+  overflow: hidden;
+  background: var(--infographic-bg);
+}
+
+.hero-infographic::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('assets/images/pattern-bg.svg');
+  background-size: 200px;
+  opacity: 0.05;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Dekoratif parçacıklar */
+.infographic-particle {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(10px);
+  opacity: 0.2;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.particle-1 {
+  width: 150px;
+  height: 150px;
+  background: var(--primary-color);
+  top: 10%;
+  left: 5%;
+  animation: float-particle 15s infinite ease-in-out;
+}
+
+.particle-2 {
+  width: 100px;
+  height: 100px;
+  background: var(--secondary-color);
+  bottom: 15%;
+  right: 8%;
+  animation: float-particle 12s infinite ease-in-out reverse;
+}
+
+.particle-3 {
+  width: 80px;
+  height: 80px;
+  background: var(--accent-color);
+  bottom: 30%;
+  left: 15%;
+  animation: float-particle 18s infinite ease-in-out 5s;
+}
+
+@keyframes float-particle {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(20px, -20px) scale(1.1);
+  }
+  50% {
+    transform: translate(40px, 20px) scale(0.9);
+  }
+  75% {
+    transform: translate(10px, 30px) scale(1.05);
+  }
+}
+
+/* ============================================
+   HERO İNFOGRAFİK BAŞLIK
+   ============================================ */
+.hero-info-title-container {
+  text-align: center;
+  position: relative;
+  z-index: var(--infographic-item-z);
+  margin-bottom: var(--spacing-5, 3rem);
+  padding: 0 var(--spacing-3, 1.5rem);
+}
+
+.hero-info-badge {
+  display: inline-block;
+  padding: var(--spacing-1, 0.5rem) var(--spacing-2, 1rem);
+  background: rgba(var(--primary-rgb, 0, 85, 164), 0.1);
+  color: var(--primary-color);
+  border-radius: var(--border-radius-pill, 50px);
+  font-size: var(--font-size-sm, 0.85rem);
+  font-weight: var(--font-weight-semibold, 600);
+  margin-bottom: var(--spacing-2, 1rem);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.hero-info-title {
+  font-size: var(--h1-font-size, 3.2rem);
+  font-weight: var(--font-weight-bold, 800);
+  color: var(--text-color, #333);
+  margin-bottom: var(--spacing-3, 1.5rem);
+  position: relative;
+}
+
+.hero-info-title-accent {
+  color: var(--primary-color);
+  position: relative;
+  display: inline-block;
+}
+
+.hero-info-title-accent::after {
+  content: '';
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+  width: 100%;
+  height: 10px;
+  background: rgba(var(--primary-rgb, 0, 85, 164), 0.1);
+  z-index: -1;
+  transform: skewX(-5deg);
+}
+
+.hero-info-subtitle {
+  max-width: 700px;
+  margin: 0 auto;
+  font-size: var(--h5-font-size, 1.25rem);
+  color: var(--text-muted, #6c757d);
+  line-height: var(--line-height-base, 1.6);
+}
+
+/* ============================================
+   HERO İNFOGRAFİK GRAFİK BÖLÜMÜ
+   ============================================ */
+.hero-info-graphic {
+  display: grid;
+  grid-template-columns: 1fr 100px 1fr;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: var(--infographic-base-z);
+  padding: 0 var(--spacing-3, 1.5rem);
+}
+
+/* Orta çizgi */
+.hero-info-timeline {
+  grid-column: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.hero-info-line {
+  width: 4px;
+  background: var(--infographic-line-color);
+  height: 100%;
+  position: absolute;
+  top: 0;
+  z-index: 1;
+  opacity: 0.3;
+}
+
+/* ============================================
+   HERO INFOGRAPHIC ITEM
+   ============================================ */
+.hero-info-items-container {
+  grid-column: 1 / span 3;
+  display: grid;
+  grid-template-columns: 1fr 100px 1fr;
+  gap: var(--spacing-4, 2rem) 0;
+  position: relative;
+  z-index: var(--infographic-item-z);
+}
+
+.hero-info-item {
+  background: var(--infographic-item-bg);
+  border-radius: var(--infographic-radius);
+  padding: var(--infographic-item-padding);
+  box-shadow: var(--infographic-shadow);
+  position: relative;
+  transition: var(--infographic-transition);
+  border: 1px solid var(--infographic-item-border);
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.hero-info-item:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  z-index: var(--infographic-hover-z);
+}
+
+.hero-info-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: var(--primary-gradient, linear-gradient(90deg, var(--primary-color), var(--primary-light)));
+  z-index: 0;
+}
+
+.hero-info-item:nth-child(even)::before {
+  background: var(--secondary-gradient, linear-gradient(90deg, var(--secondary-color), var(--secondary-light)));
+}
+
+/* Sol kolonlar */
+.hero-info-item:nth-child(odd) {
+  grid-column: 1;
+  text-align: right;
+  margin-right: var(--spacing-4, 2rem);
+}
+
+/* Sağ kolonlar */
+.hero-info-item:nth-child(even) {
+  grid-column: 3;
+  text-align: left;
+  margin-left: var(--spacing-4, 2rem);
+}
+
+/* Bağlantı çizgileri */
+.hero-info-item:nth-child(odd)::after,
+.hero-info-item:nth-child(even)::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: var(--spacing-4, 2rem);
+  height: 3px;
+  background: var(--infographic-line-color);
+  z-index: 0;
+}
+
+.hero-info-item:nth-child(odd)::after {
+  right: calc(-1 * var(--spacing-4, 2rem));
+}
+
+.hero-info-item:nth-child(even)::after {
+  left: calc(-1 * var(--spacing-4, 2rem));
+}
+
+/* Timeline noktaları */
+.hero-info-dot {
+  width: 24px;
+  height: 24px;
+  background: var(--surface-color, #fff);
+  border: 4px solid var(--primary-color);
+  border-radius: 50%;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.hero-info-dot:nth-child(even) {
+  border-color: var(--secondary-color);
+}
+
+.hero-info-dot:nth-child(1) {
+  top: 50%;
+}
+
+.hero-info-dot:nth-child(2) {
+  top: calc(50% + var(--spacing-4, 2rem) + var(--infographic-item-padding) * 2);
+}
+
+/* İçerik Stilleri */
+.hero-info-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  height: 70px;
+  border-radius: 16px;
+  margin-bottom: var(--spacing-3, 1.5rem);
+  position: relative;
+  z-index: 1;
+}
+
+.hero-info-item:nth-child(odd) .hero-info-icon {
+  margin-left: auto;
+  background: var(--primary-gradient, linear-gradient(135deg, var(--primary-color), var(--primary-light)));
+}
+
+.hero-info-item:nth-child(even) .hero-info-icon {
+  margin-right: auto;
+  background: var(--secondary-gradient, linear-gradient(135deg, var(--secondary-color), var(--secondary-light)));
+}
+
+.hero-info-icon i {
+  font-size: 32px;
+  color: var(--text-on-primary, #fff);
+}
+
+.hero-info-item-title {
+  font-size: var(--h3-font-size, 1.75rem);
+  font-weight: var(--font-weight-bold, 700);
+  margin-bottom: var(--spacing-2, 1rem);
+  color: var(--text-color, #333);
+}
+
+.hero-info-item-subtitle {
+  font-size: var(--font-size-lg, 1.1rem);
+  font-weight: var(--font-weight-medium, 500);
+  color: var(--primary-color);
+  margin-bottom: var(--spacing-2, 1rem);
+}
+
+.hero-info-item:nth-child(even) .hero-info-item-subtitle {
+  color: var(--secondary-color);
+}
+
+.hero-info-item-description {
+  font-size: var(--font-size-base, 1rem);
+  color: var(--text-muted, #6c757d);
+  line-height: var(--line-height-base, 1.6);
+  margin-bottom: var(--spacing-3, 1.5rem);
+}
+
+/* Özellik Listesi */
+.hero-info-features {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1, 0.5rem);
+}
+
+.hero-info-item:nth-child(odd) .hero-info-features {
+  align-items: flex-end;
+}
+
+.hero-info-feature {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-1, 0.5rem);
+  padding: var(--spacing-1, 0.5rem) var(--spacing-2, 1rem);
+  background: rgba(var(--primary-rgb, 0, 85, 164), 0.05);
+  border-radius: var(--border-radius-pill, 50px);
+  font-size: var(--font-size-sm, 0.85rem);
+  transition: var(--transition-duration, 0.3s) ease;
+}
+
+.hero-info-item:nth-child(even) .hero-info-feature {
+  background: rgba(var(--secondary-rgb, 234, 134, 0), 0.05);
+}
+
+.hero-info-feature:hover {
+  background: rgba(var(--primary-rgb, 0, 85, 164), 0.1);
+  transform: translateY(-2px);
+}
+
+.hero-info-item:nth-child(even) .hero-info-feature:hover {
+  background: rgba(var(--secondary-rgb, 234, 134, 0), 0.1);
+}
+
+.hero-info-feature i {
+  color: var(--primary-color);
+  font-size: var(--font-size-sm, 0.85rem);
+}
+
+.hero-info-item:nth-child(even) .hero-info-feature i {
+  color: var(--secondary-color);
+}
+
+/* ============================================
+   CTA BUTONLARI
+   ============================================ */
+.hero-info-cta {
+  text-align: center;
+  margin-top: var(--spacing-6, 4rem);
+  position: relative;
+  z-index: var(--infographic-item-z);
+}
+
+.hero-info-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--btn-padding-y, 0.8rem) var(--btn-padding-x, 1.5rem);
+  font-weight: var(--font-weight-semibold, 600);
+  font-size: var(--font-size-base, 1rem);
+  border-radius: var(--btn-border-radius, 0.5rem);
+  text-decoration: none;
+  transition: all var(--transition-duration, 0.3s) ease;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  margin: 0 var(--spacing-1, 0.5rem);
+}
+
+.hero-info-btn.primary {
+  background: var(--primary-gradient, linear-gradient(135deg, var(--primary-color), var(--primary-light)));
+  color: var(--text-on-primary, #fff);
+  box-shadow: 0 8px 20px -6px rgba(var(--primary-rgb, 0, 85, 164), 0.5);
+}
+
+.hero-info-btn.secondary {
+  background: transparent;
+  color: var(--text-color, #333);
+  border: 1px solid rgba(var(--primary-rgb, 0, 85, 164), 0.2);
+}
+
+.hero-info-btn:hover {
+  transform: translateY(-5px);
+}
+
+.hero-info-btn.primary:hover {
+  box-shadow: 0 12px 28px -8px rgba(var(--primary-rgb, 0, 85, 164), 0.6);
+}
+
+.hero-info-btn.secondary:hover {
+  background: rgba(var(--primary-rgb, 0, 85, 164), 0.05);
+  border-color: rgba(var(--primary-rgb, 0, 85, 164), 0.3);
+}
+
+.hero-info-btn i {
+  margin-left: var(--spacing-1, 0.5rem);
+  transition: transform var(--transition-duration-fast, 0.2s) ease;
+}
+
+.hero-info-btn:hover i {
+  transform: translateX(5px);
+}
+
+/* ============================================
+   KOYU TEMA UYUMLULUK
+   ============================================ */
+html[data-theme="dark"] .hero-infographic {
+  background: linear-gradient(135deg, rgba(var(--primary-rgb, 0, 85, 164), 0.1), rgba(var(--primary-rgb, 0, 85, 164), 0.15));
+}
+
+html[data-theme="dark"] .hero-info-item {
+  background: rgba(var(--neutral-800-rgb, 30, 30, 30), 0.9);
+  border-color: rgba(var(--primary-rgb, 0, 85, 164), 0.2);
+}
+
+html[data-theme="dark"] .hero-info-feature {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+html[data-theme="dark"] .hero-info-feature:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+html[data-theme="dark"] .hero-info-btn.secondary {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-light, #f0f0f0);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+html[data-theme="dark"] .hero-info-btn.secondary:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* ============================================
+   ERİŞİLEBİLİRLİK - AZALTILMIŞ HAREKET
+   ============================================ */
+html[data-reduced-motion="true"] .hero-info-item:hover,
+html[data-reduced-motion="true"] .hero-info-btn:hover,
+html[data-reduced-motion="true"] .hero-info-feature:hover {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-info-item:hover,
+  .hero-info-btn:hover,
+  .hero-info-feature:hover {
+    transform: none;
+  }
+  
+  .infographic-particle {
+    animation: none;
+  }
+}
+
+/* ============================================
+   DUYARLI TASARIM (RESPONSIVE)
+   ============================================ */
+@media (max-width: 991.98px) {
+  .hero-info-title {
+    font-size: var(--h2-font-size, 2.5rem);
+  }
+  
+  .hero-info-subtitle {
+    font-size: var(--font-size-lg, 1.1rem);
+  }
+  
+  .hero-info-item-title {
+    font-size: var(--h4-font-size, 1.5rem);
+  }
+  
+  .hero-info-graphic,
+  .hero-info-items-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .hero-info-timeline {
+    display: none;
+  }
+  
+  .hero-info-item,
+  .hero-info-item:nth-child(odd),
+  .hero-info-item:nth-child(even) {
+    grid-column: 1;
+    text-align: left;
+    margin: 0;
+  }
+  
+  .hero-info-item:nth-child(odd) .hero-info-icon,
+  .hero-info-item:nth-child(even) .hero-info-icon {
+    margin-right: auto;
+    margin-left: 0;
+  }
+  
+  .hero-info-item:nth-child(odd) .hero-info-features,
+  .hero-info-item:nth-child(even) .hero-info-features {
+    align-items: flex-start;
+  }
+  
+  .hero-info-item::after {
+    display: none;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .hero-infographic {
+    padding: var(--spacing-4, 2rem) 0;
+  }
+  
+  .hero-info-title {
+    font-size: var(--h3-font-size, 1.75rem);
+  }
+  
+  .hero-info-subtitle {
+    font-size: var(--font-size-base, 1rem);
+  }
+  
+  .hero-info-item {
+    padding: var(--spacing-3, 1.5rem);
+  }
+  
+  .hero-info-icon {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .hero-info-icon i {
+    font-size: 28px;
+  }
+  
+  .hero-info-cta {
+    margin-top: var(--spacing-4, 2rem);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2, 1rem);
+    padding: 0 var(--spacing-3, 1.5rem);
+  }
+  
+  .hero-info-btn {
+    margin: 0;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+} 

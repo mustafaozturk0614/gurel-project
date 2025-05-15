@@ -1,0 +1,448 @@
+/* =========================================================
+   GÜREL YÖNETİM - SPLIT SCREEN HERO
+   İki farklı iş kolu için bölünmüş ekran tasarımı
+   Versiyon 1.0 - 2024
+   ========================================================= */
+
+/* ============================================
+   SPLIT SCREEN DEĞİŞKENLERİ
+   ============================================ */
+:root {
+  /* Split Screen Değişkenleri */
+  --split-screen-height: 85vh;
+  --split-screen-min-height: 560px;
+  --split-screen-overlay: rgba(0, 0, 0, 0.5);
+  --split-screen-hover-overlay: rgba(0, 0, 0, 0.35);
+  --split-transition: all 0.5s var(--transition-function-special, cubic-bezier(0.16, 1, 0.3, 1));
+  
+  /* Hover Efektleri */
+  --split-inactive-width: 35%;
+  --split-active-width: 65%;
+  --split-scale-factor: 1.05;
+  
+  /* Konumlandırma */
+  --split-content-padding: var(--spacing-7, 6rem);
+  --split-mobile-padding: var(--spacing-4, 2rem);
+  
+  /* Z-index değerleri */
+  --split-background-z: 1;
+  --split-overlay-z: 2;
+  --split-content-z: 3;
+}
+
+/* ============================================
+   ANA CONTAINER
+   ============================================ */
+.hero-split-screen {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: var(--split-screen-height);
+  min-height: var(--split-screen-min-height);
+  position: relative;
+  overflow: hidden;
+}
+
+/* ============================================
+   SPLIT PANEL
+   ============================================ */
+.split-panel {
+  flex: 1;
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  transition: var(--split-transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Hover durumunda genişlik değişimi ve parlama efekti */
+.hero-split-screen:hover .split-panel {
+  flex-basis: var(--split-inactive-width);
+}
+
+.hero-split-screen .split-panel:hover {
+  flex-basis: var(--split-active-width);
+  box-shadow: 0 0 30px rgba(var(--primary-rgb), 0.5), 0 0 60px rgba(var(--secondary-rgb), 0.3);
+}
+
+/* Arka plan görseli ve video için yumuşak geçiş */
+.split-panel-bg video,
+.split-panel-bg {
+  transition: transform var(--split-transition), opacity 0.5s ease-in-out;
+}
+
+.split-panel:not(:hover) .split-panel-bg video {
+    opacity: 0.7; /* Aktif olmayan panelde videoyu biraz soluklaştır */
+}
+
+/* Panel içeriği için gelişmiş animasyon ve görünürlük */
+.split-panel-content {
+  transition: transform var(--split-transition), opacity var(--split-transition);
+}
+
+.split-panel:not(:hover) .split-panel-content {
+  opacity: 0.7;
+  transform: translateY(30px) scale(0.95);
+}
+
+.split-panel:hover .split-panel-content {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* İkonlar için ek stil ve animasyon */
+.split-panel-icon {
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.split-panel:hover .split-panel-icon {
+  transform: scale(1.1) rotate(10deg);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+/* Butonlar için ek hover efekti */
+.split-panel-btn {
+    transition: all 0.3s ease, transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.split-panel-btn:hover {
+  letter-spacing: 1px;
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+}
+
+/* Arka plan görseli */
+.split-panel-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+  background-position: center;
+  transition: var(--split-transition);
+  z-index: var(--split-background-z);
+}
+
+/* Hover efektleri */
+.split-panel:hover .split-panel-bg {
+  transform: scale(var(--split-scale-factor));
+}
+
+/* Overlay */
+.split-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--split-screen-overlay);
+  z-index: var(--split-overlay-z);
+  transition: var(--split-transition);
+}
+
+.split-panel:hover::before {
+  background-color: var(--split-screen-hover-overlay);
+}
+
+/* ============================================
+   PANEL İÇERİĞİ
+   ============================================ */
+.split-panel-content {
+  position: relative;
+  z-index: var(--split-content-z);
+  padding: var(--split-content-padding);
+  width: 100%;
+  max-width: 600px;
+  color: var(--white, #fff);
+  text-align: center;
+  transform: translateY(20px);
+  opacity: 0.9;
+  transition: var(--split-transition);
+  animation: fadeInUp 1s ease forwards;
+}
+
+.split-panel:hover .split-panel-content {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* İkon */
+.split-panel-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-bottom: var(--spacing-3, 1.5rem);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+.split-panel-icon i {
+  font-size: 35px;
+  color: var(--white, #fff);
+}
+
+/* Sol Panel Özel Stiller */
+.split-panel-left .split-panel-icon {
+  background: linear-gradient(135deg, rgba(var(--primary-rgb, 0, 85, 164), 0.8), rgba(var(--primary-rgb, 0, 85, 164), 0.6));
+}
+
+/* Sağ Panel Özel Stiller */
+.split-panel-right .split-panel-icon {
+  background: linear-gradient(135deg, rgba(var(--secondary-rgb, 234, 134, 0), 0.8), rgba(var(--secondary-rgb, 234, 134, 0), 0.6));
+}
+
+/* Başlık Stilleri */
+.split-panel-title {
+  font-size: var(--h2-font-size, 2.5rem);
+  font-weight: var(--font-weight-bold, 700);
+  margin-bottom: var(--spacing-3, 1.5rem);
+  color: var(--white, #fff);
+  position: relative;
+  display: inline-block;
+}
+
+.split-panel-title::after {
+  content: '';
+  position: absolute;
+  width: 50px;
+  height: 3px;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--white, #fff);
+  transition: var(--split-transition);
+}
+
+.split-panel:hover .split-panel-title::after {
+  width: 100px;
+}
+
+/* Sol Panel Başlık Vurgusu */
+.split-panel-left .split-panel-title::after {
+  background-color: var(--primary-color, #0055a4);
+}
+
+/* Sağ Panel Başlık Vurgusu */
+.split-panel-right .split-panel-title::after {
+  background-color: var(--secondary-color, #ea8600);
+}
+
+/* Açıklama */
+.split-panel-description {
+  font-size: var(--font-size-lg, 1.125rem);
+  line-height: var(--line-height-base, 1.6);
+  margin-bottom: var(--spacing-4, 2rem);
+  opacity: 0.9;
+}
+
+/* Özellikler Listesi */
+.split-panel-features {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2, 1rem);
+  margin-bottom: var(--spacing-4, 2rem);
+}
+
+.split-feature {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-2, 1rem);
+  font-size: var(--font-size-base, 1rem);
+}
+
+.split-feature i {
+  font-size: var(--font-size-sm, 0.875rem);
+}
+
+/* Sol Panel Özellik Vurgusu */
+.split-panel-left .split-feature i {
+  color: var(--primary-light, #4c9aff);
+}
+
+/* Sağ Panel Özellik Vurgusu */
+.split-panel-right .split-feature i {
+  color: var(--secondary-light, #ffaa33);
+}
+
+/* Buton */
+.split-panel-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--btn-padding-y, 0.75rem) var(--btn-padding-x, 1.5rem);
+  border-radius: var(--btn-border-radius, 0.5rem);
+  font-weight: var(--font-weight-semibold, 600);
+  text-decoration: none;
+  transition: var(--transition-duration, 0.3s) ease;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid var(--white, #fff);
+  color: var(--white, #fff);
+  background: transparent;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.split-panel-btn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.split-panel-btn i {
+  margin-left: var(--spacing-1, 0.5rem);
+  transition: transform var(--transition-duration-fast, 0.2s) ease;
+}
+
+.split-panel-btn:hover i {
+  transform: translateX(5px);
+}
+
+/* Sol Panel Buton */
+.split-panel-left .split-panel-btn {
+  background: rgba(var(--primary-rgb, 0, 85, 164), 0.2);
+  border-color: var(--primary-color, #0055a4);
+}
+
+.split-panel-left .split-panel-btn:hover {
+  background: var(--primary-color, #0055a4);
+}
+
+/* Sağ Panel Buton */
+.split-panel-right .split-panel-btn {
+  background: rgba(var(--secondary-rgb, 234, 134, 0), 0.2);
+  border-color: var(--secondary-color, #ea8600);
+}
+
+.split-panel-right .split-panel-btn:hover {
+  background: var(--secondary-color, #ea8600);
+}
+
+/* ============================================
+   DUYARLI TASARIM (RESPONSIVE)
+   ============================================ */
+@media (max-width: 991.98px) {
+  .hero-split-screen {
+    flex-direction: column;
+    height: auto;
+  }
+  
+  .split-panel {
+    height: 500px;
+    min-height: 0;
+  }
+  
+  .hero-split-screen:hover .split-panel,
+  .hero-split-screen .split-panel:hover {
+    flex-basis: auto;
+  }
+  
+  .split-panel-content {
+    padding: var(--split-mobile-padding);
+    max-width: 90%;
+  }
+  
+  .split-panel-title {
+    font-size: var(--h3-font-size, 1.75rem);
+  }
+  
+  .split-panel-description {
+    font-size: var(--font-size-base, 1rem);
+  }
+  
+  .split-panel-icon {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .split-panel-icon i {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .split-panel {
+    height: 400px;
+  }
+  
+  .split-panel-btn {
+    width: 100%;
+  }
+  
+  .split-panel-features {
+    text-align: center;
+  }
+  
+  .split-feature {
+    justify-content: center;
+  }
+}
+
+/* ============================================
+   ERİŞİLEBİLİRLİK - AZALTILMIŞ HAREKET
+   ============================================ */
+html[data-reduced-motion="true"] .split-panel,
+html[data-reduced-motion="true"] .split-panel-bg,
+html[data-reduced-motion="true"] .split-panel-content,
+html[data-reduced-motion="true"] .split-panel-btn {
+  transition: none !important;
+  transform: none !important;
+}
+
+html[data-reduced-motion="true"] .split-panel:hover .split-panel-bg {
+  transform: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .split-panel,
+  .split-panel-bg,
+  .split-panel-content,
+  .split-panel-btn {
+    transition: none !important;
+    transform: none !important;
+  }
+  
+  .split-panel:hover .split-panel-bg {
+    transform: none !important;
+  }
+}
+
+/* Animasyonlar ve scroll indicator */
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(10px); }
+}
+
+.split-panel-right .split-panel-content {
+  animation-delay: 0.5s;
+}
+
+.scroll-down-indicator {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: var(--split-content-z, 3);
+}
+
+.scroll-down-indicator a {
+  color: #fff;
+  font-size: 2rem;
+  display: inline-block;
+  animation: bounce 2s infinite;
+} 

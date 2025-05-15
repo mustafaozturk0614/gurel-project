@@ -1,0 +1,2984 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="light" data-color-theme="gradient">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gürel Yönetim - Modern Yönetim Çözümleri</title>
+    
+    <link rel="stylesheet" href="theme-system/theme-variables.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* ANA RENKLER */
+            --primary-hue: 220;
+            --primary-saturation: 85%;
+            --accent-hue: 340;
+            
+            /* RENK PALETİ - LIGHT MODE */
+            --primary: hsl(var(--primary-hue), var(--primary-saturation), 55%);
+            --primary-light: hsl(var(--primary-hue), calc(var(--primary-saturation) - 15%), 65%);
+            --primary-dark: hsl(var(--primary-hue), var(--primary-saturation), 45%);
+            --secondary: hsl(calc(var(--primary-hue) + 190), 80%, 55%);
+            --accent: hsl(var(--accent-hue), 85%, 65%);
+            --dark: #151c2b;
+            --light: #ffffff;
+            --surface: #f8faff;
+            --surface-2: #eef3ff;
+            --text-primary: #2a2f45;
+            --text-secondary: #606680;
+            --text-light: #ffffff;
+            
+            /* RGB DEĞERLER */
+            --primary-rgb: 44, 107, 237;
+            --secondary-rgb: 107, 60, 233;
+            --accent-rgb: 255, 107, 107;
+            --surface-rgb: 248, 250, 255;
+            
+            /* GRADİENTLER */
+            --gradient-primary: linear-gradient(135deg, var(--primary), var(--secondary));
+            --gradient-primary-soft: linear-gradient(135deg, 
+                               hsl(var(--primary-hue), var(--primary-saturation), 65%), 
+                               hsl(calc(var(--primary-hue) + 190), 75%, 65%));
+            --gradient-accent: linear-gradient(135deg, var(--accent), hsl(calc(var(--accent-hue) + 30), 85%, 65%));
+            --gradient-dark: linear-gradient(135deg, var(--dark), #253248);
+            --gradient-surface: linear-gradient(135deg, var(--surface), var(--surface-2));
+            
+            /* GÖLGELER */
+            --shadow-sm: 0 2px 8px rgba(11, 22, 44, 0.08);
+            --shadow-md: 0 8px 30px rgba(11, 22, 44, 0.08);
+            --shadow-lg: 0 16px 40px rgba(11, 22, 44, 0.12);
+            --shadow-primary: 0 10px 25px rgba(var(--primary-rgb), 0.25);
+            --shadow-accent: 0 10px 25px rgba(var(--accent-rgb), 0.25);
+            
+            /* GLASSMORPHISM */
+            --glass-background: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --glass-blur: 15px;
+            
+            /* YUVARLAK KÖŞELER */
+            --radius-sm: 8px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-xl: 32px;
+            --radius-full: 999px;
+            
+            /* GEÇİŞLER */
+            --transition-fast: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: all 0.5s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+            --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* ÇERÇEVELEŞTİRME */
+            --container-max-width: 1400px;
+            --container-padding: 2rem;
+            --section-spacing: 8rem;
+            --inner-spacing: 6rem;
+            
+            /* YAZI TİPLERİ */
+            --font-family: 'Plus Jakarta Sans', sans-serif;
+            --font-size-xs: 0.75rem;
+            --font-size-sm: 0.875rem;
+            --font-size-md: 1rem;
+            --font-size-lg: 1.125rem;
+            --font-size-xl: 1.25rem;
+            --font-size-2xl: 1.5rem;
+            --font-size-3xl: 2rem;
+            --font-size-4xl: 2.5rem;
+            --font-size-5xl: 3rem;
+            --font-size-6xl: 3.75rem;
+            
+            /* KATMANLAR */
+            --z-negative: -1;
+            --z-normal: 1;
+            --z-tooltip: 10;
+            --z-fixed: 100;
+            --z-modal: 1000;
+        }
+        
+        /* DARK MODE */
+        [data-theme="dark"] {
+            --primary: hsl(var(--primary-hue), var(--primary-saturation), 60%);
+            --primary-light: hsl(var(--primary-hue), calc(var(--primary-saturation) - 15%), 70%);
+            --primary-dark: hsl(var(--primary-hue), var(--primary-saturation), 50%);
+            --surface: #111827;
+            --surface-2: #1e293b;
+            --dark: #0f172a;
+            --light: #1e293b;
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --text-light: #f8fafc;
+            --glass-background: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(30, 41, 59, 0.5);
+        }
+        
+        /* BASE STYLES */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 100px;
+        }
+        
+        body {
+            font-family: var(--font-family);
+            margin: 0;
+            padding: 0;
+            background-color: var(--surface);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        /* MODERN FLOWING BACKGROUND */
+        .bg-flowing {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            opacity: 0.5;
+            background: linear-gradient(-45deg, 
+                rgba(var(--primary-rgb), 0.15),
+                rgba(var(--secondary-rgb), 0.15),
+                rgba(var(--primary-rgb), 0.15),
+                rgba(var(--accent-rgb), 0.15));
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            filter: blur(100px);
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGQ9Ik0wIDBoMzAwdjMwMEgweiIgZmlsdGVyPSJ1cmwoI2EpIiBvcGFjaXR5PSIuMDUiLz48L3N2Zz4=');
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.4;
+        }
+        
+        /* ENHANCED GLASS MORPHISM HEADER */
+        .glass-header {
+            position: fixed;
+            width: 100%;
+            z-index: var(--z-fixed);
+            transition: var(--transition-smooth);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 2rem;
+            margin: 1.5rem 2rem;
+            background: var(--glass-background);
+            backdrop-filter: blur(var(--glass-blur));
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-md);
+            transition: var(--transition-smooth);
+            border: 1px solid var(--glass-border);
+        }
+        
+        .scrolled .header-container {
+            padding: 0.8rem 2rem;
+            margin: 0.75rem 2rem;
+            background: var(--glass-background);
+            backdrop-filter: blur(calc(var(--glass-blur) + 5px));
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            position: relative;
+        }
+        
+        .logo-container::after {
+            content: '';
+            position: absolute;
+            width: 120%;
+            height: 120%;
+            background: radial-gradient(circle, rgba(var(--primary-rgb), 0.08), transparent 70%);
+            z-index: -1;
+            opacity: 0;
+            transition: var(--transition-smooth);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: var(--radius-full);
+        }
+        
+        .logo-container:hover::after {
+            opacity: 1;
+        }
+        
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--gradient-primary);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--light);
+            font-size: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-primary);
+            transition: var(--transition-bounce);
+        }
+        
+        .logo-icon::before {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background: linear-gradient(transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: rotate(45deg) translateX(-300%);
+            transition: transform 0.7s ease;
+        }
+        
+        .logo-container:hover .logo-icon {
+            transform: rotate(10deg) scale(1.1);
+            box-shadow: 0 10px 25px rgba(var(--primary-rgb), 0.4);
+        }
+        
+        .logo-container:hover .logo-icon::before {
+            transform: rotate(45deg) translateX(300%);
+        }
+        
+        .logo-text {
+            font-weight: 700;
+            font-size: var(--font-size-2xl);
+            color: var(--text-primary);
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+        
+        .logo-tagline {
+            font-size: var(--font-size-xs);
+            color: var(--text-secondary);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            margin-top: 2px;
+        }
+        
+        /* MODERN NAVIGATION */
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .nav-link {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: var(--font-size-md);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-full);
+            transition: var(--transition-smooth);
+            position: relative;
+            letter-spacing: 0.3px;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 1rem;
+            right: 1rem;
+            height: 2px;
+            border-radius: 2px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+            transform-origin: right;
+        }
+        
+        .nav-link:hover {
+            background: rgba(var(--primary-rgb), 0.08);
+            color: var(--primary);
+        }
+        
+        .nav-link:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        
+        .nav-link.active {
+            font-weight: 600;
+            color: var(--primary);
+            background: rgba(var(--primary-rgb), 0.1);
+        }
+        
+        .nav-link.active::after {
+            transform: scaleX(1);
+        }
+        
+        .theme-toggle {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--surface-2);
+            color: var(--text-secondary);
+            border: none;
+            cursor: pointer;
+            margin-right: 1rem;
+            transition: var(--transition-smooth);
+        }
+        
+        .theme-toggle:hover {
+            background: var(--primary-light);
+            color: var(--text-light);
+            transform: rotate(15deg);
+        }
+        
+        .contact-button {
+            background: var(--gradient-primary);
+            color: var(--text-light);
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-full);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: var(--shadow-primary);
+            transition: var(--transition-bounce);
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.3px;
+        }
+        
+        .contact-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(255,255,255,0.2), transparent);
+            transform: translateY(-100%);
+            transition: transform 0.4s ease;
+        }
+        
+        .contact-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(var(--primary-rgb), 0.3);
+        }
+        
+        .contact-button:hover::before {
+            transform: translateY(0);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+        
+        .mobile-menu-btn:hover {
+            color: var(--primary);
+        }
+        
+        /* COMMON SECTION STYLES */
+        .container {
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            padding: 0 var(--container-padding);
+            position: relative;
+        }
+        
+        section {
+            padding: var(--section-spacing) 0;
+            position: relative;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .section-badge {
+            display: inline-block;
+            background: rgba(107, 60, 233, 0.1);
+            color: var(--primary);
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .section-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+            line-height: 1.2;
+        }
+        
+        .section-description {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        /* ABOUT SECTION */
+        .about-section {
+            overflow: hidden;
+            background-color: var(--light);
+            position: relative;
+            padding: var(--section-spacing) 0;
+        }
+        
+        .about-section::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--surface);
+            clip-path: polygon(0 15%, 100% 0, 100% 85%, 0 100%);
+            z-index: 0;
+        }
+        
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .about-content {
+            position: relative;
+        }
+        
+        .section-badge {
+            display: inline-block;
+            background: rgba(var(--primary-rgb), 0.1);
+            color: var(--primary);
+            padding: 0.5rem 1.5rem;
+            border-radius: var(--radius-full);
+            font-weight: 600;
+            font-size: var(--font-size-sm);
+            margin-bottom: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .section-badge::before {
+            content: '';
+            position: absolute;
+            left: -50%;
+            top: 0;
+            width: 40%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+            transform: skewX(-20deg);
+            animation: shine 4s infinite;
+        }
+        
+        @keyframes shine {
+            0% { left: -50%; }
+            100% { left: 150%; }
+        }
+        
+        .section-title {
+            font-size: var(--font-size-4xl);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            line-height: 1.2;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            width: 80px;
+            height: 5px;
+            background: var(--gradient-primary);
+            border-radius: var(--radius-full);
+        }
+        
+        .section-title .gradient-text {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+        
+        .section-description {
+            font-size: var(--font-size-lg);
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            line-height: 1.8;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+            margin: 3rem 0;
+        }
+        
+        .feature {
+            display: flex;
+            gap: 1.5rem;
+            transition: var(--transition-smooth);
+            padding: 1.5rem;
+            border-radius: var(--radius-lg);
+            background: var(--light);
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+        
+        .feature::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-primary-soft);
+            opacity: 0;
+            transition: var(--transition-smooth);
+            z-index: -1;
+            border-radius: var(--radius-lg);
+        }
+        
+        .feature:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .feature:hover::before {
+            opacity: 0.05;
+        }
+        
+        .feature-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border-radius: var(--radius-md);
+            color: var(--light);
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            box-shadow: var(--shadow-primary);
+            transition: var(--transition-bounce);
+        }
+        
+        .feature:hover .feature-icon {
+            transform: scale(1.1) rotate(10deg);
+        }
+        
+        .feature-content {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .feature-title {
+            font-size: var(--font-size-xl);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            transition: var(--transition-smooth);
+        }
+        
+        .feature:hover .feature-title {
+            color: var(--primary);
+        }
+        
+        .feature-description {
+            font-size: var(--font-size-md);
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        
+        .about-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            background: var(--gradient-primary);
+            color: var(--light);
+            padding: 1rem 2rem;
+            border-radius: var(--radius-full);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition-bounce);
+            box-shadow: var(--shadow-primary);
+            position: relative;
+            overflow: hidden;
+            font-size: var(--font-size-md);
+            margin-top: 1rem;
+        }
+        
+        .about-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+        
+        .about-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(var(--primary-rgb), 0.3);
+        }
+        
+        .about-button:hover::before {
+            transform: translateX(100%);
+        }
+        
+        .about-button i {
+            transition: var(--transition-smooth);
+        }
+        
+        .about-button:hover i {
+            transform: translateX(5px);
+        }
+        
+        .about-image-container {
+            position: relative;
+            height: 600px;
+        }
+        
+        .about-image-wrapper {
+            position: relative;
+            height: 100%;
+            perspective: 1000px;
+        }
+        
+        .about-image {
+            position: absolute;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            transition: var(--transition-smooth);
+            object-fit: cover;
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+        
+        .main-image {
+            width: 80%;
+            height: 80%;
+            right: 0;
+            bottom: 0;
+            z-index: 2;
+            transform: rotateY(-5deg);
+            animation: floatMainImage 6s infinite ease-in-out;
+        }
+        
+        .accent-image {
+            width: 60%;
+            height: 50%;
+            left: 0;
+            top: 0;
+            z-index: 1;
+            transform: rotateY(5deg);
+            animation: floatAccentImage 8s infinite ease-in-out;
+        }
+        
+        @keyframes floatMainImage {
+            0%, 100% { transform: rotateY(-5deg) translateY(0); }
+            50% { transform: rotateY(-5deg) translateY(-15px); }
+        }
+        
+        @keyframes floatAccentImage {
+            0%, 100% { transform: rotateY(5deg) translateY(0); }
+            50% { transform: rotateY(5deg) translateY(-20px); }
+        }
+        
+        .about-image-shape {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(45deg, rgba(var(--primary-rgb), 0.15), rgba(var(--secondary-rgb), 0.15));
+            border-radius: 50%;
+            bottom: -50px;
+            left: -80px;
+            z-index: 0;
+            filter: blur(60px);
+            animation: pulse-slow 8s infinite alternate;
+        }
+        
+        @keyframes pulse-slow {
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(1.2); opacity: 0.3; }
+        }
+        
+        .experience-badge {
+            position: absolute;
+            bottom: 40px;
+            left: 40px;
+            background: var(--glass-background);
+            backdrop-filter: blur(var(--glass-blur));
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: 1.8rem;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: var(--transition-bounce);
+        }
+        
+        .experience-badge:hover {
+            transform: translateY(-10px) rotate(3deg);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .experience-number {
+            font-size: 3rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            line-height: 1;
+            position: relative;
+        }
+        
+        .experience-number::after {
+            content: '+';
+            position: absolute;
+            right: -15px;
+            top: 0;
+            font-size: 40%;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .experience-text {
+            font-size: var(--font-size-sm);
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-top: 0.5rem;
+            line-height: 1.4;
+        }
+        
+        /* SERVICES SECTION */
+        .services-section {
+            background-color: var(--surface);
+            position: relative;
+            padding: var(--section-spacing) 0;
+            overflow: hidden;
+        }
+        
+        .services-section .shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+        }
+        
+        .services-section .shape-1 {
+            width: 500px;
+            height: 500px;
+            background: rgba(var(--primary-rgb), 0.07);
+            top: -250px;
+            right: -200px;
+        }
+        
+        .services-section .shape-2 {
+            width: 400px;
+            height: 400px;
+            background: rgba(var(--secondary-rgb), 0.07);
+            bottom: -200px;
+            left: -150px;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .section-header .section-badge {
+            margin-bottom: 1rem;
+        }
+        
+        .section-header .section-title {
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .section-header .section-title::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .section-header .section-description {
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .service-card {
+            background: var(--light);
+            border-radius: var(--radius-lg);
+            padding: 3rem 2.5rem;
+            position: relative;
+            transition: var(--transition-smooth);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(var(--primary-rgb), 0.05);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            z-index: 1;
+        }
+        
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+            z-index: 1;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-15px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .service-card.featured {
+            background: var(--gradient-primary);
+            color: var(--light);
+            transform: scale(1.05);
+            box-shadow: var(--shadow-primary);
+            z-index: 2;
+        }
+        
+        .service-card.featured:hover {
+            transform: scale(1.05) translateY(-15px);
+            box-shadow: 0 20px 40px rgba(var(--primary-rgb), 0.3);
+        }
+        
+        .service-card.featured::before {
+            display: none;
+        }
+        
+        .service-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--light);
+            padding: 0.4rem 1.2rem;
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+            backdrop-filter: blur(var(--glass-blur));
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            letter-spacing: 0.5px;
+        }
+        
+        .service-icon {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(var(--primary-rgb), 0.1);
+            border-radius: var(--radius-lg);
+            transition: var(--transition-bounce);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-icon::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30%;
+            background: rgba(var(--primary-rgb), 0.2);
+            transition: var(--transition-smooth);
+        }
+        
+        .service-card.featured .service-icon {
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--light);
+        }
+        
+        .service-card.featured .service-icon::after {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .service-card:hover .service-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        .service-title {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        .service-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: var(--radius-full);
+            transition: var(--transition-smooth);
+        }
+        
+        .service-card:hover .service-title::after {
+            width: 60px;
+        }
+        
+        .service-card.featured .service-title {
+            color: var(--light);
+        }
+        
+        .service-card.featured .service-title::after {
+            background: var(--light);
+        }
+        
+        .service-description {
+            font-size: var(--font-size-md);
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            flex-grow: 1;
+        }
+        
+        .service-card.featured .service-description {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .service-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-decoration: none;
+            transition: var(--transition-smooth);
+            font-size: var(--font-size-md);
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        
+        .service-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary);
+            transform: scaleX(0.3);
+            transform-origin: left;
+            opacity: 0.3;
+            transition: var(--transition-smooth);
+        }
+        
+        .service-card.featured .service-link {
+            color: var(--light);
+        }
+        
+        .service-card.featured .service-link::after {
+            background: var(--light);
+        }
+        
+        .service-link:hover {
+            gap: 1rem;
+        }
+        
+        .service-link:hover::after {
+            transform: scaleX(1);
+            opacity: 1;
+        }
+        
+        .service-link i {
+            transition: var(--transition-smooth);
+        }
+        
+        .service-link:hover i {
+            transform: translateX(5px);
+        }
+        
+        .service-shape {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: rgba(var(--primary-rgb), 0.03);
+            bottom: -100px;
+            right: -100px;
+            z-index: -1;
+            transition: var(--transition-smooth);
+        }
+        
+        .service-card:hover .service-shape {
+            transform: scale(1.2);
+            background: rgba(var(--primary-rgb), 0.05);
+        }
+        
+        .service-card.featured .service-shape {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        /* PROJECTS SECTION */
+        .projects-section {
+            background-color: var(--light);
+            position: relative;
+            padding: var(--section-spacing) 0;
+            overflow: hidden;
+        }
+        
+        .projects-section::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--surface);
+            clip-path: polygon(30% 0, 100% 0, 100% 100%, 0 100%);
+            z-index: 0;
+        }
+        
+        .projects-section .container {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .projects-filter {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 4rem;
+            flex-wrap: wrap;
+            position: relative;
+        }
+        
+        .filter-button {
+            background: var(--light);
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: var(--radius-full);
+            font-weight: 600;
+            font-size: var(--font-size-sm);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .filter-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-primary);
+            z-index: -1;
+            opacity: 0;
+            transition: var(--transition-smooth);
+        }
+        
+        .filter-button.active, .filter-button:hover {
+            color: var(--light);
+            box-shadow: var(--shadow-primary);
+            transform: translateY(-3px);
+        }
+        
+        .filter-button.active::before, .filter-button:hover::before {
+            opacity: 1;
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+            position: relative;
+        }
+        
+        .project-card {
+            background: var(--light);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: var(--transition-smooth);
+            box-shadow: var(--shadow-md);
+            position: relative;
+            height: 100%;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .project-image-container {
+            position: relative;
+            height: 280px;
+            overflow: hidden;
+        }
+        
+        .project-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.7s ease;
+            transform-origin: center;
+        }
+        
+        .project-card:hover .project-image {
+            transform: scale(1.1);
+        }
+        
+        .project-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0) 60%);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding: 2rem;
+            opacity: 0;
+            transition: var(--transition-smooth);
+        }
+        
+        .project-card:hover .project-overlay {
+            opacity: 1;
+        }
+        
+        .project-category {
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--light);
+            padding: 0.4rem 1.2rem;
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+            backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(20px);
+            opacity: 0;
+            transition: var(--transition-smooth);
+            transition-delay: 0.1s;
+        }
+        
+        .project-card:hover .project-category {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .project-details-button {
+            width: 50px;
+            height: 50px;
+            background: var(--light);
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            text-decoration: none;
+            transition: var(--transition-bounce);
+            transform: translateY(20px) rotate(-45deg);
+            opacity: 0;
+            transition-delay: 0.2s;
+        }
+        
+        .project-card:hover .project-details-button {
+            transform: translateY(0) rotate(0);
+            opacity: 1;
+        }
+        
+        .project-details-button:hover {
+            transform: scale(1.1);
+            background: var(--primary);
+            color: var(--light);
+            box-shadow: var(--shadow-primary);
+        }
+        
+        .project-content {
+            padding: 2rem;
+            transform-style: preserve-3d;
+            position: relative;
+            z-index: 1;
+            background: var(--light);
+        }
+        
+        .project-title {
+            font-size: var(--font-size-xl);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            position: relative;
+            padding-bottom: 1rem;
+            transition: var(--transition-smooth);
+        }
+        
+        .project-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: var(--radius-full);
+            transition: var(--transition-smooth);
+        }
+        
+        .project-card:hover .project-title {
+            color: var(--primary);
+        }
+        
+        .project-card:hover .project-title::after {
+            width: 60px;
+        }
+        
+        .project-location {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: var(--font-size-sm);
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        
+        .project-location i {
+            color: var(--primary);
+            font-size: 1rem;
+        }
+        
+        .featured-project {
+            grid-column: span 2;
+        }
+        
+        .featured-project .project-image-container {
+            height: 380px;
+        }
+        
+        /* TESTIMONIALS SECTION */
+        .testimonials-section {
+            background-color: var(--surface);
+            position: relative;
+            padding: var(--section-spacing) 0;
+            overflow: hidden;
+        }
+        
+        .testimonials-section .shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+        }
+        
+        .testimonials-section .shape-1 {
+            width: 600px;
+            height: 600px;
+            background: rgba(var(--primary-rgb), 0.06);
+            top: -300px;
+            left: -200px;
+        }
+        
+        .testimonials-section .shape-2 {
+            width: 500px;
+            height: 500px;
+            background: rgba(var(--secondary-rgb), 0.06);
+            bottom: -250px;
+            right: -150px;
+        }
+        
+        .testimonials-container {
+            position: relative;
+            overflow: hidden;
+            padding: 2rem 0;
+        }
+        
+        .testimonials-slider {
+            display: flex;
+            width: 300%;
+            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .testimonial-card {
+            flex: 1;
+            padding: 3.5rem;
+            background: var(--light);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            width: calc(100% / 3);
+            position: relative;
+            margin: 0 1.5rem;
+            border: 1px solid rgba(var(--primary-rgb), 0.05);
+            transition: var(--transition-smooth);
+            transform: scale(0.95);
+        }
+        
+        .testimonial-card::before {
+            content: '';
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            width: 60px;
+            height: 60px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' fill='%232c6bed' opacity='0.1'%3E%3Cpath d='M464 256h-80v-64c0-35.3 28.7-64 64-64h8c13.3 0 24-10.7 24-24V56c0-13.3-10.7-24-24-24h-8c-88.4 0-160 71.6-160 160v240c0 26.5 21.5 48 48 48h128c26.5 0 48-21.5 48-48V304c0-26.5-21.5-48-48-48zm-288 0H96v-64c0-35.3 28.7-64 64-64h8c13.3 0 24-10.7 24-24V56c0-13.3-10.7-24-24-24h-8C71.6 32 0 103.6 0 192v240c0 26.5 21.5 48 48 48h128c26.5 0 48-21.5 48-48V304c0-26.5-21.5-48-48-48z'%3E%3C/path%3E%3C/svg%3E") no-repeat center center;
+            opacity: 0.08;
+            z-index: 0;
+        }
+        
+        .testimonial-card.active {
+            transform: scale(1);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .testimonial-rating {
+            display: flex;
+            gap: 0.3rem;
+            margin-bottom: 2rem;
+        }
+        
+        .star {
+            color: #FFD700;
+            font-size: 1.1rem;
+        }
+        
+        .testimonial-content {
+            margin-bottom: 2.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .testimonial-content p {
+            font-size: var(--font-size-lg);
+            line-height: 1.8;
+            color: var(--text-secondary);
+            font-style: italic;
+            position: relative;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .author-image {
+            width: 70px;
+            height: 70px;
+            border-radius: var(--radius-full);
+            overflow: hidden;
+            border: 3px solid var(--light);
+            box-shadow: var(--shadow-md);
+            position: relative;
+        }
+        
+        .author-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 2px solid transparent;
+            border-radius: var(--radius-full);
+            background: var(--gradient-primary) border-box;
+            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+        }
+        
+        .author-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-smooth);
+        }
+        
+        .testimonial-card:hover .author-image img {
+            transform: scale(1.05);
+        }
+        
+        .author-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+        
+        .author-name {
+            font-weight: 700;
+            font-size: var(--font-size-lg);
+            color: var(--text-primary);
+            margin: 0;
+        }
+        
+        .author-position {
+            font-size: var(--font-size-sm);
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin: 0;
+        }
+        
+        .testimonials-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2.5rem;
+            margin-top: 4rem;
+        }
+        
+        .testimonial-arrow {
+            width: 60px;
+            height: 60px;
+            border-radius: var(--radius-full);
+            background: var(--light);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition-bounce);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .testimonial-arrow:hover {
+            background: var(--gradient-primary);
+            color: var(--light);
+            box-shadow: var(--shadow-primary);
+            transform: translateY(-5px);
+        }
+        
+        .testimonial-dots {
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+        }
+        
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: var(--radius-full);
+            background: rgba(var(--primary-rgb), 0.2);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            position: relative;
+        }
+        
+        .dot::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 24px;
+            height: 24px;
+            border-radius: var(--radius-full);
+            border: 2px solid var(--primary);
+            opacity: 0;
+            transition: var(--transition-smooth);
+        }
+        
+        .dot.active, .dot:hover {
+            background: var(--primary);
+        }
+        
+        .dot.active::after {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 0.3;
+        }
+        
+        /* CTA SECTION */
+        .cta-section {
+            padding: 7rem 0;
+            background: var(--gradient-primary);
+            color: var(--light);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .cta-content {
+            max-width: 60%;
+            position: relative;
+        }
+        
+        .cta-title {
+            font-size: var(--font-size-4xl);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: var(--light);
+            line-height: 1.2;
+            position: relative;
+        }
+        
+        .cta-title .gradient-text {
+            background: linear-gradient(to right, rgba(255,255,255,1), rgba(255,255,255,0.85));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+        
+        .cta-description {
+            font-size: var(--font-size-lg);
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 90%;
+        }
+        
+        .cta-actions {
+            position: relative;
+        }
+        
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            background: var(--light);
+            color: var(--primary);
+            padding: 1.2rem 2.5rem;
+            border-radius: var(--radius-full);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: var(--font-size-md);
+            transition: var(--transition-bounce);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.3px;
+        }
+        
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(var(--primary-rgb), 0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            color: var(--primary-dark);
+        }
+        
+        .cta-button:hover::before {
+            transform: translateX(100%);
+        }
+        
+        .cta-button i {
+            transition: var(--transition-smooth);
+            font-size: 1.2rem;
+        }
+        
+        .cta-button:hover i {
+            transform: scale(1.2);
+        }
+        
+        .cta-decoration {
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            width: 100%;
+            height: 10%;
+            background: rgba(255,255,255,0.9);
+            transform: translateZ(10px);
+            display: flex;
+            justify-content: space-around;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+        
+        .roof-item {
+            width: 10px;
+            height: 10px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            opacity: 0.7;
+            animation: glow 2s infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 5px rgba(var(--primary-rgb), 0.5); }
+            to { box-shadow: 0 0 15px rgba(var(--secondary-rgb), 0.8); }
+        }
+        
+        .windows-grid {
+            position: absolute;
+            top: 15%;
+            left: 10%;
+            width: 80%;
+            height: 80%;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(8, 1fr);
+            gap: 10px;
+        }
+        
+        .window {
+            background: rgba(255,255,255,0.3);
+            border-radius: 3px;
+            transition: all 0.5s ease;
+        }
+        
+        .window.lit {
+            background: rgba(255, 217, 102, 0.7);
+            box-shadow: 0 0 10px rgba(255, 217, 102, 0.5);
+        }
+        
+        /* FLOATING SHAPES DECORATION */
+        .floating-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+        
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.5;
+            filter: blur(50px);
+            will-change: transform;
+        }
+        
+        .shape-1 {
+            width: 400px;
+            height: 400px;
+            background: rgba(var(--primary-rgb), 0.15);
+            top: -150px;
+            left: -100px;
+            animation: floatShape1 20s infinite ease-in-out;
+        }
+        
+        .shape-2 {
+            width: 300px;
+            height: 300px;
+            background: rgba(var(--secondary-rgb), 0.15);
+            bottom: -100px;
+            right: -50px;
+            animation: floatShape2 15s infinite ease-in-out;
+        }
+        
+        .shape-3 {
+            width: 200px;
+            height: 200px;
+            background: rgba(var(--accent-rgb), 0.15);
+            top: 50%;
+            right: 20%;
+            animation: floatShape3 18s infinite ease-in-out;
+        }
+        
+        @keyframes floatShape1 {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(50px, 30px) rotate(180deg); }
+        }
+        
+        @keyframes floatShape2 {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(-30px, -50px) rotate(-180deg); }
+        }
+        
+        @keyframes floatShape3 {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(-20px, 20px) rotate(60deg); }
+            66% { transform: translate(20px, -20px) rotate(-60deg); }
+        }
+        
+        /* SCROLL INDICATOR */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            z-index: 5;
+            text-decoration: none;
+            opacity: 0;
+            animation: fadeInUp 1s ease 1.2s forwards;
+        }
+        
+        .scroll-text {
+            font-size: var(--font-size-xs);
+            font-weight: 500;
+            color: var(--text-secondary);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        
+        .scroll-mouse {
+            width: 30px;
+            height: 50px;
+            border: 2px solid var(--text-secondary);
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .scroll-wheel {
+            width: 6px;
+            height: 12px;
+            background: var(--text-secondary);
+            border-radius: 4px;
+            margin-top: 8px;
+            animation: scrollWheel 2s infinite;
+        }
+        
+        @keyframes scrollWheel {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(20px); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- FLOWING BACKGROUND -->
+    <div class="bg-flowing"></div>
+    <div class="noise-overlay"></div>
+    
+    <!-- GLASSMORPHISM HEADER -->
+    <header class="glass-header">
+        <div class="header-container">
+            <div class="logo-container">
+                <div class="logo-icon">
+                    <i class="fas fa-building"></i>
+                </div>
+                <div class="logo-text">
+                    GÜREL YÖNETİM
+                    <span class="logo-tagline">Modern Yönetim Çözümleri</span>
+                </div>
+            </div>
+            
+            <nav class="nav-links">
+                <button id="theme-toggle" class="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <a href="#home" class="nav-link active">Ana Sayfa</a>
+                <a href="#about" class="nav-link">Hakkımızda</a>
+                <a href="#services" class="nav-link">Hizmetlerimiz</a>
+                <a href="#projects" class="nav-link">Projelerimiz</a>
+                <a href="#testimonials" class="nav-link">Referanslar</a>
+                <a href="#contact" class="nav-link">İletişim</a>
+                <a href="#contact" class="contact-button">
+                    <i class="fas fa-headset"></i>
+                    Bize Ulaşın
+                </a>
+            </nav>
+            
+            <button class="mobile-menu-btn" id="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+    
+    <!-- HERO SECTION WITH SMART BUILDINGS -->
+    <section class="hero-section" id="home">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        </div>
+        
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="badge-dot"></span>
+                    Modern Yönetim & Danışmanlık
+                </div>
+                
+                <h1 class="hero-title">
+                    Mülkünüzün <span class="highlight">potansiyelini</span> 
+                    <span class="gradient-text">keşfedin</span>
+                </h1>
+                
+                <p class="hero-description">
+                    Gürel Yönetim ile site ve apartmanlarınızı profesyonel çözümlerle yönetiyor, 
+                    şeffaf ve teknoloji odaklı yaklaşımımızla yaşam kalitenizi artırıyoruz.
+                </p>
+                
+                <div class="hero-buttons">
+                    <a href="#services" class="hero-button hero-button-primary">
+                        <i class="fas fa-clipboard-list"></i>
+                        Hizmetlerimizi Keşfedin
+                    </a>
+                    <a href="#contact" class="hero-button hero-button-secondary">
+                        <i class="fas fa-phone-alt"></i>
+                        Bize Ulaşın
+                    </a>
+                </div>
+                
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <div class="stat-value">15+</div>
+                        <div class="stat-label">Yıllık Deneyim</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="stat-value">250+</div>
+                        <div class="stat-label">Mutlu Müşteri</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="stat-value">9</div>
+                        <div class="stat-label">Hizmet Bölgesi</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-visual">
+                <div class="cityscape" id="cityscape">
+                    <div class="building building-1">
+                        <div class="building-roof">
+                            <div class="roof-item"></div>
+                            <div class="roof-item"></div>
+                            <div class="roof-item"></div>
+                        </div>
+                        <div class="windows-grid" id="windows-1"></div>
+                    </div>
+                    <div class="building building-2">
+                        <div class="building-roof">
+                            <div class="roof-item"></div>
+                            <div class="roof-item"></div>
+                            <div class="roof-item"></div>
+                            <div class="roof-item"></div>
+                        </div>
+                        <div class="windows-grid" id="windows-2"></div>
+                    </div>
+                    <div class="building building-3">
+                        <div class="building-roof">
+                            <div class="roof-item"></div>
+                            <div class="roof-item"></div>
+                            <div class="roof-item"></div>
+                            <div class="roof-item"></div>
+                            <div class="roof-item"></div>
+                        </div>
+                        <div class="windows-grid" id="windows-3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <a href="#about" class="scroll-indicator">
+            <span class="scroll-text">Keşfet</span>
+            <div class="scroll-mouse">
+                <div class="scroll-wheel"></div>
+            </div>
+        </a>
+    </section>
+    
+    <!-- ABOUT SECTION -->
+    <section class="about-section" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-content">
+                    <div class="section-badge">Hakkımızda</div>
+                    <h2 class="section-title">Mülk yönetiminde <span class="gradient-text">15 yıllık</span> deneyim</h2>
+                    <p class="section-description">
+                        Gürel Yönetim olarak, 2009'dan bu yana site ve apartman yönetimi alanında profesyonel hizmet sunuyoruz. Amacımız, mülk sahiplerinin ve sakinlerin yaşam kalitesini artırırken, mülklerin değerini korumak ve geliştirmektir.
+                    </p>
+                    
+                    <div class="features-grid">
+                        <div class="feature">
+                            <div class="feature-icon">
+                                <i class="fas fa-handshake"></i>
+                            </div>
+                            <div class="feature-content">
+                                <h3 class="feature-title">Güvenilir Ortaklık</h3>
+                                <p class="feature-description">Müşterilerimizle uzun vadeli, şeffaf ve güvene dayalı ilişkiler kuruyoruz.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature">
+                            <div class="feature-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="feature-content">
+                                <h3 class="feature-title">Değer Artışı</h3>
+                                <p class="feature-description">Proaktif yaklaşımımızla mülkünüzün değerini koruyor ve artırıyoruz.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature">
+                            <div class="feature-icon">
+                                <i class="fas fa-cogs"></i>
+                            </div>
+                            <div class="feature-content">
+                                <h3 class="feature-title">Teknoloji Odaklı</h3>
+                                <p class="feature-description">Modern yönetim sistemleri ile verimli ve etkin çözümler sunuyoruz.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature">
+                            <div class="feature-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="feature-content">
+                                <h3 class="feature-title">Uzman Ekip</h3>
+                                <p class="feature-description">Alanında uzman ekibimizle her türlü yönetim ihtiyacınıza çözüm üretiyoruz.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <a href="#contact" class="about-button">
+                        Bize Ulaşın
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                
+                <div class="about-image-container">
+                    <div class="about-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Gürel Yönetim Ekibi" class="about-image main-image">
+                        <img src="https://images.unsplash.com/photo-1491336477066-31156b5e4f35?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="Modern Binalar" class="about-image accent-image">
+                        <div class="about-image-shape"></div>
+                        <div class="experience-badge">
+                            <span class="experience-number">15+</span>
+                            <span class="experience-text">Yıllık<br>Deneyim</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- SERVICES SECTION -->
+    <section class="services-section" id="services">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">Hizmetlerimiz</div>
+                <h2 class="section-title">Kapsamlı <span class="gradient-text">yönetim çözümleri</span> sunuyoruz</h2>
+                <p class="section-description">
+                    Mülk sahiplerinin ve sakinlerin ihtiyaçlarını karşılamak için özel olarak tasarlanmış geniş bir hizmet yelpazesi sunuyoruz.
+                </p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h3 class="service-title">Apartman Yönetimi</h3>
+                    <p class="service-description">
+                        Bütçe planlaması, aidat takibi, mali raporlama ve günlük operasyon yönetimi ile apartmanınızın ihtiyaçlarını karşılıyoruz.
+                    </p>
+                    <a href="#contact" class="service-link">
+                        Detaylı Bilgi
+                        <i class="fas fa-long-arrow-alt-right"></i>
+                    </a>
+                    <div class="service-shape"></div>
+                </div>
+                
+                <div class="service-card featured">
+                    <div class="service-badge">En Popüler</div>
+                    <div class="service-icon">
+                        <i class="fas fa-city"></i>
+                    </div>
+                    <h3 class="service-title">Site Yönetimi</h3>
+                    <p class="service-description">
+                        Kapsamlı site yönetimi hizmetimizle güvenlik, peyzaj, teknik bakım ve ortak alan yönetimini profesyonel şekilde sağlıyoruz.
+                    </p>
+                    <a href="#contact" class="service-link">
+                        Detaylı Bilgi
+                        <i class="fas fa-long-arrow-alt-right"></i>
+                    </a>
+                    <div class="service-shape"></div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3 class="service-title">Bakım ve Onarım</h3>
+                    <p class="service-description">
+                        Düzenli bakım ve hızlı müdahale ekiplerimizle binanızın teknik sorunlarına çözüm sağlıyoruz.
+                    </p>
+                    <a href="#contact" class="service-link">
+                        Detaylı Bilgi
+                        <i class="fas fa-long-arrow-alt-right"></i>
+                    </a>
+                    <div class="service-shape"></div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <h3 class="service-title">Finansal Yönetim</h3>
+                    <p class="service-description">
+                        Şeffaf finansal raporlama, aidat takibi ve bütçe yönetimi ile mali süreçleri profesyonelce yönetiyoruz.
+                    </p>
+                    <a href="#contact" class="service-link">
+                        Detaylı Bilgi
+                        <i class="fas fa-long-arrow-alt-right"></i>
+                    </a>
+                    <div class="service-shape"></div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <h3 class="service-title">Güvenlik Çözümleri</h3>
+                    <p class="service-description">
+                        Modern güvenlik sistemleri ve eğitimli personel ile yaşam alanlarınızın güvenliğini en üst düzeyde sağlıyoruz.
+                    </p>
+                    <a href="#contact" class="service-link">
+                        Detaylı Bilgi
+                        <i class="fas fa-long-arrow-alt-right"></i>
+                    </a>
+                    <div class="service-shape"></div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h3 class="service-title">Kiralama Hizmetleri</h3>
+                    <p class="service-description">
+                        Mülk sahipleri için profesyonel kiracı bulma ve sözleşme yönetimi hizmetleri sunuyoruz.
+                    </p>
+                    <a href="#contact" class="service-link">
+                        Detaylı Bilgi
+                        <i class="fas fa-long-arrow-alt-right"></i>
+                    </a>
+                    <div class="service-shape"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- PROJECTS SECTION -->
+    <section class="projects-section" id="projects">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">Projelerimiz</div>
+                <h2 class="section-title">Başarıyla yönettiğimiz <span class="gradient-text">özel projeler</span></h2>
+                <p class="section-description">
+                    Farklı ölçek ve kapsamdaki projelerde sunduğumuz başarılı yönetim çözümleri ile gurur duyuyoruz.
+                </p>
+            </div>
+            
+            <div class="projects-filter">
+                <button class="filter-button active" data-filter="all">Tümü</button>
+                <button class="filter-button" data-filter="apartments">Apartmanlar</button>
+                <button class="filter-button" data-filter="residences">Rezidanslar</button>
+                <button class="filter-button" data-filter="compounds">Site Kompleksleri</button>
+            </div>
+            
+            <div class="projects-grid">
+                <div class="project-card" data-category="residences">
+                    <div class="project-image-container">
+                        <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Elit Rezidans" class="project-image">
+                        <div class="project-overlay">
+                            <div class="project-category">Rezidans</div>
+                            <a href="#" class="project-details-button">
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <h3 class="project-title">Elit Rezidans</h3>
+                    <p class="project-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Kadıköy, İstanbul
+                    </p>
+                </div>
+                
+                <div class="project-card featured-project" data-category="compounds">
+                    <div class="project-image-container">
+                        <img src="https://images.unsplash.com/photo-1464082354059-27db6ce50048?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Panorama Yaşam Sitesi" class="project-image">
+                        <div class="project-overlay">
+                            <div class="project-category">Site Kompleksi</div>
+                            <a href="#" class="project-details-button">
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <h3 class="project-title">Panorama Yaşam Sitesi</h3>
+                    <p class="project-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Beylikdüzü, İstanbul
+                    </p>
+                </div>
+                
+                <div class="project-card" data-category="apartments">
+                    <div class="project-image-container">
+                        <img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Yeşil Vadi Apartmanı" class="project-image">
+                        <div class="project-overlay">
+                            <div class="project-category">Apartman</div>
+                            <a href="#" class="project-details-button">
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <h3 class="project-title">Yeşil Vadi Apartmanı</h3>
+                    <p class="project-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Beşiktaş, İstanbul
+                    </p>
+                </div>
+                
+                <div class="project-card" data-category="compounds">
+                    <div class="project-image-container">
+                        <img src="https://images.unsplash.com/photo-1475855581690-80accde3ae2b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Mavi Göl Sitesi" class="project-image">
+                        <div class="project-overlay">
+                            <div class="project-category">Site Kompleksi</div>
+                            <a href="#" class="project-details-button">
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <h3 class="project-title">Mavi Göl Sitesi</h3>
+                    <p class="project-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Ataşehir, İstanbul
+                    </p>
+                </div>
+                
+                <div class="project-card" data-category="residences">
+                    <div class="project-image-container">
+                        <img src="https://images.unsplash.com/photo-1505409859467-3a796fd5798e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Crystal Towers" class="project-image">
+                        <div class="project-overlay">
+                            <div class="project-category">Rezidans</div>
+                            <a href="#" class="project-details-button">
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <h3 class="project-title">Crystal Towers</h3>
+                    <p class="project-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Şişli, İstanbul
+                    </p>
+                </div>
+                
+                <div class="project-card" data-category="apartments">
+                    <div class="project-image-container">
+                        <img src="https://images.unsplash.com/photo-1523192193543-6e7296d960e4?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Göztepe Residence" class="project-image">
+                        <div class="project-overlay">
+                            <div class="project-category">Apartman</div>
+                            <a href="#" class="project-details-button">
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <h3 class="project-title">Göztepe Residence</h3>
+                    <p class="project-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Göztepe, İstanbul
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- TESTIMONIALS SECTION -->
+    <section class="testimonials-section" id="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">Referanslar</div>
+                <h2 class="section-title">Mutlu <span class="gradient-text">müşterilerimiz</span> ne diyor?</h2>
+                <p class="section-description">
+                    Hizmet verdiğimiz müşterilerimizin deneyimleri ve değerlendirmeleri bizim için çok değerli.
+                </p>
+            </div>
+            
+            <div class="testimonials-container">
+                <div class="testimonials-slider">
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="testimonial-content">
+                            <p>
+                                "Gürel Yönetim ile çalıştığımız üç yıl boyunca her zaman profesyonel ve çözüm odaklı bir yaklaşım sergilediler. Site sakinleri olarak kendimizi güvende ve değerli hissediyoruz."
+                            </p>
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-image">
+                                <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Zeynep Yılmaz">
+                            </div>
+                            <div class="author-info">
+                                <h4 class="author-name">Zeynep Yılmaz</h4>
+                                <p class="author-position">Panorama Yaşam Sitesi Sakini</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="testimonial-content">
+                            <p>
+                                "Apartmanımızın yönetimini Gürel'e devrettikten sonra hem bütçe yönetimimiz şeffaflaştı hem de ortak alanlarımızın kalitesi arttı. Özellikle aidat takip sistemi çok başarılı."
+                            </p>
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-image">
+                                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Ahmet Demir">
+                            </div>
+                            <div class="author-info">
+                                <h4 class="author-name">Ahmet Demir</h4>
+                                <p class="author-position">Yeşil Vadi Apartmanı Yönetici</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <div class="testimonial-content">
+                            <p>
+                                "Mülk sahibi olarak Gürel Yönetim'in kiralama ve bakım hizmetlerinden çok memnunum. Uzak şehirde yaşamama rağmen gayrimenkulüm profesyonelce yönetiliyor ve değerini koruyor."
+                            </p>
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-image">
+                                <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Ayşe Kaya">
+                            </div>
+                            <div class="author-info">
+                                <h4 class="author-name">Ayşe Kaya</h4>
+                                <p class="author-position">Elit Rezidans Mal Sahibi</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonials-controls">
+                    <button class="testimonial-arrow prev-arrow">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <div class="testimonial-dots">
+                        <span class="dot active"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+                    <button class="testimonial-arrow next-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA SECTION -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-container">
+                <div class="cta-content">
+                    <h2 class="cta-title">Profesyonel yönetim ile <span class="gradient-text">hayatınızı kolaylaştırın</span></h2>
+                    <p class="cta-description">
+                        Gürel Yönetim ile tanışın, mülkünüzün potansiyelini keşfedin. Ücretsiz danışmanlık için hemen bize ulaşın.
+                    </p>
+                </div>
+                <div class="cta-actions">
+                    <a href="#contact" class="cta-button">
+                        <i class="fas fa-headset"></i>
+                        Ücretsiz Danışmanlık
+                    </a>
+                </div>
+                <div class="cta-decoration">
+                    <div class="cta-shape"></div>
+                    <div class="cta-shape"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CONTACT SECTION -->
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">İletişim</div>
+                <h2 class="section-title">Bizimle <span class="gradient-text">iletişime geçin</span></h2>
+                <p class="section-description">
+                    Sorularınız veya ihtiyaçlarınız için bizimle iletişime geçebilirsiniz. Size en kısa sürede dönüş yapacağız.
+                </p>
+            </div>
+            
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="contact-info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="info-content">
+                            <h3 class="info-title">Adres</h3>
+                            <p class="info-details">Bağdat Caddesi No:123<br>Kadıköy, İstanbul</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div class="info-content">
+                            <h3 class="info-title">Telefon</h3>
+                            <p class="info-details">+90 (216) 555 44 33<br>+90 (532) 444 33 22</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="info-content">
+                            <h3 class="info-title">E-posta</h3>
+                            <p class="info-details">info@gurelyonetim.com<br>destek@gurelyonetim.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="info-content">
+                            <h3 class="info-title">Çalışma Saatleri</h3>
+                            <p class="info-details">Pazartesi - Cumartesi<br>09:00 - 18:00</p>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="contact-form-container">
+                    <form class="contact-form">
+                        <div class="form-group">
+                            <label for="name">Adınız Soyadınız</label>
+                            <input type="text" id="name" name="name" class="form-control" placeholder="Adınız Soyadınız" required>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">E-posta Adresiniz</label>
+                                <input type="email" id="email" name="email" class="form-control" placeholder="E-posta Adresiniz" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="phone">Telefon Numaranız</label>
+                                <input type="tel" id="phone" name="phone" class="form-control" placeholder="Telefon Numaranız">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">Konu</label>
+                            <select id="subject" name="subject" class="form-control">
+                                <option value="bilgi">Bilgi Almak İstiyorum</option>
+                                <option value="hizmet">Hizmet Talebi</option>
+                                <option value="teklif">Fiyat Teklifi</option>
+                                <option value="öneri">Öneri/Şikayet</option>
+                                <option value="diğer">Diğer</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Mesajınız</label>
+                            <textarea id="message" name="message" class="form-control" placeholder="Mesajınızı buraya yazabilirsiniz..." rows="5" required></textarea>
+                        </div>
+                        
+                        <div class="form-check">
+                            <input type="checkbox" id="agreement" name="agreement" class="form-check-input" required>
+                            <label for="agreement" class="form-check-label">
+                                Kişisel verilerimin işlenmesini kabul ediyorum
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="form-submit-button">
+                            <span>Gönder</span>
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-info">
+                    <div class="footer-logo">
+                        <div class="logo-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <div class="logo-text">
+                            GÜREL YÖNETİM
+                            <span class="logo-tagline">Modern Yönetim Çözümleri</span>
+                        </div>
+                    </div>
+                    
+                    <p class="footer-description">
+                        Gürel Yönetim olarak site ve apartmanlarınızın yönetiminde profesyonel hizmet sunuyoruz. 15 yıllık deneyimimizle mülkünüzün değerini artırıyoruz.
+                    </p>
+                    
+                    <div class="footer-contact">
+                        <div class="footer-contact-item">
+                            <i class="fas fa-phone-alt"></i>
+                            <span>+90 (216) 555 44 33</span>
+                        </div>
+                        <div class="footer-contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>info@gurelyonetim.com</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h3 class="footer-title">Hızlı Erişim</h3>
+                    <ul class="footer-menu">
+                        <li><a href="#home">Ana Sayfa</a></li>
+                        <li><a href="#about">Hakkımızda</a></li>
+                        <li><a href="#services">Hizmetlerimiz</a></li>
+                        <li><a href="#projects">Projelerimiz</a></li>
+                        <li><a href="#testimonials">Referanslar</a></li>
+                        <li><a href="#contact">İletişim</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h3 class="footer-title">Hizmetlerimiz</h3>
+                    <ul class="footer-menu">
+                        <li><a href="#services">Apartman Yönetimi</a></li>
+                        <li><a href="#services">Site Yönetimi</a></li>
+                        <li><a href="#services">Bakım ve Onarım</a></li>
+                        <li><a href="#services">Finansal Yönetim</a></li>
+                        <li><a href="#services">Güvenlik Çözümleri</a></li>
+                        <li><a href="#services">Kiralama Hizmetleri</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h3 class="footer-title">İletişimde Kalın</h3>
+                    <p class="newsletter-text">Kampanyalarımız ve yeniliklerden haberdar olmak için bültenimize abone olun.</p>
+                    
+                    <form class="newsletter-form">
+                        <div class="newsletter-input-group">
+                            <input type="email" placeholder="E-posta adresiniz" class="newsletter-input" required>
+                            <button type="submit" class="newsletter-button">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="copyright">
+                    &copy; 2023 Gürel Yönetim. Tüm hakları saklıdır.
+                </div>
+                <div class="footer-bottom-links">
+                    <a href="#">Gizlilik Politikası</a>
+                    <a href="#">Kullanım Şartları</a>
+                    <a href="#">Çerez Politikası</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Theme Toggle Functionality
+            const themeToggle = document.getElementById('theme-toggle');
+            const htmlElement = document.documentElement;
+            const themeIcon = themeToggle.querySelector('i');
+            
+            // Check for saved theme preference or respect OS preference
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            if (savedTheme === 'dark' || (!savedTheme && prefersDarkScheme)) {
+                htmlElement.setAttribute('data-theme', 'dark');
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+            }
+            
+            themeToggle.addEventListener('click', function() {
+                if (htmlElement.getAttribute('data-theme') === 'dark') {
+                    htmlElement.setAttribute('data-theme', 'light');
+                    themeIcon.classList.replace('fa-sun', 'fa-moon');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    htmlElement.setAttribute('data-theme', 'dark');
+                    themeIcon.classList.replace('fa-moon', 'fa-sun');
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+            
+            // Header Scroll Effect
+            const header = document.querySelector('.glass-header');
+            
+            function handleScroll() {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            }
+            
+            window.addEventListener('scroll', handleScroll);
+            handleScroll(); // Initial check
+            
+            // Mobile Menu Toggle
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                navLinks.classList.toggle('mobile-active');
+                const icon = mobileMenuBtn.querySelector('i');
+                
+                if (icon.classList.contains('fa-bars')) {
+                    icon.classList.replace('fa-bars', 'fa-times');
+                } else {
+                    icon.classList.replace('fa-times', 'fa-bars');
+                }
+            });
+            
+            // Close mobile menu when clicking on a link
+            const navLinkElements = document.querySelectorAll('.nav-link, .contact-button');
+            navLinkElements.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (navLinks.classList.contains('mobile-active')) {
+                        navLinks.classList.remove('mobile-active');
+                        const icon = mobileMenuBtn.querySelector('i');
+                        icon.classList.replace('fa-times', 'fa-bars');
+                    }
+                });
+            });
+            
+            // 3D Buildings Effect
+            const cityscape = document.getElementById('cityscape');
+            const buildings = document.querySelectorAll('.building');
+            
+            const windowsContainers = [
+                document.getElementById('windows-1'),
+                document.getElementById('windows-2'),
+                document.getElementById('windows-3')
+            ];
+            
+            // Generate windows
+            windowsContainers.forEach(container => {
+                if (container) {
+                    for (let i = 0; i < 24; i++) {
+                        const window = document.createElement('div');
+                        window.className = 'window';
+                        
+                        // Random initial state for some windows
+                        if (Math.random() > 0.7) {
+                            window.classList.add('lit');
+                        }
+                        
+                        container.appendChild(window);
+                    }
+                }
+            });
+            
+            // Random window lighting
+            setInterval(() => {
+                document.querySelectorAll('.window').forEach(window => {
+                    if (Math.random() > 0.95) {
+                        window.classList.toggle('lit');
+                    }
+                });
+            }, 1000);
+            
+            // 3D Parallax Effect on Mouse Movement
+            document.addEventListener('mousemove', function(e) {
+                if (window.innerWidth <= 992) return; // Disable on mobile
+                
+                const { innerWidth, innerHeight } = window;
+                const x = (e.clientX / innerWidth - 0.5) * 15; // Reduced effect strength
+                const y = (e.clientY / innerHeight - 0.5) * 15;
+                
+                if (cityscape) {
+                    cityscape.style.transform = `rotateY(${x}deg) rotateX(${-y}deg)`;
+                }
+                
+                buildings.forEach(building => {
+                    const depth = parseFloat(building.style.transform.replace(/[^0-9.]/g, '')) || 100;
+                    const factor = depth / 100;
+                    building.style.transform = `translateZ(${depth}px) translateX(${x * factor * 1.5}px) translateY(${y * factor * 1.5}px)`;
+                });
+            });
+            
+            // Scroll Animations
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                    }
+                });
+            }, observerOptions);
+            
+            // Add elements to observe for scroll animations
+            const animatedElements = document.querySelectorAll('.feature, .service-card, .project-card, .testimonial-card, .contact-info-card');
+            animatedElements.forEach(el => {
+                observer.observe(el);
+                el.classList.add('animate-on-scroll');
+            });
+            
+            // Projects Filter
+            const filterButtons = document.querySelectorAll('.filter-button');
+            const projectCards = document.querySelectorAll('.project-card');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    button.classList.add('active');
+                    
+                    // Get filter value
+                    const filter = button.dataset.filter;
+                    
+                    // Filter projects with animation
+                    projectCards.forEach(card => {
+                        if (filter === 'all' || card.dataset.category === filter) {
+                            card.style.display = 'block';
+                            setTimeout(() => {
+                                card.style.opacity = '1';
+                                card.style.transform = 'translateY(0) scale(1)';
+                            }, 50);
+                        } else {
+                            card.style.opacity = '0';
+                            card.style.transform = 'translateY(20px) scale(0.9)';
+                            setTimeout(() => {
+                                card.style.display = 'none';
+                            }, 300);
+                        }
+                    });
+                });
+            });
+            
+            // Testimonials Slider
+            const testimonialSlider = document.querySelector('.testimonials-slider');
+            const testimonialCards = document.querySelectorAll('.testimonial-card');
+            const dots = document.querySelectorAll('.dot');
+            const prevArrow = document.querySelector('.prev-arrow');
+            const nextArrow = document.querySelector('.next-arrow');
+            
+            if (testimonialSlider && testimonialCards.length > 0) {
+                let currentIndex = 0;
+                
+                function updateSlider() {
+                    testimonialSlider.style.transform = `translateX(-${currentIndex * 100 / testimonialCards.length}%)`;
+                    
+                    // Update active class for cards
+                    testimonialCards.forEach((card, index) => {
+                        card.classList.toggle('active', index === currentIndex);
+                    });
+                    
+                    // Update dots
+                    dots.forEach((dot, index) => {
+                        dot.classList.toggle('active', index === currentIndex);
+                    });
+                }
+                
+                // Initialize
+                updateSlider();
+                
+                // Next testimonial
+                nextArrow.addEventListener('click', () => {
+                    currentIndex = (currentIndex + 1) % testimonialCards.length;
+                    updateSlider();
+                });
+                
+                // Previous testimonial
+                prevArrow.addEventListener('click', () => {
+                    currentIndex = (currentIndex - 1 + testimonialCards.length) % testimonialCards.length;
+                    updateSlider();
+                });
+                
+                // Dot navigation
+                dots.forEach((dot, index) => {
+                    dot.addEventListener('click', () => {
+                        currentIndex = index;
+                        updateSlider();
+                    });
+                });
+                
+                // Auto-slide
+                let autoSlideInterval = setInterval(() => {
+                    currentIndex = (currentIndex + 1) % testimonialCards.length;
+                    updateSlider();
+                }, 6000);
+                
+                // Stop auto-slide on interaction
+                const sliderControls = [prevArrow, nextArrow, ...dots];
+                sliderControls.forEach(control => {
+                    control.addEventListener('click', () => {
+                        clearInterval(autoSlideInterval);
+                        autoSlideInterval = setInterval(() => {
+                            currentIndex = (currentIndex + 1) % testimonialCards.length;
+                            updateSlider();
+                        }, 6000);
+                    });
+                });
+            }
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Active menu item on scroll
+            const sections = document.querySelectorAll('section[id]');
+            
+            function highlightNavLink() {
+                const scrollY = window.pageYOffset;
+                
+                sections.forEach(section => {
+                    const sectionHeight = section.offsetHeight;
+                    const sectionTop = section.offsetTop - 150;
+                    const sectionId = section.getAttribute('id');
+                    
+                    if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+                        document.querySelector(`.nav-link[href="#${sectionId}"]`)?.classList.add('active');
+                    } else {
+                        document.querySelector(`.nav-link[href="#${sectionId}"]`)?.classList.remove('active');
+                    }
+                });
+            }
+            
+            window.addEventListener('scroll', highlightNavLink);
+            
+            // CTA Particle Animation
+            const ctaSection = document.querySelector('.cta-section');
+            if (ctaSection) {
+                const particles = document.createElement('div');
+                particles.className = 'cta-particles';
+                
+                // Add particles
+                for (let i = 0; i < 4; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'cta-particle';
+                    particles.appendChild(particle);
+                }
+                
+                ctaSection.appendChild(particles);
+            }
+            
+            // Contact Form Validation and Animation
+            const contactForm = document.querySelector('.contact-form');
+            const formInputs = document.querySelectorAll('.form-control');
+            
+            formInputs.forEach(input => {
+                input.addEventListener('focus', () => {
+                    input.parentElement.classList.add('focused');
+                });
+                
+                input.addEventListener('blur', () => {
+                    if (input.value.trim() === '') {
+                        input.parentElement.classList.remove('focused');
+                    }
+                });
+            });
+            
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Simple validation
+                    let isValid = true;
+                    const requiredInputs = contactForm.querySelectorAll('[required]');
+                    
+                    requiredInputs.forEach(input => {
+                        if (input.value.trim() === '') {
+                            isValid = false;
+                            input.classList.add('error');
+                        } else {
+                            input.classList.remove('error');
+                        }
+                    });
+                    
+                    if (isValid) {
+                        // In a real application, you would send the form data to a server
+                        // Here we'll just show a success message
+                        const formSubmitButton = contactForm.querySelector('.form-submit-button');
+                        const originalText = formSubmitButton.innerHTML;
+                        
+                        formSubmitButton.innerHTML = '<i class="fas fa-check"></i> Gönderildi!';
+                        formSubmitButton.classList.add('success');
+                        
+                        setTimeout(() => {
+                            formSubmitButton.innerHTML = originalText;
+                            formSubmitButton.classList.remove('success');
+                            contactForm.reset();
+                        }, 3000);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,507 @@
+/* =========================================================
+   GÜREL YÖNETİM - CAROUSEL SLIDER BİLEŞENİ
+   Çok yönlü slider ve carousel bileşenleri
+   Versiyon 1.0 - 2024
+   ========================================================= */
+
+/* ==============================================
+   CAROUSEL DEĞİŞKENLERİ
+   ============================================== */
+:root {
+  /* Carousel Ana Değişkenleri */
+  --carousel-height: 500px;
+  --carousel-mobile-height: 350px;
+  --carousel-transition-duration: 400ms;
+  --carousel-transition-timing: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  --carousel-shadow: 0 10px 30px rgba(var(--dark-rgb, 0, 0, 0), 0.15);
+  --carousel-radius: var(--border-radius-lg, 1rem);
+  
+  /* Kontrol Elementleri */
+  --carousel-control-size: 40px;
+  --carousel-control-icon-size: 1.5rem;
+  --carousel-control-bg: rgba(var(--white-rgb, 255, 255, 255), 0.8);
+  --carousel-control-bg-hover: rgba(var(--white-rgb, 255, 255, 255), 1);
+  --carousel-control-color: var(--dark, #212529);
+  --carousel-control-radius: 50%;
+  --carousel-control-opacity: 0.8;
+  --carousel-control-opacity-hover: 1;
+  
+  /* Dot Navigasyon */
+  --carousel-dot-size: 10px;
+  --carousel-dot-active-size: 12px;
+  --carousel-dot-color: rgba(var(--white-rgb, 255, 255, 255), 0.5);
+  --carousel-dot-active-color: var(--white, #fff);
+  --carousel-dot-spacing: 4px;
+  
+  /* İçerik Pozisyonlama */
+  --carousel-content-padding: var(--spacing-5, 3rem);
+  --carousel-content-mobile-padding: var(--spacing-3, 1.5rem);
+  
+  /* Özel Varyasyonlar */
+  --carousel-multi-gap: 20px;
+  --carousel-thumbnail-size: 80px;
+  --carousel-thumbnail-gap: 10px;
+}
+
+/* ==============================================
+   CAROUSEL KAPSAYICI
+   ============================================== */
+.carousel {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: var(--carousel-height);
+  border-radius: var(--carousel-radius);
+  box-shadow: var(--carousel-shadow);
+  background-color: var(--light, #f8f9fa);
+}
+
+.carousel-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* ==============================================
+   TEMEL CAROUSEL SLAYTLARI
+   ============================================== */
+.carousel-slides {
+  display: flex;
+  height: 100%;
+  position: relative;
+  transition: transform var(--carousel-transition-duration) var(--carousel-transition-timing);
+}
+
+.carousel-slide {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Varsayılan geçiş animasyonu */
+.carousel-slide:not(.active) {
+  display: flex;
+}
+
+/* ==============================================
+   ARKA PLAN VE İÇERİK
+   ============================================== */
+.carousel-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
+/* Arka plan tonu veya overlay */
+.carousel-bg::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(var(--dark-rgb, 0, 0, 0), 0.1), rgba(var(--dark-rgb, 0, 0, 0), 0.6));
+  z-index: 2;
+}
+
+.carousel-content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: var(--white, #fff);
+  text-align: center;
+  padding: var(--carousel-content-padding);
+  width: 100%;
+  height: 100%;
+}
+
+/* İçerik konumları */
+.carousel-content.text-left {
+  text-align: left;
+  align-items: flex-start;
+}
+
+.carousel-content.text-right {
+  text-align: right;
+  align-items: flex-end;
+}
+
+.carousel-content.position-top {
+  justify-content: flex-start;
+  padding-top: calc(var(--carousel-content-padding) * 1.5);
+}
+
+.carousel-content.position-bottom {
+  justify-content: flex-end;
+  padding-bottom: calc(var(--carousel-content-padding) * 1.5);
+}
+
+/* İçerik öğeleri */
+.carousel-title {
+  font-size: var(--h1-font-size, 2.5rem);
+  font-weight: var(--font-weight-bold, 700);
+  margin-bottom: var(--spacing-3, 1.5rem);
+  line-height: var(--line-height-heading, 1.4);
+}
+
+.carousel-description {
+  font-size: var(--font-size-lg, 1.125rem);
+  margin-bottom: var(--spacing-4, 2rem);
+  line-height: var(--line-height-base, 1.6);
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.carousel-content.text-left .carousel-description,
+.carousel-content.text-right .carousel-description {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* Butonlar */
+.carousel-buttons {
+  display: flex;
+  gap: var(--spacing-2, 1rem);
+  justify-content: center;
+}
+
+.carousel-content.text-left .carousel-buttons {
+  justify-content: flex-start;
+}
+
+.carousel-content.text-right .carousel-buttons {
+  justify-content: flex-end;
+}
+
+.carousel-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--btn-padding-y, 0.75rem) var(--btn-padding-x, 1.5rem);
+  background-color: var(--primary-color, #0055a4);
+  color: var(--text-on-primary, #fff);
+  border: none;
+  border-radius: var(--btn-border-radius, 0.5rem);
+  font-weight: var(--font-weight-medium, 500);
+  text-decoration: none;
+  transition: all var(--transition-duration, 0.3s) ease;
+  gap: 0.5rem;
+}
+
+.carousel-btn:hover {
+  background-color: var(--primary-dark, #003c7d);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(var(--primary-rgb, 0, 85, 164), 0.4);
+}
+
+.carousel-btn.btn-outline {
+  background-color: transparent;
+  border: 2px solid var(--white, #fff);
+  color: var(--white, #fff);
+}
+
+.carousel-btn.btn-outline:hover {
+  background-color: var(--white, #fff);
+  color: var(--primary-color, #0055a4);
+}
+
+/* ==============================================
+   KONTROL ELEMANLARI
+   ============================================== */
+/* Yön Butonları */
+.carousel-control {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20;
+  width: var(--carousel-control-size);
+  height: var(--carousel-control-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--carousel-control-bg);
+  color: var(--carousel-control-color);
+  border-radius: var(--carousel-control-radius);
+  cursor: pointer;
+  opacity: var(--carousel-control-opacity);
+  transition: all var(--transition-duration, 0.3s) ease;
+  border: none;
+  font-size: var(--carousel-control-icon-size);
+}
+
+.carousel-control:hover {
+  opacity: var(--carousel-control-opacity-hover);
+  background-color: var(--carousel-control-bg-hover);
+}
+
+.carousel-control.prev {
+  left: var(--spacing-3, 1.5rem);
+}
+
+.carousel-control.next {
+  right: var(--spacing-3, 1.5rem);
+}
+
+/* Dot Navigasyon */
+.carousel-dots {
+  position: absolute;
+  bottom: var(--spacing-4, 2rem);
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: var(--carousel-dot-spacing);
+  z-index: 20;
+}
+
+.carousel-dot {
+  width: var(--carousel-dot-size);
+  height: var(--carousel-dot-size);
+  border-radius: 50%;
+  background-color: var(--carousel-dot-color);
+  cursor: pointer;
+  transition: all var(--transition-duration, 0.3s) ease;
+  border: none;
+  padding: 0;
+}
+
+.carousel-dot.active {
+  background-color: var(--carousel-dot-active-color);
+  width: var(--carousel-dot-active-size);
+  height: var(--carousel-dot-active-size);
+}
+
+/* ==============================================
+   CAROUSEL ÇEŞİTLERİ
+   ============================================== */
+
+/* 1. FADE EFFECT CAROUSEL */
+.carousel.fade .carousel-slides {
+  transition: none;
+}
+
+.carousel.fade .carousel-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  z-index: 1;
+  transition: opacity var(--carousel-transition-duration) var(--carousel-transition-timing);
+}
+
+.carousel.fade .carousel-slide.active {
+  opacity: 1;
+  z-index: 5;
+}
+
+/* 2. MULTI-ITEM CAROUSEL */
+.carousel.multi-item .carousel-slides {
+  gap: var(--carousel-multi-gap);
+  padding: 0 var(--spacing-3, 1.5rem);
+}
+
+.carousel.multi-item .carousel-slide {
+  flex: 0 0 calc(33.333% - (var(--carousel-multi-gap) * 2 / 3));
+  border-radius: var(--border-radius, 0.5rem);
+  box-shadow: var(--shadow-md, 0 4px 12px rgba(0, 0, 0, 0.08));
+  overflow: hidden;
+}
+
+.carousel.multi-item.items-2 .carousel-slide {
+  flex: 0 0 calc(50% - (var(--carousel-multi-gap) / 2));
+}
+
+.carousel.multi-item.items-4 .carousel-slide {
+  flex: 0 0 calc(25% - (var(--carousel-multi-gap) * 3 / 4));
+}
+
+/* 3. THUMBNAIL CAROUSEL */
+.carousel-thumbnails {
+  display: flex;
+  gap: var(--carousel-thumbnail-gap);
+  padding: var(--spacing-3, 1.5rem);
+  overflow-x: auto;
+  scrollbar-width: none; /* Firefox */
+}
+
+.carousel-thumbnails::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}
+
+.carousel-thumbnail {
+  flex: 0 0 var(--carousel-thumbnail-size);
+  height: var(--carousel-thumbnail-size);
+  border-radius: calc(var(--carousel-radius) / 2);
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  border: 2px solid transparent;
+  transition: all var(--transition-duration, 0.3s) ease;
+}
+
+.carousel-thumbnail.active {
+  border-color: var(--primary-color, #0055a4);
+  transform: scale(1.05);
+}
+
+.carousel-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 4. CARD CAROUSEL */
+.carousel.card-carousel {
+  height: auto;
+  padding: var(--spacing-4, 2rem) 0;
+}
+
+.carousel.card-carousel .carousel-slide {
+  height: auto;
+  padding: 0 var(--spacing-2, 1rem);
+}
+
+.carousel-card {
+  background-color: var(--surface-color, #fff);
+  border-radius: var(--border-radius, 0.5rem);
+  box-shadow: var(--shadow-md, 0 4px 12px rgba(0, 0, 0, 0.08));
+  overflow: hidden;
+  height: 100%;
+}
+
+.carousel-card-img {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.carousel-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-duration, 0.3s) ease;
+}
+
+.carousel-card:hover .carousel-card-img img {
+  transform: scale(1.05);
+}
+
+.carousel-card-body {
+  padding: var(--spacing-3, 1.5rem);
+}
+
+.carousel-card-title {
+  font-size: var(--h4-font-size, 1.5rem);
+  font-weight: var(--font-weight-bold, 700);
+  margin-bottom: var(--spacing-2, 1rem);
+}
+
+.carousel-card-text {
+  color: var(--text-muted, #6c757d);
+  margin-bottom: var(--spacing-3, 1.5rem);
+}
+
+/* ==============================================
+   DUYARLI TASARIM (RESPONSIVE)
+   ============================================== */
+@media (max-width: 991.98px) {
+  :root {
+    --carousel-height: 450px;
+    --carousel-content-padding: var(--spacing-4, 2rem);
+  }
+  
+  .carousel-title {
+    font-size: var(--h2-font-size, 2rem);
+  }
+  
+  .carousel-multi-item .carousel-slide {
+    flex: 0 0 calc(50% - (var(--carousel-multi-gap) / 2));
+  }
+  
+  .carousel.multi-item.items-4 .carousel-slide {
+    flex: 0 0 calc(33.333% - (var(--carousel-multi-gap) * 2 / 3));
+  }
+}
+
+@media (max-width: 767.98px) {
+  :root {
+    --carousel-height: var(--carousel-mobile-height);
+    --carousel-content-padding: var(--carousel-content-mobile-padding);
+    --carousel-control-size: 36px;
+    --carousel-dot-size: 8px;
+    --carousel-dot-active-size: 10px;
+  }
+  
+  .carousel-title {
+    font-size: var(--h3-font-size, 1.75rem);
+    margin-bottom: var(--spacing-2, 1rem);
+  }
+  
+  .carousel-description {
+    font-size: var(--font-size-base, 1rem);
+    margin-bottom: var(--spacing-3, 1.5rem);
+  }
+  
+  .carousel-buttons {
+    flex-direction: column;
+    gap: var(--spacing-1, 0.5rem);
+  }
+  
+  .carousel-control {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .carousel-control.prev {
+    left: var(--spacing-2, 1rem);
+  }
+  
+  .carousel-control.next {
+    right: var(--spacing-2, 1rem);
+  }
+  
+  .carousel.multi-item .carousel-slide,
+  .carousel.multi-item.items-2 .carousel-slide,
+  .carousel.multi-item.items-4 .carousel-slide {
+    flex: 0 0 calc(100% - var(--carousel-multi-gap));
+  }
+}
+
+/* ==============================================
+   ERİŞİLEBİLİRLİK AYARLARI
+   ============================================== */
+html[data-reduced-motion="true"] .carousel-slides,
+html[data-reduced-motion="true"] .carousel-slide,
+html[data-reduced-motion="true"] .carousel-btn,
+html[data-reduced-motion="true"] .carousel-card-img img {
+  transition: none !important;
+}
+
+html[data-reduced-motion="true"] .carousel-btn:hover {
+  transform: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carousel-slides,
+  .carousel-slide,
+  .carousel-btn,
+  .carousel-card-img img {
+    transition: none !important;
+  }
+  
+  .carousel-btn:hover {
+    transform: none !important;
+  }
+} 

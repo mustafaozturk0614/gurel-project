@@ -1,0 +1,500 @@
+/* =========================================================
+   GÜREL YÖNETİM - HERO SECTION
+   Modern, Split Screen Hero Section
+   Versiyon 2.0 - Tema Sistemine Entegre
+   ========================================================= */
+
+/* ============================================
+   HERO TEMEL STİLLERİ
+   ============================================ */
+.hero-section {
+  position: relative;
+  width: 100%;
+  min-height: 90vh;
+  background-color: var(--background-color);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  margin-top: calc(var(--header-height) * -1);
+  padding-top: var(--header-height);
+}
+
+.hero-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  z-index: var(--z-base);
+}
+
+/* Geniş ekranlar için yatay bölünmüş görünüm */
+@media (min-width: 992px) {
+  .hero-container {
+    flex-direction: row;
+  }
+}
+
+/* ============================================
+   HERO BAŞLIK VE METİN ALANI
+   ============================================ */
+.hero-content {
+  position: relative;
+  width: 100%;
+  padding: var(--spacing-8) var(--spacing-5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: var(--z-base);
+}
+
+/* Ana başlık */
+.hero-title {
+  font-size: var(--h1-font-size-mobile);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  margin-bottom: var(--spacing-4);
+  color: var(--text-color);
+  position: relative;
+  max-width: 800px;
+}
+
+/* Alt başlık */
+.hero-subtitle {
+  font-size: var(--font-size-xl-mobile);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-base);
+  margin-bottom: var(--spacing-6);
+  color: var(--text-muted);
+  max-width: 700px;
+}
+
+/* Vurgulanmış metin */
+.hero-highlight {
+  color: var(--primary-color);
+  position: relative;
+  display: inline-block;
+}
+
+/* Vurgulanan metin altı çizgi */
+.hero-highlight::after {
+  content: "";
+  position: absolute;
+  bottom: 0.1em;
+  left: 0;
+  width: 100%;
+  height: 0.2em;
+  background-color: var(--primary-color);
+  opacity: 0.3;
+  border-radius: var(--border-radius-sm);
+  z-index: -1;
+}
+
+/* Buton konteyneri */
+.hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-3);
+  margin-top: var(--spacing-5);
+}
+
+/* Ana buton */
+.hero-btn-primary {
+  background-color: var(--primary-color);
+  color: var(--text-on-primary);
+  border: none;
+  border-radius: var(--border-radius-md);
+  padding: var(--btn-padding-y) var(--btn-padding-x);
+  font-size: var(--btn-font-size);
+  font-weight: var(--btn-font-weight);
+  cursor: pointer;
+  transition: var(--transition-all);
+  text-align: center;
+  text-decoration: none;
+  box-shadow: var(--shadow-md);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-2);
+}
+
+.hero-btn-primary:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* İkincil buton */
+.hero-btn-secondary {
+  background-color: transparent;
+  color: var(--text-color);
+  border: var(--border-width-md) solid var(--primary-color);
+  border-radius: var(--border-radius-md);
+  padding: calc(var(--btn-padding-y) - var(--border-width-md)) var(--btn-padding-x);
+  font-size: var(--btn-font-size);
+  font-weight: var(--btn-font-weight);
+  cursor: pointer;
+  transition: var(--transition-all);
+  text-align: center;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-2);
+}
+
+.hero-btn-secondary:hover {
+  background-color: var(--primary-color);
+  color: var(--text-on-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Büyük ekranlar için uyarlanmış stiller */
+@media (min-width: 992px) {
+  .hero-content {
+    padding: var(--spacing-10) var(--spacing-7);
+    width: 50%;
+  }
+  
+  .hero-title {
+    font-size: var(--h1-font-size);
+  }
+  
+  .hero-subtitle {
+    font-size: var(--font-size-xl);
+  }
+}
+
+/* ============================================
+   HERO SPLİT SCREEN - İŞ KOLLARI
+   ============================================ */
+.hero-split {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Geniş ekranlarda yatay düzenleme */
+@media (min-width: 992px) {
+  .hero-split {
+    width: 50%;
+    flex-direction: row;
+  }
+}
+
+/* İş kolu paneli (her bir kart) */
+.business-panel {
+  position: relative;
+  flex: 1;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: var(--spacing-6) var(--spacing-5);
+  overflow: hidden;
+  transition: var(--transition-all);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* İş kolu paneli hover efekti */
+.business-panel:hover {
+  flex: 1.2;
+}
+
+/* İş kolu arkaplan paneli */
+.business-panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.2;
+  z-index: -1;
+  transition: var(--transition-transform), opacity var(--transition-duration-slow) var(--transition-timing-cubic);
+}
+
+.business-panel:hover::before {
+  opacity: 0.3;
+  transform: scale(1.05);
+}
+
+/* Apartman yönetimi paneli */
+.business-panel.apartment {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  color: var(--text-on-primary);
+}
+
+.business-panel.apartment::before {
+  background-image: url('../assets/images/apartment-management.jpg');
+}
+
+/* Mülk yönetimi paneli */
+.business-panel.property {
+  background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
+  color: var(--text-on-primary);
+}
+
+.business-panel.property::before {
+  background-image: url('../assets/images/property-management.jpg');
+}
+
+/* Panel içeriği */
+.panel-content {
+  z-index: 2;
+  text-align: center;
+  max-width: 400px;
+}
+
+/* Panel başlığı */
+.panel-title {
+  font-size: var(--h3-font-size-mobile);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--spacing-4);
+  position: relative;
+  display: inline-block;
+}
+
+/* Panel alt başlığı */
+.panel-subtitle {
+  font-size: var(--font-size-md);
+  margin-bottom: var(--spacing-4);
+  opacity: 0.9;
+}
+
+/* Panel ikonu */
+.panel-icon {
+  font-size: 3rem;
+  margin-bottom: var(--spacing-4);
+  transition: var(--transition-transform);
+}
+
+.business-panel:hover .panel-icon {
+  transform: scale(1.1);
+}
+
+/* Panel CTA (Daha Fazla) butonu */
+.panel-cta {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: var(--text-on-primary);
+  border: none;
+  border-radius: var(--border-radius-pill);
+  padding: var(--btn-padding-y-sm) var(--btn-padding-x);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: var(--transition-all);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.panel-cta:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Büyük ekranlar için uyarlanmış stiller */
+@media (min-width: 992px) {
+  .business-panel {
+    padding: var(--spacing-6);
+    min-height: 100%;
+  }
+  
+  .panel-title {
+    font-size: var(--h3-font-size);
+  }
+  
+  .panel-subtitle {
+    font-size: var(--font-size-lg);
+  }
+}
+
+/* ============================================
+   HERO ARKA PLAN VE DEKOR ÖĞELERİ
+   ============================================ */
+/* Arka plan dekoratif dalgalar */
+.hero-bg-waves {
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  z-index: 1;
+}
+
+.hero-bg-waves svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 94px;
+}
+
+.hero-bg-waves .shape-fill {
+  fill: var(--background-alt);
+}
+
+/* Sağ üst köşe dekoratif eleman */
+.hero-decoration {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 120px;
+  height: 120px;
+  border-radius: var(--border-radius-circle);
+  background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+  opacity: 0.1;
+  filter: blur(40px);
+  z-index: 0;
+}
+
+/* Sol alt köşe dekoratif eleman */
+.hero-decoration-2 {
+  position: absolute;
+  bottom: 50px;
+  left: 20px;
+  width: 80px;
+  height: 80px;
+  border-radius: var(--border-radius-circle);
+  background: linear-gradient(135deg, var(--secondary-light), var(--secondary-color));
+  opacity: 0.1;
+  filter: blur(30px);
+  z-index: 0;
+}
+
+/* ============================================
+   HERO VİDEO ARKAPLAN
+   ============================================ */
+.hero-video-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.hero-video-bg::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, 
+    rgba(var(--primary-rgb), 0.2),
+    rgba(var(--secondary-rgb), 0.2));
+  z-index: 1;
+}
+
+.hero-video-bg video {
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  object-fit: cover;
+}
+
+/* ============================================
+   ANİMASYONLAR
+   ============================================ */
+@keyframes fadeInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    transform: translateX(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Animasyon uygulama */
+.hero-title {
+  animation: fadeInUp var(--animation-duration-fast) var(--animation-function) forwards;
+  animation-delay: 0.2s;
+  opacity: 0;
+}
+
+.hero-subtitle {
+  animation: fadeInUp var(--animation-duration-fast) var(--animation-function) forwards;
+  animation-delay: 0.4s;
+  opacity: 0;
+}
+
+.hero-cta {
+  animation: fadeInUp var(--animation-duration-fast) var(--animation-function) forwards;
+  animation-delay: 0.6s;
+  opacity: 0;
+}
+
+.business-panel.apartment {
+  animation: fadeInRight var(--animation-duration-fast) var(--animation-function) forwards;
+  animation-delay: 0.8s;
+  opacity: 0;
+}
+
+.business-panel.property {
+  animation: fadeInLeft var(--animation-duration-fast) var(--animation-function) forwards;
+  animation-delay: 1s;
+  opacity: 0;
+}
+
+/* Erişilebilirlik için animasyonları devre dışı bırakma */
+@media (prefers-reduced-motion: reduce) {
+  .hero-title,
+  .hero-subtitle,
+  .hero-cta,
+  .business-panel.apartment,
+  .business-panel.property {
+    animation: none;
+    opacity: 1;
+  }
+} 

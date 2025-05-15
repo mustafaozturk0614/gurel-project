@@ -1,0 +1,374 @@
+/* =========================================================
+   GÜREL YÖNETİM - 3D FLIP PANEL KARTLARI
+   Hover ile dönen 3D panel kartları
+   Versiyon 1.0 - 2024
+   ========================================================= */
+
+/* ==============================================
+   FLIP PANEL DEĞİŞKENLERİ
+   ============================================== */
+:root {
+  /* Flip Panel Değişkenleri */
+  --flip-panel-height: 300px;
+  --flip-panel-radius: var(--border-radius-lg, 1rem);
+  --flip-panel-perspective: 1500px;
+  --flip-panel-transition: 0.8s;
+  --flip-panel-transition-function: var(--transition-function-special, cubic-bezier(0.16, 1, 0.3, 1));
+  --flip-shadow: 0 15px 35px rgba(var(--dark-rgb, 0, 0, 0), 0.2);
+  
+  /* Özel Arka Plan Opaklık Değerleri */
+  --flip-front-overlay: rgba(var(--dark-rgb, 0, 0, 0), 0.3);
+  --flip-back-overlay: rgba(var(--dark-rgb, 0, 0, 0), 0.7);
+  
+  /* İçerik Konumlandırma */
+  --flip-content-padding: var(--spacing-4, 2rem);
+  
+  /* Çerçeve Stilleri */
+  --flip-border-width: 2px;
+  --flip-border-color: rgba(var(--white-rgb, 255, 255, 255), 0.2);
+}
+
+/* ==============================================
+   FLIP PANEL CONTAINER
+   ============================================== */
+.flip-panels {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--spacing-4, 2rem);
+  padding: var(--spacing-3, 1.5rem);
+}
+
+/* ==============================================
+   FLIP PANEL TEMEL YAPISI
+   ============================================== */
+.flip-panel {
+  position: relative;
+  width: 100%;
+  height: var(--flip-panel-height);
+  perspective: var(--flip-panel-perspective);
+  border-radius: var(--flip-panel-radius);
+  cursor: pointer;
+}
+
+.flip-panel-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform var(--flip-panel-transition) var(--flip-panel-transition-function);
+  transform-style: preserve-3d;
+  border-radius: var(--flip-panel-radius);
+  box-shadow: var(--flip-shadow);
+}
+
+/* Hover veya aktif durumlarda dönme efekti */
+.flip-panel:hover .flip-panel-inner,
+.flip-panel.active .flip-panel-inner {
+  transform: rotateY(180deg);
+}
+
+/* Ön ve arka yüz ortak stiller */
+.flip-panel-front,
+.flip-panel-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: var(--flip-panel-radius);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: var(--flip-content-padding);
+  text-align: center;
+  border: var(--flip-border-width) solid var(--flip-border-color);
+}
+
+/* Ön yüz stilleri */
+.flip-panel-front {
+  background-size: cover;
+  background-position: center;
+  color: var(--white, #fff);
+  z-index: 2;
+}
+
+/* Arka yüz stilleri - Y ekseninde 180 derece döndürülmüş */
+.flip-panel-back {
+  background-color: var(--surface-color, #fff);
+  color: var(--text-color, #333);
+  transform: rotateY(180deg);
+  z-index: 1;
+}
+
+/* Overlay ile içeriği vurgulamak */
+.flip-panel-front::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--flip-front-overlay);
+  z-index: -1;
+  border-radius: var(--flip-panel-radius);
+}
+
+.flip-panel-back::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--flip-back-overlay);
+  z-index: -1;
+  border-radius: var(--flip-panel-radius);
+  opacity: 0.05;
+}
+
+/* ==============================================
+   FLIP PANEL İÇERİK STİLLERİ
+   ============================================== */
+.flip-panel-icon {
+  font-size: 3rem;
+  margin-bottom: var(--spacing-3, 1.5rem);
+  color: var(--white, #fff);
+  background: rgba(var(--white-rgb, 255, 255, 255), 0.2);
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.flip-panel-title {
+  font-size: var(--h3-font-size, 1.75rem);
+  font-weight: var(--font-weight-bold, 700);
+  margin-bottom: var(--spacing-2, 1rem);
+  position: relative;
+}
+
+.flip-panel-title::after {
+  content: '';
+  position: absolute;
+  bottom: -0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 3px;
+  background-color: var(--primary-color, #0055a4);
+  border-radius: 2px;
+}
+
+.flip-panel-back .flip-panel-title {
+  font-size: var(--h4-font-size, 1.5rem);
+  margin-bottom: var(--spacing-3, 1.5rem);
+}
+
+.flip-panel-front .flip-panel-description {
+  font-size: var(--font-size-lg, 1.125rem);
+  margin-bottom: 0;
+  font-weight: var(--font-weight-medium, 500);
+}
+
+.flip-panel-back .flip-panel-description {
+  font-size: var(--font-size-base, 1rem);
+  margin-bottom: var(--spacing-3, 1.5rem);
+  line-height: var(--line-height-base, 1.6);
+}
+
+/* ==============================================
+   FLIP PANEL VARYASYONLARI
+   ============================================== */
+/* Y Ekseni Dönüşü (Varsayılan) */
+.flip-panel.flip-y .flip-panel-inner {
+  transform: rotateY(0);
+}
+
+.flip-panel.flip-y:hover .flip-panel-inner,
+.flip-panel.flip-y.active .flip-panel-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-panel.flip-y .flip-panel-back {
+  transform: rotateY(180deg);
+}
+
+/* X Ekseni Dönüşü */
+.flip-panel.flip-x .flip-panel-inner {
+  transform: rotateX(0);
+}
+
+.flip-panel.flip-x:hover .flip-panel-inner,
+.flip-panel.flip-x.active .flip-panel-inner {
+  transform: rotateX(180deg);
+}
+
+.flip-panel.flip-x .flip-panel-back {
+  transform: rotateX(180deg);
+}
+
+/* Buton Stili */
+.flip-panel-btn {
+  padding: var(--btn-padding-y, 0.75rem) var(--btn-padding-x, 1.5rem);
+  background-color: var(--primary-color, #0055a4);
+  color: var(--text-on-primary, #fff);
+  border: none;
+  border-radius: var(--btn-border-radius, 0.5rem);
+  font-weight: var(--font-weight-medium, 500);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all var(--transition-duration, 0.3s) ease;
+}
+
+.flip-panel-btn:hover {
+  background-color: var(--primary-dark, #003c7d);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(var(--primary-rgb, 0, 85, 164), 0.4);
+}
+
+.flip-panel-btn i {
+  font-size: 0.875rem;
+  transition: transform 0.2s ease;
+}
+
+.flip-panel-btn:hover i {
+  transform: translateX(4px);
+}
+
+/* ==============================================
+   FLIP PANEL TEMA RENK VARYASYONLARI
+   ============================================== */
+.flip-panel.primary .flip-panel-title::after {
+  background-color: var(--primary-color, #0055a4);
+}
+
+.flip-panel.primary .flip-panel-btn {
+  background-color: var(--primary-color, #0055a4);
+}
+
+.flip-panel.secondary .flip-panel-title::after {
+  background-color: var(--secondary-color, #ea8600);
+}
+
+.flip-panel.secondary .flip-panel-btn {
+  background-color: var(--secondary-color, #ea8600);
+}
+
+.flip-panel.accent .flip-panel-title::after {
+  background-color: var(--accent-color, #f8c100);
+}
+
+.flip-panel.accent .flip-panel-btn {
+  background-color: var(--accent-color, #f8c100);
+  color: var(--dark, #212529);
+}
+
+/* ==============================================
+   FLIP PANEL LİSTE ÖĞELER
+   ============================================== */
+.flip-panel-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--spacing-3, 1.5rem);
+  text-align: left;
+  width: 100%;
+}
+
+.flip-panel-list li {
+  padding: 0.5rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-bottom: 1px solid rgba(var(--gray-rgb, 173, 181, 189), 0.2);
+}
+
+.flip-panel-list li:last-child {
+  border-bottom: none;
+}
+
+.flip-panel-list i {
+  color: var(--primary-color, #0055a4);
+  font-size: var(--font-size-sm, 0.875rem);
+}
+
+.flip-panel.secondary .flip-panel-list i {
+  color: var(--secondary-color, #ea8600);
+}
+
+.flip-panel.accent .flip-panel-list i {
+  color: var(--accent-color, #f8c100);
+}
+
+/* ==============================================
+   RESPONSIVE AYARLAR
+   ============================================== */
+@media (max-width: 991.98px) {
+  .flip-panels {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
+
+@media (max-width: 767.98px) {
+  :root {
+    --flip-panel-height: 280px;
+  }
+
+  .flip-panel-title {
+    font-size: var(--h4-font-size, 1.5rem);
+  }
+
+  .flip-panel-icon {
+    width: 70px;
+    height: 70px;
+    font-size: 2.5rem;
+  }
+}
+
+/* Cihaz özelliklerine göre hover yerine tıklama için */
+@media (hover: none) {
+  .flip-panel:hover .flip-panel-inner {
+    transform: none;
+  }
+
+  .flip-panel.active .flip-panel-inner {
+    transform: rotateY(180deg);
+  }
+
+  .flip-panel.flip-x.active .flip-panel-inner {
+    transform: rotateX(180deg);
+  }
+}
+
+/* ==============================================
+   ERİŞİLEBİLİRLİK AYARLARI
+   ============================================== */
+html[data-reduced-motion="true"] .flip-panel-inner,
+html[data-reduced-motion="true"] .flip-panel-btn,
+html[data-reduced-motion="true"] .flip-panel-btn i {
+  transition: none !important;
+}
+
+html[data-reduced-motion="true"] .flip-panel:hover .flip-panel-btn,
+html[data-reduced-motion="true"] .flip-panel-btn:hover i {
+  transform: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flip-panel-inner,
+  .flip-panel-btn,
+  .flip-panel-btn i {
+    transition: none !important;
+  }
+
+  .flip-panel:hover .flip-panel-btn,
+  .flip-panel-btn:hover i {
+    transform: none !important;
+  }
+} 

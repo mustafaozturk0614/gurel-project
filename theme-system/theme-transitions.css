@@ -413,10 +413,74 @@
    =========================================== */
 /* Tema değişikliklerinde geçiş efekti */
 .theme-transition {
-  transition: background-color var(--transition-duration-slow) ease,
-              color var(--transition-duration-slow) ease,
-              border-color var(--transition-duration) ease,
-              box-shadow var(--transition-duration) ease;
+  transition: background-color var(--transition-duration) var(--transition-function), 
+              color var(--transition-duration) var(--transition-function),
+              border-color calc(var(--transition-duration) - 0.1s) var(--transition-function),
+              box-shadow calc(var(--transition-duration) - 0.05s) var(--transition-function);
+}
+
+/* Tema geçişlerinde tüm body ve sayfa elemanları için geçiş efektleri */
+html.theme-transition,
+html.theme-transition body,
+html.theme-transition .card,
+html.theme-transition .service-box,
+html.theme-transition .team-card,
+html.theme-transition .business-card,
+html.theme-transition .patreon-header,
+html.theme-transition .navbar,
+html.theme-transition .footer,
+html.theme-transition .shock-footer,
+html.theme-transition input,
+html.theme-transition textarea,
+html.theme-transition select,
+html.theme-transition button:not(.btn-primary):not(.btn-secondary),
+html.theme-transition .form-control {
+  transition: background-color 0.5s ease, 
+              color 0.3s ease, 
+              border-color 0.3s ease,
+              box-shadow 0.3s ease;
+}
+
+/* Koyu tema için özel geçiş efektleri */
+html[data-theme="dark"] {
+  transition: background-color 0.5s ease;
+}
+
+html[data-theme="dark"] body {
+  transition: background-color 0.5s ease, color 0.3s ease;
+}
+
+/* Tema değişimi sırasında görsel bozuklukları önlemek için overlay */
+.theme-change-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transition: opacity 0.3s ease;
+}
+
+html.theme-changing .theme-change-overlay {
+  opacity: 1;
+}
+
+/* Tema geçişi sırasında özel animasyonlar */
+@keyframes theme-fade {
+  0% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Koyu tema geçişinde body animasyonu */
+html.theme-transition[data-theme="dark"] body {
+  animation: theme-fade 0.5s ease forwards;
 }
 
 /* Tema değiştir düğmesi */
@@ -718,4 +782,17 @@ input:checked + .theme-toggle-slider:before {
   .animation-paused {
     animation-play-state: paused !important;
   }
+}
+
+/* transition-theme.css içeriği */
+html {
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+body, header, footer, .card, .service-box, .team-card, 
+button, input, textarea, select, .form-control {
+  transition: background-color 0.5s ease, 
+              color 0.5s ease, 
+              border-color 0.5s ease, 
+              box-shadow 0.5s ease;
 } 

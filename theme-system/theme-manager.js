@@ -71,25 +71,48 @@ class ThemeManager {
    * Kullanıcı ayarlarını yükler
    */
   loadSettings() {
-    const keys = ['themeMode', 'colorTheme', 'contrastLevel', 'fontSizePercent', 'reducedMotion'];
-    
-    keys.forEach(key => {
-      const value = ThemeUtils.getFromStorage(key);
-      if (value !== null) {
-        // Sayısal değerleri dönüştür
-        if (key === 'contrastLevel' || key === 'fontSizePercent') {
-          this.settings[key] = parseInt(value);
-        } 
-        // Boolean değerleri dönüştür
-        else if (key === 'reducedMotion') {
-          this.settings[key] = value === 'true';
-        }
-        // Diğer string değerler
-        else {
-          this.settings[key] = value;
-        }
+    try {
+      // Kaydedilmiş ayarları oku
+      this.settings = {
+        themeMode: ThemeUtils.getFromStorage('themeMode', 'light'), // Varsayılan: light
+        colorTheme: ThemeUtils.getFromStorage('colorTheme', 'blue'), // Varsayılan: blue
+        contrastLevel: parseInt(ThemeUtils.getFromStorage('contrastLevel', '0')), // Varsayılan: normal
+        fontSizePercent: parseInt(ThemeUtils.getFromStorage('fontSizePercent', '100')), // Varsayılan: 100%
+        reducedMotion: ThemeUtils.getFromStorage('reducedMotion') === 'true' // Varsayılan: false
+      };
+      
+      // Önemli: Tema modunu hemen uygula
+      document.documentElement.setAttribute('data-theme', this.settings.themeMode === 'auto' ? 
+        (this.isNightTime() ? 'dark' : 'light') : 
+        this.settings.themeMode);
+      
+      // Dark mode sınıfını body'ye uygula
+      const isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
+      if (isDarkMode) {
+        document.body.classList.add('dark-mode');
+      } else {
+        document.body.classList.remove('dark-mode');
       }
-    });
+      
+      // Diğer tema ayarlarını uygula
+      document.documentElement.setAttribute('data-color-theme', this.settings.colorTheme);
+      document.documentElement.setAttribute('data-reduced-motion', this.settings.reducedMotion.toString());
+      document.documentElement.style.fontSize = this.settings.fontSizePercent + '%';
+      
+      // Kontrast sınıflarını uygula
+      document.body.classList.remove('contrast-normal', 'contrast-mild', 'contrast-medium', 'contrast-high');
+      document.body.classList.add(
+        ['contrast-normal', 'contrast-mild', 'contrast-medium', 'contrast-high'][this.settings.contrastLevel]
+      );
+      
+      this.log('✅ Tema ayarları başarıyla yüklendi!', this.settings);
+      return this.settings;
+    } catch (error) {
+      if (this.options && this.options.debug) {
+        console.log('[ThemeManager] ❌ Tema ayarları yüklenirken hata:', error);
+      }
+      return null;
+    }
   }
 
   /**
@@ -97,63 +120,83 @@ class ThemeManager {
    * @param {string} mode - Tema modu
    */
   setThemeMode(mode) {
+    // Geçerlilik kontrolü
     if (!['light', 'dark', 'auto', 'system'].includes(mode)) {
       console.error(`Geçersiz tema modu: ${mode}`);
-      return;
+      return false;
     }
     
-    // Önceki modu kaydet
-    const prevMode = this.settings.themeMode;
+    // Tema değişimi sırasında geçiş için sınıf ekle
+    document.documentElement.classList.add('theme-transition', 'theme-changing');
     
-    // Yeni modu kaydet
-    this.settings.themeMode = mode;
-    ThemeUtils.saveToStorage('themeMode', mode);
+    // Önceki tema 
+    const prevTheme = document.documentElement.getAttribute('data-theme');
+    let newTheme = mode;
     
-    // Otomatik mod zamanlayıcısını kontrol et
-    if (mode === 'auto') {
-      this.startAutoModeTimer();
-    } else if (this._autoModeTimer) {
-      clearInterval(this._autoModeTimer);
-      this._autoModeTimer = null;
-    }
-    
-    // Tema modunu uygula
+    // Tema modunu ayarla
     switch (mode) {
       case 'light':
+        newTheme = 'light';
         document.documentElement.setAttribute('data-theme', 'light');
         document.body.classList.remove('dark-mode');
         break;
+        
       case 'dark':
+        newTheme = 'dark';
         document.documentElement.setAttribute('data-theme', 'dark');
         document.body.classList.add('dark-mode');
+        
+        // Koyu tema için sayfa içeriğini karartma
+        document.querySelectorAll('.card, .service-box, .team-card, .business-card')
+          .forEach(el => el.style.transition = 'background-color 0.5s ease, color 0.3s ease');
         break;
-      case 'auto': {
-        const currentHour = new Date().getHours();
-        const isDark = (currentHour >= 19 || currentHour < 7);
-        document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+        
+      case 'auto':
+        // Günün saatine göre açık veya koyu tema
+        const isDark = this.isNightTime();
+        newTheme = isDark ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', newTheme);
         document.body.classList.toggle('dark-mode', isDark);
+        
+        // Otomatik modda zamanlamalı kontrol başlat
+        this.startAutoModeTimer();
         break;
-      }
-      case 'system': {
-        const prefersDarkMode = ThemeUtils.prefersDarkTheme();
-        document.documentElement.setAttribute('data-theme', prefersDarkMode ? 'dark' : 'light');
-        document.body.classList.toggle('dark-mode', prefersDarkMode);
+        
+      case 'system':
+        // Sistem temasına göre açık veya koyu tema
+        const prefersDark = ThemeUtils.prefersDarkTheme();
+        newTheme = prefersDark ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        document.body.classList.toggle('dark-mode', prefersDark);
         break;
-      }
     }
     
-    // Tema değişikliği olayını tetikle
+    // Ayarları güncelle ve kaydet
+    this.settings.themeMode = mode;
+    ThemeUtils.saveToStorage('themeMode', mode);
+    
+    // Geçiş sınıfını belirli bir süre sonra kaldır
+    setTimeout(() => {
+      document.documentElement.classList.remove('theme-changing');
+      
+      // DOM güncellemesini zorla
+    setTimeout(() => {
+      document.documentElement.classList.remove('theme-transition');
+      }, 500);
+    }, 300);
+    
+    // Tema değişim olayını tetikle
     this.emit('themeModeChanged', mode);
     
-    // Erişilebilirlik bildirimi
-    const modeName = {
-      'light': 'Açık',
-      'dark': 'Koyu',
-      'auto': 'Otomatik',
-      'system': 'Sistem'
-    }[mode] || mode;
+    // Özelleştirilmiş olay gönder
+    ThemeUtils.dispatchCustomEvent('themeChanged', { 
+      oldTheme: prevTheme, 
+      newTheme: newTheme, 
+      mode: mode
+    });
     
-    ThemeUtils.announceToScreenReader(`${modeName} tema modu etkinleştirildi`);
+    this.log(`Tema modu değiştirildi: ${mode} -> ${newTheme}`);
+    return true;
   }
   
   /**
@@ -548,6 +591,24 @@ class ThemeManager {
           console.error(`Event handler error for ${eventName}:`, error);
         }
       });
+    }
+  }
+
+  // Şu anki saatin gece olup olmadığını kontrol eden yardımcı fonksiyon
+  isNightTime() {
+    const currentHour = new Date().getHours();
+    // Gece modu: Akşam 19:00 - Sabah 7:00 arası
+    return (currentHour >= 19 || currentHour < 7);
+  }
+
+  log(...args) {
+    // Konsol hatalarını önlemek için try-catch bloğu içinde
+    try {
+      if (this.options && this.options.debug) {
+        console.log('[ThemeManager]', ...args);
+      }
+    } catch (error) {
+      // Sessizce hataları görmezden gel
     }
   }
 }

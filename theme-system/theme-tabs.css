@@ -1,0 +1,206 @@
+/* =========================================================
+   GÜREL YÖNETİM - TAB SİSTEMİ CSS
+   Tab yapısı için özel stiller ve animasyonlar
+   Versiyon 1.0 - 2024
+   ========================================================= */
+
+/* ============================================
+   DEĞİŞKENLER (TEMA UYUMLU)
+   ============================================ */
+:root {
+  /* Tab butonları */
+  --tab-btn-padding: 0.6rem 1.2rem;
+  --tab-btn-radius: var(--border-radius, 0.5rem);
+  --tab-btn-bg: rgba(255, 255, 255, 0.1);
+  --tab-btn-bg-active: rgba(var(--primary-rgb, 0, 85, 164), 0.2);
+  --tab-btn-color: rgba(255, 255, 255, 0.8);
+  --tab-btn-color-active: rgba(255, 255, 255, 1);
+  --tab-btn-border: 1px solid rgba(255, 255, 255, 0.15);
+  --tab-btn-border-active: 1px solid rgba(255, 255, 255, 0.3);
+  --tab-btn-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --tab-btn-shadow-active: 0 5px 12px rgba(0, 0, 0, 0.15);
+  
+  /* Tab içerikleri */
+  --tab-content-transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
+  --tab-indicator-color: var(--primary-color, #0055a4);
+  --tab-gap: 0.75rem;
+}
+
+/* ============================================
+   TAB KONTEYNERI
+   ============================================ */
+.hero-section-label {
+  display: block;
+  margin-bottom: 0.6rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+}
+
+.hero-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  position: relative;
+  z-index: 2;
+}
+
+/* Tab Butonları */
+.hero-tab-btn {
+  padding: var(--tab-btn-padding);
+  border-radius: var(--tab-btn-radius);
+  background: var(--tab-btn-bg);
+  color: var(--tab-btn-color);
+  border: var(--tab-btn-border);
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  box-shadow: var(--tab-btn-shadow);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-tab-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.hero-tab-btn.active {
+  background: var(--tab-btn-bg-active);
+  color: var(--tab-btn-color-active);
+  border: var(--tab-btn-border-active);
+  box-shadow: var(--tab-btn-shadow-active);
+}
+
+.hero-tab-btn i {
+  font-size: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.hero-tab-btn.active i {
+  transform: scale(1.2);
+  color: var(--accent-color, #f8c100);
+}
+
+/* Işıma efekti */
+.hero-tab-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(120deg, 
+    transparent 0%, 
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.hero-tab-btn:hover::after,
+.hero-tab-btn.active::after {
+  opacity: 1;
+}
+
+/* ============================================
+   TAB İÇERİKLERİ
+   ============================================ */
+.hero-tabs-content {
+  position: relative;
+  min-height: 80px;
+}
+
+.hero-tab-pane {
+  display: none;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: var(--tab-content-transition);
+  position: relative;
+}
+
+.hero-tab-pane.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Sadece aktif tab gösterilsin */
+.hero-tab-pane:not(.active) {
+  display: none !important;
+  pointer-events: none;
+  position: absolute;
+  visibility: hidden;
+}
+
+/* Animasyon ve Geçiş Efektleri */
+@keyframes tabFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-tab-pane.active {
+  animation: tabFadeIn 0.5s ease forwards;
+}
+
+/* ============================================
+   KARARTILMIŞ MOD
+   ============================================ */
+[data-theme="dark"] .hero-tab-btn {
+  --tab-btn-bg: rgba(0, 0, 0, 0.3);
+  --tab-btn-bg-active: rgba(var(--primary-rgb, 0, 85, 164), 0.4);
+  --tab-btn-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* ============================================
+   YÜKSEK KONTRAST MOD
+   ============================================ */
+[data-theme="high-contrast"] .hero-tab-btn {
+  --tab-btn-bg: rgba(0, 0, 0, 0.7);
+  --tab-btn-color: white;
+  --tab-btn-border: 2px solid white;
+  --tab-btn-bg-active: black;
+  --tab-btn-border-active: 2px solid yellow;
+}
+
+/* ============================================
+   DUYARLI TASARIM
+   ============================================ */
+@media (max-width: 767px) {
+  .hero-tabs {
+    flex-direction: row;
+    gap: 0.4rem;
+  }
+  
+  .hero-tab-btn {
+    padding: 0.5rem 0.85rem;
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-tabs {
+    width: 100%;
+  }
+  
+  .hero-tab-btn {
+    flex: 1;
+    justify-content: center;
+    padding: 0.45rem 0.65rem;
+    font-size: 0.7rem;
+  }
+} 

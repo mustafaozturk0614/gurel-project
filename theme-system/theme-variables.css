@@ -1,1158 +1,924 @@
-/* =========================================
- * Gürel Yönetim - Gelişmiş Merkezi Tema Sistemi
- * Sürüm: 4.0.0
- * Son Güncelleme: 2024
- * =========================================*/
-
-/**
- * İÇİNDEKİLER:
- * 1. Kök Değişkenler (Tema Renkleri ve Bileşenler)
- * 2. Tema Modu Değişkenleri (Açık, Koyu, Yüksek Kontrast)
- * 3. Renk Tema Varyasyonları (Mavi, Yeşil, Kırmızı, Turuncu, Mor, Turkuaz, Pembe)
- * 4. Erişilebilirlik Değişkenleri (Font, Hareket, Kontrast)
- * 5. Tipografi Sistemi (Başlıklar, Gövde, İkincil metin)
- * 6. Boşluk ve Mesafe Sistemi (Çerçeveler arası mesafeler)
- * 7. Gölge ve Yükseltme Efektleri
- * 8. Geçiş ve Animasyon Stilleri
- * 9. Duyarlı Tasarım (Responsive) Ayarları
- * 10. Bileşen Temel Stilleri (Butonlar, Kartlar, Form)
- * 11. RTL Dil Desteği
- * 12. Sistem Tema Entegrasyonu
- * 13. Özel Durumlar (Print, Karanlık Mod, Yüksek Kontrast)
- * 14. Yardımcı Sınıflar
- */
-
-/* =========================================
- * 1. Kök Değişkenler (Tema Renkleri ve Bileşenler)
- * =========================================*/
-:root {
-  /* HSL Renk Sistemi */
-  --primary-hue: 210;
-  --primary-saturation: 100%;
-  --primary-lightness: 32%;
-  
-  /* Ana Renkler - HSL Tabanlı */
-  --primary-color: hsl(var(--primary-hue), var(--primary-saturation), var(--primary-lightness));
-  --primary-50: hsl(var(--primary-hue), var(--primary-saturation), 95%);
-  --primary-100: hsl(var(--primary-hue), var(--primary-saturation), 90%);
-  --primary-200: hsl(var(--primary-hue), var(--primary-saturation), 80%);
-  --primary-300: hsl(var(--primary-hue), var(--primary-saturation), 70%);
-  --primary-400: hsl(var(--primary-hue), var(--primary-saturation), 60%);
-  --primary-500: hsl(var(--primary-hue), var(--primary-saturation), 50%);
-  --primary-600: hsl(var(--primary-hue), var(--primary-saturation), 40%);
-  --primary-700: hsl(var(--primary-hue), var(--primary-saturation), 30%);
-  --primary-800: hsl(var(--primary-hue), var(--primary-saturation), 20%);
-  --primary-900: hsl(var(--primary-hue), var(--primary-saturation), 10%);
-
-  /* Semantic Renkler */
-  --success-hue: 142;
-  --error-hue: 354;
-  --warning-hue: 45;
-  --info-hue: 200;
-
-  --success-color: hsl(var(--success-hue), 76%, 36%);
-  --error-color: hsl(var(--error-hue), 70%, 45%);
-  --warning-color: hsl(var(--warning-hue), 100%, 50%);
-  --info-color: hsl(var(--info-hue), 65%, 45%);
-
-  /* Erişilebilirlik Değişkenleri */
-  --focus-ring-color: hsl(var(--primary-hue), var(--primary-saturation), 50%, 0.5);
-  --focus-ring-width: 3px;
-  --focus-ring-offset: 2px;
-  
-  /* WCAG Kontrast Oranları */
-  --min-contrast-ratio: 4.5;
-  --preferred-contrast-ratio: 7;
-  --max-contrast-ratio: 21;
-
-  /* Responsive Container Değerleri */
-  --container-max-width-xs: 100%;
-  --container-max-width-sm: min(540px, 100% - 3rem);
-  --container-max-width-md: min(720px, 100% - 4rem);
-  --container-max-width-lg: min(960px, 100% - 5rem);
-  --container-max-width-xl: min(1140px, 100% - 6rem);
-  --container-max-width-2xl: min(1320px, 100% - 8rem);
-
-  /* Aspect Ratio Değişkenleri */
-  --aspect-square: 1;
-  --aspect-video: 16/9;
-  --aspect-cinema: 21/9;
-  --aspect-portrait: 3/4;
-
-  /* Z-index Katmanları - Geliştirilmiş */
-  --z-negative: -1;
-  --z-elevate: 1;
-  --z-drawer: 200;
-  --z-dropdown: 400;
-  --z-sticky: 600;
-  --z-fixed: 700;
-  --z-modalBackdrop: 800;
-  --z-settings-toggle: 850; /* Setting butonu için yeni z-index */
-  --z-modal: 900;
-  --z-settings-panel: 950; /* Setting panel için yeni z-index */
-  --z-popover: 1000;
-  --z-tooltip: 1100;
-  --z-toast: 1200;
-  
-  /* Klavye Navigasyon Değişkenleri */
-  --focus-visible-box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-color);
-  --focus-visible-outline: none;
-  --focus-visible-offset: var(--focus-ring-offset);
-  
-  /* Ana Renkler */
-  --primary-rgb: 0, 85, 164;
-  --primary-light: #3378bc;
-  --primary-dark: #00448e;
-  
-  /* Yardımcı Renkler */
-  --secondary-color: #ea8600; /* Turuncu renk için güncellendi - Site markası ile uyumlu */
-  --secondary-rgb: 234, 134, 0; /* Turuncu RGB değerlerine güncellendi */
-  --success-rgb: 40, 167, 69;
-  --danger-rgb: 220, 53, 69;
-  --warning-rgb: 255, 193, 7;
-  --info-rgb: 23, 162, 184;
-  
-  /* Nötr Renkler */
-  --white: #ffffff;
-  --gray-100: #f8f9fa;
-  --gray-200: #e9ecef;
-  --gray-300: #dee2e6;
-  --gray-400: #ced4da;
-  --gray-500: #adb5bd;
-  --gray-600: #6c757d;
-  --gray-700: #495057;
-  --gray-800: #343a40;
-  --gray-900: #212529;
-  --black: #000000;
-  
-  /* Arkaplan ve Text (Light Mod Varsayılan) */
-  --background: #ffffff;
-  --background-alt: #f5f7fa;
-  --background-tertiary: #ebeef2;
-  --surface-color: #ffffff;
-  --text-color: #212529;
-  --text-secondary: #495057;
-  --text-tertiary: #6c757d;
-  --text-on-primary: #ffffff;
-  --border-color: #dee2e6;
-  --border-color-light: #eff2f7;
-  
-  /* Bileşen Ayarları */
-  --border-radius-sm: 0.25rem;
-  --border-radius-md: 0.375rem;
-  --border-radius-lg: 0.5rem;
-  --border-radius-xl: 1rem;
-  --border-radius-pill: 50rem;
-  
-  /* Buton Varyasyon Değişkenleri */
-  --btn-hover-brightness: 0.85;
-  --btn-active-brightness: 0.7;
-  --btn-disabled-opacity: 0.65;
-  
-  /* Buton boyutları */
-  --btn-padding-y-sm: 0.25rem;
-  --btn-padding-x-sm: 0.5rem;
-  --btn-padding-y-lg: 0.5rem;
-  --btn-padding-x-lg: 1rem;
-  
-  /* Kart stilleri için ek değişkenler */
-  --card-title-color: var(--text-color);
-  --card-subtitle-color: var(--text-secondary);
-  --card-hover-transform: translateY(-3px);
-  --card-hover-shadow: var(--shadow-lg);
-
-  /* Form element değişkenleri */
-  --input-disabled-bg: var(--gray-200);
-  --input-disabled-color: var(--gray-600);
-  --form-text-color: var(--text-secondary);
-  --form-invalid-color: var(--danger-color);
-  --form-valid-color: var(--success-color);
-  --form-feedback-font-size: var(--font-size-sm);
-
-  /* ---- HEADER DEĞİŞKENLERİ ---- */
-  /* Header Yapısal Değişkenleri */
-  --header-height: 90px;
-  --header-height-scrolled: 70px;
-  --header-height-mini: 55px;
-  --header-logo-height: 80px;
-  --header-logo-height-scrolled: 45px;
-  --header-logo-height-mini: 35px;
-  --header-transition: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  --header-z-index: var(--z-index-fixed);
-  
-  /* Header Arkaplan ve Stiller */
-  --header-bg-transparent: transparent;
-  --header-bg-light: var(--background); 
-  --header-bg-dark: var(--background);
-  --header-bg-highcontrast: var(--background);
-  --header-shadow-light: var(--shadow-sm);
-  --header-shadow-dark: var(--shadow-md);
-  --header-shadow-highcontrast: 0 0 0 2px var(--text-color);
-  
-  /* Header Metin Renkleri */
-  --header-text-light: var(--text-color);
-  --header-text-light-hover: var(--primary-color);
-  --header-text-dark: var(--text-color);
-  --header-text-dark-hover: var(--primary-light);
-  --header-text-transparent: var(--white);
-  --header-text-transparent-hover: var(--white);
-  --header-text-shadow-transparent: 0 1px 2px rgba(0, 0, 0, 0.5);
-  
-  /* Mobil Menü Değişkenleri */
-  --header-mobile-menu-bg: var(--surface-color);
-  --header-mobile-overlay: rgba(0, 0, 0, 0.3);
-  
-  /* ---- HERO BÖLÜMÜ DEĞİŞKENLERİ ---- */
-  /* Hero Yapısal Değişkenleri */
-  --hero-height: 750px;
-  --hero-mobile-height: 100vh;
-  --hero-padding: 6rem 0;
-  --hero-container-max-width: var(--container-xxl);
-  --hero-container-padding: 15px;
-  --hero-split-ratio: 55% 45%;
-  
-  /* Hero İki Kolon Yapısı (Mobil ve Tablet için) */
-  --hero-mobile-split-ratio: 1fr;
-  --hero-tablet-split-ratio: 1fr;
-  
-  /* Hero Görsel ve Arkaplan Değişkenleri */
-  --hero-bg-image: url('../assets/images/hero-bg.jpg');
-  --hero-bg-overlay: linear-gradient(135deg, rgba(var(--primary-rgb), 0.85), rgba(var(--secondary-rgb), 0.75));
-  --hero-bg-overlay-dark: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(var(--primary-rgb), 0.85));
-  --hero-bg-overlay-high-contrast: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.85));
-  
-  /* Hero İçerik Stilleri */
-  --hero-text-color: var(--white);
-  --hero-title-size: 3.5rem;
-  --hero-title-size-tablet: 3rem;
-  --hero-title-size-mobile: 2.5rem;
-  --hero-subtitle-size: 1.5rem;
-  --hero-subtitle-size-tablet: 1.25rem;
-  --hero-subtitle-size-mobile: 1.1rem;
-  --hero-text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  
-  /* Hero İş Kolları Kart Stilleri */
-  --hero-card-bg-light: rgba(255, 255, 255, 0.85);
-  --hero-card-bg-dark: rgba(30, 30, 35, 0.85);
-  --hero-card-bg-high-contrast: rgba(0, 0, 0, 0.95);
-  --hero-card-radius: 1.25rem;
-  --hero-card-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-  --hero-card-shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.15);
-  --hero-card-border-size: 5px;
-  --hero-card-border-size-high-contrast: 8px;
-  --hero-card-transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  
-  /* Hero Rozet (Badge) Stilleri */
-  --hero-badge-bg: rgba(var(--primary-rgb), 0.15);
-  --hero-badge-bg-dark: rgba(var(--primary-rgb), 0.25);
-  --hero-badge-text: var(--primary-color);
-  --hero-badge-text-dark: var(--primary-light);
-  --hero-badge-border-radius: 2rem;
-  
-  /* Hero Animasyon Zamanlamaları */
-  --hero-animation-delay-main: 0.3s;
-  --hero-animation-delay-cards: 0.5s;
-  --hero-animation-duration: 1s;
-}
-
-/* =========================================
- * 2. Tema Modu Değişkenleri (Açık, Koyu, Yüksek Kontrast)
- * =========================================*/
-
-/* Açık Tema (Varsayılan) */
-html[data-theme="light"] {
-  --background: #ffffff;
-  --background-alt: #f5f7fa;
-  --background-tertiary: #ebeef2;
-  --surface-color: #ffffff;
-  --text-color: #212529;
-  --text-secondary: #495057;
-  --text-tertiary: #6c757d;
-  --border-color: #dee2e6;
-  --border-color-light: #eff2f7;
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.05);
-  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.05);
-  
-  
-   
-}
-
-/* Koyu Tema */
-html[data-theme="dark"] {
-  --background: #121212;
-  --background-alt: #1e1e1e;
-  --background-tertiary: #2c2c2c;
-  --surface-color: #242424;
-  --text-color: #e0e0e0;
-  --text-secondary: #b0b0b0;
-  --text-tertiary: #909090;
-  --border-color: #444444;
-  --border-color-light: #333333;
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
-  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.6);
-  
-  /* Koyu temada buton ve elementlerin otomatik renk değişimi */
-  --primary-light: #1c67c9;
-  --primary-dark: #0a4089;
-  --success-color: #1f9a3d;
-  --danger-color: #c42c3b;
-  --warning-color: #e5ad06;
-  --info-color: #138796;
-}
-
-/* Yüksek Kontrast Modu - Açık */
-html[data-theme="light"] body.contrast-high {
-  --background: #ffffff;
-  --background-alt: #f0f0f0;
-  --background-tertiary: #e0e0e0;
-  --surface-color: #ffffff;
-  --text-color: #000000;
-  --text-secondary: #333333;
-  --text-tertiary: #555555;
-  --border-color: #000000;
-  --border-color-light: #000000;
-  --shadow-sm: 0 0 0 1px #000000;
-  --shadow-md: 0 0 0 2px #000000;
-  --shadow-lg: 0 0 0 3px #000000;
-  --shadow-xl: 0 0 0 4px #000000;
-}
-
-/* Yüksek Kontrast Modu - Koyu */
-html[data-theme="dark"] body.contrast-high {
-  --background: #000000;
-  --background-alt: #0f0f0f;
-  --background-tertiary: #1a1a1a;
-  --surface-color: #000000;
-  --text-color: #ffffff;
-  --text-secondary: #eeeeee;
-  --text-tertiary: #dddddd;
-  --border-color: #ffffff;
-  --border-color-light: #ffffff;
-  --shadow-sm: 0 0 0 1px #ffffff;
-  --shadow-md: 0 0 0 2px #ffffff;
-  --shadow-lg: 0 0 0 3px #ffffff;
-  --shadow-xl: 0 0 0 4px #ffffff;
-}
-
-/* =========================================
- * 3. Renk Tema Varyasyonları (Mavi, Yeşil, Kırmızı, Turuncu, Mor, Turkuaz, Pembe)
- * =========================================*/
-
-/* Mavi Tema (Varsayılan) */
-html[data-color-theme="blue"] {
-  --primary-color: #0055a4;
-  --primary-rgb: 0, 85, 164;
-  --primary-light: #3378bc;
-  --primary-dark: #00448e;
-}
-
-/* Yeşil Tema */
-html[data-color-theme="green"] {
-  --primary-color: #188038;
-  --primary-rgb: 24, 128, 56;
-  --primary-light: #27a34a;
-  --primary-dark: #106028;
-}
-
-/* Kırmızı Tema */
-html[data-color-theme="red"] {
-  --primary-color: #d93025;
-  --primary-rgb: 217, 48, 37;
-  --primary-light: #e35d53;
-  --primary-dark: #b32219;
-}
-
-/* Turuncu Tema */
-html[data-color-theme="orange"] {
-  --primary-color: #ea8600;
-  --primary-rgb: 234, 134, 0;
-  --primary-light: #ff9f21;
-  --primary-dark: #c96e00;
-}
-
-/* Mor Tema */
-html[data-color-theme="purple"] {
-  --primary-color: #7b1fa2;
-  --primary-rgb: 123, 31, 162;
-  --primary-light: #9c27b0;
-  --primary-dark: #6a1b9a;
-}
-
-/* Turkuaz Tema */
-html[data-color-theme="teal"] {
-  --primary-color: #009688;
-  --primary-rgb: 0, 150, 136;
-  --primary-light: #26a69a;
-  --primary-dark: #00796b;
-}
-
-/* Pembe Tema */
-html[data-color-theme="pink"] {
-  --primary-color: #e91e63;
-  --primary-rgb: 233, 30, 99;
-  --primary-light: #ec407a;
-  --primary-dark: #c2185b;
-}
-
-/* =========================================
- * 4. Erişilebilirlik Değişkenleri (Font, Hareket, Kontrast)
- * =========================================*/
-
-/* Kontrast Seviyeleri */
-body.contrast-normal {
-  /* Varsayılan kontrast değerleri (yukarıdaki tanımlar) */
-}
-
-body.contrast-mild {
-  --text-color: #000000;
-  --text-secondary: #1a1a1a;
-  --text-tertiary: #333333;
-  --border-color: #444444;
-}
-
-body.contrast-medium {
-  --text-color: #000000;
-  --text-secondary: #000000;
-  --text-tertiary: #111111;
-  --border-color: #000000;
-  --background-alt: #e6e6e6;
-  --background-tertiary: #d6d6d6;
-}
-
-body.contrast-high {
-  /* Yüksek kontrast değerleri (yukarıda tanımlandı) */
-}
-
-/* Azaltılmış Hareket */
-html[data-reduced-motion="true"] {
-  scroll-behavior: auto;
-}
-
-html[data-reduced-motion="true"] *,
-html[data-reduced-motion="true"] *::before,
-html[data-reduced-motion="true"] *::after {
-  animation-duration: 0.001s !important;
-  transition-duration: 0.001s !important;
-}
-
-/* Font Boyutu Ölçekleme */
-html[data-font-size="small"] {
-  /* Varsayılan ayarlar, orijinal boyut font-size'a bağlı */
-}
-
-html[data-font-size="normal"] {
-  /* Varsayılan ayarlar, orijinal boyut font-size'a bağlı */
-}
-
-html[data-font-size="large"] {
-  /* Varsayılan ayarlar, orijinal boyut font-size'a bağlı */
-}
-
-html[data-font-size="xlarge"] {
-  /* Varsayılan ayarlar, orijinal boyut font-size'a bağlı */
-}
-
-/* =========================================
- * 5. Tipografi Sistemi (Başlıklar, Gövde, İkincil metin)
- * =========================================*/
-:root {
-  /* Font Aileleri */
-  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-  --font-family-heading: var(--font-family);
-  --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  
-  /* Font Boyutları */
-  --font-size-xs: 0.75rem;
-  --font-size-sm: 0.875rem;
-  --font-size-base: 1rem;
-  --font-size-lg: 1.125rem;
-  --font-size-xl: 1.25rem;
-  --font-size-2xl: 1.5rem;
-  --font-size-3xl: 1.875rem;
-  --font-size-4xl: 2.25rem;
-  --font-size-5xl: 3rem;
-  --font-size-6xl: 4rem;
-  --font-size-7xl: 5rem;
-  --font-size-8xl: 6rem;
-  --font-size-9xl: 7rem;
-  --font-size-10xl: 8rem;
-  
-  /* Font Ağırlıkları */
-  --font-weight-light: 300;
-  --font-weight-normal: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
-  --font-weight-bold: 700;
-  --font-weight-extrabold: 800;
-  --font-weight-black: 900;
-  --font-weight-extrablack: 1000;
-
-  
-  /* Satır Yükseklikleri */
-  --line-height-none: 1;
-  --line-height-tight: 1.25;
-  --line-height-snug: 1.375;
-  --line-height-normal: 1.5;
-  --line-height-relaxed: 1.625;
-  --line-height-loose: 2;
-  --line-height-superloose: 3;
-  
-  /* Harf Aralıkları */
-  --letter-spacing-tighter: -0.05em;
-  --letter-spacing-tight: -0.025em;
-  --letter-spacing-normal: 0em;
-  --letter-spacing-wide: 0.025em;
-  --letter-spacing-wider: 0.05em;
-  --letter-spacing-widest: 0.1em;
-  --letter-spacing-superwide: 0.2em;
-  
-}
-
-/* Başlıklar */
-h1, .h1 {
-  font-size: var(--font-size-4xl);
-  font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-tight);
-  margin-bottom: 1rem;
-}
-
-h2, .h2 {
-  font-size: var(--font-size-3xl);
-  font-weight: var(--font-weight-semibold);
-  line-height: var(--line-height-tight);
-  margin-bottom: 0.75rem;
-}
-
-h3, .h3 {
-  font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-semibold);
-  line-height: var(--line-height-snug);
-  margin-bottom: 0.75rem;
-}
-
-h4, .h4 {
-  font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-medium);
-  line-height: var(--line-height-snug);
-  margin-bottom: 0.5rem;
-}
-
-h5, .h5 {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-medium);
-  line-height: var(--line-height-normal);
-  margin-bottom: 0.5rem;
-}
-
-h6, .h6 {
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-medium);
-  line-height: var(--line-height-normal);
-  margin-bottom: 0.5rem;
-}
-
-/* Metin */
-p, .text-base {
-  font-size: var(--font-size-base);
-  line-height: var(--line-height-normal);
-  margin-bottom: 1rem;
-}
-
-.text-xs {
-  font-size: var(--font-size-xs);
-}
-
-.text-sm {
-  font-size: var(--font-size-sm);
-}
-
-.text-lg {
-  font-size: var(--font-size-lg);
-}
-
-.text-xl {
-  font-size: var(--font-size-xl);
-}
-
-.text-2xl {
-  font-size: var(--font-size-2xl);
-}
-
-.font-light {
-  font-weight: var(--font-weight-light);
-}
-
-.font-normal {
-  font-weight: var(--font-weight-normal);
-}
-
-.font-medium {
-  font-weight: var(--font-weight-medium);
-}
-
-.font-semibold {
-  font-weight: var(--font-weight-semibold);
-}
-
-.font-bold {
-  font-weight: var(--font-weight-bold);
-}
-
-.font-extrabold {
-  font-weight: var(--font-weight-extrabold);
-}
-
-/* =========================================
- * 6. Boşluk ve Mesafe Sistemi (Çerçeveler arası mesafeler)
- * =========================================*/
-:root {
-  --spacing-0: 0;
-  --spacing-1: 0.25rem;
-  --spacing-2: 0.5rem;
-  --spacing-3: 0.75rem;
-  --spacing-4: 1rem;
-  --spacing-5: 1.25rem;
-  --spacing-6: 1.5rem;
-  --spacing-8: 2rem;
-  --spacing-10: 2.5rem;
-  --spacing-12: 3rem;
-  --spacing-16: 4rem;
-  --spacing-20: 5rem;
-  --spacing-24: 6rem;
-  --spacing-32: 8rem;
-  --spacing-40: 10rem;
-  --spacing-48: 12rem;
-  --spacing-56: 14rem;
-  --spacing-64: 16rem;
-}
-
-/* =========================================
- * 7. Gölge ve Yükseltme Efektleri
- * =========================================*/
-:root {
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.05);
-  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.05);
-  --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.1);
-  --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
-  --shadow-outline: 0 0 0 3px rgba(var(--primary-rgb), 0.5);
-  --shadow-none: none;
-}
-
-/* =========================================
- * 8. Geçiş ve Animasyon Stilleri
- * =========================================*/
-:root {
-  /* Temel Animasyon Değişkenleri */
-  --animation-duration-fast: 150ms;
-  --animation-duration-normal: 300ms;
-  --animation-duration-slow: 500ms;
-  --animation-duration-slower: 800ms;
-  
-  /* Zamanlama Fonksiyonları */
-  --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
-  --ease-in: cubic-bezier(0.4, 0, 1, 1);
-  --ease-out: cubic-bezier(0, 0, 0.2, 1);
-  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
-  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  --ease-elastic: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  
-  /* Özel Animasyon Eğrileri */
-  --ease-emphasis: cubic-bezier(0.2, 0, 0, 1);
-  --ease-emphasis-in: cubic-bezier(0.7, 0, 0.84, 0);
-  --ease-emphasis-out: cubic-bezier(0.16, 1, 0.3, 1);
-  
-  /* Geçiş Kombinasyonları */
-  --transition-transform: transform var(--animation-duration-normal) var(--ease-default);
-  --transition-opacity: opacity var(--animation-duration-normal) var(--ease-default);
-  --transition-colors: background-color var(--animation-duration-normal) var(--ease-default),
-                      border-color var(--animation-duration-normal) var(--ease-default),
-                      color var(--animation-duration-normal) var(--ease-default);
-  --transition-shadow: box-shadow var(--animation-duration-normal) var(--ease-default);
-  --transition-all: all var(--animation-duration-normal) var(--ease-default);
-  
-  /* Animasyon Keyframe Değişkenleri */
-  --rotate-360: rotate(360deg);
-  --scale-up: scale(1.1);
-  --scale-down: scale(0.9);
-  --translate-up: translateY(-10px);
-  --translate-down: translateY(10px);
-  --translate-left: translateX(-10px);
-  --translate-right: translateX(10px);
-  
-  /* Özel Animasyon Değişkenleri */
-  --animation-fade-in: fade-in var(--animation-duration-normal) var(--ease-default);
-  --animation-fade-out: fade-out var(--animation-duration-normal) var(--ease-default);
-  --animation-slide-in: slide-in var(--animation-duration-normal) var(--ease-emphasis-out);
-  --animation-slide-out: slide-out var(--animation-duration-normal) var(--ease-emphasis-in);
-  --animation-scale-in: scale-in var(--animation-duration-normal) var(--ease-bounce);
-  --animation-scale-out: scale-out var(--animation-duration-normal) var(--ease-bounce);
-  --animation-rotate: rotate var(--animation-duration-slower) linear infinite;
-  --animation-bounce: bounce var(--animation-duration-normal) var(--ease-bounce) infinite;
-  
-  /* Tema Geçiş Ayarları */
-  --theme-transition-duration: var(--animation-duration-slow);
-  --theme-transition-timing: var(--ease-emphasis);
-}
-
-/* Temel Animasyon Keyframe'leri */
-@keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes fade-out {
-  from { opacity: 1; }
-  to { opacity: 0; }
-}
-
-@keyframes slide-in {
-  from { 
-    transform: var(--translate-down);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-@keyframes slide-out {
-  from {
-    transform: translateY(0);
-    opacity: 1;
-  }
-  to {
-    transform: var(--translate-up);
-    opacity: 0;
-  }
-}
-
-@keyframes scale-in {
-  from {
-    transform: var(--scale-down);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-@keyframes scale-out {
-  from {
-    transform: scale(1);
-    opacity: 1;
-  }
-  to {
-    transform: var(--scale-down);
-    opacity: 0;
-  }
-}
-
-@keyframes rotate {
-  from { transform: rotate(0deg); }
-  to { transform: var(--rotate-360); }
-}
-
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: var(--translate-up); }
-}
-
-/* Animasyon Yardımcı Sınıfları */
-.animate-fade-in {
-  animation: var(--animation-fade-in);
-}
-
-.animate-fade-out {
-  animation: var(--animation-fade-out);
-}
-
-.animate-slide-in {
-  animation: var(--animation-slide-in);
-}
-
-.animate-slide-out {
-  animation: var(--animation-slide-out);
-}
-
-.animate-scale-in {
-  animation: var(--animation-scale-in);
-}
-
-.animate-scale-out {
-  animation: var(--animation-scale-out);
-}
-
-.animate-rotate {
-  animation: var(--animation-rotate);
-}
-
-.animate-bounce {
-  animation: var(--animation-bounce);
-}
-
-/* Geçiş Yardımcı Sınıfları */
-.transition-transform {
-  transition: var(--transition-transform);
-}
-
-.transition-opacity {
-  transition: var(--transition-opacity);
-}
-
-.transition-colors {
-  transition: var(--transition-colors);
-}
-
-.transition-shadow {
-  transition: var(--transition-shadow);
-}
-
-.transition-all {
-  transition: var(--transition-all);
-}
-
-/* =========================================
- * 9. Duyarlı Tasarım (Responsive) Ayarları
- * =========================================*/
-:root {
-  /* Ekran Genişlik Kırılım Noktaları - Modern Değerler */
-  --breakpoint-xs: 0;
-  --breakpoint-sm: 640px;  /* 576px yerine */
-  --breakpoint-md: 768px;
-  --breakpoint-lg: 1024px; /* 992px yerine */
-  --breakpoint-xl: 1280px; /* 1200px yerine */
-  --breakpoint-2xl: 1536px; /* 1400px yerine */
-  
-  /* Mobil Öncelikli Grid Sistemi */
-  --grid-columns-mobile: 4;
-  --grid-columns-tablet: 8;
-  --grid-columns-desktop: 12;
-  --grid-gap-mobile: 1rem;
-  --grid-gap-tablet: 1.5rem;
-  --grid-gap-desktop: 2rem;
-  
-  /* Responsive Tipografi */
-  --font-size-fluid-base: clamp(1rem, 2vw, 1.125rem);
-  --font-size-fluid-lg: clamp(1.125rem, 3vw, 1.25rem);
-  --font-size-fluid-xl: clamp(1.25rem, 4vw, 1.5rem);
-  --font-size-fluid-2xl: clamp(1.5rem, 5vw, 2rem);
-  --font-size-fluid-3xl: clamp(2rem, 6vw, 3rem);
-  
-  /* Responsive Boşluklar */
-  --spacing-fluid-sm: clamp(0.5rem, 2vw, 1rem);
-  --spacing-fluid-md: clamp(1rem, 3vw, 2rem);
-  --spacing-fluid-lg: clamp(2rem, 4vw, 4rem);
-  --spacing-fluid-xl: clamp(3rem, 5vw, 6rem);
-}
-
-/* Mobil Cihazlar */
-@media (max-width: 639px) {
-  :root {
-    /* Mobil Font Boyutları */
-    --font-size-base: 14px;
-    --line-height-base: 1.4;
+/* =========================================================
+   GÜREL YÖNETİM - TEMA DEĞİŞKENLERİ
+   Tema sisteminin temel değişkenleri
+   Versiyon 2.0 - 2024
+   ========================================================= */
+
+/* ==============================================
+   1. KÖK DEĞİŞKENLER (TEMA RENKLERİ VE BİLEŞENLER)
+   ============================================== */
+   :root {
+    /* Ana Renkler */
+    --primary-hue: 210; /* Varsayılan mavi tema için */
+    --primary-saturation: 100%;
+    --primary-lightness: 50%;
+
+    --secondary-hue:330; /* Varsayılan mavi tema için */
+    --secondary-saturation: 100%;
+    --secondary-lightness: 50%;
+
+    --accent-hue: 400; /* Varsayılan mavi tema için */
+    --accent-saturation: 100%;
+    --accent-lightness: 50%;
     
-    /* Mobil Boşluklar */
-    --section-spacing: var(--spacing-fluid-md);
-    --component-spacing: var(--spacing-fluid-sm);
+    /* Hesaplanmış Renkler */
+    --primary-color: hsl(var(--primary-hue), var(--primary-saturation), var(--primary-lightness));
+    --primary-color-light: hsl(var(--primary-hue), var(--primary-saturation), calc(var(--primary-lightness) + 20%));
+    --primary-color-dark: hsl(var(--primary-hue), var(--primary-saturation), calc(var(--primary-lightness) - 10%));
+    --primary-color-rgb: 0, 150, 136; 
+
+    --secondary-color: hsl(var(--secondary-hue), var(--secondary-saturation), var(--secondary-lightness));
+    --secondary-color-light: hsl(var(--secondary-hue), var(--secondary-saturation), calc(var(--secondary-lightness) + 20%));
+    --secondary-color-dark: hsl(var(--secondary-hue), var(--secondary-saturation), calc(var(--secondary-lightness) - 10%));
+    --secondary-color-rgb: 0, 150, 136;
+
+    --accent-color: hsl(var(--accent-hue), var(--accent-saturation), var(--accent-lightness));
+    --accent-color-light: hsl(var(--accent-hue), var(--accent-saturation), calc(var(--accent-lightness) + 20%));
+    --accent-color-dark: hsl(var(--accent-hue), var(--accent-saturation), calc(var(--accent-lightness) - 10%));
+    --accent-color-rgb: 0, 150, 136;
+
+    --text-color: hsl(var(--text-hue), var(--text-saturation), var(--text-lightness));
     
-    /* Mobil Header */
-    --header-height: 60px;
-    --header-padding: 0.5rem;
+    /* Nötr Renkler */
+    --text-color: var(--dark-text);
+    --background-color: var(--light-background);
+    --border-color: hsl(var(--primary-hue), 15%, 85%);
     
-    /* Mobil Butonlar */
-    --btn-padding-y: 0.5rem;
-    --btn-padding-x: 1rem;
-    --btn-font-size: 14px;
+    /* Ölçüler */
+    --border-radius-sm: 0.25rem;
+    --border-radius-md: 0.5rem;
+    --border-radius-lg: 1rem;
+    --border-radius-xl: 2rem;
     
-    /* Mobil Kartlar */
-    --card-padding: 1rem;
-    --card-border-radius: 0.5rem;
-  }
-}
-
-/* Tablet Cihazlar */
-@media (min-width: 640px) and (max-width: 1023px) {
-  :root {
-    /* Tablet Font Boyutları */
-    --font-size-base: 15px;
-    --line-height-base: 1.5;
+    /* Z-indeks Katmanları */
+    --z-index-header: 1000;
+    --z-index-modal: 2000;
+    --z-index-tooltip: 3000;
+    --z-index-dropdown: 1500;
     
-    /* Tablet Boşluklar */
-    --section-spacing: var(--spacing-fluid-lg);
-    --component-spacing: var(--spacing-fluid-md);
+    /* Konteyner Genişlikleri */
+    --container-max-width: 1200px;
+    --container-padding: 1rem;
     
-    /* Tablet Grid */
-    --grid-columns: var(--grid-columns-tablet);
-    --grid-gap: var(--grid-gap-tablet);
-  }
-}
-
-/* Masaüstü ve Büyük Ekranlar */
-@media (min-width: 1024px) {
-  :root {
-    /* Masaüstü Font Boyutları */
-    --font-size-base: 16px;
-    --line-height-base: 1.5;
+    /* Arkaplan Renkleri */
+    --background-color: #f0f4f8;
+    --background-secondary: #e5ebf2;
+    --background-gradient-start: #f0f4f8;
+    --background-gradient-end: #e5ebf2;
+    --background-rgb: 240, 244, 248;
     
-    /* Masaüstü Boşluklar */
-    --section-spacing: var(--spacing-fluid-xl);
-    --component-spacing: var(--spacing-fluid-lg);
+    /* Yüzey Renkleri */
+    --surface-color: #ffffff;
+    --surface-secondary: #f9fafb;
     
-    /* Masaüstü Grid */
-    --grid-columns: var(--grid-columns-desktop);
-    --grid-gap: var(--grid-gap-desktop);
-  }
-}
-
-/* Retina ve Yüksek DPI Ekranlar */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  :root {
-    --border-width: 0.5px;
-    --shadow-sharpness: 0.5px;
-  }
-}
-
-/* Karanlık Mod ve Yüksek Kontrast İyileştirmeleri */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) {
-    --shadow-strength: 0.8;
-    --shadow-color: 0, 0, 0;
-  }
-}
-
-/* Geniş Renk Gamı Ekranlar */
-@media (color-gamut: p3) {
-  :root {
-    --primary-color: color(display-p3 0 0.33 0.64);
-    --success-color: color(display-p3 0.15 0.65 0.27);
-    --error-color: color(display-p3 0.86 0.21 0.27);
-  }
-}
-
-/* =========================================
- * 10. Bileşen Temel Stilleri (Butonlar, Kartlar, Form)
- * =========================================*/
-
-/* Buton Temelleri */
-:root {
-  --btn-padding-y: 0.375rem;
-  --btn-padding-x: 0.75rem;
-  --btn-font-size: var(--font-size-base);
-  --btn-line-height: 1.5;
-  --btn-border-radius: var(--border-radius-md);
-  --btn-border-width: 1px;
-  --btn-font-weight: var(--font-weight-medium);
-  --btn-transition: var(--transition-normal);
-  --btn-focus-width: 0.25rem;
-}
-
-/* Kart Temelleri */
-:root {
-  --card-border-radius: var(--border-radius-md);
-  --card-border-color: var(--border-color);
-  --card-border-width: 1px;
-  --card-box-shadow: var(--shadow-md);
-  --card-bg: var(--surface-color);
-  --card-padding: var(--spacing-4);
-  --card-margin-bottom: var(--spacing-4);
-}
-
-/* Form Temelleri */
-:root {
-  --input-padding-y: 0.375rem;
-  --input-padding-x: 0.75rem;
-  --input-font-size: var(--font-size-base);
-  --input-line-height: 1.5;
-  --input-color: var(--text-color);
-  --input-bg: var(--background);
-  --input-border-width: 1px;
-  --input-border-color: var(--border-color);
-  --input-border-radius: var(--border-radius-md);
-  --input-focus-border-color: var(--primary-light);
-  --input-focus-box-shadow: 0 0 0 0.2rem rgba(var(--primary-rgb), 0.25);
-  --input-placeholder-color: var(--text-tertiary);
-  --input-height: calc(1.5em + 0.75rem + 2px);
-}
-
-/* =========================================
- * 11. RTL Dil Desteği
- * =========================================*/
-[dir="rtl"] {
-  /* RTL için özel değişkenler */
-}
-
-/* =========================================
- * 12. Sistem Tema Entegrasyonu
- * =========================================*/
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) {
-    /* Sistem karanlık modu tercih edildiğinde ve kullanıcı tema seçmediyse */
-    --background: #121212;
-    --background-alt: #1e1e1e;
-    --background-tertiary: #2c2c2c;
-    --surface-color: #242424;
-    --text-color: #e0e0e0;
-    --text-secondary: #b0b0b0;
-    --text-tertiary: #909090;
-    --border-color: #444444;
-    --border-color-light: #333333;
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
-    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
-    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.6);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  :root:not([data-reduced-motion]) {
-    /* Sistem azaltılmış hareket tercih edildiğinde ve kullanıcı ayar seçmediyse */
-    scroll-behavior: auto;
+    /* Metin Renkleri */
+    --text-light: #f8f9fa;
+    --text-muted: #6c757d;
+    --text-muted-light: #c2c7d0;
+    --text-on-primary: #ffffff;
+    --text-on-secondary: #ffffff;
+    
+    /* Uyarı Renkleri */
+    --success-color: #28a745;
+    --info-color: #17a2b8;
+    --warning-color: #ffc107;
+    --danger-color: #dc3545;
+    
+    /* Container Boyutları */
+    --container-max-width: 1400px;
+    --container-padding: 1rem;
+    
+    /* Border Değerleri */
+    --border-width: 1px;
+    --border-width-md: 2px;
+    --border-width-lg: 3px;
+    --border-radius-pill: 50rem;
+    
+    /* Boşluk Sistemi */
+    --spacing-0: 0rem;
+    --spacing-0-5: 0.25rem;
+    --spacing-1: 0.5rem;
+    --spacing-1-5: 0.75rem;
+    --spacing-2: 1rem;
+    --spacing-2-5: 1.25rem;
+    --spacing-3: 1.5rem;
+    --spacing-3-5: 1.75rem;
+    --spacing-4: 2rem;
+    --spacing-5: 3rem;
+    --spacing-6: 4rem;
+    --spacing-7: 6rem;
+    --spacing-8: 8rem;
+    
+    /* Tipografi */
+    --font-family-base: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --font-family-heading: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+    
+    --h1-font-size: 2.5rem;
+    --h2-font-size: 2rem;
+    --h3-font-size: 1.75rem;
+    --h4-font-size: 1.5rem;
+    --h5-font-size: 1.25rem;
+    --h6-font-size: 1rem;
+    
+    --h1-font-size-mobile: 2rem;
+    --h2-font-size-mobile: 1.75rem;
+    --h3-font-size-mobile: 1.5rem;
+    --h4-font-size-mobile: 1.25rem;
+    --h5-font-size-mobile: 1.125rem;
+    --h6-font-size-mobile: 1rem;
+    
+    --font-weight-light: 300;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    --font-weight-extrabold: 800;
+    
+    --line-height-tight: 1.25;
+    --line-height-heading: 1.4;
+    --line-height-base: 1.6;
+    --line-height-loose: 1.8;
+    
+    /* Gölge Efektleri */
+    --shadow-sm: 0 2px 5px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 8px 25px rgba(0, 0, 0, 0.12);
+    --shadow-xl: 0 12px 35px rgba(0, 0, 0, 0.15);
+    --shadow-colored: 0 8px 20px -6px rgba(var(--primary-rgb), 0.4);
+    --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+    
+    /* Geçiş ve Animasyon */
+    --transition-duration-fast: 0.2s;
+    --transition-duration: 0.3s;
+    --transition-duration-slow: 0.5s;
+    --transition-duration-slower: 0.8s;
+    --transition-duration-slowest: 1.2s;
+    
+    --transition-function: ease;
+    --transition-function-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-function-ease-out: cubic-bezier(0, 0, 0.2, 1);
+    --transition-function-ease-in: cubic-bezier(0.4, 0, 1, 1);
+    --transition-function-special: cubic-bezier(0.16, 1, 0.3, 1);
+    
+    --animation-duration: 1s;
+    --animation-function: ease;
+    
+    /* Buton Değişkenleri */
+    --btn-padding-y: 0.75rem;
+    --btn-padding-x: 1.5rem;
+    --btn-padding-y-sm: 0.5rem;
+    --btn-padding-x-sm: 1rem;
+    --btn-padding-y-lg: 1rem;
+    --btn-padding-x-lg: 2rem;
+    --btn-border-radius: 0.5rem;
+    
+    /* Text Gölgeleri */
+    --text-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
+    --text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    --text-shadow-lg: 0 3px 6px rgba(0, 0, 0, 0.2);
+    
+    /* Split Panel İçerik Değişkenleri */
+    --split-panel-content-padding: 3rem 2rem;
+    --split-panel-content-max-width: 580px;
+    --split-panel-gap: 0.75rem;
+    
+    --split-panel-icon-size: 70px;
+    --split-panel-icon-font-size: 30px;
+    
+    --split-panel-title-font-size: 2.2rem;
+    --split-panel-title-font-size-mobile: 1.6rem;
+    
+    --split-panel-feature-gap: 0.5rem;
+    --split-panel-feature-font-size: 0.9rem;
+    --split-panel-feature-icon-size: 0.8rem;
+    
+    --split-panel-btn-padding: 0.75rem 1.5rem;
+    --split-panel-btn-hover-y: -3px;
+    
+    --hero-badge-padding: 0.5rem 1rem;
+    --hero-badge-font-size: 0.8rem;
   }
   
-  :root:not([data-reduced-motion]) *,
-  :root:not([data-reduced-motion]) *::before,
-  :root:not([data-reduced-motion]) *::after {
-    animation-duration: 0.001s !important;
-    transition-duration: 0.001s !important;
+  /* ==============================================
+     2. TEMA MODU DEĞİŞKENLERİ (AÇIK, KOYU, YÜKSEK KONTRAST)
+     ============================================== */
+  :root[data-theme="light"] {
+    /* Tüm varsayılan renk değişkenleri zaten tanımlandı */
   }
-}
-
-/* =========================================
- * 13. Özel Durumlar (Print, Karanlık Mod, Yüksek Kontrast)
- * =========================================*/
-
-/* Yazdırma Stili */
-@media print {
-  :root {
-    --background: #ffffff;
+  
+  :root[data-theme="dark"] {
+    /* Arkaplan ve Yüzey */
+    --background-color: #121212;
+    --background-secondary: #1e1e1e;
+    --background-gradient-start: #121212;
+    --background-gradient-end: #1e1e1e;
+    --background-rgb: 18, 18, 18;
+    
+    --surface-color: #1e1e1e;
+    --surface-secondary: #252525;
+    
+    /* Metin Renkleri */
+    --text-color: #f0f0f0;
+    --text-muted: #a0a0a0;
+    --text-muted-light: #c2c7d0;
+    
+    /* Sınır Renkleri */
+    --border-color: #333333;
+    
+    /* Gölge Efektleri - Koyu modda daha belirgin */
+    --shadow-sm: 0 2px 5px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.25);
+    --shadow-lg: 0 8px 25px rgba(0, 0, 0, 0.3);
+    --shadow-xl: 0 12px 35px rgba(0, 0, 0, 0.35);
+    --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+    
+    /* Koyu temada kart ve bileşenlerin arka planları */
+    --card-bg: #252525;
+    --header-bg: #1a1a1a;
+    --footer-bg: #1a1a1a;
+    --dropdown-bg: #252525;
+    --tooltip-bg: #333333;
+    
+    /* Form elemanları */
+    --input-bg: #333333;
+    --input-border: #444444;
+    --input-focus-border: #505050;
+    --input-placeholder: #777777;
+    
+    /* Buton stilleri */
+    --btn-default-bg: #333333;
+    --btn-default-color: #f0f0f0;
+    --btn-default-border: #444444;
+    
+    /* Tema geçişleri için ek değişkenler */
+    --theme-transition-bg: cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+    --theme-transition-color: cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+  }
+  
+  /* Koyu tema için body sınıfı - Tema değişirken eklenir */
+  body.dark-mode {
+    background-color: var(--background-color);
+    color: var(--text-color);
+  }
+  
+  /* Koyu temada genel elementlerin stillerini düzelt */
+  [data-theme="dark"] .card,
+  [data-theme="dark"] .service-box,
+  [data-theme="dark"] .team-card,
+  [data-theme="dark"] .business-card {
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+  }
+  
+  [data-theme="dark"] .navbar,
+  [data-theme="dark"] .header,
+  [data-theme="dark"] .patreon-header {
+    background-color: var(--header-bg);
+  }
+  
+  [data-theme="dark"] .footer,
+  [data-theme="dark"] .shock-footer {
+    background-color: var(--footer-bg);
+  }
+  
+  [data-theme="dark"] input,
+  [data-theme="dark"] textarea,
+  [data-theme="dark"] select {
+    background-color: var(--input-bg);
+    border-color: var(--input-border);
+    color: var(--text-color);
+  }
+  
+  [data-theme="dark"] input:focus,
+  [data-theme="dark"] textarea:focus,
+  [data-theme="dark"] select:focus {
+    border-color: var(--input-focus-border);
+  }
+  
+  [data-theme="dark"] ::placeholder {
+    color: var(--input-placeholder);
+  }
+  
+  [data-theme="dark"] .btn:not(.btn-primary):not(.btn-secondary):not(.btn-accent) {
+    background-color: var(--btn-default-bg);
+    color: var(--btn-default-color);
+    border-color: var(--btn-default-border);
+  }
+  
+  :root[data-theme="high-contrast"] {
+    /* Yüksek kontrast için arka planlar ve renkler */
+    --background-color: #ffffff;
+    --background-secondary: #f0f0f0;
+    --surface-color: #ffffff;
+    
+    /* Metin renkleri - maksimum kontrast */
     --text-color: #000000;
-    --text-secondary: #333333;
-    --border-color: #cccccc;
-    --shadow-sm: none;
-    --shadow-md: none;
-    --shadow-lg: none;
-    --shadow-xl: none;
+    --text-muted: #333333;
+    
+    /* Ana renkler - daha koyu tonlar */
+    --primary-color: #003c7d;
+    --secondary-color: #cc6600;
+    --accent-color: #cc9e00;
+    
+    /* Butonlar ve interaktif elementler */
+    --btn-border-radius: 0.25rem;
+    
+    /* Belirgin kenarlar */
+    --border-width: 2px;
+    --border-color: #000000;
+    
+    /* Kontrast için değişkenler */
+    --high-contrast-text: #000000;
+    --high-contrast-background: #ffffff;
+    --high-contrast-border: #000000;
+    --high-contrast-highlight: #ffff00;
+    --high-contrast-primary: #000080;
   }
   
-  body {
-    background: #ffffff !important;
-    color: #000000 !important;
+  /* ==============================================
+     3. RENK TEMA VARYASYONLARI
+     ============================================== */
+  :root[data-color-theme="blue"] {
+    --primary-color: #0055a4;
+    --primary-light: #4c9aff;
+    --primary-dark: #003c7d;
+    --primary-rgb: 0, 85, 164;
+    --primary-gradient: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    --primary-gradient-hover: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+    --primary-gradient-active: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
+    --primary-gradient-disabled: linear-gradient(135deg, var(--primary-light), var(--primary-light));
+    --primary-gradient-focus: linear-gradient(135deg, var(--primary-light), var(--primary-color));
   }
   
-  .no-print {
-    display: none !important;
+  :root[data-color-theme="green"] {
+    --primary-color: #2e7d32;
+    --primary-light: #60ad5e;
+    --primary-dark: #005005;
+    --primary-rgb: 46, 125, 50;
+    --primary-gradient: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    --primary-gradient-hover: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+    --primary-gradient-active: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
+    --primary-gradient-disabled: linear-gradient(135deg, var(--primary-light), var(--primary-light));
+    --primary-gradient-focus: linear-gradient(135deg, var(--primary-light), var(--primary-color));
   }
-}
-
-/* Tarayıcı Yüksek Kontrast Modu Desteği */
-@media (forced-colors: active) {
-  :root {
-    --background: Canvas;
-    --background-alt: Canvas;
-    --background-tertiary: Canvas;
-    --surface-color: Canvas;
-    --text-color: CanvasText;
-    --text-secondary: CanvasText;
-    --text-tertiary: GrayText;
-    --border-color: CanvasText;
-    --border-color-light: GrayText;
-    --primary-color: Highlight;
-    --primary-light: Highlight;
-    --primary-dark: Highlight;
-    --text-on-primary: HighlightText;
+  
+  :root[data-color-theme="red"] {
+    --primary-color: #c62828;
+    --primary-light: #ff5f52;
+    --primary-dark: #8e0000;
+    --primary-rgb: 198, 40, 40;
+    --primary-gradient: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    --primary-gradient-hover: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+    --primary-gradient-active: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
+    --primary-gradient-disabled: linear-gradient(135deg, var(--primary-light), var(--primary-light));
+    --primary-gradient-focus: linear-gradient(135deg, var(--primary-light), var(--primary-color));
   }
-}
+  
+  :root[data-color-theme="orange"] {
+    --primary-color: #e65100;
+    --primary-light: #ff833a;
+    --primary-dark: #ac1900;
+    --primary-rgb: 230, 81, 0;
+    --primary-gradient: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    --primary-gradient-hover: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+    --primary-gradient-active: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
+    --primary-gradient-disabled: linear-gradient(135deg, var(--primary-light), var(--primary-light));
+    --primary-gradient-focus: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+  }
+  
+  :root[data-color-theme="purple"] {
+    --primary-color: #6a1b9a;
+    --primary-light: #9c4dcc;
+    --primary-dark: #38006b;
+    --primary-rgb: 106, 27, 154;
+    --primary-gradient: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    --primary-gradient-hover: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+    --primary-gradient-active: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
+    --primary-gradient-disabled: linear-gradient(135deg, var(--primary-light), var(--primary-light));
+    --primary-gradient-focus: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+  }
+  
 
-/* =========================================
- * 14. Yardımcı Sınıflar
- * =========================================*/
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
-}
 
-.dark-mode {
-  color-scheme: dark;
-}
-
-.light-mode {
-  color-scheme: light;
-}
-
-/* Tema Geçiş Animasyonları */
-.theme-transition * {
-  transition-property: color, background-color, border-color, box-shadow;
-  transition-duration: 0.3s;
-  transition-timing-function: ease;
-}
-
-/* Erişilebilirlik Aracı */
-#themeAnnouncer {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
-}
-
-/* Koyu Temada Header Değişkenleri */
-html[data-theme="dark"] {
-  --header-bg-dark: var(--background);
-  --header-shadow-dark: var(--shadow-md);
-  --header-text-dark: var(--text-color);
-  --header-text-dark-hover: var(--primary-light);
-  --header-mobile-menu-bg: var(--surface-color);
-  --header-mobile-overlay: rgba(0, 0, 0, 0.7);
-}
-
-/* Erişilebilirlik İyileştirmeleri */
-:focus-visible {
-  outline: var(--focus-visible-outline);
-  box-shadow: var(--focus-visible-box-shadow);
-  outline-offset: var(--focus-visible-offset);
-}
-
-/* Screen Reader Only Sınıfı - Geliştirilmiş */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-  -webkit-clip-path: inset(50%);
-  clip-path: inset(50%);
-}
-
-/* Reduced Motion İyileştirmeleri */
-@media (prefers-reduced-motion: reduce) {
-  :root {
-    --animation-duration: 0.01ms !important;
-    --animation-iteration-count: 1 !important;
-    --transition-duration: 0.01ms !important;
+  
+  :root[data-color-theme="teal"] {
+    --primary-color: #009688;
+    --primary-light: #4db6ac;
+    --primary-dark: #00695c;
+    --primary-rgb: 0, 150, 136;
+    --primary-gradient: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    --primary-gradient-hover: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+    --primary-gradient-active: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
+    --primary-gradient-disabled: linear-gradient(135deg, var(--primary-light), var(--primary-light));
+    --primary-gradient-focus: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+  }
+  
+  :root[data-color-theme="pink"] {
+    --primary-color: #e91e63;
+    --primary-light: #ff6b93;
+    --primary-dark: #b0003a;
+    --primary-rgb: 233, 30, 99;
+    --primary-gradient: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    --primary-gradient-hover: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+    --primary-gradient-active: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
+    --primary-gradient-disabled: linear-gradient(135deg, var(--primary-light), var(--primary-light));
+    --primary-gradient-focus: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+  }
+  
+  /* ==============================================
+     4. ERİŞİLEBİLİRLİK DEĞİŞKENLERİ
+     ============================================== */
+  /* Font Boyutu Ayarları */
+  
+  :root[data-font-size="small"] {
+    --font-size-xs: 0.7rem;
+    --font-size-sm: 0.8rem;
+    --font-size-base: 0.9rem;
+    --font-size-lg: 1rem;
+    --font-size-xl: 1.1rem;
+    
+    --h1-font-size: 2.2rem;
+    --h2-font-size: 1.8rem;
+    --h3-font-size: 1.6rem;
+    --h4-font-size: 1.4rem;
+    --h5-font-size: 1.2rem;
+    --h6-font-size: 1rem;
+    
+    --h1-font-size-mobile: 1.8rem;
+    --h2-font-size-mobile: 1.6rem;
+    --h3-font-size-mobile: 1.4rem;
+    --h4-font-size-mobile: 1.2rem;
+    --h5-font-size-mobile: 1.1rem;
+    --h6-font-size-mobile: 1rem;
+  }
+  
+  :root[data-font-size="large"] {
+    --font-size-xs: 0.85rem;
+    --font-size-sm: 1rem;
+    --font-size-base: 1.15rem;
+    --font-size-lg: 1.3rem;
+    --font-size-xl: 1.5rem;
+    
+    --h1-font-size: 3rem;
+    --h2-font-size: 2.4rem;
+    --h3-font-size: 2rem;
+    --h4-font-size: 1.8rem;
+    --h5-font-size: 1.5rem;
+    --h6-font-size: 1.2rem;
+    
+    --h1-font-size-mobile: 2.3rem;
+    --h2-font-size-mobile: 2rem;
+    --h3-font-size-mobile: 1.8rem;
+    --h4-font-size-mobile: 1.5rem;
+    --h5-font-size-mobile: 1.3rem;
+    --h6-font-size-mobile: 1.1rem;
+  }
+  
+  /* Azaltılmış Hareket */
+  html[data-reduced-motion="true"] * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
-} 
+  
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+  
+  /* ==============================================
+     5. TİPOGRAFİ SİSTEMİ
+     ============================================== */
+  body {
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-base);
+    color: var(--text-color);
+    background-color: var(--background-color);
+  }
+  
+  h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
+    font-family: var(--font-family-heading);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-heading);
+    margin-bottom: var(--spacing-2);
+    color: var(--text-color);
+  }
+  
+  h1, .h1 {
+    font-size: var(--h1-font-size);
+  }
+  
+  h2, .h2 {
+    font-size: var(--h2-font-size);
+  }
+  
+  h3, .h3 {
+    font-size: var(--h3-font-size);
+  }
+  
+  h4, .h4 {
+    font-size: var(--h4-font-size);
+  }
+  
+  h5, .h5 {
+    font-size: var(--h5-font-size);
+  }
+  
+  h6, .h6 {
+    font-size: var(--h6-font-size);
+  }
+  
+  @media (max-width: 767.98px) {
+    h1, .h1 {
+      font-size: var(--h1-font-size-mobile);
+    }
+    
+    h2, .h2 {
+      font-size: var(--h2-font-size-mobile);
+    }
+    
+    h3, .h3 {
+      font-size: var(--h3-font-size-mobile);
+    }
+    
+    h4, .h4 {
+      font-size: var(--h4-font-size-mobile);
+    }
+    
+    h5, .h5 {
+      font-size: var(--h5-font-size-mobile);
+    }
+    
+    h6, .h6 {
+      font-size: var(--h6-font-size-mobile);
+    }
+  }
+  
+  /* ==============================================
+     6. BOŞLUK VE MESAFE SİSTEMİ
+     ============================================== */
+  .container {
+    max-width: var(--container-max-width);
+    padding-left: var(--container-padding);
+    padding-right: var(--container-padding);
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .section-padding {
+    padding-top: var(--spacing-6);
+    padding-bottom: var(--spacing-6);
+  }
+  
+  @media (max-width: 767.98px) {
+    .section-padding {
+      padding-top: var(--spacing-4);
+      padding-bottom: var(--spacing-4);
+    }
+  }
+  
+  /* ==============================================
+     7. GÖLGE VE YÜKSELTME EFEKTLERİ
+     ============================================== */
+  .shadow-sm {
+    box-shadow: var(--shadow-sm);
+  }
+  
+  .shadow {
+    box-shadow: var(--shadow-md);
+  }
+  
+  .shadow-lg {
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .shadow-xl {
+    box-shadow: var(--shadow-xl);
+  }
+  
+  /* ==============================================
+     8. GEÇİŞ VE ANİMASYON STİLLERİ
+     ============================================== */
+  .transition {
+    transition: all var(--transition-duration) var(--transition-function);
+  }
+  
+  .transition-slow {
+    transition: all var(--transition-duration-slow) var(--transition-function);
+  }
+  
+  .transition-fast {
+    transition: all var(--transition-duration-fast) var(--transition-function);
+  }
+  
+  /* Temel animasyon sınıfları */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes fadeInUp {
+    from { 
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .fade-in {
+    animation: fadeIn var(--animation-duration) var(--animation-function);
+  }
+  
+  .fade-in-up {
+    animation: fadeInUp var(--animation-duration) var(--animation-function);
+  }
+  
+  /* ==============================================
+     9. DUYARLI TASARIM (RESPONSIVE) AYARLARI
+     ============================================== */
+  :root {
+    --grid-breakpoint-xs: 0;
+    --grid-breakpoint-sm: 576px;
+    --grid-breakpoint-md: 768px;
+    --grid-breakpoint-lg: 992px;
+    --grid-breakpoint-xl: 1200px;
+    --grid-breakpoint-xxl: 1400px;
+  }
+  
+  /* Taşınabilir cihazlar */
+  @media (max-width: 767.98px) {
+    :root {
+      --spacing-5: 2.5rem;
+      --spacing-6: 3rem;
+      --spacing-7: 4rem;
+      --spacing-8: 5rem;
+    }
+  }
+  
+  /* ==============================================
+     10. BİLEŞEN TEMEL STİLLERİ
+     ============================================== */
+  /* Butonlar */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--btn-padding-y) var(--btn-padding-x);
+    font-weight: var(--font-weight-medium);
+    border-radius: var(--btn-border-radius);
+    text-decoration: none;
+    cursor: pointer;
+    transition: all var(--transition-duration) var(--transition-function);
+    border: var(--border-width) solid transparent;
+    text-align: center;
+  }
+  
+  .btn-primary {
+    background-color: var(--primary-color);
+    color: var(--text-on-primary);
+    border-color: var(--primary-color);
+  }
+  
+  .btn-primary:hover {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+  }
+  
+  .btn-secondary {
+    background-color: var(--secondary-color);
+    color: var(--text-on-secondary);
+    border-color: var(--secondary-color);
+  }
+  
+  .btn-secondary:hover {
+    background-color: var(--secondary-dark);
+    border-color: var(--secondary-dark);
+  }
+  
+  .btn-outline-primary {
+    background-color: transparent;
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+  }
+  
+  .btn-outline-primary:hover {
+    background-color: var(--primary-color);
+    color: var(--text-on-primary);
+  }
+  
+  /* Kartlar */
+  .card {
+    background-color: var(--surface-color);
+    border-radius: var(--border-radius);
+    border: var(--border-width) solid var(--border-color);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-duration) var(--transition-function);
+  }
+  
+  .card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-5px);
+  }
+  
+  .card-body {
+    padding: var(--spacing-3);
+  }
+  
+  .card-title {
+    font-size: var(--h4-font-size);
+    margin-bottom: var(--spacing-2);
+  }
+  
+  .card-text {
+    margin-bottom: var(--spacing-3);
+  }
+  
+  /* Form Elementleri */
+  .form-control {
+    display: block;
+    width: 100%;
+    padding: var(--spacing-1-5) var(--spacing-2);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-base);
+    color: var(--text-color);
+    background-color: var(--surface-color);
+    background-clip: padding-box;
+    border: var(--border-width) solid var(--border-color);
+    border-radius: var(--border-radius);
+    transition: border-color var(--transition-duration) var(--transition-function);
+  }
+  
+  .form-control:focus {
+    border-color: var(--primary-color);
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(var(--primary-rgb), 0.25);
+  }
+  
+  /* ==============================================
+     11. RTL DİL DESTEĞİ
+     ============================================== */
+  html[dir="rtl"] {
+    text-align: right;
+  }
+  
+  html[dir="rtl"] .mr-2 {
+    margin-right: 0;
+    margin-left: var(--spacing-1);
+  }
+  
+  html[dir="rtl"] .ml-2 {
+    margin-left: 0;
+    margin-right: var(--spacing-1);
+  }
+  
+  /* ==============================================
+     12. SİSTEM TEMA ENTEGRASYONU
+     ============================================== */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) {
+      --background-color: #121212;
+      --background-secondary: #1e1e1e;
+      --background-rgb: 18, 18, 18;
+      
+      --surface-color: #1e1e1e;
+      --surface-secondary: #252525;
+      
+      --text-color: #f0f0f0;
+      --text-muted: #a0a0a0;
+      
+      --border-color: #333333;
+      
+      --shadow-sm: 0 2px 5px rgba(0, 0, 0, 0.2);
+      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.25);
+      --shadow-lg: 0 8px 25px rgba(0, 0, 0, 0.3);
+      --shadow-xl: 0 12px 35px rgba(0, 0, 0, 0.35);
+    }
+  }
+  
+  /* ==============================================
+     13. ÖZEL DURUMLAR
+     ============================================== */
+  /* Yazdırma için özel stiller */
+  @media print {
+    body {
+      background-color: white !important;
+      color: black !important;
+    }
+    
+    .no-print {
+      display: none !important;
+    }
+    
+    a {
+      text-decoration: underline !important;
+      color: black !important;
+    }
+    
+    .container {
+      max-width: 100% !important;
+    }
+    
+    .shadow, .shadow-sm, .shadow-lg, .shadow-xl {
+      box-shadow: none !important;
+    }
+  }
+  
+  /* Yüksek Kontrast modu için ek stil düzeltmeleri */
+  @media (forced-colors: active) {
+  :root {
+      --border-width: 2px;
+    }
+    
+    .btn {
+      border: 2px solid currentColor;
+    }
+    
+    a {
+      text-decoration: underline;
+    }
+  }
+  
+  /* ==============================================
+     14. YARDIMCI SINIFLAR
+     ============================================== */
+  .text-primary {
+    color: var(--primary-color) !important;
+  }
+  
+  .text-secondary {
+    color: var(--secondary-color) !important;
+  }
+  
+  .text-accent {
+    color: var(--accent-color) !important;
+  }
+  
+  .text-muted {
+    color: var(--text-muted) !important;
+  }
+  
+  .bg-primary {
+    background-color: var(--primary-color) !important;
+  }
+  
+  .bg-secondary {
+    background-color: var(--secondary-color) !important;
+  }
+  
+  .bg-accent {
+    background-color: var(--accent-color) !important;
+  }
+  
+  .border-primary {
+    border-color: var(--primary-color) !important;
+  }
+  
+  .rounded {
+    border-radius: var(--border-radius) !important;
+  }
+  
+  .rounded-lg {
+    border-radius: var(--border-radius-lg) !important;
+  }
+  
+  .rounded-circle {
+    border-radius: 50% !important;
+  }
+  
+  .overflow-hidden {
+    overflow: hidden !important;
+  }
+  
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  } 
+  /* Yatay kaydırmayı engellemek için tüm sayfada yatay kaydırmayı kapat */
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
+  }

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gürel Yönetim - Paralaks İnfografik Hero</title>
+  <!-- Tema ve Stil Dosyaları -->
+  <link rel="stylesheet" href="theme-system/theme-variables.css">
+  <link rel="stylesheet" href="hero-infographic.css">
+  <!-- Font Awesome Iconlar -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  
+  <!-- HERO BÖLÜMÜ BAŞLANGICI -->
+  <section class="hero-infographic">
+    <!-- Arkaplan Parçacıkları -->
+    <div class="infographic-particle particle-1"></div>
+    <div class="infographic-particle particle-2"></div>
+    <div class="infographic-particle particle-3"></div>
+    
+    <!-- Başlık Bölümü -->
+    <div class="hero-info-title-container">
+      <span class="hero-info-badge">Gürel Yönetim Hizmetleri</span>
+      <h1 class="hero-info-title">Konut ve İşyeri Yönetiminde <span class="hero-info-title-accent">Uzman Çözümler</span></h1>
+      <p class="hero-info-subtitle">
+        Mülk yönetiminde 20 yılı aşkın tecrübemizle apartman, site ve işyeri yönetiminde profesyonel ve yenilikçi çözümler sunuyoruz.
+      </p>
+    </div>
+    
+    <!-- İnfografik Ana Bölüm -->
+    <div class="hero-info-graphic">
+      <!-- Orta Çizgi ve Zaman Çizgisi -->
+      <div class="hero-info-timeline">
+        <div class="hero-info-line"></div>
+        <!-- Zaman Çizgisi Noktaları -->
+        <div class="hero-info-dot"></div>
+        <div class="hero-info-dot"></div>
+      </div>
+      
+      <!-- Bilgi Kutuları -->
+      <div class="hero-info-items-container">
+        <!-- 1. Kutu - Apartman/Site Yönetimi -->
+        <div class="hero-info-item">
+          <div class="hero-info-icon">
+            <i class="fas fa-building"></i>
+          </div>
+          <h2 class="hero-info-item-title">Apartman/Site Yönetimi</h2>
+          <h3 class="hero-info-item-subtitle">Zahmetsiz Yaşam Alanları</h3>
+          <p class="hero-info-item-description">
+            Kat malikleri için yönetim işlerini üstlenerek tüm operasyonel süreçleri profesyonelce yürütüyoruz. Sakinlerin tüm talepleri zamanında karşılanır, ortak alanlar etkin şekilde yönetilir.
+          </p>
+          <div class="hero-info-features">
+            <span class="hero-info-feature"><i class="fas fa-check"></i> 7/24 Acil Durum Desteği</span>
+            <span class="hero-info-feature"><i class="fas fa-check"></i> Aidat Takip Sistemi</span>
+            <span class="hero-info-feature"><i class="fas fa-check"></i> Ortak Alan Bakımı</span>
+          </div>
+        </div>
+        
+        <!-- 2. Kutu - Mülk Yönetimi -->
+        <div class="hero-info-item">
+          <div class="hero-info-icon">
+            <i class="fas fa-home"></i>
+          </div>
+          <h2 class="hero-info-item-title">Mülk Yönetimi</h2>
+          <h3 class="hero-info-item-subtitle">Yatırımlarınızı Değerlendirir</h3>
+          <p class="hero-info-item-description">
+            Emlak yatırımlarınızdan maksimum verim almanız için kiralama, bakım, onarım ve diğer tüm yönetim hizmetlerini tek çatı altında sunuyoruz. Gayrimenkullerinizin değeri bizimle artar.
+          </p>
+          <div class="hero-info-features">
+            <span class="hero-info-feature"><i class="fas fa-check"></i> Kiracı Yönetimi</span>
+            <span class="hero-info-feature"><i class="fas fa-check"></i> Periyodik Bakım</span>
+            <span class="hero-info-feature"><i class="fas fa-check"></i> Gelir Optimizasyonu</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- CTA Butonları -->
+    <div class="hero-info-cta">
+      <a href="#" class="hero-info-btn primary">Hizmet Teklifi Alın <i class="fas fa-arrow-right"></i></a>
+      <a href="#" class="hero-info-btn secondary">Detaylı Bilgi <i class="fas fa-info-circle"></i></a>
+    </div>
+  </section>
+  <!-- HERO BÖLÜMÜ SONU -->
+  
+  <!-- Basit JS - Paralaks efekt için -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      window.addEventListener('scroll', function() {
+        const scrolled = window.scrollY;
+        
+        // Paralaks efektleri
+        if (scrolled < 1000) { // 1000px'den önce efekti uygula
+          document.querySelectorAll('.hero-info-item').forEach((item, index) => {
+            const direction = index % 2 === 0 ? 1 : -1; // Sol ve sağ farklı yönde hareket
+            item.style.transform = `translateY(${scrolled * 0.03 * direction}px)`;
+          });
+          
+          document.querySelectorAll('.infographic-particle').forEach((particle, index) => {
+            const speed = 0.05 - (index * 0.01);
+            const direction = index % 2 === 0 ? 1 : -1;
+            particle.style.transform = `translate(${scrolled * speed * direction}px, ${scrolled * speed}px)`;
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html> 
