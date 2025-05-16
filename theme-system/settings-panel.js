@@ -21,13 +21,14 @@ class SettingsPanel {
     this.defaults = {
       panelPosition: 'right',
       colorThemes: [
-        { name: 'Mavi', color: '#0055a4', theme: 'blue' },
-        { name: 'Kırmızı', color: '#d93025', theme: 'red' },
-        { name: 'Yeşil', color: '#188038', theme: 'green' },
-        { name: 'Turuncu', color: '#ea8600', theme: 'orange' },
-        { name: 'Mor', color: '#7b1fa2', theme: 'purple' },
-        { name: 'Turkuaz', color: '#009688', theme: 'teal' },
-        { name: 'Pembe', color: '#e91e63', theme: 'pink' }
+        { name: 'Royal Blue', color: '#0d47a1', theme: 'blue' },
+        { name: 'Royal Purple', color: '#673ab7', theme: 'lavender' },
+        { name: 'Coral Breeze', color: '#f44336', theme: 'coral' },
+        { name: 'Emerald Green', color: '#00897b', theme: 'emerald' },
+        { name: 'Amber Gold', color: '#ff8f00', theme: 'amber' },
+        { name: 'Midnight Blue', color: '#263238', theme: 'midnight' },
+        { name: 'Turquoise', color: '#00838f', theme: 'turquoise' },
+        { name: 'Rose Pink', color: '#d81b60', theme: 'rose' }
       ],
       autoInit: true,
       quietMode: false,
@@ -74,7 +75,7 @@ class SettingsPanel {
     this.state = {
       isOpen: false, // Başlangıçta kapalı
       isInitialized: false,
-      initializationInProgress: false,
+      initializationInProgress: false, // Başlatma işlemi devam ediyor
       themeModeChangeInProgress: false, // Tema değişikliği kontrol bayrağı
       lastThemeChange: 0, // Son tema değişikliği zamanı
       lastColorTheme: null, // Son renk teması
@@ -268,11 +269,6 @@ class SettingsPanel {
             <div class="sun-ray"></div>
           </div>
           <div class="moon"></div>
-          <div class="horizon">
-            <svg viewBox="0 0 120 28" preserveAspectRatio="none"><path d="M0,20 Q30,28 60,20 T120,20 V28 H0Z" fill="#b0b8c9" opacity=".7"/></svg>
-          </div>
-          <div class="cloud"></div>
-          <div class="cloud cloud2"></div>
           <div class="star star1"></div>
           <div class="star star2"></div>
           <div class="star star3"></div>
@@ -280,6 +276,13 @@ class SettingsPanel {
           <div class="star star5"></div>
           <div class="star star6"></div>
           <div class="star star7"></div>
+          <div class="star star8"></div>
+          <div class="star star9"></div>
+          <div class="horizon">
+            <svg viewBox="0 0 120 28" preserveAspectRatio="none"><path d="M0,20 Q30,28 60,20 T120,20 V28 H0Z" fill="#b0b8c9" opacity=".7"/></svg>
+          </div>
+          <div class="cloud"></div>
+          <div class="cloud cloud2"></div>
           <div class="time-indicator">00:00</div>
           <span class="auto-icon" title="Otomatik Tema">
             <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -470,7 +473,80 @@ class SettingsPanel {
     const preview = panel.querySelector('.theme-preview');
     const sun = preview.querySelector('.sun');
     const moon = preview.querySelector('.moon');
+    const stars = preview.querySelectorAll('.star');
     const timeIndicator = preview.querySelector('.time-indicator');
+    const clouds = preview.querySelectorAll('.cloud, .cloud2');
+    const skyElement = preview.querySelector('.sky');
+    const horizonElement = preview.querySelector('.horizon');
+    
+    // Ek yıldızlar ekle (daha zengin bir gece görünümü için)
+    const addExtraStars = () => {
+      // Önce yıldızlar konteynerini oluştur (kullanılmıyorsa)
+      let starsContainer = preview.querySelector('.extra-stars');
+      if (!starsContainer) {
+        starsContainer = document.createElement('div');
+        starsContainer.className = 'extra-stars';
+        starsContainer.style.position = 'absolute';
+        starsContainer.style.top = '0';
+        starsContainer.style.left = '0';
+        starsContainer.style.width = '100%';
+        starsContainer.style.height = '100%';
+        starsContainer.style.pointerEvents = 'none';
+        starsContainer.style.opacity = '0';
+        starsContainer.style.transition = 'opacity 2s ease';
+        skyElement.appendChild(starsContainer);
+      }
+      
+      // Eğer yıldızlar zaten eklenmişse tekrar ekleme
+      if (starsContainer.children.length > 0) return;
+      
+      // 20 ek yıldız ekle (daha yoğun gece gökyüzü için)
+      for (let i = 0; i < 20; i++) {
+        const star = document.createElement('div');
+        star.className = 'extra-star';
+        star.style.position = 'absolute';
+        star.style.width = (Math.random() * 2 + 1) + 'px';  // 1-3px arası rastgele boyut
+        star.style.height = star.style.width;
+        star.style.backgroundColor = 'white';
+        star.style.borderRadius = '50%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.opacity = '0';
+        star.style.boxShadow = '0 0 ' + (Math.random() * 6 + 4) + 'px rgba(255, 255, 255, 0.9)';
+        
+        // Yıldız parıltı animasyonu
+        const animDuration = Math.random() * 3 + 2; // 2-5s arası rastgele süre
+        const animDelay = Math.random() * 5; // 0-5s arası rastgele gecikme
+        star.style.animation = `twinkle ${animDuration}s infinite alternate ${animDelay}s`;
+        
+        starsContainer.appendChild(star);
+      }
+    };
+    
+    // Ek yıldızları göster/gizle
+    const toggleExtraStars = (show) => {
+      const starsContainer = preview.querySelector('.extra-stars');
+      if (!starsContainer) return;
+      
+      starsContainer.style.opacity = show ? '1' : '0';
+      
+      // Eğer gösterilecekse, her yıldızı sırayla yak
+      if (show) {
+        Array.from(starsContainer.children).forEach((star, index) => {
+          setTimeout(() => {
+            star.style.opacity = '1';
+          }, index * 80); // Daha hızlı aralıklarla yak
+        });
+      } else {
+        // Gizlenecekse hepsini hemen kapat
+        Array.from(starsContainer.children).forEach(star => {
+          star.style.opacity = '0';
+        });
+      }
+    };
+    
+    // Ek yıldızları oluştur
+    addExtraStars();
     
     // Her tema modu için saat göstergesini başlatıcak ve güncelleyecek fonksiyon
     const updateClock = () => {
@@ -484,10 +560,87 @@ class SettingsPanel {
         const hour = now.getHours();
         const isNight = hour >= 19 || hour < 6;
         
-        if (isNight) {
-          preview.classList.add('night-mode');
-        } else {
-          preview.classList.remove('night-mode');
+        // Auto-anim sınıfı var mı kontrol et (otomatik modda mıyız?)
+        if (preview.classList.contains('auto-anim')) {
+          if (isNight && !preview.classList.contains('night-mode')) {
+            // Gece saati ama gündüz gösteriliyor, gece moduna geç
+            preview.classList.add('night-mode');
+            
+            // Gökyüzünü karanlık yap
+            skyElement.style.background = 'linear-gradient(140deg, #0a1525 0%, #162942 100%)';
+            
+            // Güneşi gizle, ayı göster animasyonu
+            sun.style.opacity = '0';
+            sun.style.transform = 'translateY(20px) scale(0.8)';
+            
+            // Güneş ışınlarını gizle
+            const sunRays = sun.querySelectorAll('.sun-ray');
+            if (sunRays && sunRays.length) {
+              sunRays.forEach(ray => {
+                ray.style.opacity = '0';
+              });
+            }
+            
+            // Bulutları gizle
+            clouds.forEach(cloud => {
+              cloud.style.backgroundColor = 'rgba(180, 185, 195, 0.25)';
+              cloud.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.1)';
+              cloud.style.opacity = '0';
+              cloud.style.transform = 'translateY(20px)';
+            });
+            
+            // Ay ve yıldızları göster
+            setTimeout(() => {
+              moon.style.opacity = '1';
+              moon.style.transform = 'translateX(-50%) scale(1.1) rotate(-5deg)';
+              
+              // Yıldızları yak
+              toggleExtraStars(true);
+              stars.forEach((star, index) => {
+                setTimeout(() => {
+                  star.style.opacity = '0.7';
+                }, 100 + index * 50); // Daha hızlı bir şekilde yıldızları yak
+              });
+            }, 300);
+          } else if (!isNight && preview.classList.contains('night-mode')) {
+            // Gündüz saati ama gece gösteriliyor, gündüz moduna geç
+            preview.classList.remove('night-mode');
+            
+            // Gökyüzünü aydınlat
+            skyElement.style.background = 'linear-gradient(140deg, #e0e7ef 0%, #f5f7fa 50%, #ffe6c9 100%)';
+            
+            // Ayı gizle
+            moon.style.opacity = '0';
+            moon.style.transform = 'translateY(20px) scale(0.8)';
+            
+            // Yıldızları söndür
+            stars.forEach(star => {
+              star.style.opacity = '0';
+            });
+            toggleExtraStars(false);
+            
+            // Bulutları göster
+            clouds.forEach(cloud => {
+              cloud.style.backgroundColor = 'rgba(255, 255, 255, 0.85)';
+              cloud.style.boxShadow = '0 2px 6px rgba(0, 0, 0, 0.05)';
+              cloud.style.opacity = '0.75';
+              cloud.style.transform = 'translateY(0)';
+            });
+            
+            // Güneşi göster
+            setTimeout(() => {
+              sun.style.opacity = '1';
+              sun.style.transform = 'translateX(-50%) scale(1.1) rotate(-5deg)';
+              
+              // Güneş ışınlarını göster
+              const sunRays = sun.querySelectorAll('.sun-ray');
+              if (sunRays && sunRays.length) {
+                sunRays.forEach(ray => {
+                  ray.style.opacity = '1';
+                });
+              }
+            }, 300);
+          }
         }
       }
     };
@@ -499,24 +652,250 @@ class SettingsPanel {
     clearInterval(this._timeUpdateInterval);
     this._timeUpdateInterval = setInterval(updateClock, 60000);
     
-    // Tema değişiminde animasyon tetikleme
+    // Tema değişiminde gelişmiş animasyon tetikleme
     const animate = (mode) => {
+      // Tüm animasyon sınıflarını kaldır
       preview.classList.remove('light-anim', 'dark-anim', 'auto-anim');
-      void preview.offsetWidth; // reflow
-      if (mode === 'light') {
-        preview.classList.add('light-anim');
-      } else if (mode === 'dark') {
-        preview.classList.add('dark-anim');
-      } else if (mode === 'auto') {
-        preview.classList.add('auto-anim');
-      }
       
-      // Her tema değişikliğinde saati güncelle
-      updateClock();
+      // Animasyonu geciktir, performans için requestAnimationFrame kullan
+      requestAnimationFrame(() => {
+        if (mode === 'light') {
+          // Gece modundaysa gündüz moduna geçiş animasyonu
+          if (preview.classList.contains('night-mode')) {
+            // Önce gece modu sınıfını kaldır
+            preview.classList.remove('night-mode');
+            
+            // Gökyüzü arka planını ayarla
+            skyElement.style.background = 'linear-gradient(140deg, #e0e7ef 0%, #f5f7fa 50%, #ffe6c9 100%)';
+            
+            // Yıldızları gizle
+            stars.forEach(star => {
+              star.style.opacity = '0';
+            });
+            
+            // Ek yıldızları gizle
+            toggleExtraStars(false);
+            
+            // Ay kaybolsun
+            moon.style.opacity = '0';
+            moon.style.transform = 'translateY(20px) scale(0.8)';
+            
+            // Bulutları güncelle - gündüz modu için
+            clouds.forEach(cloud => {
+              cloud.style.backgroundColor = 'rgba(255, 255, 255, 0.85)';
+              cloud.style.boxShadow = '0 2px 6px rgba(0, 0, 0, 0.05)';
+              cloud.style.opacity = '0.75';
+              cloud.style.transform = 'translateY(0)';
+            });
+            
+            // Kısa bir gecikme sonra güneş doğsun
+            setTimeout(() => {
+              // Güneş görünür olsun
+              sun.style.opacity = '1';
+              sun.style.transform = 'translateX(-50%) scale(1.1) rotate(-5deg)';
+              
+              // Işınları görünür yap
+              const sunRays = sun.querySelectorAll('.sun-ray');
+              if (sunRays && sunRays.length) {
+                sunRays.forEach(ray => {
+                  ray.style.opacity = '1';
+                });
+              }
+              
+              // Animasyon sınıfını ekle
+              preview.classList.add('light-anim');
+            }, 300);
+          } else {
+            // Doğrudan gündüz modu animasyonu
+            skyElement.style.background = 'linear-gradient(140deg, #e0e7ef 0%, #f5f7fa 50%, #ffe6c9 100%)';
+            
+            // Ay gizli, güneş görünür
+            moon.style.opacity = '0';
+            moon.style.transform = 'translateY(20px) scale(0.8)';
+            sun.style.opacity = '1';
+            sun.style.transform = 'translateX(-50%) scale(1.1) rotate(-5deg)';
+            
+            // Işınları görünür yap
+            const sunRays = sun.querySelectorAll('.sun-ray');
+            if (sunRays && sunRays.length) {
+              sunRays.forEach(ray => {
+                ray.style.opacity = '1';
+              });
+            }
+            
+            // Bulutları güncelle
+            clouds.forEach(cloud => {
+              cloud.style.backgroundColor = 'rgba(255, 255, 255, 0.85)';
+              cloud.style.boxShadow = '0 2px 6px rgba(0, 0, 0, 0.05)';
+              cloud.style.opacity = '0.75';
+              cloud.style.transform = 'translateY(0)';
+            });
+            
+            preview.classList.add('light-anim');
+          }
+        } else if (mode === 'dark') {
+          // Gündüz modundaysa gece moduna geçiş
+          if (!preview.classList.contains('night-mode')) {
+            // Gece modu sınıfını ekle
+            preview.classList.add('night-mode');
+            
+            // Gökyüzü arka planını ayarla - gece moduna uygun karanlık renk
+            skyElement.style.background = 'linear-gradient(140deg, #0a1525 0%, #162942 100%)';
+            
+            // Güneş batsın
+            sun.style.opacity = '0';
+            sun.style.transform = 'translateY(20px) scale(0.8)';
+            
+            // Işınları gizle
+            const sunRays = sun.querySelectorAll('.sun-ray');
+            if (sunRays && sunRays.length) {
+              sunRays.forEach(ray => {
+                ray.style.opacity = '0';
+              });
+            }
+            
+            // Bulutları güncelle - gece modu için daha transparan
+            clouds.forEach(cloud => {
+              cloud.style.backgroundColor = 'rgba(180, 185, 195, 0.25)';
+              cloud.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.1)';
+              cloud.style.opacity = '0';
+              cloud.style.transform = 'translateY(20px)';
+            });
+            
+            // Kısa bir gecikme sonra ay ve yıldızlar görünsün
+            setTimeout(() => {
+              // Ayın görünmesi
+              moon.style.opacity = '1';
+              moon.style.transform = 'translateX(-50%) scale(1.1) rotate(-5deg)';
+              
+              // Ek yıldızları göster
+              toggleExtraStars(true);
+              
+              // Yıldızları sırayla göster
+              stars.forEach((star, index) => {
+                setTimeout(() => {
+                  star.style.opacity = '0.7';
+                }, index * 100);
+              });
+              
+              // Animasyon sınıfını ekle
+              preview.classList.add('dark-anim');
+            }, 300);
+          } else {
+            // Doğrudan gece modu
+            skyElement.style.background = 'linear-gradient(140deg, #0a1525 0%, #162942 100%)';
+            
+            // Güneş gizli, ay görünür
+            sun.style.opacity = '0';
+            sun.style.transform = 'translateY(20px) scale(0.8)';
+            moon.style.opacity = '1';
+            moon.style.transform = 'translateX(-50%) scale(1.1) rotate(-5deg)';
+            
+            // Bulutları güncelle
+            clouds.forEach(cloud => {
+              cloud.style.backgroundColor = 'rgba(180, 185, 195, 0.25)';
+              cloud.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.1)';
+              cloud.style.opacity = '0';
+              cloud.style.transform = 'translateY(20px)';
+            });
+            
+            // Yıldızları göster
+            stars.forEach(star => {
+              star.style.opacity = '0.7';
+            });
+            
+            // Ek yıldızları göster
+            toggleExtraStars(true);
+            
+            preview.classList.add('dark-anim');
+          }
+        } else if (mode === 'auto') {
+          preview.classList.add('auto-anim');
+          
+          // Saate göre güneş/ay pozisyonunu ayarla
+          const now = new Date();
+          const hour = now.getHours();
+          const isNight = hour >= 19 || hour < 6;
+          
+          // İlk yükleme için doğru gece/gündüz durumunu ayarla
+          if (isNight) {
+            // Şimdi gece saati - gece moduna geç
+            preview.classList.add('night-mode');
+            
+            // Gökyüzü karanlık
+            skyElement.style.background = 'linear-gradient(140deg, #0a1525 0%, #162942 100%)';
+            
+            // Güneş gizli, ay görünür
+            sun.style.opacity = '0';
+            sun.style.transform = 'translateY(20px) scale(0.8)';
+            moon.style.opacity = '1';
+            moon.style.transform = 'translateX(-50%) scale(1.1) rotate(-5deg)';
+            
+            // Güneş ışınları gizli
+            const sunRays = sun.querySelectorAll('.sun-ray');
+            if (sunRays && sunRays.length) {
+              sunRays.forEach(ray => {
+                ray.style.opacity = '0';
+              });
+            }
+            
+            // Bulutlar transparent
+            clouds.forEach(cloud => {
+              cloud.style.backgroundColor = 'rgba(180, 185, 195, 0.25)';
+              cloud.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.1)';
+              cloud.style.opacity = '0';
+              cloud.style.transform = 'translateY(20px)';
+            });
+            
+            // Yıldızlar görünür
+            toggleExtraStars(true);
+            stars.forEach(star => {
+              star.style.opacity = '0.7';
+            });
+          } else {
+            // Şimdi gündüz saati - gündüz moduna geç
+            preview.classList.remove('night-mode');
+            
+            // Gökyüzü aydınlık
+            skyElement.style.background = 'linear-gradient(140deg, #e0e7ef 0%, #f5f7fa 50%, #ffe6c9 100%)';
+            
+            // Ay gizli, güneş görünür
+            moon.style.opacity = '0';
+            moon.style.transform = 'translateY(20px) scale(0.8)';
+            sun.style.opacity = '1'; 
+            sun.style.transform = 'translateX(-50%) scale(1.1) rotate(-5deg)';
+            
+            // Güneş ışınları görünür
+            const sunRays = sun.querySelectorAll('.sun-ray');
+            if (sunRays && sunRays.length) {
+              sunRays.forEach(ray => {
+                ray.style.opacity = '1';
+              });
+            }
+            
+            // Bulutlar görünür
+            clouds.forEach(cloud => {
+              cloud.style.backgroundColor = 'rgba(255, 255, 255, 0.85)';
+              cloud.style.boxShadow = '0 2px 6px rgba(0, 0, 0, 0.05)';
+              cloud.style.opacity = '0.75';
+              cloud.style.transform = 'translateY(0)';
+            });
+            
+            // Yıldızlar gizli
+            toggleExtraStars(false);
+            stars.forEach(star => {
+              star.style.opacity = '0';
+            });
+          }
+        }
+        
+        // Her tema değişikliğinde saati güncelle
+        updateClock();
+      });
     };
     
     // İlk yüklemede mevcut temaya göre animasyon
-    let currentTheme = 'light';
+    let currentTheme = 'light'; // Varsayılan tema
     
     // ThemeManager veya doküman özniteliğinden tema modunu al
     if (this.themeManager && this.themeManager.settings) {
@@ -525,6 +904,128 @@ class SettingsPanel {
       currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
     }
     
+    // Mevcut saate göre gündüz/gece stilini belirle
+    const now = new Date();
+    const hour = now.getHours();
+    const isNight = hour >= 19 || hour < 6;
+    
+    // Güneş ve ay pozisyonlarını CSS değişkenine uygun ayarla
+    if (sun) {
+      sun.style.bottom = 'var(--sun-position-bottom, 42px)';
+      sun.style.transform = 'translateX(-50%) scale(1.1) rotate(-5deg)';
+    }
+    
+    if (moon) {
+      moon.style.bottom = 'var(--moon-position-bottom, 42px)';
+      moon.style.transform = 'translateX(-50%) scale(1.1) rotate(-5deg)';
+    }
+    
+    // Eğer tema otomatikse veya gece modu etkinse gece stilini uygula
+    if (currentTheme === 'auto' && isNight) {
+      preview.classList.add('night-mode');
+      
+      // Gökyüzü ve horizon başlangıç renkleri - daha koyu
+      skyElement.style.background = 'linear-gradient(140deg, #0a1525 0%, #162942 100%)';
+      
+      // Bulutları güncelle - daha transparan
+      clouds.forEach(cloud => {
+        cloud.style.backgroundColor = 'rgba(180, 185, 195, 0.25)';
+        cloud.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.1)';
+        cloud.style.opacity = '0';
+        cloud.style.transform = 'translateY(20px)';
+      });
+      
+      // Ay görünür, güneş gizli
+      moon.style.opacity = '1';
+      sun.style.opacity = '0';
+      sun.style.transform = 'translateY(20px) scale(0.8)';
+      
+      // Işınları gizle
+      const sunRays = sun.querySelectorAll('.sun-ray');
+      if (sunRays && sunRays.length) {
+        sunRays.forEach(ray => {
+          ray.style.opacity = '0';
+        });
+      }
+      
+      // Yıldızlar görünür
+      stars.forEach(star => {
+        star.style.opacity = '0.7';
+      });
+      
+      // Ek yıldızları göster
+      toggleExtraStars(true);
+    } else if (currentTheme === 'dark') {
+      preview.classList.add('night-mode');
+      
+      // Gökyüzü ve horizon başlangıç renkleri - daha koyu
+      skyElement.style.background = 'linear-gradient(140deg, #0a1525 0%, #162942 100%)';
+      
+      // Bulutları güncelle - daha transparan
+      clouds.forEach(cloud => {
+        cloud.style.backgroundColor = 'rgba(180, 185, 195, 0.25)';
+        cloud.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.1)';
+        cloud.style.opacity = '0';
+        cloud.style.transform = 'translateY(20px)';
+      });
+      
+      // Ay görünür, güneş gizli
+      moon.style.opacity = '1';
+      sun.style.opacity = '0';
+      sun.style.transform = 'translateY(20px) scale(0.8)';
+      
+      // Işınları gizle
+      const sunRays = sun.querySelectorAll('.sun-ray');
+      if (sunRays && sunRays.length) {
+        sunRays.forEach(ray => {
+          ray.style.opacity = '0';
+        });
+      }
+      
+      // Yıldızlar görünür
+      stars.forEach(star => {
+        star.style.opacity = '0.7';
+      });
+      
+      // Ek yıldızları göster
+      toggleExtraStars(true);
+    } else {
+      // Gündüz modu - güneş görünür, ay gizli
+      preview.classList.remove('night-mode');
+      
+      // Gökyüzü ve horizon başlangıç renkleri - daha canlı
+      skyElement.style.background = 'linear-gradient(140deg, #e0e7ef 0%, #f5f7fa 50%, #ffe6c9 100%)';
+      
+      // Bulutları güncelle - daha opak
+      clouds.forEach(cloud => {
+        cloud.style.backgroundColor = 'rgba(255, 255, 255, 0.85)';
+        cloud.style.boxShadow = '0 2px 6px rgba(0, 0, 0, 0.05)';
+        cloud.style.opacity = '0.75';
+        cloud.style.transform = 'translateY(0)';
+      });
+      
+      sun.style.opacity = '1';
+      moon.style.opacity = '0';
+      moon.style.transform = 'translateY(20px) scale(0.8)';
+      
+      // Işınları görünür yap
+      const sunRays = sun.querySelectorAll('.sun-ray');
+      if (sunRays && sunRays.length) {
+        sunRays.forEach(ray => {
+          ray.style.opacity = '1';
+        });
+      }
+      
+      // Yıldızlar gizli
+      stars.forEach(star => {
+        star.style.opacity = '0';
+      });
+      
+      // Ek yıldızları gizle
+      toggleExtraStars(false);
+    }
+    
+    // İlk animasyonu başlat
     animate(currentTheme);
     
     // Tema değişiminde tetikleme
@@ -536,6 +1037,16 @@ class SettingsPanel {
     // Sayfadan ayrılırken zamanlayıcıyı temizle
     window.addEventListener('beforeunload', () => {
       clearInterval(this._timeUpdateInterval);
+    });
+
+    // Bulutlara animasyon ekle
+    clouds.forEach(cloud => {
+      // Float-cloud animasyonunun CSS'de tanımlandığından emin ol
+      const randomDuration = Math.floor(Math.random() * 20) + 40; // 40-60s arası
+      const randomDelay = Math.floor(Math.random() * 10); // 0-10s arası
+      
+      cloud.style.animation = `float-cloud ${randomDuration}s linear infinite`;
+      cloud.style.animationDelay = `${randomDelay}s`;
     });
   }
   

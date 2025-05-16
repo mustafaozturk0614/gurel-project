@@ -29,10 +29,10 @@
     --header-shadow-highcontrast: 0 2px 10px rgba(255, 255, 255, 0.3);
     
     /* ---- İÇERİK RENKLERİ - THEMES.CSS ENTEGRASYONU ---- */
-    --header-text-light: var(--text-color, #333333);
-    --header-text-light-hover: var(--text-primary, #333333);
+    --header-text-light: var(--text-color, #212121);
+    --header-text-light-hover: var(--primary-color, #0055a4);
     --header-text-dark: var(--text-light, #ffffff);
-    --header-text-dark-hover: var(--text-inverted, #ffffff);
+    --header-text-dark-hover: var(--primary-light, #38bdf8);
     --header-text-highcontrast: #ffffff;
     --header-text-highcontrast-hover: #ffff00;
     
@@ -43,10 +43,10 @@
     
     /* ---- HEADER BUTTON DEĞİŞKENLERİ ---- */
     --header-button-bg: var(--primary-color, #0055a4);
-    --header-button-text: var(--button-primary-text, #ffffff);
-    --header-button-hover-bg: var(--button-primary-hover-bg, #003c80);
-    --header-button-shadow: var(--shadow-md, 0 4px 12px rgba(0, 85, 164, 0.2));
-    --header-button-hover-shadow: var(--shadow-lg, 0 6px 16px rgba(0, 85, 164, 0.3));
+    --header-button-text: var(--text-on-primary, #ffffff);
+    --header-button-hover-bg: var(--primary-dark, #003c80);
+    --header-button-shadow: var(--shadow-md, 0 4px 12px rgba(var(--primary-rgb, 0, 85, 164), 0.2));
+    --header-button-hover-shadow: var(--shadow-lg, 0 6px 16px rgba(var(--primary-rgb, 0, 85, 164), 0.3));
     
     /* ---- HEADER RENK DEĞİŞKENLERİ ---- */
     --header-bg-color: var(--surface-color, #ffffff);
@@ -76,29 +76,29 @@
   /* Karanlık Mod Header Değişkenleri */
   [data-theme="dark"] {
     --header-bg-color: var(--surface-color, #1e1e1e);
-    --header-text-color: var(--text-color, #e4e6eb);
-    --header-link-color: var(--link-color, #4e9de6);
-    --header-link-hover-color: var(--link-hover-color, #74b3ed);
-    --header-border-color: var(--border-color, #3a3a3a);
+    --header-text-color: var(--text-color, #f0f0f0);
+    --header-link-color: var(--primary-light, #38bdf8);
+    --header-link-hover-color: var(--primary-light, #74b3ed);
+    --header-border-color: var(--border-color, #333333);
     --header-shadow: var(--shadow-md, 0 0.5rem 1rem rgba(0, 0, 0, 0.65));
     --header-transparent-bg: rgba(18, 18, 18, 0.9);
-    --header-transparent-text: var(--text-on-dark, #e4e6eb);
-    --header-transparent-link: var(--link-color, #4e9de6);
-    --header-transparent-hover: var(--gray-600, #6c757d);
+    --header-transparent-text: var(--text-light, #f0f0f0);
+    --header-transparent-link: var(--primary-light, #38bdf8);
+    --header-transparent-hover: var(--primary-light, #74b3ed);
   }
   
   /* Yüksek Kontrast Mod Header Değişkenleri */
   [data-theme="high-contrast"] {
     --header-bg-color: var(--surface-color, #000000);
     --header-text-color: var(--text-color, #ffffff);
-    --header-link-color: var(--link-color, #ffff00);
-    --header-link-hover-color: var(--link-hover-color, #00ffff);
+    --header-link-color: var(--high-contrast-highlight, #ffff00);
+    --header-link-hover-color: var(--accent-light, #00ffff);
     --header-border-color: var(--border-color, #ffffff);
     --header-shadow: none;
     --header-transparent-bg: rgba(0, 0, 0, 0.9);
     --header-transparent-text: var(--text-color, #ffffff);
-    --header-transparent-link: var(--link-color, #ffff00);
-    --header-transparent-hover: var(--link-hover-color, #00ffff);
+    --header-transparent-link: var(--high-contrast-highlight, #ffff00);
+    --header-transparent-hover: var(--accent-light, #00ffff);
   }
   
   /* ============================================
@@ -248,7 +248,7 @@
   .nav-link {
     position: relative;
     color: var(--header-text-color);
-    font-size: var(--font-size-xl) !important;
+    font-size: var(--font-size-base);
     font-weight: var(--font-weight-medium, 500);
     border-radius: 6px;
     transition: all 0.25s ease-in-out;
@@ -266,8 +266,8 @@
   
   .nav-link:hover, 
   .nav-link:focus {
-    color: var(--header-link-hover-color);
-    background-color: rgba(0, 0, 0, 0.05);
+    color: var(--primary-color);
+    background-color: rgba(var(--primary-rgb), 0.05);
   }
   
   .transparent .nav-link:hover, 
@@ -280,8 +280,8 @@
   .nav-link.active {
     color: var(--primary-color, #0056b3) !important;
     font-weight: var(--font-weight-semibold, 600);
-    background-color: var(--primary-light-alpha, rgba(var(--primary-rgb, 0, 85, 164), 0.1));
-    box-shadow: 0 2px 8px rgba(var(--primary-rgb, 0, 85, 164), 0.2);
+    background-color: var(--primary-light-alpha, rgba(var(--primary-rgb), 0.1));
+    box-shadow: 0 2px 8px rgba(var(--primary-rgb), 0.2);
     border-bottom: 2px solid var(--primary-color, #0056b3);
     transform: translateY(-2px);
     border-radius: 6px;
@@ -290,22 +290,22 @@
   
   .nav-link.active:hover {
     transform: translateY(-2px);
-    background-color: var(--primary-light-alpha-hover, rgba(var(--primary-rgb, 0, 85, 164), 0.15));
+    background-color: var(--primary-light-alpha-hover, rgba(var(--primary-rgb), 0.15));
     color: var(--primary-color, #0056b3) !important;
   }
   
   /* Light tema aktif menü - yüksek kontrast */
   html[data-theme="light"] .nav-link.active {
-    color: var(--primary-dark, #00376d) !important;
-    box-shadow: 0 2px 8px rgba(var(--primary-rgb, 0, 85, 164), 0.25);
+    color: var(--primary-dark) !important;
+    box-shadow: 0 2px 8px rgba(var(--primary-rgb), 0.25);
   }
   
   /* Dark tema aktif menü - yüksek kontrast */
   html[data-theme="dark"] .nav-link.active {
-    color: var(--primary-light, #4c9aff) !important;
-    background-color: rgba(var(--primary-rgb, 0, 85, 164), 0.25);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(var(--primary-rgb, 0, 85, 164), 0.5);
-    border-bottom-color: var(--primary-light, #4c9aff);
+    color: var(--primary-light) !important;
+    background-color: rgba(var(--primary-rgb), 0.25);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(var(--primary-rgb), 0.5);
+    border-bottom-color: var(--primary-light);
   }
   
   /* Yüksek kontrast tema için belirgin aktif menü */
@@ -984,13 +984,13 @@
   /* Aktif menü hover efektlerini düzelt */
   .nav-link.active:hover {
     transform: translateY(-2px);
-    background-color: var(--primary-light-alpha-hover, rgba(var(--primary-rgb, 0, 85, 164), 0.15));
+    background-color: var(--primary-light-alpha-hover, rgba(var(--primary-rgb), 0.15));
     color: var(--primary-color, #0056b3) !important;
   }
   
   html[data-theme="dark"] .nav-link.active:hover {
     color: var(--primary-light, #4c9aff) !important;
-    background-color: rgba(var(--primary-rgb, 0, 85, 164), 0.3);
+    background-color: rgba(var(--primary-rgb), 0.3);
   }
   
   /* Transparent için hover efektlerini düzelt */
@@ -1030,12 +1030,12 @@
     padding: 0.6rem 1.5rem;
     font-weight: 600;
     font-size: 0.95rem;
-    color: var(--header-button-text);
+    color: var(--text-on-primary, #ffffff);
     background: linear-gradient(45deg, var(--primary-color), var(--primary-light));
     border: none;
     border-radius: 30px;
     overflow: hidden;
-      transition: all 0.3s ease;
+    transition: all 0.3s ease;
     z-index: 1;
     box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.3);
     margin-left: 1rem;
@@ -1043,6 +1043,28 @@
     /* Mouse takibi için değişkenler */
     --x-pos: 50%;
     --y-pos: 50%;
+  }
+  
+  .header-button:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg, 0 8px 20px rgba(var(--primary-rgb), 0.3));
+  }
+  
+  /* Pulse Animasyon */
+  .pulse-animation {
+    animation: pulse 2s infinite;
+  }
+  
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(var(--primary-rgb), 0.6);
+    }
+    70% {
+      box-shadow: 0 0 0 12px rgba(var(--primary-rgb), 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(var(--primary-rgb), 0);
+    }
   }
   
   .header-button::before {
@@ -1064,11 +1086,6 @@
       opacity: 1;
   }
   
-  .header-button:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--header-button-hover-shadow);
-  }
-  
   .header-button:active {
     transform: translateY(1px);
   }
@@ -1088,23 +1105,6 @@
     to {
       transform: scale(2);
       opacity: 0;
-    }
-  }
-  
-  /* Pulse Animasyon */
-  .pulse-animation {
-    animation: pulse 2s infinite;
-  }
-  
-  @keyframes pulse {
-    0% {
-      box-shadow: 0 0 0 0 rgba(var(--primary-rgb), 0.6);
-    }
-    70% {
-      box-shadow: 0 0 0 12px rgba(var(--primary-rgb), 0);
-    }
-    100% {
-      box-shadow: 0 0 0 0 rgba(var(--primary-rgb), 0);
     }
   }
   
@@ -1140,8 +1140,8 @@
      =============================== */
   html[data-theme="dark"] .patreon-header {
     --header-box-shadow: var(--shadow-md, 0 4px 15px rgba(0, 0, 0, 0.3));
-    --header-text-color: var(--text-color, #e4e6eb);
-    --header-text-hover-color: var(--text-on-dark-hover, #ffffff);
+    --header-text-color: var(--text-color, #f0f0f0);
+    --header-text-hover-color: var(--primary-light);
     --header-bg-color: var(--surface-color, #1e1e1e);
   }
   
@@ -1151,12 +1151,12 @@
   html[data-theme="highContrast"] .patreon-header {
     --header-box-shadow: var(--shadow-high-contrast, 0 0 0 2px #ffffff);
     --header-text-color: var(--text-color, #ffffff);
-    --header-text-hover-color: var(--accent-color-high-contrast, #ffff00);
+    --header-text-hover-color: var(--high-contrast-highlight, #ffff00);
     --header-bg-color: var(--surface-color, #000000);
   }
   
   html[data-theme="highContrast"] .header-button {
-    background: var(--accent-color-high-contrast, #ffff00) !important;
+    background: var(--high-contrast-highlight, #ffff00) !important;
     color: var(--text-on-accent-high-contrast, #000000) !important;
     border: 2px solid var(--border-color-high-contrast, #ffffff);
     text-shadow: none !important;
@@ -1176,44 +1176,44 @@
   /* Mavi Tema (Varsayılan) */
   [data-color-theme="blue"] .header-button,
   [data-color-theme="default"] .header-button {
-    background: linear-gradient(45deg, var(--primary-color, #0055a4), var(--primary-light, #1a7fd1));
-    box-shadow: 0 4px 12px rgba(var(--primary-rgb, 0, 85, 164), 0.3);
+    background: linear-gradient(45deg, var(--primary-color, #0ea5e9), var(--primary-light, #38bdf8));
+    box-shadow: 0 4px 12px rgba(var(--primary-rgb, 14, 165, 233), 0.3);
   }
   
   /* Kırmızı Tema */
   [data-color-theme="red"] .header-button {
-    background: linear-gradient(45deg, var(--danger-color, #dc3545), var(--danger-light, #e05d6c));
-    box-shadow: 0 4px 12px rgba(var(--danger-rgb, 220, 53, 69), 0.3);
+    background: linear-gradient(45deg, var(--primary-color, #e53935), var(--primary-light, #ff7961));
+    box-shadow: 0 4px 12px rgba(var(--primary-rgb, 229, 57, 53), 0.3);
   }
   
   /* Yeşil Tema */
   [data-color-theme="green"] .header-button {
-    background: linear-gradient(45deg, var(--success-color, #28a745), var(--success-light, #48c767));
-    box-shadow: 0 4px 12px rgba(var(--success-rgb, 40, 167, 69), 0.3);
+    background: linear-gradient(45deg, var(--primary-color, #3d9970), var(--primary-light, #80bfa3));
+    box-shadow: 0 4px 12px rgba(var(--primary-rgb, 61, 153, 112), 0.3);
   }
   
   /* Turuncu Tema */
   [data-color-theme="orange"] .header-button {
-    background: linear-gradient(45deg, var(--warning-color, #fd7e14), var(--warning-light, #fd9843));
-    box-shadow: 0 4px 12px rgba(var(--warning-rgb, 253, 126, 20), 0.3);
+    background: linear-gradient(45deg, var(--primary-color, #ff7755), var(--primary-light, #ffd6a5));
+    box-shadow: 0 4px 12px rgba(var(--primary-rgb, 255, 119, 85), 0.3);
   }
   
   /* Mor Tema */
   [data-color-theme="purple"] .header-button {
-    background: linear-gradient(45deg, var(--purple-color, #6f42c1), var(--purple-light, #8c68d6));
-    box-shadow: 0 4px 12px rgba(var(--purple-rgb, 111, 66, 193), 0.3);
+    background: linear-gradient(45deg, var(--primary-color, #7f5af0), var(--primary-light, #d8b4fe));
+    box-shadow: 0 4px 12px rgba(var(--primary-rgb, 127, 90, 240), 0.3);
   }
   
   /* Turkuaz Tema */
   [data-color-theme="teal"] .header-button {
-    background: linear-gradient(45deg, var(--info-color, #17a2b8), var(--info-light, #3bb9cd));
-    box-shadow: 0 4px 12px rgba(var(--info-rgb, 23, 162, 184), 0.3);
+    background: linear-gradient(45deg, var(--primary-color, #009688), var(--primary-light, #52c7b8));
+    box-shadow: 0 4px 12px rgba(var(--primary-rgb, 0, 150, 136), 0.3);
   }
   
   /* Pembe Tema */
   [data-color-theme="pink"] .header-button {
-    background: linear-gradient(45deg, var(--pink-color, #e83e8c), var(--pink-light, #ed65a4));
-    box-shadow: 0 4px 12px rgba(var(--pink-rgb, 232, 62, 140), 0.3);
+    background: linear-gradient(45deg, var(--primary-color, #b388ff), var(--primary-light, #e0c3fc));
+    box-shadow: 0 4px 12px rgba(var(--primary-rgb, 179, 136, 255), 0.3);
   }
   
   /* ===============================
@@ -1721,8 +1721,8 @@
   .mobile-nav-link.section-active {
     color: var(--text-on-primary, #fff);
     font-weight: var(--font-weight-semibold, 600);
-    background: linear-gradient(45deg, var(--primary-color, #0056b3), var(--primary-light, #3378bc));
-    box-shadow: var(--shadow-md, 0 8px 15px rgba(var(--primary-rgb, 0, 85, 164), 0.25));
+    background: linear-gradient(45deg, var(--primary-color), var(--primary-light));
+    box-shadow: var(--shadow-md, 0 8px 15px rgba(var(--primary-rgb), 0.25));
     border-left-color: var(--white, #fff);
     position: relative;
   }

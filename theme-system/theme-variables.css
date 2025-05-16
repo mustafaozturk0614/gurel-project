@@ -342,94 +342,304 @@
   }
   
   /* ==============================================
-     3. RENK TEMA VARYASYONLARI
-     ============================================== */
-  :root[data-color-theme="blue"] {
-    --primary-color: #0055a4;
-    --primary-light: #4c9aff;
-    --primary-dark: #003c7d;
-    --primary-rgb: 0, 85, 164;
-    --primary-gradient: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-    --primary-gradient-hover: linear-gradient(135deg, var(--primary-light), var(--primary-color));
-    --primary-gradient-active: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
-    --primary-gradient-disabled: linear-gradient(135deg, var(--primary-light), var(--primary-light));
-    --primary-gradient-focus: linear-gradient(135deg, var(--primary-light), var(--primary-color));
-  }
-  
-  :root[data-color-theme="green"] {
-    --primary-color: #2e7d32;
-    --primary-light: #60ad5e;
-    --primary-dark: #005005;
-    --primary-rgb: 46, 125, 50;
-    --primary-gradient: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-    --primary-gradient-hover: linear-gradient(135deg, var(--primary-light), var(--primary-color));
-    --primary-gradient-active: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
-    --primary-gradient-disabled: linear-gradient(135deg, var(--primary-light), var(--primary-light));
-    --primary-gradient-focus: linear-gradient(135deg, var(--primary-light), var(--primary-color));
-  }
-  
-  :root[data-color-theme="red"] {
-    --primary-color: #c62828;
-    --primary-light: #ff5f52;
-    --primary-dark: #8e0000;
-    --primary-rgb: 198, 40, 40;
-    --primary-gradient: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-    --primary-gradient-hover: linear-gradient(135deg, var(--primary-light), var(--primary-color));
-    --primary-gradient-active: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
-    --primary-gradient-disabled: linear-gradient(135deg, var(--primary-light), var(--primary-light));
-    --primary-gradient-focus: linear-gradient(135deg, var(--primary-light), var(--primary-color));
-  }
-  
-  :root[data-color-theme="orange"] {
-    --primary-color: #e65100;
-    --primary-light: #ff833a;
-    --primary-dark: #ac1900;
-    --primary-rgb: 230, 81, 0;
-    --primary-gradient: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-    --primary-gradient-hover: linear-gradient(135deg, var(--primary-light), var(--primary-color));
-    --primary-gradient-active: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
-    --primary-gradient-disabled: linear-gradient(135deg, var(--primary-light), var(--primary-light));
-    --primary-gradient-focus: linear-gradient(135deg, var(--primary-light), var(--primary-color));
-  }
-  
-  :root[data-color-theme="purple"] {
-    --primary-color: #6a1b9a;
-    --primary-light: #9c4dcc;
-    --primary-dark: #38006b;
-    --primary-rgb: 106, 27, 154;
-    --primary-gradient: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-    --primary-gradient-hover: linear-gradient(135deg, var(--primary-light), var(--primary-color));
-    --primary-gradient-active: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
-    --primary-gradient-disabled: linear-gradient(135deg, var(--primary-light), var(--primary-light));
-    --primary-gradient-focus: linear-gradient(135deg, var(--primary-light), var(--primary-color));
-  }
-  
+   3. MODERN RENK TEMA VARYASYONLARI (GÜNCEL)
+   ============================================== */
 
+/* ======================================================
+   ROYAL BLUE — Kurumsal, Güvenilir ve Profesyonel
+   ====================================================== */
+:root[data-color-theme="blue"] {
+  --primary-color:      #0d47a1; /* Koyu mavi - Daha zengin bir ton */
+  --primary-light:      #1976d2; /* Açık mavi - Daha canlı */
+  --primary-dark:       #002171; /* Koyu mavi - Daha derinlikli */
+  --primary-rgb:        13, 71, 161;
+  --primary-gradient:   linear-gradient(145deg, #0d47a1, #1976d2);
+  --primary-gradient-hover: linear-gradient(145deg, #1976d2, #0d47a1);
+  --primary-gradient-active: linear-gradient(145deg, #002171, #0d47a1);
+  --primary-gradient-disabled: linear-gradient(145deg, #bbdefb, #bbdefb);
+  --primary-gradient-focus: linear-gradient(145deg, #1976d2, #0d47a1);
+  
+  /* İkincil renk - Tamamlayıcı renk */
+  --secondary-rgb:      255, 152, 0;
+  --secondary-color:    #ff9800; /* Turuncu - Mavi ile kontrast yaratır */
+  --secondary-light:    #ffb74d;
+  --secondary-dark:     #f57c00;
+  
+  /* Vurgu rengi (CTA Butonları vb) */
+  --accent-color:       #2196f3; /* Parlak mavi */
+  --accent-light:       #64b5f6;
+  --accent-dark:        #1976d2;
+  
+  /* Uyarı renklerini köklerden miras al */
+  --success-color:      var(--success, #2e7d32);
+  --warning-color:      var(--warning, #ff9800);
+  --error-color:        var(--error, #d32f2f);
+  --info-color:         var(--info, #0288d1);
+  
+  /* Diğer renk değişkenleri */
+  --surface-primary:    #ffffff;
+  --surface-secondary:  #f5f9ff; /* Hafif mavi tonu */
+  --surface-tertiary:   #e3f2fd;
+}
 
+/* ======================================================
+   CORAL BREEZE — Sıcak, Enerjik ve Modern
+   ====================================================== */
+:root[data-color-theme="coral"] {
+  --primary-color:      #f44336; /* Daha canlı mercan */
+  --primary-light:      #ff7961;
+  --primary-dark:       #ba000d;
+  --primary-rgb:        244, 67, 54;
+  --primary-gradient:   linear-gradient(145deg, #f44336, #ff7961);
+  --primary-gradient-hover: linear-gradient(145deg, #ff7961, #f44336);
+  --primary-gradient-active: linear-gradient(145deg, #ba000d, #f44336);
+  --primary-gradient-disabled: linear-gradient(145deg, #ffccbc, #ffccbc);
+  --primary-gradient-focus: linear-gradient(145deg, #ff7961, #f44336);
   
-  :root[data-color-theme="teal"] {
-    --primary-color: #009688;
-    --primary-light: #4db6ac;
-    --primary-dark: #00695c;
-    --primary-rgb: 0, 150, 136;
-    --primary-gradient: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-    --primary-gradient-hover: linear-gradient(135deg, var(--primary-light), var(--primary-color));
-    --primary-gradient-active: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
-    --primary-gradient-disabled: linear-gradient(135deg, var(--primary-light), var(--primary-light));
-    --primary-gradient-focus: linear-gradient(135deg, var(--primary-light), var(--primary-color));
-  }
+  /* İkincil renk - Tamamlayıcı renk */
+  --secondary-rgb:      0, 150, 136;
+  --secondary-color:    #009688; /* Türkuaz - Mercan ile güzel kontrast */
+  --secondary-light:    #4db6ac;
+  --secondary-dark:     #00796b;
   
-  :root[data-color-theme="pink"] {
-    --primary-color: #e91e63;
-    --primary-light: #ff6b93;
-    --primary-dark: #b0003a;
-    --primary-rgb: 233, 30, 99;
-    --primary-gradient: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-    --primary-gradient-hover: linear-gradient(135deg, var(--primary-light), var(--primary-color));
-    --primary-gradient-active: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
-    --primary-gradient-disabled: linear-gradient(135deg, var(--primary-light), var(--primary-light));
-    --primary-gradient-focus: linear-gradient(135deg, var(--primary-light), var(--primary-color));
-  }
+  /* Vurgu rengi (CTA Butonları vb) */
+  --accent-color:       #ff5722; /* Turuncu/Mercan */
+  --accent-light:       #ff8a65;
+  --accent-dark:        #c41c00;
+  
+  /* Uyarı renkler */
+  --success-color:      var(--success, #2e7d32);
+  --warning-color:      var(--warning, #ff9800);
+  --error-color:        var(--error, #d32f2f);
+  --info-color:         var(--info, #0288d1);
+  
+  /* Diğer renk değişkenleri */
+  --surface-primary:    #ffffff;
+  --surface-secondary:  #fff9f8; /* Hafif mercan tonu */
+  --surface-tertiary:   #ffebee;
+}
+
+/* ======================================================
+   ROYAL PURPLE — Zarif, Lüks ve Etkileyici
+   ====================================================== */
+:root[data-color-theme="lavender"] {
+  --primary-color:      #673ab7; /* Mor/Lavanta - Daha zengin */
+  --primary-light:      #9575cd;
+  --primary-dark:       #4527a0;
+  --primary-rgb:        103, 58, 183;
+  --primary-gradient:   linear-gradient(145deg, #673ab7, #9575cd);
+  --primary-gradient-hover: linear-gradient(145deg, #9575cd, #673ab7);
+  --primary-gradient-active: linear-gradient(145deg, #4527a0, #673ab7);
+  --primary-gradient-disabled: linear-gradient(145deg, #d1c4e9, #d1c4e9);
+  --primary-gradient-focus: linear-gradient(145deg, #9575cd, #673ab7);
+  
+  /* İkincil renk - Tamamlayıcı renk */
+  --secondary-rgb:      255, 193, 7;
+  --secondary-color:    #ffc107; /* Amber/Altın - Mor ile lüks kontrast */
+  --secondary-light:    #ffecb3;
+  --secondary-dark:     #ffa000;
+  
+  /* Vurgu rengi (CTA Butonları vb) */
+  --accent-color:       #7c4dff; /* Parlak mor */
+  --accent-light:       #b388ff;
+  --accent-dark:        #651fff;
+  
+  /* Uyarı renkler */
+  --success-color:      var(--success, #2e7d32);
+  --warning-color:      var(--warning, #ff9800);
+  --error-color:        var(--error, #d32f2f);
+  --info-color:         var(--info, #0288d1);
+  
+  /* Diğer renk değişkenleri */
+  --surface-primary:    #ffffff;
+  --surface-secondary:  #f8f5ff; /* Hafif lavanta tonu */
+  --surface-tertiary:   #f3e5f5;
+}
+
+/* ======================================================
+   AMBER GOLD — Sıcak, Premium ve Enerji Dolu
+   ====================================================== */
+:root[data-color-theme="amber"] {
+  --primary-color:      #ff8f00; /* Daha zengin amber/altın */
+  --primary-light:      #ffb300;
+  --primary-dark:       #c56000;
+  --primary-rgb:        255, 143, 0;
+  --primary-gradient:   linear-gradient(145deg, #ff8f00, #ffb300);
+  --primary-gradient-hover: linear-gradient(145deg, #ffb300, #ff8f00);
+  --primary-gradient-active: linear-gradient(145deg, #c56000, #ff8f00);
+  --primary-gradient-disabled: linear-gradient(145deg, #ffe082, #ffe082);
+  --primary-gradient-focus: linear-gradient(145deg, #ffb300, #ff8f00);
+  
+  /* İkincil renk - Tamamlayıcı renk */
+  --secondary-rgb:      78, 52, 46;
+  --secondary-color:    #4e342e; /* Kahverengi - Sıcak amber ile uyumlu */
+  --secondary-light:    #7b5e57;
+  --secondary-dark:     #260e04;
+  
+  /* Vurgu rengi (CTA Butonları vb) */
+  --accent-color:       #ff9800; /* Turuncu */
+  --accent-light:       #ffb74d;
+  --accent-dark:        #f57c00;
+  
+  /* Uyarı renkler */
+  --success-color:      var(--success, #2e7d32);
+  --warning-color:      var(--warning, #ff9800);
+  --error-color:        var(--error, #d32f2f);
+  --info-color:         var(--info, #0288d1);
+  
+  /* Diğer renk değişkenleri */
+  --surface-primary:    #ffffff;
+  --surface-secondary:  #fffcf5; /* Hafif amber tonu */
+  --surface-tertiary:   #fff8e1;
+}
+
+/* ======================================================
+   EMERALD GREEN — Taze, Doğal ve Sofistike
+   ====================================================== */
+:root[data-color-theme="emerald"] {
+  --primary-color:      #00897b; /* Zengin zümrüt yeşili */
+  --primary-light:      #4db6ac;
+  --primary-dark:       #005b4f;
+  --primary-rgb:        0, 137, 123;
+  --primary-gradient:   linear-gradient(145deg, #00897b, #4db6ac);
+  --primary-gradient-hover: linear-gradient(145deg, #4db6ac, #00897b);
+  --primary-gradient-active: linear-gradient(145deg, #005b4f, #00897b);
+  --primary-gradient-disabled: linear-gradient(145deg, #b2dfdb, #b2dfdb);
+  --primary-gradient-focus: linear-gradient(145deg, #4db6ac, #00897b);
+  
+  /* İkincil renk - Tamamlayıcı renk */
+  --secondary-rgb:      216, 67, 21;
+  --secondary-color:    #d84315; /* Turuncu/Kırmızı - Yeşil ile kontrast */
+  --secondary-light:    #ff7043;
+  --secondary-dark:     #9f0000;
+  
+  /* Vurgu rengi (CTA Butonları vb) */
+  --accent-color:       #00bfa5; /* Parlak yeşil/türkuaz */
+  --accent-light:       #5df2d6;
+  --accent-dark:        #008e76;
+  
+  /* Uyarı renkler */
+  --success-color:      var(--success, #2e7d32);
+  --warning-color:      var(--warning, #ff9800);
+  --error-color:        var(--error, #d32f2f);
+  --info-color:         var(--info, #0288d1);
+  
+  /* Diğer renk değişkenleri */
+  --surface-primary:    #ffffff;
+  --surface-secondary:  #f4fbfa; /* Hafif yeşil tonu */
+  --surface-tertiary:   #e0f2f1;
+}
+
+/* ======================================================
+   MIDNIGHT BLUE — Sofistike, Güçlü ve Şık
+   ====================================================== */
+:root[data-color-theme="midnight"] {
+  --primary-color:      #263238; /* Koyu lacivert */
+  --primary-light:      #4f5b62;
+  --primary-dark:       #000a12;
+  --primary-rgb:        38, 50, 56;
+  --primary-gradient:   linear-gradient(145deg, #263238, #4f5b62);
+  --primary-gradient-hover: linear-gradient(145deg, #4f5b62, #263238);
+  --primary-gradient-active: linear-gradient(145deg, #000a12, #263238);
+  --primary-gradient-disabled: linear-gradient(145deg, #b0bec5, #b0bec5);
+  --primary-gradient-focus: linear-gradient(145deg, #4f5b62, #263238);
+  
+  /* İkincil renk - Tamamlayıcı renk */
+  --secondary-rgb:      240, 98, 146;
+  --secondary-color:    #f06292; /* Pembe - Gece mavisiyle dramatik kontrast */
+  --secondary-light:    #ff94c2;
+  --secondary-dark:     #ba2d65;
+  
+  /* Vurgu rengi (CTA Butonları vb) */
+  --accent-color:       #455a64; /* Koyu mavi-gri */
+  --accent-light:       #718792;
+  --accent-dark:        #1c313a;
+  
+  /* Uyarı renkler */
+  --success-color:      var(--success, #2e7d32);
+  --warning-color:      var(--warning, #ff9800);
+  --error-color:        var(--error, #d32f2f);
+  --info-color:         var(--info, #0288d1);
+  
+  /* Diğer renk değişkenleri */
+  --surface-primary:    #ffffff;
+  --surface-secondary:  #f5f7f8; /* Hafif mavi-gri tonu */
+  --surface-tertiary:   #eceff1;
+}
+
+/* ======================================================
+   TURQUOISE — Ferah, Modern ve Dinamik
+   ====================================================== */
+:root[data-color-theme="turquoise"] {
+  --primary-color:      #00838f; /* Türkuaz */
+  --primary-light:      #4fb3bf;
+  --primary-dark:       #005662;
+  --primary-rgb:        0, 131, 143;
+  --primary-gradient:   linear-gradient(145deg, #00838f, #4fb3bf);
+  --primary-gradient-hover: linear-gradient(145deg, #4fb3bf, #00838f);
+  --primary-gradient-active: linear-gradient(145deg, #005662, #00838f);
+  --primary-gradient-disabled: linear-gradient(145deg, #b2ebf2, #b2ebf2);
+  --primary-gradient-focus: linear-gradient(145deg, #4fb3bf, #00838f);
+  
+  /* İkincil renk - Tamamlayıcı renk */
+  --secondary-rgb:      255, 87, 34;
+  --secondary-color:    #ff5722; /* Turuncu/Kırmızı - Türkuaz ile güçlü kontrast */
+  --secondary-light:    #ff8a50;
+  --secondary-dark:     #c41c00;
+  
+  /* Vurgu rengi (CTA Butonları vb) */
+  --accent-color:       #00acc1; /* Aydınlık türkuaz */
+  --accent-light:       #5ddef4;
+  --accent-dark:        #007c91;
+  
+  /* Uyarı renkler */
+  --success-color:      var(--success, #2e7d32);
+  --warning-color:      var(--warning, #ff9800);
+  --error-color:        var(--error, #d32f2f);
+  --info-color:         var(--info, #0288d1);
+  
+  /* Diğer renk değişkenleri */
+  --surface-primary:    #ffffff;
+  --surface-secondary:  #f5fcfd; /* Hafif türkuaz tonu */
+  --surface-tertiary:   #e0f7fa;
+}
+
+/* ======================================================
+   ROSE PINK — Feminen, Yumuşak ve Modern
+   ====================================================== */
+:root[data-color-theme="rose"] {
+  --primary-color:      #d81b60; /* Zengin pembe/gül rengi */
+  --primary-light:      #ff5c8d;
+  --primary-dark:       #a00037;
+  --primary-rgb:        216, 27, 96;
+  --primary-gradient:   linear-gradient(145deg, #d81b60, #ff5c8d);
+  --primary-gradient-hover: linear-gradient(145deg, #ff5c8d, #d81b60);
+  --primary-gradient-active: linear-gradient(145deg, #a00037, #d81b60);
+  --primary-gradient-disabled: linear-gradient(145deg, #f8bbd0, #f8bbd0);
+  --primary-gradient-focus: linear-gradient(145deg, #ff5c8d, #d81b60);
+  
+  /* İkincil renk - Tamamlayıcı renk */
+  --secondary-rgb:      0, 150, 136;
+  --secondary-color:    #009688; /* Turkuaz/Yeşil - Pembe ile güçlü kontrast */
+  --secondary-light:    #4db6ac;
+  --secondary-dark:     #00796b;
+  
+  /* Vurgu rengi (CTA Butonları vb) */
+  --accent-color:       #ec407a; /* Parlak pembe */
+  --accent-light:       #ff77a9;
+  --accent-dark:        #b4004e;
+  
+  /* Uyarı renkler */
+  --success-color:      var(--success, #2e7d32);
+  --warning-color:      var(--warning, #ff9800);
+  --error-color:        var(--error, #d32f2f);
+  --info-color:         var(--info, #0288d1);
+  
+  /* Diğer renk değişkenleri */
+  --surface-primary:    #ffffff;
+  --surface-secondary:  #fef6f9; /* Hafif pembe tonu */
+  --surface-tertiary:   #fce4ec;
+}
   
   /* ==============================================
      4. ERİŞİLEBİLİRLİK DEĞİŞKENLERİ
@@ -670,105 +880,6 @@
     }
   }
   
-  /* ==============================================
-     10. BİLEŞEN TEMEL STİLLERİ
-     ============================================== */
-  /* Butonlar */
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--btn-padding-y) var(--btn-padding-x);
-    font-weight: var(--font-weight-medium);
-    border-radius: var(--btn-border-radius);
-    text-decoration: none;
-    cursor: pointer;
-    transition: all var(--transition-duration) var(--transition-function);
-    border: var(--border-width) solid transparent;
-    text-align: center;
-  }
-  
-  .btn-primary {
-    background-color: var(--primary-color);
-    color: var(--text-on-primary);
-    border-color: var(--primary-color);
-  }
-  
-  .btn-primary:hover {
-    background-color: var(--primary-dark);
-    border-color: var(--primary-dark);
-  }
-  
-  .btn-secondary {
-    background-color: var(--secondary-color);
-    color: var(--text-on-secondary);
-    border-color: var(--secondary-color);
-  }
-  
-  .btn-secondary:hover {
-    background-color: var(--secondary-dark);
-    border-color: var(--secondary-dark);
-  }
-  
-  .btn-outline-primary {
-    background-color: transparent;
-    color: var(--primary-color);
-    border-color: var(--primary-color);
-  }
-  
-  .btn-outline-primary:hover {
-    background-color: var(--primary-color);
-    color: var(--text-on-primary);
-  }
-  
-  /* Kartlar */
-  .card {
-    background-color: var(--surface-color);
-    border-radius: var(--border-radius);
-    border: var(--border-width) solid var(--border-color);
-    overflow: hidden;
-    box-shadow: var(--shadow-sm);
-    transition: all var(--transition-duration) var(--transition-function);
-  }
-  
-  .card:hover {
-    box-shadow: var(--shadow-md);
-    transform: translateY(-5px);
-  }
-  
-  .card-body {
-    padding: var(--spacing-3);
-  }
-  
-  .card-title {
-    font-size: var(--h4-font-size);
-    margin-bottom: var(--spacing-2);
-  }
-  
-  .card-text {
-    margin-bottom: var(--spacing-3);
-  }
-  
-  /* Form Elementleri */
-  .form-control {
-    display: block;
-    width: 100%;
-    padding: var(--spacing-1-5) var(--spacing-2);
-    font-size: var(--font-size-base);
-    line-height: var(--line-height-base);
-    color: var(--text-color);
-    background-color: var(--surface-color);
-    background-clip: padding-box;
-    border: var(--border-width) solid var(--border-color);
-    border-radius: var(--border-radius);
-    transition: border-color var(--transition-duration) var(--transition-function);
-  }
-  
-  .form-control:focus {
-    border-color: var(--primary-color);
-    outline: 0;
-    box-shadow: 0 0 0 0.25rem rgba(var(--primary-rgb), 0.25);
-  }
   
   /* ==============================================
      11. RTL DİL DESTEĞİ
