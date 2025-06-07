@@ -372,24 +372,6 @@ function connectThemeSystem() {
   } catch (error) {
     console.error('Tema sistemi bağlanırken hata:', error);
   }
-  
-  // Tema değiştirici butonu varsa, olay ekle
-  const themeToggleBtn = document.getElementById('themeToggleBtn');
-  if (themeToggleBtn) {
-    themeToggleBtn.addEventListener('click', function() {
-      const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-      
-      // Tema değiştir
-      if (window.themeManager && typeof window.themeManager.setThemeMode === 'function') {
-        window.themeManager.setThemeMode(newTheme);
-      } else {
-        document.documentElement.setAttribute('data-theme', newTheme);
-        document.body.classList.toggle('dark-mode', newTheme === 'dark');
-        localStorage.setItem('themeMode', newTheme);
-      }
-    });
-  }
 }
 
 // 13. YARDIMCI FONKSİYONLAR (ThemeUtils'i kullanarak optimize edildi)

@@ -1,0 +1,502 @@
+/*
+ * Grid Düzen Sistemi
+ * 
+ * Modern CSS Grid ve Flexbox temelli düzen sistemi
+ */
+
+/* Konteyner */
+.container {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: var(--spacing-4, 1rem);
+  padding-left: var(--spacing-4, 1rem);
+}
+
+.container--fluid {
+  max-width: 100%;
+}
+
+.container--sm {
+  max-width: var(--container-max-width-sm, 640px);
+}
+
+.container--md {
+  max-width: var(--container-max-width-md, 768px);
+}
+
+.container--lg {
+  max-width: var(--container-max-width-lg, 1024px);
+}
+
+.container--xl {
+  max-width: var(--container-max-width-xl, 1280px);
+}
+
+.container--2xl {
+  max-width: var(--container-max-width-2xl, 1536px);
+}
+
+/* Grid düzeni */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--spacing-4, 1rem);
+}
+
+.grid--no-gap {
+  gap: 0;
+}
+
+.grid--gap-sm {
+  gap: var(--spacing-2, 0.5rem);
+}
+
+.grid--gap-md {
+  gap: var(--spacing-4, 1rem);
+}
+
+.grid--gap-lg {
+  gap: var(--spacing-6, 1.5rem);
+}
+
+.grid--gap-xl {
+  gap: var(--spacing-8, 2rem);
+}
+
+/* Otomatik grid sütunları */
+.grid--auto-sm {
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+
+.grid--auto-md {
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+}
+
+.grid--auto-lg {
+  grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
+}
+
+/* Grid hücreleri */
+.grid__cell {
+  grid-column: span 12;
+}
+
+.grid__cell--span-1 {
+  grid-column: span 1;
+}
+
+.grid__cell--span-2 {
+  grid-column: span 2;
+}
+
+.grid__cell--span-3 {
+  grid-column: span 3;
+}
+
+.grid__cell--span-4 {
+  grid-column: span 4;
+}
+
+.grid__cell--span-5 {
+  grid-column: span 5;
+}
+
+.grid__cell--span-6 {
+  grid-column: span 6;
+}
+
+.grid__cell--span-7 {
+  grid-column: span 7;
+}
+
+.grid__cell--span-8 {
+  grid-column: span 8;
+}
+
+.grid__cell--span-9 {
+  grid-column: span 9;
+}
+
+.grid__cell--span-10 {
+  grid-column: span 10;
+}
+
+.grid__cell--span-11 {
+  grid-column: span 11;
+}
+
+.grid__cell--span-12 {
+  grid-column: span 12;
+}
+
+/* Duyarlı grid hücreleri (tablet) */
+@media (min-width: 768px) {
+  .grid__cell--md-span-1 {
+    grid-column: span 1;
+  }
+  
+  .grid__cell--md-span-2 {
+    grid-column: span 2;
+  }
+  
+  .grid__cell--md-span-3 {
+    grid-column: span 3;
+  }
+  
+  .grid__cell--md-span-4 {
+    grid-column: span 4;
+  }
+  
+  .grid__cell--md-span-5 {
+    grid-column: span 5;
+  }
+  
+  .grid__cell--md-span-6 {
+    grid-column: span 6;
+  }
+  
+  .grid__cell--md-span-7 {
+    grid-column: span 7;
+  }
+  
+  .grid__cell--md-span-8 {
+    grid-column: span 8;
+  }
+  
+  .grid__cell--md-span-9 {
+    grid-column: span 9;
+  }
+  
+  .grid__cell--md-span-10 {
+    grid-column: span 10;
+  }
+  
+  .grid__cell--md-span-11 {
+    grid-column: span 11;
+  }
+  
+  .grid__cell--md-span-12 {
+    grid-column: span 12;
+  }
+}
+
+/* Duyarlı grid hücreleri (masaüstü) */
+@media (min-width: 1024px) {
+  .grid__cell--lg-span-1 {
+    grid-column: span 1;
+  }
+  
+  .grid__cell--lg-span-2 {
+    grid-column: span 2;
+  }
+  
+  .grid__cell--lg-span-3 {
+    grid-column: span 3;
+  }
+  
+  .grid__cell--lg-span-4 {
+    grid-column: span 4;
+  }
+  
+  .grid__cell--lg-span-5 {
+    grid-column: span 5;
+  }
+  
+  .grid__cell--lg-span-6 {
+    grid-column: span 6;
+  }
+  
+  .grid__cell--lg-span-7 {
+    grid-column: span 7;
+  }
+  
+  .grid__cell--lg-span-8 {
+    grid-column: span 8;
+  }
+  
+  .grid__cell--lg-span-9 {
+    grid-column: span 9;
+  }
+  
+  .grid__cell--lg-span-10 {
+    grid-column: span 10;
+  }
+  
+  .grid__cell--lg-span-11 {
+    grid-column: span 11;
+  }
+  
+  .grid__cell--lg-span-12 {
+    grid-column: span 12;
+  }
+}
+
+/* Grid satır konumlandırma */
+.grid__cell--row-start-1 {
+  grid-row-start: 1;
+}
+
+.grid__cell--row-start-2 {
+  grid-row-start: 2;
+}
+
+.grid__cell--row-start-3 {
+  grid-row-start: 3;
+}
+
+.grid__cell--row-end-2 {
+  grid-row-end: 2;
+}
+
+.grid__cell--row-end-3 {
+  grid-row-end: 3;
+}
+
+.grid__cell--row-end-4 {
+  grid-row-end: 4;
+}
+
+/* Grid sütun konumlandırma */
+.grid__cell--col-start-1 {
+  grid-column-start: 1;
+}
+
+.grid__cell--col-start-2 {
+  grid-column-start: 2;
+}
+
+.grid__cell--col-start-3 {
+  grid-column-start: 3;
+}
+
+.grid__cell--col-start-4 {
+  grid-column-start: 4;
+}
+
+.grid__cell--col-start-5 {
+  grid-column-start: 5;
+}
+
+.grid__cell--col-start-6 {
+  grid-column-start: 6;
+}
+
+.grid__cell--col-start-7 {
+  grid-column-start: 7;
+}
+
+/* Flexbox düzeni */
+.flex {
+  display: flex;
+}
+
+.flex--inline {
+  display: inline-flex;
+}
+
+.flex--row {
+  flex-direction: row;
+}
+
+.flex--row-reverse {
+  flex-direction: row-reverse;
+}
+
+.flex--column {
+  flex-direction: column;
+}
+
+.flex--column-reverse {
+  flex-direction: column-reverse;
+}
+
+.flex--wrap {
+  flex-wrap: wrap;
+}
+
+.flex--nowrap {
+  flex-wrap: nowrap;
+}
+
+.flex--wrap-reverse {
+  flex-wrap: wrap-reverse;
+}
+
+/* Flex hizalama (Main Axis) */
+.flex--justify-start {
+  justify-content: flex-start;
+}
+
+.flex--justify-end {
+  justify-content: flex-end;
+}
+
+.flex--justify-center {
+  justify-content: center;
+}
+
+.flex--justify-between {
+  justify-content: space-between;
+}
+
+.flex--justify-around {
+  justify-content: space-around;
+}
+
+.flex--justify-evenly {
+  justify-content: space-evenly;
+}
+
+/* Flex hizalama (Cross Axis) */
+.flex--items-start {
+  align-items: flex-start;
+}
+
+.flex--items-end {
+  align-items: flex-end;
+}
+
+.flex--items-center {
+  align-items: center;
+}
+
+.flex--items-baseline {
+  align-items: baseline;
+}
+
+.flex--items-stretch {
+  align-items: stretch;
+}
+
+/* Flex öğeleri */
+.flex__item {
+  flex: 1 1 auto;
+}
+
+.flex__item--grow-0 {
+  flex-grow: 0;
+}
+
+.flex__item--grow-1 {
+  flex-grow: 1;
+}
+
+.flex__item--shrink-0 {
+  flex-shrink: 0;
+}
+
+.flex__item--shrink-1 {
+  flex-shrink: 1;
+}
+
+.flex__item--basis-auto {
+  flex-basis: auto;
+}
+
+.flex__item--basis-0 {
+  flex-basis: 0;
+}
+
+.flex__item--basis-full {
+  flex-basis: 100%;
+}
+
+.flex__item--order-first {
+  order: -1;
+}
+
+.flex__item--order-last {
+  order: 999;
+}
+
+.flex__item--order-none {
+  order: 0;
+}
+
+/* Flex boşluklar */
+.flex--gap-sm {
+  gap: var(--spacing-2, 0.5rem);
+}
+
+.flex--gap-md {
+  gap: var(--spacing-4, 1rem);
+}
+
+.flex--gap-lg {
+  gap: var(--spacing-6, 1.5rem);
+}
+
+.flex--gap-xl {
+  gap: var(--spacing-8, 2rem);
+}
+
+/* Özel düzenler */
+.grid--2-cols {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid--3-cols {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.grid--4-cols {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.grid--5-cols {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.grid--6-cols {
+  grid-template-columns: repeat(6, 1fr);
+}
+
+/* Duyarlı düzenler */
+@media (max-width: 768px) {
+  .grid--2-cols,
+  .grid--3-cols,
+  .grid--4-cols,
+  .grid--5-cols,
+  .grid--6-cols {
+    grid-template-columns: 1fr;
+  }
+  
+  .flex--md-column {
+    flex-direction: column;
+  }
+  
+  .flex--md-row {
+    flex-direction: row;
+  }
+  
+  .grid__cell {
+    grid-column: span 12;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .grid--3-cols,
+  .grid--4-cols,
+  .grid--5-cols,
+  .grid--6-cols {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Özel düzen: İki sütunlu, sağ sütun dar */
+.grid--main-sidebar {
+  grid-template-columns: 1fr 300px;
+}
+
+/* Özel düzen: İki sütunlu, sol sütun dar */
+.grid--sidebar-main {
+  grid-template-columns: 300px 1fr;
+}
+
+@media (max-width: 768px) {
+  .grid--main-sidebar,
+  .grid--sidebar-main {
+    grid-template-columns: 1fr;
+  }
+} 

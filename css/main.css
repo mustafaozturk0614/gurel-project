@@ -1,0 +1,65 @@
+/*
+ * Gürel Yönetim - Ana CSS Dosyası
+ * 
+ * Bu dosya, tüm CSS bileşenlerini doğru sırada içe aktarır.
+ * Değişkenler > Sıfırlama > Temel > Bileşenler > Düzen > Yardımcılar > Temalar sırasını takip eder.
+ */
+
+/* --------------------------
+ * 1. Temel - Base
+ * -------------------------- */
+
+/* Değişkenler - değerlerin tanımlandığı yer */
+@import 'base/variables.css';
+
+/* Sıfırlama - tarayıcı varsayılanlarını normalize eder */
+@import 'base/reset.css';
+
+/* Tipografi - metin stilleri ve başlıklar */
+@import 'base/typography.css';
+
+/* --------------------------
+ * 2. Düzen - Layout
+ * -------------------------- */
+
+/* Grid ve Flexbox düzen sistemleri */
+@import 'layout/grid.css';
+
+/* --------------------------
+ * 3. Bileşenler - Components
+ * -------------------------- */
+
+/* Butonlar */
+@import 'components/buttons.css';
+
+/* Kartlar */
+@import 'components/cards.css';
+
+/* --------------------------
+ * 4. Yardımcılar - Utilities
+ * -------------------------- */
+
+/* Boşluk yardımcıları (margin ve padding) */
+@import 'utils/spacing.css';
+
+/* Genel yardımcı sınıflar */
+@import 'utils/helpers.css';
+
+/* --------------------------
+ * 5. Temalar - Themes
+ * -------------------------- */
+
+/* Tema stilleri - açık tema varsayılandır */
+@import 'themes/light.css';
+@import 'themes/dark.css';
+
+/* --------------------------
+ * 6. Sayfa Özgü Stiller - Pages
+ * -------------------------- */
+
+/* Sayfa özgü stiller buraya eklenecek */
+/* @import 'pages/home.css'; */
+/* @import 'pages/about.css'; */
+/* @import 'pages/contact.css'; */
+
+/* Özel stil ekleri bu noktadan sonra eklenir */ 

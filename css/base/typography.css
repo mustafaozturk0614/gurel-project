@@ -1,0 +1,315 @@
+/*
+ * Tipografi Sistemi
+ * 
+ * BEM metodolojisine uygun olarak oluşturulmuş tipografi sınıfları
+ */
+
+/* Başlık sınıfları */
+.heading {
+  font-family: var(--font-family-heading, sans-serif);
+  font-weight: var(--font-weight-bold, 700);
+  line-height: var(--line-height-tight, 1.25);
+  color: var(--text-primary, #212529);
+  margin-bottom: var(--spacing-4, 1rem);
+}
+
+.heading--1 {
+  font-size: var(--font-size-4xl, 2.25rem);
+  margin-bottom: var(--spacing-6, 1.5rem);
+}
+
+.heading--2 {
+  font-size: var(--font-size-3xl, 1.875rem);
+  margin-bottom: var(--spacing-5, 1.25rem);
+}
+
+.heading--3 {
+  font-size: var(--font-size-2xl, 1.5rem);
+  margin-bottom: var(--spacing-4, 1rem);
+}
+
+.heading--4 {
+  font-size: var(--font-size-xl, 1.25rem);
+  margin-bottom: var(--spacing-3, 0.75rem);
+}
+
+.heading--5 {
+  font-size: var(--font-size-lg, 1.125rem);
+  margin-bottom: var(--spacing-2, 0.5rem);
+}
+
+.heading--6 {
+  font-size: var(--font-size-base, 1rem);
+  margin-bottom: var(--spacing-2, 0.5rem);
+}
+
+/* Metin gövde sınıfları */
+.text {
+  font-family: var(--font-family-base, sans-serif);
+  font-size: var(--font-size-base, 1rem);
+  line-height: var(--line-height-normal, 1.5);
+  color: var(--text-primary, #212529);
+  margin-bottom: var(--spacing-4, 1rem);
+}
+
+.text--xs {
+  font-size: var(--font-size-xs, 0.75rem);
+}
+
+.text--sm {
+  font-size: var(--font-size-sm, 0.875rem);
+}
+
+.text--lg {
+  font-size: var(--font-size-lg, 1.125rem);
+}
+
+.text--xl {
+  font-size: var(--font-size-xl, 1.25rem);
+}
+
+.text--2xl {
+  font-size: var(--font-size-2xl, 1.5rem);
+}
+
+/* Metin stilleri */
+.text--bold {
+  font-weight: var(--font-weight-bold, 700);
+}
+
+.text--semibold {
+  font-weight: var(--font-weight-semibold, 600);
+}
+
+.text--medium {
+  font-weight: var(--font-weight-medium, 500);
+}
+
+.text--normal {
+  font-weight: var(--font-weight-normal, 400);
+}
+
+.text--light {
+  font-weight: var(--font-weight-light, 300);
+}
+
+.text--italic {
+  font-style: italic;
+}
+
+.text--underline {
+  text-decoration: underline;
+}
+
+/* Metin hizalama */
+.text--left {
+  text-align: left;
+}
+
+.text--center {
+  text-align: center;
+}
+
+.text--right {
+  text-align: right;
+}
+
+.text--justify {
+  text-align: justify;
+}
+
+/* Metin dönüşümleri */
+.text--uppercase {
+  text-transform: uppercase;
+}
+
+.text--lowercase {
+  text-transform: lowercase;
+}
+
+.text--capitalize {
+  text-transform: capitalize;
+}
+
+/* Metin renkleri */
+.text--primary {
+  color: var(--text-primary, #212529);
+}
+
+.text--secondary {
+  color: var(--text-secondary, #495057);
+}
+
+.text--muted {
+  color: var(--text-muted, #6c757d);
+}
+
+.text--success {
+  color: var(--color-success, #28a745);
+}
+
+.text--danger {
+  color: var(--color-danger, #dc3545);
+}
+
+.text--warning {
+  color: var(--color-warning, #ffc107);
+}
+
+.text--info {
+  color: var(--color-info, #17a2b8);
+}
+
+/* Paragraf stilleri */
+.paragraph {
+  margin-bottom: var(--spacing-4, 1rem);
+  max-width: 70ch; /* Okunabilirlik için ideal satır uzunluğu */
+}
+
+.paragraph--lead {
+  font-size: var(--font-size-lg, 1.125rem);
+  font-weight: var(--font-weight-normal, 400);
+  line-height: var(--line-height-relaxed, 1.625);
+  margin-bottom: var(--spacing-6, 1.5rem);
+}
+
+.paragraph--small {
+  font-size: var(--font-size-sm, 0.875rem);
+  color: var(--text-muted, #6c757d);
+}
+
+/* Liste stilleri */
+.list {
+  margin-bottom: var(--spacing-4, 1rem);
+  padding-left: var(--spacing-6, 1.5rem);
+}
+
+.list--unstyled {
+  list-style: none;
+  padding-left: 0;
+}
+
+.list--inline {
+  list-style: none;
+  padding-left: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-4, 1rem);
+}
+
+.list__item {
+  margin-bottom: var(--spacing-2, 0.5rem);
+}
+
+.list__item--inline {
+  display: inline-block;
+  margin-right: var(--spacing-4, 1rem);
+}
+
+/* Blockquote stilleri */
+.blockquote {
+  font-size: var(--font-size-lg, 1.125rem);
+  font-style: italic;
+  margin: var(--spacing-6, 1.5rem) 0;
+  padding: var(--spacing-4, 1rem) var(--spacing-6, 1.5rem);
+  border-left: 4px solid var(--color-primary, #0056b3);
+  background-color: var(--bg-muted, #f8f9fa);
+}
+
+.blockquote__footer {
+  font-size: var(--font-size-sm, 0.875rem);
+  color: var(--text-muted, #6c757d);
+  margin-top: var(--spacing-2, 0.5rem);
+}
+
+.blockquote__footer::before {
+  content: "— ";
+}
+
+/* Kod metni */
+.code {
+  font-family: var(--font-family-monospace, monospace);
+  font-size: var(--font-size-sm, 0.875rem);
+  color: var(--color-danger, #dc3545);
+  background-color: var(--bg-muted, #f8f9fa);
+  padding: var(--spacing-1, 0.25rem) var(--spacing-2, 0.5rem);
+  border-radius: var(--radius-sm, 0.125rem);
+}
+
+/* Link stilleri */
+.link {
+  color: var(--color-primary, #0056b3);
+  text-decoration: none;
+  transition: var(--transition-fast, all 0.15s ease);
+}
+
+.link:hover {
+  color: var(--color-primary-dark, #003b7a);
+  text-decoration: underline;
+}
+
+.link--muted {
+  color: var(--text-muted, #6c757d);
+}
+
+.link--muted:hover {
+  color: var(--text-primary, #212529);
+}
+
+.link--unstyled {
+  color: inherit;
+  text-decoration: none;
+}
+
+.link--unstyled:hover {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Başlık grupları */
+.heading-group {
+  margin-bottom: var(--spacing-8, 2rem);
+}
+
+.heading-group__title {
+  margin-bottom: var(--spacing-2, 0.5rem);
+}
+
+.heading-group__subtitle {
+  font-size: var(--font-size-lg, 1.125rem);
+  color: var(--text-secondary, #495057);
+  font-weight: var(--font-weight-normal, 400);
+}
+
+/* Duyarlı tipografi */
+@media (max-width: 768px) {
+  .heading--1 {
+    font-size: var(--font-size-3xl, 1.875rem);
+  }
+  
+  .heading--2 {
+    font-size: var(--font-size-2xl, 1.5rem);
+  }
+  
+  .heading--3 {
+    font-size: var(--font-size-xl, 1.25rem);
+  }
+  
+  .paragraph--lead {
+    font-size: var(--font-size-base, 1rem);
+  }
+}
+
+@media (max-width: 576px) {
+  .heading--1 {
+    font-size: var(--font-size-2xl, 1.5rem);
+  }
+  
+  .heading--2 {
+    font-size: var(--font-size-xl, 1.25rem);
+  }
+  
+  .heading--3 {
+    font-size: var(--font-size-lg, 1.125rem);
+  }
+} 

@@ -1,0 +1,56 @@
+/*
+ * Koyu Tema Değişkenleri
+ * 
+ * Dark Theme CSS değişkenleri - data-theme="dark" için
+ */
+
+:root[data-theme="dark"] {
+  /* Temel renkler */
+  --bg-body: #212529;
+  --bg-surface: #343a40;
+  --bg-muted: #495057;
+  --bg-subtle: #6c757d;
+  
+  /* Metin renkleri */
+  --text-primary: #f8f9fa;
+  --text-secondary: #e9ecef;
+  --text-muted: #adb5bd;
+  --text-on-primary: #ffffff;
+  
+  /* Kenar renkleri */
+  --border-color: #495057;
+  --border-color-subtle: #6c757d;
+  
+  /* Gölgeler */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.3);
+  
+  /* Kontrastlar */
+  --contrast-level: 1.2;
+  
+  /* Form alanları */
+  --input-bg: #343a40;
+  --input-border: #495057;
+  --input-text: #f8f9fa;
+  --input-placeholder: #adb5bd;
+  
+  /* Odaklanma */
+  --focus-ring-color: rgba(128, 189, 255, 0.5);
+  --focus-ring-width: 0.25rem;
+  
+  /* Özel bileşen renkleri */
+  --modal-overlay-bg: rgba(0, 0, 0, 0.7);
+  --tooltip-bg: #f8f9fa;
+  --tooltip-text: #212529;
+  
+  /* Kodlama alanları */
+  --code-bg: #2b3035;
+  --code-text: #f8f9fa;
+  --code-border: #495057;
+  
+  /* Tema ayarları */
+  --theme-transition-duration: 0.3s;
+  --theme-transition-easing: ease;
+} 

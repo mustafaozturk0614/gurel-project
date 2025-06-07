@@ -16,15 +16,16 @@
         @import url("critical.css");
     </style>
     
-    <!-- CSS Dosyaları - Async olarak yükleniyor -->
+    <!-- Modernize Edilmiş CSS Sistemi -->
+    <link rel="stylesheet" href="css/main.css" media="all">
+    
+    <!-- Eski CSS Dosyaları - Async olarak yükleniyor -->
     <link rel="stylesheet" href="base.css" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="header.css?v=1.3&t=20240705" media="all">
     <link rel="stylesheet" href="hero-split-screen.css" media="print" onload="this.media='all'">
-
     
     <!-- Tema Sistemi CSS -->
     <link rel="stylesheet" href="theme-system/theme-variables.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="theme-system/settings-panel.css" media="print" onload="this.media='all'">
     
     <!-- Önbellek yenilemesi için -->
     <script>
@@ -83,12 +84,90 @@
     <!-- Font Awesome - öncelikli yükleme (settings panel için gerekli) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <!-- Settings CSS - öncelikli yükleme -->
-   
-    
     <!-- Bootstrap CSS - gecikmeli yükleme -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"></noscript>
+    
+    <!-- Doğrudan çalışan Tema Değiştirme Scripti -->
+    <script>
+    // ThemeManager ile tema değiştirme işlemini yönetelim
+    document.addEventListener('DOMContentLoaded', function() {
+        // Tema butonlarını seçelim
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        const mobileThemeToggleBtn = document.querySelector('.mobile-theme-toggle-btn');
+        
+        // Tema değiştirme fonksiyonu - doğrudan ThemeManager API'sini kullanır
+        function toggleTheme() {
+            // Mevcut temayı kontrol et
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+            // Zıt temayı belirle
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            console.log(`Tema değişimi istendi: ${currentTheme} -> ${newTheme}`);
+            
+            // Global tema yöneticisini kullan (app.js tarafından zaten yükleniyor)
+            if (window.themeManager && typeof window.themeManager.setThemeMode === 'function') {
+                console.log('ThemeManager API kullanılıyor...');
+                window.themeManager.setThemeMode(newTheme);
+            } else {
+                // ThemeManager bulunamadıysa doğrudan DOM manipülasyonu yap
+                console.log('ThemeManager bulunamadı, doğrudan DOM değişikliği yapılıyor...');
+                document.documentElement.setAttribute('data-theme', newTheme);
+                document.body.classList.toggle('dark-mode', newTheme === 'dark');
+                localStorage.setItem('themeMode', newTheme);
+            }
+            
+            // Mobil ikonları güncelle
+            updateMobileIcons(newTheme);
+        }
+        
+        // Ana tema değiştirme butonu
+        if (themeToggleBtn) {
+            themeToggleBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                toggleTheme();
+            });
+        }
+        
+        // Mobil tema değiştirme butonu
+        if (mobileThemeToggleBtn) {
+            mobileThemeToggleBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                toggleTheme();
+            });
+        }
+        
+        // ThemeManager'dan gelen tema değişikliği olaylarını dinle
+        document.addEventListener('themeChanged', function(e) {
+            if (e && e.detail && e.detail.newTheme) {
+                updateMobileIcons(e.detail.newTheme);
+            }
+        });
+        
+        // Mobil tema ikonlarını güncelleme fonksiyonu
+        function updateMobileIcons(theme) {
+            const lightIcon = document.querySelector('.mobile-theme-icon-light');
+            const darkIcon = document.querySelector('.mobile-theme-icon-dark');
+            
+            if (lightIcon && darkIcon) {
+                if (theme === 'dark') {
+                    lightIcon.style.display = 'none';
+                    darkIcon.style.display = 'inline-block';
+                } else {
+                    lightIcon.style.display = 'inline-block';
+                    darkIcon.style.display = 'none';
+                }
+            }
+        }
+        
+        // Başlangıçta mevcut temaya göre ikonları ayarla
+        const initialTheme = document.documentElement.getAttribute('data-theme') || 'light';
+        updateMobileIcons(initialTheme);
+    });
+    </script>
+    
+    <!-- Tema sistemini doğru sırayla yüklemek için özel script -->
+    
     
     <!-- Diğer CSS dosyaları - gecikmeli yükleme -->
     <link rel="stylesheet" href="assets/css/shock.css" media="print" onload="this.media='all'">
@@ -179,6 +258,53 @@
         #loading {
             animation: hideLoader 0s ease-in 5s forwards;
         }
+        
+        /* Tema Değiştirme Butonu Stili */
+        .theme-toggle-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            position: relative;
+            margin-left: 10px;
+        }
+        
+        .theme-toggle-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .theme-toggle-btn i {
+            font-size: 1.2rem;
+            color: var(--text-color);
+            transition: transform 0.5s ease, opacity 0.3s ease;
+        }
+        
+        .theme-toggle-btn .fa-sun {
+            position: absolute;
+            opacity: 1;
+        }
+        
+        .theme-toggle-btn .fa-moon {
+            position: absolute;
+            opacity: 0;
+            transform: rotate(30deg) scale(0);
+        }
+        
+        [data-theme="dark"] .theme-toggle-btn .fa-sun {
+            opacity: 0;
+            transform: rotate(-30deg) scale(0);
+        }
+        
+        [data-theme="dark"] .theme-toggle-btn .fa-moon {
+            opacity: 1;
+            transform: rotate(0) scale(1);
+        }
     </style>
 
 </head>
@@ -251,6 +377,13 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <!-- Tema Değiştirme Butonu -->
+                        <button id="themeToggleBtn" class="theme-toggle-btn" aria-label="Tema Değiştir">
+                            <i class="fas fa-sun"></i>
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </li>
+                    <li class="nav-item">
                         <a href="#contact" class="header-button pulse-animation" aria-label="Bize Ulaşın">
                             <span class="btn-icon"><i class="fas fa-headset"></i></span>
                             <span class="btn-text" data-translate="header.get_quote">Bize Ulaşın</span>
@@ -307,6 +440,16 @@
                         <span class="mobile-nav-text">Diğer Tasarımlar</span>
                     </a>
                 </li>
+                <!-- Mobil Tema Değiştirme Butonu -->
+                <li class="mobile-nav-item" style="--item-index: 5">
+                    <button class="mobile-theme-toggle-btn mobile-nav-link">
+                        <span class="mobile-nav-icon">
+                            <i class="fas fa-sun mobile-theme-icon-light"></i>
+                            <i class="fas fa-moon mobile-theme-icon-dark" style="display: none;"></i>
+                        </span>
+                        <span class="mobile-nav-text">Tema Değiştir</span>
+                    </button>
+                </li>
             </ul>
             
             <!-- Mobil Butonlar -->
@@ -341,21 +484,24 @@
                         <source src="assets/videos/20250405_1349_Sunrise Modern Complex_storyboard_01jr2s3hqwep79q17t9mpghbxw.mp4" type="video/mp4">
                         <img src="assets/images/site-yonetimi-poster.jpg" alt="Apartman ve Site Yönetimi">
                     </video>
+                    <div class="split-panel-overlay"></div>
                 </div>
                 <div class="split-panel-content">
-                    <div class="hero-badge"><i class="fas fa-shield-alt"></i><span>2022'DEN BERİ BALIKESİR'DE</span></div>
-                    <div class="split-panel-icon"><i class="fas fa-building"></i></div>
-                    <h2 class="split-panel-title">Apartman ve Site Yönetimi</h2>
-                    <p class="split-panel-description">Site ve toplu yapı yönetiminde uzman kadromuz ve gelişmiş teknolojik altyapımız ile binlerce konut sakininin hayatını kolaylaştırıyoruz.</p>
-                    
-                    <div class="split-panel-features">
-                        <div class="split-feature"><i class="fas fa-check-circle"></i><span>7/24 Teknik Destek ve Güvenlik</span></div>
-                        <div class="split-feature"><i class="fas fa-check-circle"></i><span>Şeffaf Mali Yönetim</span></div>
-                        <div class="split-feature"><i class="fas fa-check-circle"></i><span>Online Aidat Takip Sistemi</span></div>
-                        <div class="split-feature"><i class="fas fa-check-circle"></i><span>Profesyonel Taşeron Yönetimi</span></div>
+                    <div class="hero-badge pulse-animation"><i class="fas fa-shield-alt"></i><span>2022'DEN BERİ BALIKESİR'DE</span></div>
+                    <div class="content-container">
+                        <div class="split-panel-icon"><i class="fas fa-building"></i></div>
+                        <h2 class="split-panel-title">Apartman ve Site Yönetimi</h2>
+                        <p class="split-panel-description">Site ve toplu yapı yönetiminde uzman kadromuz ve gelişmiş teknolojik altyapımız ile binlerce konut sakininin hayatını kolaylaştırıyoruz.</p>
+                        
+                        <div class="split-panel-features">
+                            <div class="split-feature"><i class="fas fa-check-circle"></i><span>7/24 Teknik Destek ve Güvenlik</span></div>
+                            <div class="split-feature"><i class="fas fa-check-circle"></i><span>Şeffaf Mali Yönetim</span></div>
+                            <div class="split-feature"><i class="fas fa-check-circle"></i><span>Online Aidat Takip Sistemi</span></div>
+                            <div class="split-feature"><i class="fas fa-check-circle"></i><span>Profesyonel Taşeron Yönetimi</span></div>
+                        </div>
+                        
+                        <a href="#services" class="split-panel-btn">Detaylı Bilgi <i class="fas fa-arrow-right"></i></a>
                     </div>
-                    
-                    <a href="#services" class="split-panel-btn">Detaylı Bilgi <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
             
@@ -366,20 +512,23 @@
                         <source src="assets/videos/hero.mp4" type="video/mp4">
                         <img src="assets/images/mulk-yonetimi-poster.jpg" alt="Mülk Yönetimi">
                     </video>
+                    <div class="split-panel-overlay"></div>
                 </div>
                 <div class="split-panel-content">
-                    <div class="split-panel-icon"><i class="fas fa-home"></i></div>
-                    <h2 class="split-panel-title">Mülk Yönetimi</h2>
-                    <p class="split-panel-description">Mülk sahipleri için özel çözümler sunuyoruz. Kiralama, bakım, onarım ve değerleme hizmetlerimizle gayrimenkulünüzün potansiyelini en üst seviyeye çıkarıyoruz.</p>
-                    
-                    <div class="split-panel-features">
-                        <div class="split-feature"><i class="fas fa-check-circle"></i><span>Kiracı Bulma ve Sözleşme Yönetimi</span></div>
-                        <div class="split-feature"><i class="fas fa-check-circle"></i><span>Bakım ve Onarım Hizmetleri</span></div>
-                        <div class="split-feature"><i class="fas fa-check-circle"></i><span>Kira Geliri Optimizasyonu</span></div>
-                        <div class="split-feature"><i class="fas fa-check-circle"></i><span>Gayrimenkul Değerleme</span></div>
+                    <div class="content-container">
+                        <div class="split-panel-icon"><i class="fas fa-home"></i></div>
+                        <h2 class="split-panel-title">Mülk Yönetimi</h2>
+                        <p class="split-panel-description">Mülk sahipleri için özel çözümler sunuyoruz. Kiralama, bakım, onarım ve değerleme hizmetlerimizle gayrimenkulünüzün potansiyelini en üst seviyeye çıkarıyoruz.</p>
+                        
+                        <div class="split-panel-features">
+                            <div class="split-feature"><i class="fas fa-check-circle"></i><span>Kiracı Bulma ve Sözleşme Yönetimi</span></div>
+                            <div class="split-feature"><i class="fas fa-check-circle"></i><span>Bakım ve Onarım Hizmetleri</span></div>
+                            <div class="split-feature"><i class="fas fa-check-circle"></i><span>Kira Geliri Optimizasyonu</span></div>
+                            <div class="split-feature"><i class="fas fa-check-circle"></i><span>Gayrimenkul Değerleme</span></div>
+                        </div>
+                        
+                        <a href="#property-management" class="split-panel-btn">Detaylı Bilgi <i class="fas fa-arrow-right"></i></a>
                     </div>
-                    
-                    <a href="#property-management" class="split-panel-btn">Detaylı Bilgi <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
             
@@ -1936,6 +2085,31 @@
                 }
             });
         });
+    </script>
+
+    <!-- Tema sistemini yüklemek için özel script ekleyeceğim -->
+    <script>
+      // Sayfa yüklendikten sonra tema ve dil ayarlarını yükle
+      document.addEventListener('DOMContentLoaded', function() {
+        // Tema sistemini yükle (theme-manager.js tarafından oluşturulan global değişken)
+        if (typeof window.themeManager === 'undefined') {
+          console.log('ThemeManager global değişkeni bulunamadı, tema sistemi doğru şekilde yüklenemiyor olabilir');
+          
+          // Basit bir tema yönetimi sağla
+          const savedTheme = localStorage.getItem('themeMode') || 'light';
+          document.documentElement.setAttribute('data-theme', savedTheme);
+          console.log('Tema basit mod ile ayarlandı:', savedTheme);
+        } else {
+          console.log('ThemeManager başarıyla yüklendi');
+          
+          // Başlangıç temasını localStorage'dan kontrol et
+          const savedTheme = localStorage.getItem('themeMode');
+          if (savedTheme && savedTheme !== window.themeManager.settings.themeMode) {
+            window.themeManager.setThemeMode(savedTheme);
+            console.log('Tema localStorage\'dan yüklendi:', savedTheme);
+          }
+        }
+      });
     </script>
 
 </body>
