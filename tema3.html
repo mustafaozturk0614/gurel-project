@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gürel Yönetim - Tema Deneyimi</title>
+    <style>
+        /* Global Styles */
+        :root {
+            --border-radius-md: .25rem;
+            --shadow-md: 0 2px 4px rgba(0,0,0,0.1);
+            --spacing-4: 1rem;
+            --transition-smooth: .3s;
+            --text-on-primary: #fff;
+        }
+
+        /* 1. Kurumsal Güven */
+        :root[data-theme="theme-1"] {
+            --color-primary: #0052CC;
+            --color-primary-hover: #0048AA;
+            --color-secondary: #FF8F00;
+            --color-secondary-hover: #E67E00;
+            --bg-body: #FFFFFF;
+            --bg-surface: #F4F7FB;
+            --text-primary: #2C3E50;
+            --text-secondary: #495C6B;
+        }
+
+        /* 2. Doğal Denge */
+        :root[data-theme="theme-2"] {
+            --color-primary: #009688;
+            --color-primary-hover: #00897B;
+            --color-secondary: #F1E4D3;
+            --color-secondary-hover: #E8DDD1;
+            --bg-body: #FFFFFF;
+            --bg-surface: #F9F9F9;
+            --text-primary: #34403D;
+            --text-secondary: #556E6B;
+        }
+
+        /* 3. Teknoloji & Yenilik */
+        :root[data-theme="theme-3"] {
+            --color-primary: #6A0DAD;
+            --color-primary-hover: #5800A0;
+            --color-secondary: #00BFFF;
+            --color-secondary-hover: #00A8E6;
+            --bg-body: #FFFFFF;
+            --bg-surface: #F2F5FA;
+            --text-primary: #2A264B;
+            --text-secondary: #4C4773;
+        }
+
+        /* 4. Sıcaklık & Samimiyet */
+        :root[data-theme="theme-4"] {
+            --color-primary: #FF5722;
+            --color-primary-hover: #FF4500;
+            --color-secondary: #FFECB3;
+            --color-secondary-hover: #FFEDB0;
+            --bg-body: #FFFFFF;
+            --bg-surface: #FFF8F2;
+            --text-primary: #4A2F2A;
+            --text-secondary: #6E4C47;
+        }
+
+        /* 5. Modern Minimalizm */
+        :root[data-theme="theme-5"] {
+            --color-primary: #455A64;
+            --color-primary-hover: #37474F;
+            --color-secondary: #607D8B;
+            --color-secondary-hover: #546E7A;
+            --bg-body: #FFFFFF;
+            --bg-surface: #F6F8FA;
+            --text-primary: #263238;
+            --text-secondary: #475057;
+        }
+
+        /* 6. Profesyonel Sadelik */
+        :root[data-theme="theme-6"] {
+            --color-primary: #2E8B57;
+            --color-primary-hover: #2A7A4F;
+            --color-secondary: #EAEFF2;
+            --color-secondary-hover: #E2E8EE;
+            --bg-body: #FFFFFF;
+            --bg-surface: #FCFDFE;
+            --text-primary: #1E3A2F;
+            --text-secondary: #3A5C4B;
+        }
+
+        /* 7. Enerjik Kontrast */
+        :root[data-theme="theme-7"] {
+            --color-primary: #E53935;
+            --color-primary-hover: #D32F2F;
+            --color-secondary: #283593;
+            --color-secondary-hover: #1A237E;
+            --bg-body: #FFFFFF;
+            --bg-surface: #F4F5F9;
+            --text-primary: #2C2232;
+            --text-secondary: #4A3B4C;
+        }
+
+        /* Shared Styles */
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            will-change: background-color, color;
+        }
+
+        /* Tema Geçiş Animasyonları */
+        body.theme-transition {
+            transition: all 0.3s ease;
+            will-change: background-color, color;
+        }
+
+        /* Tema Seçici Animasyonları */
+        .theme-switcher {
+            animation: slideIn 0.5s ease-out;
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1rem;
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-md);
+            backdrop-filter: blur(5px);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Tema Kartları Animasyonları */
+        .section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: var(--bg-surface);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-md);
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+            animation: fadeIn 0.5s ease-out;
+            will-change: transform, opacity;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Feature Kartları Animasyonları */
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            will-change: transform, box-shadow;
+        }
+
+        /* Tema Seçici Butonları */
+        .theme-switcher button {
+            padding: 0.5rem 1rem;
+            margin: 0.25rem;
+            border: none;
+            border-radius: var(--border-radius-md);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            will-change: background-color, color;
+        }
+
+        .theme-switcher button.active {
+            background-color: var(--color-primary);
+            color: var(--text-on-primary);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .theme-switcher button:hover:not(.active) {
+            background-color: var(--color-secondary);
+            color: var(--text-primary);
+        }
+
+        /* Tema Kartları Renkleri */
+        .section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: var(--bg-surface);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-md);
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+            animation: fadeIn 0.5s ease-out;
+            will-change: transform, opacity;
+        }
+
+        .section h2 {
+            color: var(--color-primary);
+            margin-bottom: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            will-change: transform, box-shadow;
+        }
+
+        .feature-card h3 {
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+        }
+
+        .stats-card {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-md);
+            text-align: center;
+            transition: all 0.3s ease;
+            will-change: transform, box-shadow;
+        }
+
+        .stats-card span {
+            color: var(--color-primary);
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stats-card p {
+            color: var(--text-secondary);
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background-color: var(--color-primary);
+            color: var(--text-on-primary);
+            text-decoration: none;
+            border-radius: var(--border-radius-md);
+            transition: all 0.3s ease;
+            will-change: transform, box-shadow;
+        }
+
+        .cta-button:hover {
+            background-color: var(--color-primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Tema Geçiş Animasyonu */
+        body.theme-transition {
+            transition: all 0.3s ease;
+        }
+
+        /* Tema Seçici Animasyonları */
+        .theme-switcher {
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .theme-switcher {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 1000;
+            background: white;
+            padding: 1rem;
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-md);
+        }
+
+        .theme-switcher button {
+            padding: 0.5rem 1rem;
+            margin: 0.25rem;
+            border: none;
+            border-radius: var(--border-radius-md);
+            cursor: pointer;
+            transition: background-color var(--transition-smooth);
+        }
+
+        .theme-switcher button.active {
+            background-color: var(--color-primary);
+            color: var(--text-on-primary);
+        }
+
+        .section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: var(--bg-surface);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-md);
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section h2 {
+            color: var(--color-primary);
+            margin-bottom: 2rem;
+        }
+
+        /* Kurumsal Güven Section */
+        .theme-1 .section {
+            background: linear-gradient(135deg, var(--bg-surface) 0%, #E6F3FF 100%);
+        }
+
+        /* Doğal Denge Section */
+        .theme-2 .section {
+            background: linear-gradient(135deg, var(--bg-surface) 0%, #E8F5E9 100%);
+        }
+
+        /* Teknoloji & Yenilik Section */
+        .theme-3 .section {
+            background: linear-gradient(135deg, var(--bg-surface) 0%, #E3F2FD 100%);
+            backdrop-filter: blur(5px);
+        }
+
+        /* Sıcaklık & Samimiyet Section */
+        .theme-4 .section {
+            background: linear-gradient(135deg, var(--bg-surface) 0%, #FFF3E0 100%);
+        }
+
+        /* Modern Minimalizm Section */
+        .theme-5 .section {
+            background: linear-gradient(135deg, var(--bg-surface) 0%, #F5F5F5 100%);
+        }
+
+        /* Profesyonel Sadelik Section */
+        .theme-6 .section {
+            background: linear-gradient(135deg, var(--bg-surface) 0%, #E8F5E9 100%);
+        }
+
+        /* Enerjik Kontrast Section */
+        .theme-7 .section {
+            background: linear-gradient(135deg, var(--bg-surface) 0%, #F3E5F5 100%);
+        }
+
+        /* Feature Cards */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+            animation: gridFadeIn 0.8s ease-out;
+        }
+
+        @keyframes gridFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            will-change: transform, box-shadow;
+            animation: cardSlide 0.5s ease-out;
+        }
+
+        @keyframes cardSlide {
+            from {
+                opacity: 0;
+                transform: translateY(20px) rotateX(-10deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) rotateX(0);
+            }
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px) rotateX(2deg);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card h3 {
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+            animation: statsFadeIn 0.6s ease-out;
+        }
+
+        @keyframes statsFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .stats-card {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-md);
+            text-align: center;
+            transition: all 0.3s ease;
+            will-change: transform, box-shadow;
+        }
+
+        .stats-card:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .stats-card span {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Call to Action Button */
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--color-primary);
+            color: var(--text-on-primary);
+            text-decoration: none;
+            border-radius: var(--border-radius-md);
+            transition: background-color var(--transition-smooth);
+        }
+
+        .cta-button:hover {
+            background: var(--color-primary-hover);
+        }
+    </style>
+</head>
+<body data-theme="theme-1">
+    <div class="theme-switcher">
+        <button onclick="setTheme('theme-1')" class="active">Kurumsal Güven</button>
+        <button onclick="setTheme('theme-2')">Doğal Denge</button>
+        <button onclick="setTheme('theme-3')">Teknoloji & Yenilik</button>
+        <button onclick="setTheme('theme-4')">Sıcaklık & Samimiyet</button>
+        <button onclick="setTheme('theme-5')">Modern Minimalizm</button>
+        <button onclick="setTheme('theme-6')">Profesyonel Sadelik</button>
+        <button onclick="setTheme('theme-7')">Enerjik Kontrast</button>
+    </div>
+
+    <div class="section">
+        <h2>Kurumsal Güven</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>Profesyonel Görünüm</h3>
+                <p>Mavi ve turuncu renk kombinasyonu ile kurumsal bir görünüm sağlar.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Kullanıcı Dostu</h3>
+                <p>Temiz ve anlaşılır bir arayüz tasarımı.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Modern Dokunuş</h3>
+                <p>Yenilikçi özellikler ve modern tasarım öğeleri.</p>
+            </div>
+        </div>
+        <div class="stats-grid">
+            <div class="stats-card">
+                <span>100%</span>
+                <p>Kullanıcı Memnuniyeti</p>
+            </div>
+            <div class="stats-card">
+                <span>24/7</span>
+                <p>Destek</p>
+            </div>
+            <div class="stats-card">
+                <span>1000+</span>
+                <p>Müşteri</p>
+            </div>
+        </div>
+        <a href="#" class="cta-button">Daha Fazla Bilgi</a>
+    </div>
+
+    <div class="section">
+        <h2>Doğal Denge</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>Doğal Renkler</h3>
+                <p>Yeşil ve bej tonları ile doğal bir görünüm.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Sakin Görünüm</h3>
+                <p>Yumuşak geçişler ve sakin renkler.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Organik Dokunuş</h3>
+                <p>Doğal ürünler için ideal tasarım.</p>
+            </div>
+        </div>
+        <div class="stats-grid">
+            <div class="stats-card">
+                <span>95%</span>
+                <p>Organik Ürünler</p>
+            </div>
+            <div class="stats-card">
+                <span>100%</span>
+                <p>Yenilenebilir</p>
+            </div>
+            <div class="stats-card">
+                <span>500+</span>
+                <p>Ürün</p>
+            </div>
+        </div>
+        <a href="#" class="cta-button">Mağazaya Git</a>
+    </div>
+
+    <div class="section">
+        <h2>Teknoloji & Yenilik</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>Yenilikçi Renkler</h3>
+                <p>Mavi ve mor tonları ile modern bir görünüm.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Gelecek Odaklı</h3>
+                <p>Yenilikçi teknoloji için tasarlanmış.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Modern Dokunuş</h3>
+                <p>Yenilikçi özellikler ve modern tasarım öğeleri.</p>
+            </div>
+        </div>
+        <div class="stats-grid">
+            <div class="stats-card">
+                <span>100%</span>
+                <p>Yenilikçi</p>
+            </div>
+            <div class="stats-card">
+                <span>24/7</span>
+                <p>Destek</p>
+            </div>
+            <div class="stats-card">
+                <span>1000+</span>
+                <p>Kullanıcı</p>
+            </div>
+
+        <div class="section">
+            <h2>Teknoloji & Yenilik</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>Yenilikçi Renkler</h3>
+                    <p>Mavi ve mor tonları ile modern bir görünüm.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Gelecek Odaklı</h3>
+                    <p>Yenilikçi teknoloji için tasarlanmış.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Modern Dokunuş</h3>
+                    <p>Yenilikçi özellikler ve modern tasarım öğeleri.</p>
+                </div>
+            </div>
+            <div class="stats-grid">
+                <div class="stats-card">
+                    <span>100%</span>
+                    <p>Yenilikçi</p>
+                </div>
+                <div class="stats-card">
+                    <span>24/7</span>
+                    <p>Destek</p>
+                </div>
+                <div class="stats-card">
+                    <span>1000+</span>
+                    <p>Kullanıcı</p>
+                </div>
+            </div>
+            <a href="#" class="cta-button">Daha Fazla Bilgi</a>
+        </div>
+
+        <script>
+            // Tema Verileri
+            const themes = {
+                'theme-1': { name: 'Kurumsal Güven', color: '#0052CC' },
+                'theme-2': { name: 'Doğal Denge', color: '#009688' },
+                'theme-3': { name: 'Teknoloji & Yenilik', color: '#6A0DAD' },
+                'theme-4': { name: 'Sıcaklık & Samimiyet', color: '#FF5722' },
+                'theme-5': { name: 'Modern Minimalizm', color: '#455A64' },
+                'theme-6': { name: 'Profesyonel Sadelik', color: '#2E8B57' },
+                'theme-7': { name: 'Enerjik Kontrast', color: '#E53935' }
+            };
+
+            // Tema Değiştirme Fonksiyonu
+            function setTheme(theme) {
+                // Tema geçiş animasyonu için sınıf ekle
+                document.body.classList.add('theme-transition');
+                
+                // Tema değişikliğini yap
+                document.body.setAttribute('data-theme', theme);
+                
+                // Tema seçici butonlarının durumunu güncelle
+                const buttons = document.querySelectorAll('.theme-switcher button');
+                buttons.forEach(button => {
+                    button.classList.remove('active');
+                    if (button.getAttribute('onclick').includes(theme)) {
+                        button.classList.add('active');
+                    }
+                });
+
+                // Animasyon tamamlandığında sınıfı kaldır
+                setTimeout(() => {
+                    document.body.classList.remove('theme-transition');
+                }, 300); // 300ms geçiş süresi
+            }
+
+            // Sayfa yüklendiğinde mevcut tema kontrolü
+            document.addEventListener('DOMContentLoaded', () => {
+                const currentTheme = localStorage.getItem('userTheme') || 'theme-1';
+                setTheme(currentTheme);
+            });
+
+            // Tema değiştiğinde yerel depolamaya kaydet
+            document.querySelectorAll('.theme-switcher button').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const theme = e.currentTarget.getAttribute('onclick').match(/'([^']+)'/)[1];
+                    localStorage.setItem('userTheme', theme);
+                });
+            });
+        </script>
+    </body>
+    </html>

@@ -1,0 +1,854 @@
+/* Service Detail Sayfası Stilleri */
+
+/* 0) Variables.css dosyasını içeri aktarıyoruz. Bu, tüm tema değişkenlerimizi kullanmamızı sağlar. */
+@import "../base/variables.css";
+
+/* ====================================
+ * Hizmet Detay Banner
+ * ==================================== */
+.service-detail-banner {
+    position: relative;
+    padding: var(--spacing-16) 0;
+    /* variables.css'den gelen gradient kullanılıyor */
+    background: var(--gradient-primary); 
+    color: var(--color-white);
+    overflow: hidden;
+    /* Genel fade-in animasyonu için view-transition değişkenleri kullanılıyor */
+    animation: fadeIn var(--view-transition-duration) var(--view-transition-timing) both;
+    min-height: 350px; /* Görsel bütünlük için minimum yükseklik */
+    display: flex;
+    align-items: center; /* İçeriği dikeyde ortala */
+}
+
+/* Arka plan deseni için mevcut before pseudo-elementi */
+.service-detail-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('../assets/img/pattern-dots.png');
+    opacity: 0.1;
+    z-index: 1;
+}
+
+/* Yeni: Banner'a dekoratif, yumuşak bir yarım daire ekleyelim */
+.service-detail-banner::after {
+    content: '';
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: var(--color-primary-transparent); /* variables.css'den gelen şeffaf primary rengi */
+    border-radius: 50%;
+    bottom: -150px; /* Ekranın altından başlasın */
+    left: -150px; /* Ekranın solundan başlasın */
+    opacity: 0.8;
+    z-index: 1;
+    /* Yavaş ve sürekli bir animasyon */
+    animation: pulseScale 8s ease-in-out infinite alternate;
+}
+
+.service-detail-banner .container {
+    position: relative;
+    z-index: 2; /* İçeriğin her zaman üstte kalmasını sağlar */
+}
+
+/* Breadcrumb stil iyileştirmeleri */
+.breadcrumb {
+    background: transparent;
+    padding: 0;
+    margin-bottom: var(--spacing-5);
+    font-size: var(--font-size-sm);
+}
+
+.breadcrumb-item a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: var(--transition-normal);
+}
+
+.breadcrumb-item a:hover {
+    color: var(--color-white);
+    text-decoration: underline;
+    text-shadow: var(--text-shadow-sm);
+}
+
+.breadcrumb-item.active {
+    color: var(--color-white);
+    font-weight: var(--font-weight-semibold);
+}
+
+.breadcrumb-item+.breadcrumb-item::before {
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0 var(--spacing-2);
+}
+
+.service-detail-title {
+    font-family: var(--font-family-heading); /* Başlık fontu kullanılıyor */
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-4);
+    text-shadow: var(--text-shadow-sm);
+    line-height: var(--line-height-tight);
+}
+
+.service-detail-subtitle {
+    font-size: var(--font-size-lg);
+    opacity: 0.9;
+    max-width: 600px;
+    line-height: var(--line-height-normal);
+}
+
+.service-detail-icon {
+    text-align: right;
+}
+
+/* Banner ikonuna yavaş dönme animasyonu ekleyelim */
+.service-detail-icon i {
+    font-size: 150px; /* İkonu büyüttük */
+    opacity: 0.15; /* Hafif transparanlık */
+    color: var(--color-white); /* Beyaz renk verdik */
+    animation: rotateSlow 25s linear infinite; /* Sürekli dönme animasyonu */
+    text-shadow: var(--shadow-md); /* Hafif gölge */
+}
+
+/* ====================================
+ * Detay İçeriği
+ * ==================================== */
+.service-detail-content {
+    padding: var(--spacing-16) 0;
+    background-color: var(--bg-muted); /* variables.css'den gelen muted arka plan */
+}
+
+.content-main {
+    background: var(--bg-surface);
+    padding: var(--spacing-8);
+    border-radius: var(--border-radius-2xl);
+    box-shadow: var(--shadow-lg);
+}
+
+.service-detail-image {
+    margin-bottom: var(--spacing-8);
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+}
+
+.service-detail-image img {
+    width: 100%;
+    border-radius: var(--border-radius-lg);
+    display: block; /* Resim altındaki boşluğu kaldırır */
+}
+
+/* Section başlıklarına daha yaratıcı alt çizgi efekti */
+.section-title {
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-5);
+    color: var(--text-primary);
+    position: relative;
+    padding-bottom: var(--spacing-4);
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 80px; /* Daha uzun bir çizgi */
+    height: 4px; /* Daha kalın bir çizgi */
+    background: var(--gradient-primary); /* Gradient alt çizgi */
+    border-radius: 2px;
+    animation: expandWidth 3s ease-in-out infinite alternate; /* Genişleme animasyonu */
+}
+
+.divider {
+    height: 1px;
+    background: var(--border-color);
+    width: 100%;
+    margin-top: var(--spacing-8);
+    margin-bottom: var(--spacing-8);
+}
+
+/* ====================================
+ * Özellik Alanları (Feature Items)
+ * ==================================== */
+.service-features {
+    margin: var(--spacing-8) 0;
+}
+
+.feature-item {
+    display: flex;
+    align-items: flex-start; /* İçerikleri üste hizala */
+    margin-bottom: var(--spacing-6);
+    padding: var(--spacing-5);
+    background: var(--bg-muted);
+    border-radius: var(--border-radius-lg);
+    border: 1px solid var(--border-color-subtle); /* Hafif kenarlık */
+    transition: transform 0.4s var(--transition-smooth), box-shadow 0.4s var(--transition-smooth), border-color 0.4s var(--transition-smooth);
+}
+
+/* Hover efekti: Hafif yükselme ve eğilme + gölge + kenarlık rengi değişimi */
+.feature-item:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-7px) rotate(-1deg);
+    border-color: var(--color-primary);
+}
+
+.feature-icon {
+    flex-shrink: 0;
+    width: 65px; /* Boyut büyütüldü */
+    height: 65px; /* Boyut büyütüldü */
+    background: var(--color-primary);
+    border-radius: var(--border-radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: var(--spacing-5);
+    color: var(--color-white);
+    font-size: 28px; /* İkon boyutu büyütüldü */
+    box-shadow: 0 8px 20px rgba(var(--color-primary-rgb), 0.3); /* Daha belirgin gölge */
+    animation: bob 3s ease-in-out infinite; /* İkona yüzen animasyon */
+}
+
+.feature-content h4 {
+    font-size: var(--font-size-xl); /* Başlık boyutu büyütüldü */
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--spacing-2);
+    color: var(--text-primary);
+}
+
+.feature-content p {
+    color: var(--text-muted);
+    margin-bottom: 0;
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-normal);
+}
+
+/* ====================================
+ * Avantajlar (Advantages)
+ * ==================================== */
+.advantages {
+    margin: var(--spacing-8) 0;
+}
+
+.advantage-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: var(--spacing-5);
+    padding: var(--spacing-3);
+}
+
+.advantage-icon {
+    flex-shrink: 0;
+    margin-right: var(--spacing-4);
+    color: var(--color-secondary); /* İkon rengini secondary yaptık */
+    font-size: var(--font-size-2xl); /* İkon boyutu büyütüldü */
+    transition: transform 0.3s var(--transition-normal);
+}
+
+.advantage-item:hover .advantage-icon {
+    transform: scale(1.1); /* Hover'da ikon büyüsün */
+}
+
+.advantage-content h5 {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--spacing-2);
+    color: var(--text-primary);
+}
+
+.advantage-content p {
+    color: var(--text-muted);
+    margin-bottom: 0;
+    font-size: var(--font-size-sm);
+}
+
+/* ====================================
+ * CTA Kutusu (Call to Action)
+ * ==================================== */
+.cta-box {
+    background: var(--gradient-primary); /* Gradient arka plan */
+    padding: var(--spacing-8);
+    border-radius: var(--border-radius-2xl);
+    color: var(--color-white);
+    text-align: center;
+    animation: fadeIn 0.8s ease-out both; /* Kendi fade-in animasyonu */
+    box-shadow: var(--shadow-xl); /* Daha belirgin gölge */
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(255, 255, 255, 0.05); /* İç parlaklık efekti */
+    z-index: 0;
+    border-radius: var(--border-radius-2xl);
+}
+
+.cta-box h4 {
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-4);
+    text-shadow: var(--text-shadow-sm);
+    z-index: 1;
+    position: relative;
+}
+
+.cta-box p {
+    margin-bottom: var(--spacing-5);
+    opacity: 0.9;
+    z-index: 1;
+    position: relative;
+}
+
+.cta-box .btn {
+    background: var(--color-white);
+    color: var(--color-primary);
+    border: none;
+    padding: var(--spacing-3) var(--spacing-6);
+    font-weight: var(--font-weight-semibold);
+    border-radius: var(--border-radius-full);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: var(--font-size-sm);
+    transition: var(--transition-normal);
+    box-shadow: var(--shadow-md); /* Hafif gölge */
+    z-index: 1;
+    position: relative;
+}
+
+.cta-box .btn:hover {
+    background: rgba(255, 255, 255, 0.9);
+    transform: translateY(-3px) scale(1.02); /* Hafif yükselme ve büyüme */
+    box-shadow: var(--shadow-lg);
+}
+
+/* CTA butonundaki oku canlandıralım */
+.cta-box .btn i {
+    animation: arrowBounce 1s infinite alternate; /* Ok için bounce animasyonu */
+}
+
+/* ====================================
+ * Yan Kenar (Sidebar)
+ * ==================================== */
+.service-sidebar {
+    position: sticky;
+    top: 100px; /* Header'dan aşağıda başlasın */
+    align-self: flex-start; /* Sadece kendi içeriği kadar yer kaplasın */
+}
+
+.widget {
+    background: var(--bg-surface);
+    border-radius: var(--border-radius-2xl);
+    padding: var(--spacing-6);
+    margin-bottom: var(--spacing-8);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-color-subtle);
+}
+
+.widget-title {
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-5);
+    padding-bottom: var(--spacing-4);
+    border-bottom: 1px solid var(--border-color);
+    position: relative;
+    color: var(--text-primary);
+}
+
+.widget-title::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 60px; /* Daha uzun */
+    height: 3px;
+    background: var(--color-secondary); /* Accent renk */
+}
+
+/* Hizmet Listesi */
+.service-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.service-list li {
+    margin-bottom: var(--spacing-2);
+    border-bottom: 1px solid var(--border-color-subtle);
+}
+
+.service-list li:last-child {
+    margin-bottom: 0;
+    border-bottom: none;
+}
+
+.service-list li a {
+    display: flex; /* İkon ve metni hizala */
+    align-items: center;
+    padding: var(--spacing-2) var(--spacing-4);
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: var(--transition-normal);
+    border-radius: var(--border-radius-md);
+    font-weight: var(--font-weight-medium);
+}
+
+.service-list li a:hover {
+    background-color: rgba(var(--color-primary-rgb), 0.08); /* Hafif primary tonu */
+    color: var(--color-primary);
+    padding-left: var(--spacing-5);
+}
+
+.service-list li.active a {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    font-weight: var(--font-weight-semibold);
+    box-shadow: var(--shadow-sm);
+}
+
+.service-list li.active a:hover {
+    background-color: var(--color-primary-dark); /* Aktif hover'da daha koyu */
+    color: var(--color-white);
+    padding-left: var(--spacing-4); /* Aktifken padding değişmesin */
+}
+
+.service-list li a i {
+    margin-right: var(--spacing-3); /* İkon ve metin arası boşluk */
+    font-size: var(--font-size-sm);
+}
+
+/* İletişim Widget */
+.contact-info {
+    margin-top: var(--spacing-5);
+}
+
+.contact-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: var(--spacing-5);
+}
+
+.contact-item:last-child {
+    margin-bottom: 0;
+}
+
+.contact-item i {
+    font-size: var(--font-size-lg);
+    color: var(--color-primary);
+    margin-right: var(--spacing-4);
+    margin-top: 3px;
+}
+
+.contact-text h5 {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--spacing-1);
+    color: var(--text-primary);
+}
+
+.contact-text p {
+    margin-bottom: 0;
+    color: var(--text-muted);
+}
+
+.contact-text a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: var(--transition-normal);
+}
+
+.contact-text a:hover {
+    color: var(--color-primary);
+    text-decoration: underline;
+}
+
+/* İndirme Widget */
+.download-item {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-4);
+    background: var(--bg-subtle); /* Hafif bir arka plan */
+    border-radius: var(--border-radius-lg);
+    margin-bottom: var(--spacing-4);
+    text-decoration: none;
+    transition: var(--transition-normal);
+    box-shadow: var(--shadow-sm); /* Hafif gölge */
+    border: 1px solid var(--border-color-subtle);
+}
+
+.download-item:last-child {
+    margin-bottom: 0;
+}
+
+.download-item:hover {
+    background: rgba(var(--color-primary-rgb), 0.08); /* Primary tonunda hover */
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-primary-light);
+}
+
+.download-item i:first-child {
+    font-size: var(--font-size-xl);
+    color: var(--color-danger); /* PDF ikonu kırmızı olsun */
+    margin-right: var(--spacing-4);
+}
+
+.download-text {
+    flex-grow: 1;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-primary);
+}
+
+.download-item i:last-child {
+    color: var(--color-primary); /* İndirme oku primary renk olsun */
+    font-size: var(--font-size-md);
+}
+
+/* ====================================
+ * İlgili Hizmetler Bölümü (Related Services)
+ * ==================================== */
+.related-services {
+    padding: var(--spacing-16) 0;
+    background-color: var(--bg-surface);
+}
+
+.related-service-card {
+    border-radius: var(--border-radius-xl); /* Daha yuvarlak köşeler */
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    margin-bottom: var(--spacing-8);
+    transition: transform 0.4s var(--transition-smooth), box-shadow 0.4s var(--transition-smooth);
+    border: 1px solid var(--border-color-subtle);
+}
+
+/* Hover'da kartın daha fazla yükselmesi ve gölgesinin artması */
+.related-service-card:hover {
+    transform: translateY(-12px);
+    box-shadow: var(--shadow-hover);
+}
+
+.service-image {
+    position: relative;
+    overflow: hidden;
+    height: 220px; /* Yükseklik arttırıldı */
+}
+
+.service-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+}
+
+.related-service-card:hover .service-image img {
+    transform: scale(1.15); /* Hover'da daha fazla büyüme */
+}
+
+.service-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(var(--color-primary-rgb), 0.6); /* Primary renkte yarı saydam overlay */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+}
+
+.related-service-card:hover .service-overlay {
+    opacity: 1;
+}
+
+.overlay-link {
+    width: 60px; /* Buton büyütüldü */
+    height: 60px; /* Buton büyütüldü */
+    background: var(--color-white);
+    border-radius: var(--border-radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-primary);
+    font-size: var(--font-size-xl); /* İkon boyutu büyütüldü */
+    transform: translateY(20px);
+    transition: transform var(--transition-normal);
+    box-shadow: var(--shadow-md);
+}
+
+.related-service-card:hover .overlay-link {
+    transform: translateY(0) scale(1); /* Animasyonla gelme */
+}
+
+.overlay-link:hover {
+    background: var(--color-primary);
+    color: var(--color-white);
+    box-shadow: var(--shadow-lg);
+    transform: scale(1.1); /* Hover'da hafif büyüme */
+}
+
+.service-content {
+    padding: var(--spacing-6);
+    background: var(--bg-surface);
+}
+
+.service-content h4 {
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-4);
+    color: var(--text-primary);
+}
+
+.service-content p {
+    color: var(--text-muted);
+    margin-bottom: var(--spacing-4);
+    font-size: var(--font-size-sm);
+}
+
+.read-more {
+    color: var(--color-primary);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-sm);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    transition: var(--transition-normal);
+}
+
+.read-more i {
+    margin-left: var(--spacing-1);
+    transition: var(--transition-normal);
+}
+
+.read-more:hover {
+    color: var(--color-primary-dark); /* Hover'da daha koyu primary */
+    padding-left: var(--spacing-1); /* Hafif kayma */
+}
+
+.read-more:hover i {
+    transform: translateX(5px); /* Ok daha fazla kayar */
+}
+
+/* ====================================
+ * Kısa Footer
+ * ==================================== */
+.footer-short {
+    background-color: var(--color-gray-900);
+    color: var(--color-white);
+    padding: var(--spacing-5) 0;
+    font-size: var(--font-size-sm);
+}
+
+.footer-short p {
+    margin-bottom: 0;
+    opacity: 0.8;
+}
+
+.social-icons a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px; /* Boyut büyütüldü */
+    height: 38px; /* Boyut büyütüldü */
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--color-white);
+    border-radius: var(--border-radius-full);
+    margin-left: var(--spacing-2);
+    transition: var(--transition-normal);
+}
+
+.social-icons a:hover {
+    background: var(--color-primary);
+    transform: translateY(-5px) scale(1.1); /* Daha belirgin yükselme ve büyüme */
+    box-shadow: var(--shadow-md);
+}
+
+/* ====================================
+ * Animasyon Keyframe'leri
+ * ==================================== */
+
+/* Genel fade-in animasyonu */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Banner arka planındaki yarım daire için nabız atışı/boyut değişimi */
+@keyframes pulseScale {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0.9;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+}
+
+/* Header ikonu için yavaş dönme */
+@keyframes rotateSlow {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Başlık alt çizgisinin genişlemesi */
+@keyframes expandWidth {
+    0% {
+        width: 40px;
+    }
+    50% {
+        width: 100px;
+    }
+    100% {
+        width: 40px;
+    }
+}
+
+/* Feature ikonlarının hafifçe yukarı-aşağı salınması */
+@keyframes bob {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+/* CTA butonundaki ok için sekme efekti */
+@keyframes arrowBounce {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(5px);
+    }
+}
+
+/* ====================================
+ * Responsive Düzenlemeler
+ * ==================================== */
+@media (max-width: 991px) {
+    .service-detail-banner {
+        padding: var(--spacing-12) 0;
+        min-height: 280px;
+    }
+    
+    .service-detail-title {
+        font-size: var(--font-size-3xl);
+    }
+    
+    .service-detail-content {
+        padding: var(--spacing-12) 0;
+    }
+    
+    .service-sidebar {
+        margin-top: var(--spacing-10);
+        position: static; /* Küçük ekranlarda sticky olmasın */
+    }
+
+    .service-detail-banner::after {
+        width: 250px;
+        height: 250px;
+        bottom: -100px;
+        left: -100px;
+    }
+
+    .service-detail-icon i {
+        font-size: 100px;
+    }
+}
+
+@media (max-width: 767px) {
+    .service-detail-banner {
+        padding: var(--spacing-10) 0;
+        text-align: center;
+        min-height: 250px;
+    }
+    
+    .service-detail-title {
+        font-size: var(--font-size-2xl);
+    }
+    
+    .service-detail-subtitle {
+        font-size: var(--font-size-sm);
+    }
+
+    /* Küçük ekranlarda ikon gizlensin */
+    .service-detail-icon {
+        display: none;
+    }
+    
+    .content-main {
+        padding: var(--spacing-5);
+    }
+    
+    .feature-item {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .feature-icon {
+        margin-bottom: var(--spacing-4);
+        margin-right: 0;
+        align-self: center; /* Ortaya hizala */
+    }
+    
+    .cta-box {
+        padding: var(--spacing-6);
+    }
+    
+    .related-services {
+        padding: var(--spacing-10) 0;
+    }
+
+    .section-title::after {
+        left: 50%;
+        transform: translateX(-50%); /* Ortaya hizala */
+    }
+}
+
+@media (max-width: 575px) {
+    .service-detail-banner {
+        padding: var(--spacing-8) 0;
+    }
+
+    .service-detail-title {
+        font-size: var(--font-size-xl);
+    }
+
+    .service-detail-banner::after {
+        display: none; /* Çok küçük ekranlarda gizle */
+    }
+
+    .feature-item {
+        padding: var(--spacing-4);
+    }
+
+    .related-service-card {
+        margin-bottom: var(--spacing-6);
+    }
+} 

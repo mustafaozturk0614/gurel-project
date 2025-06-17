@@ -1,6 +1,6 @@
 /**
  * Gürel Yönetim - Optimize Ana JavaScript
- * Version: 4.1.0 - Tema Sistemi Entegrasyonu
+ * Version: 4.2.0
  */
 
 // 1. KONFIGURASYON
@@ -52,7 +52,7 @@ const AppState = (() => {
   };
 })();
 
-// 3. EVENT BUS - ThemeSystem ile entegre edildi
+// 3. EVENT BUS
 const EventBus = (() => {
   const events = new Map();
   
@@ -83,7 +83,6 @@ const EventBus = (() => {
 function initializeApplication() {
   removeLoader();
   initCore();
-  connectThemeSystem();
   initHeroVideo();
   console.log("Uygulama başlatma tamamlandı");
 }
@@ -121,20 +120,19 @@ function initHeader() {
   if (!header) return;
   
   // Header scroll olayları
-  window.addEventListener('scroll', window.ThemeUtils?.throttle ?
-    window.ThemeUtils.throttle(onScroll, 150) : onScroll);
+  window.addEventListener('scroll', throttle(onScroll, 150));
   
   // Scroll olayları
   initScrollEvents();
   
   function onScroll() {
-      const scrollY = window.scrollY;
-      if (scrollY > CONFIG.scroll.threshold && !AppState.get('isHeaderScrolled')) {
-        AppState.set('isHeaderScrolled', true);
+    const scrollY = window.scrollY;
+    if (scrollY > CONFIG.scroll.threshold && !AppState.get('isHeaderScrolled')) {
+      AppState.set('isHeaderScrolled', true);
       header.classList.add('scrolled');
       header.classList.remove('transparent');
-      } else if (scrollY <= CONFIG.scroll.threshold && AppState.get('isHeaderScrolled')) {
-        AppState.set('isHeaderScrolled', false);
+    } else if (scrollY <= CONFIG.scroll.threshold && AppState.get('isHeaderScrolled')) {
+      AppState.set('isHeaderScrolled', false);
       header.classList.remove('scrolled');
       if (document.querySelector('#home')) {
         header.classList.add('transparent');
@@ -146,6 +144,18 @@ function initHeader() {
   
   // Initial call to set correct state
   onScroll();
+}
+
+// Yardımcı fonksiyon - throttle
+function throttle(func, limit) {
+  let inThrottle;
+  return function(...args) {
+    if (!inThrottle) {
+      func.apply(this, args);
+      inThrottle = true;
+      setTimeout(() => inThrottle = false, limit);
+    }
+  }
 }
 
 // 7. UI BİLEŞENLERİ
@@ -169,13 +179,12 @@ function initUIComponents() {
             if (content.id === targetId.replace('#', '') || content.id === targetId) {
               content.classList.add('active', 'show');
             }
+          });
         });
-      });
       });
     });
   }
   
-  // ThemeUtils ile LazyLoading
   initLazyLoading();
 }
 
@@ -803,6 +812,12 @@ function enhanceTabTransitions() {
   const tabButtons = document.querySelectorAll('.hero-tab-btn');
   const tabPanes = document.querySelectorAll('.hero-tab-pane');
   
+  // Eğer tabs yoksa fonksiyondan çık
+  if (!tabButtons || !tabPanes || tabButtons.length === 0 || tabPanes.length === 0) {
+    console.log('Gelişmiş tab geçişleri için gerekli elementler bulunamadı.');
+    return;
+  }
+  
   // İlk başta tüm panelleri gizleyip sadece aktif olanı göster
   tabPanes.forEach(pane => {
     if (!pane.classList.contains('active')) {
@@ -817,6 +832,8 @@ function enhanceTabTransitions() {
   
   // Önce mevcut olay dinleyicileri temizle
   tabButtons.forEach(button => {
+    if (!button) return;
+    
     // Yeni bir klonla değiştirerek eski event listener'ları temizle
     const newButton = button.cloneNode(true);
     button.parentNode.replaceChild(newButton, button);
@@ -826,12 +843,18 @@ function enhanceTabTransitions() {
     
     // Yeni click olayı ekle
     newButton.addEventListener('click', () => {
+      // Butonun data-tab özelliğini kontrol et
+      const tabId = newButton.getAttribute('data-tab');
+      if (!tabId) {
+        console.error('Tab butonu için data-tab özelliği bulunamadı.');
+        return;
+      }
+      
       // Aktif tab butonunu güncelle - güncel newButtons dizisini kullan
       newButtons.forEach(btn => btn.classList.remove('active'));
       newButton.classList.add('active');
       
       // Aktif içeriği göster ve animasyonu tetikle
-      const tabId = newButton.getAttribute('data-tab');
       
       // Önce mevcut aktif paneli kapat
       const currentActive = document.querySelector('.hero-tab-pane.active');
@@ -880,17 +903,20 @@ function enhanceTabTransitions() {
   });
   
   // İlk açılışta başlangıç aktiflik durumunu yeniden ayarla
-  const initialActiveTab = document.querySelector('.hero-tab-btn.active') || newButtons[0];
-  const activeTabId = initialActiveTab.getAttribute('data-tab');
-  
-  // İlk açılışta başlangıç aktiflik durumunu düzelt
-  newButtons.forEach(btn => {
-    if (btn.getAttribute('data-tab') === activeTabId) {
-      btn.classList.add('active');
-    } else {
-      btn.classList.remove('active');
+  const initialActiveTab = document.querySelector('.hero-tab-btn.active') || (newButtons.length > 0 ? newButtons[0] : null);
+  if (initialActiveTab) {
+    const activeTabId = initialActiveTab.getAttribute('data-tab');
+    if (activeTabId) {
+      // İlk açılışta başlangıç aktiflik durumunu düzelt
+      newButtons.forEach(btn => {
+        if (btn.getAttribute('data-tab') === activeTabId) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
     }
-  });
+  }
   
   console.log('Tab geçişleri geliştirildi (enhanced)');
 }
@@ -900,17 +926,18 @@ function initHeroTabs() {
   // Prevent multiple initializations
   if (window.__heroTabsInitialized) return;
   window.__heroTabsInitialized = true;
+  
   try {
     console.log('Tab yapısı başlatılıyor...');
     const tabButtons = document.querySelectorAll('.hero-tab-btn');
     const tabPanes = document.querySelectorAll('.hero-tab-pane');
     
-    console.log(`${tabButtons.length} adet tab butonu, ${tabPanes.length} adet tab içeriği bulundu`);
-    
-    if (tabButtons.length === 0 || tabPanes.length === 0) {
-      console.error('Tab butonları veya içerikleri bulunamadı!');
-      return;
+    if (!tabButtons || !tabPanes || tabButtons.length === 0 || tabPanes.length === 0) {
+      console.log('Tab butonları veya içerikleri bulunamadı, bu sayfada kullanılmıyor olabilir.');
+      return; // Tab yapısı mevcut değilse çık
     }
+    
+    console.log(`${tabButtons.length} adet tab butonu, ${tabPanes.length} adet tab içeriği bulundu`);
     
     // İlk olarak tüm tab panellerini gizle ve tab butonlarından active class'ını kaldır
     tabPanes.forEach(pane => {
@@ -941,46 +968,46 @@ function initHeroTabs() {
     // enhanceTabTransitions kullanılacaksa, burada click handler'ları eklemeyelim
     // böylece çift olay işleme olmayacak
     if (!window.useEnhancedTabs) {
-    // Tab butonlarına click event listener ekle
-    tabButtons.forEach(button => {
-      button.addEventListener('click', function() {
-        const tabId = this.getAttribute('data-tab');
-        console.log(`Tab değiştiriliyor: ${tabId}`);
-        
-        // Aktif tab butonunu değiştir
-        tabButtons.forEach(btn => btn.classList.remove('active'));
-        this.classList.add('active');
-        
-        // Aktif tab içeriğini değiştir
-        tabPanes.forEach(pane => {
-          pane.classList.remove('active');
-          pane.style.display = 'none'; // Tüm tab panellerini gizle
-        });
-        
-        const targetPane = document.getElementById(tabId);
-        if (targetPane) {
-          targetPane.classList.add('active');
-          targetPane.style.display = 'block'; // Aktif tab panelini göster
+      // Tab butonlarına click event listener ekle
+      tabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const tabId = this.getAttribute('data-tab');
+          console.log(`Tab değiştiriliyor: ${tabId}`);
           
-          // Tab değişikliğinde kart animasyonlarını yeniden başlat
-          const cards = targetPane.querySelectorAll('.business-card');
-          cards.forEach((card, index) => {
-            // Önce kartları gizle
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(20px)';
-            
-            // Kısa bir gecikme sonra kartları animasyonla göster
-            setTimeout(() => {
-              card.style.transition = 'all 0.5s cubic-bezier(0.23, 1, 0.32, 1)';
-              card.style.opacity = '1';
-              card.style.transform = 'translateY(0)';
-            }, 50 * (index + 1)); // Her kart için biraz gecikme ekle
+          // Aktif tab butonunu değiştir
+          tabButtons.forEach(btn => btn.classList.remove('active'));
+          this.classList.add('active');
+          
+          // Aktif tab içeriğini değiştir
+          tabPanes.forEach(pane => {
+            pane.classList.remove('active');
+            pane.style.display = 'none'; // Tüm tab panellerini gizle
           });
-        } else {
-          console.error(`Tab içeriği bulunamadı: #${tabId}`);
-        }
+          
+          const targetPane = document.getElementById(tabId);
+          if (targetPane) {
+            targetPane.classList.add('active');
+            targetPane.style.display = 'block'; // Aktif tab panelini göster
+            
+            // Tab değişikliğinde kart animasyonlarını yeniden başlat
+            const cards = targetPane.querySelectorAll('.business-card');
+            cards.forEach((card, index) => {
+              // Önce kartları gizle
+              card.style.opacity = '0';
+              card.style.transform = 'translateY(20px)';
+              
+              // Kısa bir gecikme sonra kartları animasyonla göster
+              setTimeout(() => {
+                card.style.transition = 'all 0.5s cubic-bezier(0.23, 1, 0.32, 1)';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+              }, 50 * (index + 1)); // Her kart için biraz gecikme ekle
+            });
+          } else {
+            console.error(`Tab içeriği bulunamadı: #${tabId}`);
+          }
+        });
       });
-    });
     }
     
     console.log('Tab yapısı başarıyla başlatıldı');
@@ -1008,3 +1035,98 @@ function initDecoElements() {
     });
   });
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Flip butonları için
+    const flipBtns = document.querySelectorAll('.flip-btn');
+    const closeBtns = document.querySelectorAll('.close-btn');
+    
+    flipBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const card = this.closest('.team-card-modern');
+            card.classList.add('flip');
+        });
+    });
+    
+    closeBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const card = this.closest('.team-card-modern');
+            card.classList.remove('flip');
+        });
+    });
+    
+    // Kaydırma navigasyonu için
+    const navDots = document.querySelectorAll('.nav-dot');
+    const prevBtn = document.querySelector('.team-nav-btn.prev');
+    const nextBtn = document.querySelector('.team-nav-btn.next');
+    let currentIndex = 0;
+    
+    // Mobil cihazlarda kaydırma işlevi
+    if(window.innerWidth <= 768) {
+        const cardsWrapper = document.querySelector('.team-cards-wrapper');
+        const cards = document.querySelectorAll('.team-card-modern');
+        
+        function scrollToCard(index) {
+            if(cards[index]) {
+                cards[index].scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'nearest',
+                    inline: 'center'
+                });
+                
+                // Aktif noktayı güncelle
+                navDots.forEach(dot => dot.classList.remove('active'));
+                navDots[index].classList.add('active');
+                currentIndex = index;
+            }
+        }
+        
+        // Sonraki ve önceki butonlar için
+        nextBtn.addEventListener('click', () => {
+            if(currentIndex < cards.length - 1) {
+                scrollToCard(currentIndex + 1);
+            } else {
+                scrollToCard(0);
+            }
+        });
+        
+        prevBtn.addEventListener('click', () => {
+            if(currentIndex > 0) {
+                scrollToCard(currentIndex - 1);
+            } else {
+                scrollToCard(cards.length - 1);
+            }
+        });
+        
+        // Noktalar için tıklama olayları
+        navDots.forEach((dot, index) => {
+            dot.addEventListener('click', function() {
+                scrollToCard(index);
+            });
+        });
+    }
+});
+
+// Tab'ların düzgün çalışması için gerekli kod
+document.addEventListener('DOMContentLoaded', function() {
+    // Tab click olaylarını dinle
+    const tabs = document.querySelectorAll('[data-bs-toggle="tab"]');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Tüm tab-pane'leri gizle
+            document.querySelectorAll('.tab-pane').forEach(pane => {
+                pane.classList.remove('show', 'active');
+            });
+            
+            // Seçili tab-pane'i göster
+            const target = document.querySelector(this.getAttribute('data-bs-target'));
+            target.classList.add('show', 'active');
+            
+            // Tab'ların active class'ını güncelle
+            tabs.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+});

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Gürel Yönetim - Tema Karşılaştırma</title>
+  <style>
+    /* Genel Stil */
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: #f5f5f5;
+      color: #333;
+      line-height: 1.4;
+    }
+    h1 {
+      text-align: center;
+      padding: 2rem 0 1rem;
+    }
+    section {
+      margin: 2rem auto;
+      max-width: 1000px;
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    section + section {
+      margin-top: 1.5rem;
+    }
+    section header {
+      padding: 1rem;
+      background: #eceff1;
+      border-bottom: 1px solid #ddd;
+    }
+    section header h2 {
+      margin: 0;
+      font-size: 1.25rem;
+    }
+    .content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      padding: 1rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1rem;
+    }
+    table th, table td {
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+    .swatch {
+      width: 2rem; height: 1.5rem;
+      border: 1px solid #aaa;
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 0.5rem;
+    }
+    .preview {
+      padding: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+    .preview .card {
+      width: 100%;
+      padding: 1rem;
+      border-radius: 4px;
+      background: var(--bg);
+      color: var(--text);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+      margin-bottom: 1rem;
+    }
+    .preview button {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      color: #fff;
+    }
+    .preview button.primary { background: var(--primary); }
+    .preview button.secondary { background: var(--secondary); }
+
+    /* Temalar */
+    .theme-1 {
+      --primary: #0052CC; --primary-light: #4077E8; --primary-dark: #003C9E;
+      --secondary: #FF8F00; --secondary-light: #FFB84D; --secondary-dark: #CC7200;
+      --bg: #FFFFFF; --text: #2C3E50;
+    }
+    .theme-2 {
+      --primary: #009688; --primary-light: #4DB6AC; --primary-dark: #00796B;
+      --secondary: #F1E4D3; --secondary-light: #FAF3EA; --secondary-dark: #D7C3AA;
+      --bg: #FFFFFF; --text: #2C3E50;
+    }
+    .theme-3 {
+      --primary: #6A0DAD; --primary-light: #9B59B6; --primary-dark: #4E008E;
+      --secondary: #00BFFF; --secondary-light: #4DCEFF; --secondary-dark: #009FCC;
+      --bg: #FFFFFF; --text: #2C3E50;
+    }
+    .theme-4 {
+      --primary: #FF5722; --primary-light: #FF8A50; --primary-dark: #E64A19;
+      --secondary: #FFECB3; --secondary-light: #FFF3E0; --secondary-dark: #FFD180;
+      --bg: #FFFFFF; --text: #2C3E50;
+    }
+    .theme-5 {
+      --primary: #455A64; --primary-light: #718792; --primary-dark: #1C313A;
+      --secondary: #607D8B; --secondary-light: #8EACBB; --secondary-dark: #34515E;
+      --bg: #FFFFFF; --text: #2C3E50;
+    }
+    .theme-6 {
+      --primary: #2E8B57; --primary-light: #60B184; --primary-dark: #256F47;
+      --secondary: #EAEFF2; --secondary-light: #F5F8FA; --secondary-dark: #CBD9E0;
+      --bg: #FFFFFF; --text: #2C3E50;
+    }
+    .theme-7 {
+      --primary: #E53935; --primary-light: #FF6F60; --primary-dark: #AB000D;
+      --secondary: #283593; --secondary-light: #5F5FC4; --secondary-dark: #001064;
+      --bg: #FFFFFF; --text: #2C3E50;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Gürel Yönetim Tema Karşılaştırma</h1>
+
+  <!-- Tema 1 -->
+  <section class="theme-1">
+    <header><h2>Tema 1: Kurumsal Güven</h2></header>
+    <div class="content">
+      <div>
+        <table>
+          <thead>
+            <tr><th>Değişken</th><th>Açıklama</th><th>HEX</th><th>Örnek</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>--primary</td><td>Birincil Renk</td><td>#0052CC</td><td><span class="swatch" style="background:var(--primary)"></span></td></tr>
+            <tr><td>--primary-light</td><td>Birincil Açık</td><td>#4077E8</td><td><span class="swatch" style="background:var(--primary-light)"></span></td></tr>
+            <tr><td>--primary-dark</td><td>Birincil Koyu</td><td>#003C9E</td><td><span class="swatch" style="background:var(--primary-dark)"></span></td></tr>
+            <tr><td>--secondary</td><td>İkincil Renk</td><td>#FF8F00</td><td><span class="swatch" style="background:var(--secondary)"></span></td></tr>
+            <tr><td>--secondary-light</td><td>İkincil Açık</td><td>#FFB84D</td><td><span class="swatch" style="background:var(--secondary-light)"></span></td></tr>
+            <tr><td>--secondary-dark</td><td>İkincil Koyu</td><td>#CC7200</td><td><span class="swatch" style="background:var(--secondary-dark)"></span></td></tr>
+            <tr><td>--bg</td><td>Arka Plan</td><td>#FFFFFF</td><td><span class="swatch" style="background:var(--bg)"></span></td></tr>
+            <tr><td>--text</td><td>Metin Rengi</td><td>#2C3E50</td><td><span class="swatch" style="background:var(--text)"></span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="preview">
+        <div class="card"><h3>Başlık</h3><p>Arka plan ve metin renkleri.</p></div>
+        <button class="primary">Birincil Buton</button>
+        <button class="secondary">İkincil Buton</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tema 2 -->
+  <section class="theme-2">
+    <header><h2>Tema 2: Doğal Denge</h2></header>
+    <div class="content">
+      <div>
+        <table>
+          <tbody>
+            <tr><td>--primary</td><td>Birincil Renk</td><td>#009688</td><td><span class="swatch" style="background:var(--primary)"></span></td></tr>
+            <tr><td>--primary-light</td><td>Birincil Açık</td><td>#4DB6AC</td><td><span class="swatch" style="background:var(--primary-light)"></span></td></tr>
+            <tr><td>--primary-dark</td><td>Birincil Koyu</td><td>#00796B</td><td><span class="swatch" style="background:var(--primary-dark)"></span></td></tr>
+            <tr><td>--secondary</td><td>İkincil Renk</td><td>#F1E4D3</td><td><span class="swatch" style="background:var(--secondary)"></span></td></tr>
+            <tr><td>--secondary-light</td><td>İkincil Açık</td><td>#FAF3EA</td><td><span class="swatch" style="background:var(--secondary-light)"></span></td></tr>
+            <tr><td>--secondary-dark</td><td>İkincil Koyu</td><td>#D7C3AA</td><td><span class="swatch" style="background:var(--secondary-dark)"></span></td></tr>
+            <tr><td>--bg</td><td>Arka Plan</td><td>#FFFFFF</td><td><span class="swatch" style="background:var(--bg)"></span></td></tr>
+            <tr><td>--text</td><td>Metin Rengi</td><td>#2C3E50</td><td><span class="swatch" style="background:var(--text)"></span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="preview">
+        <div class="card"><h3>Başlık</h3><p>Arka plan ve metin renkleri.</p></div>
+        <button class="primary">Birincil Buton</button>
+        <button class="secondary">İkincil Buton</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tema 3 -->
+  <section class="theme-3">
+    <header><h2>Tema 3: Teknoloji ve Yenilik</h2></header>
+    <div class="content">
+      <div>
+        <table>
+          <tbody>
+            <tr><td>--primary</td><td>Birincil Renk</td><td>#6A0DAD</td><td><span class="swatch" style="background:var(--primary)"></span></td></tr>
+            <tr><td>--primary-light</td><td>Birincil Açık</td><td>#9B59B6</td><td><span class="swatch" style="background:var(--primary-light)"></span></td></tr>
+            <tr><td>--primary-dark</td><td>Birincil Koyu</td><td>#4E008E</td><td><span class="swatch" style="background:var(--primary-dark)"></span></td></tr>
+            <tr><td>--secondary</td><td>İkincil Renk</td><td>#00BFFF</td><td><span class="swatch" style="background:var(--secondary)"></span></td></tr>
+            <tr><td>--secondary-light</td><td>İkincil Açık</td><td>#4DCEFF</td><td><span class="swatch" style="background:var(--secondary-light)"></span></td></tr>
+            <tr><td>--secondary-dark</td><td>İkincil Koyu</td><td>#009FCC</td><td><span class="swatch" style="background:var(--secondary-dark)"></span></td></tr>
+            <tr><td>--bg</td><td>Arka Plan</td><td>#FFFFFF</td><td><span class="swatch" style="background:var(--bg)"></span></td></tr>
+            <tr><td>--text</td><td>Metin Rengi</td><td>#2C3E50</td><td><span class="swatch" style="background:var(--text)"></span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="preview">
+        <div class="card"><h3>Başlık</h3><p>Arka plan ve metin renkleri.</p></div>
+        <button class="primary">Birincil Buton</button>
+        <button class="secondary">İkincil Buton</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tema 4 -->
+  <section class="theme-4">
+    <header><h2>Tema 4: Sıcaklık ve Samimiyet</h2></header>
+    <div class="content">
+      <div>
+        <table>
+          <tbody>
+            <tr><td>--primary</td><td>Birincil Renk</td><td>#FF5722</td><td><span class="swatch" style="background:var(--primary)"></span></td></tr>
+            <tr><td>--primary-light</td><td>Birincil Açık</td><td>#FF8A50</td><td><span class="swatch" style="background:var(--primary-light)"></span></td></tr>
+            <tr><td>--primary-dark</td><td>Birincil Koyu</td><td>#E64A19</td><td><span class="swatch" style="background:var(--primary-dark)"></span></td></tr>
+            <tr><td>--secondary</td><td>İkincil Renk</td><td>#FFECB3</td><td><span class="swatch" style="background:var(--secondary)"></span></td></tr>
+            <tr><td>--secondary-light</td><td>İkincil Açık</td><td>#FFF3E0</td><td><span class="swatch" style="background:var(--secondary-light)"></span></td></tr>
+            <tr><td>--secondary-dark</td><td>İkincil Koyu</td><td>#FFD180</td><td><span class="swatch" style="background:var(--secondary-dark)"></span></td></tr>
+            <tr><td>--bg</td><td>Arka Plan</td><td>#FFFFFF</td><td><span class="swatch" style="background:var(--bg)"></span></td></tr>
+            <tr><td>--text</td><td>Metin Rengi</td><td>#2C3E50</td><td><span class="swatch" style="background:var(--text)"></span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="preview">
+        <div class="card"><h3>Başlık</h3><p>Arka plan ve metin renkleri.</p></div>
+        <button class="primary">Birincil Buton</button>
+        <button class="secondary">İkincil Buton</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tema 5 -->
+  <section class="theme-5">
+    <header><h2>Tema 5: Modern Minimalizm</h2></header>
+    <div class="content">
+      <div>
+        <table>
+          <tbody>
+            <tr><td>--primary</td><td>Birincil Renk</td><td>#455A64</td><td><span class="swatch" style="background:var(--primary)"></span></td></tr>
+            <tr><td>--primary-light</td><td>Birincil Açık</td><td>#718792</td><td><span class="swatch" style="background:var(--primary-light)"></span></td></tr>
+            <tr><td>--primary-dark</td><td>Birincil Koyu</td><td>#1C313A</td><td><span class="swatch" style="background:var(--primary-dark)"></span></td></tr>
+            <tr><td>--secondary</td><td>İkincil Renk</td><td>#607D8B</td><td><span class="swatch" style="background:var(--secondary)"></span></td></tr>
+            <tr><td>--secondary-light</td><td>İkincil Açık</td><td>#8EACBB</td><td><span class="swatch" style="background:var(--secondary-light)"></span></td></tr>
+            <tr><td>--secondary-dark</td><td>İkincil Koyu</td><td>#34515E</td><td><span class="swatch" style="background:var(--secondary-dark)"></span></td></tr>
+            <tr><td>--bg</td><td>Arka Plan</td><td>#FFFFFF</td><td><span class="swatch" style="background:var(--bg)"></span></td></tr>
+            <tr><td>--text</td><td>Metin Rengi</td><td>#2C3E50</td><td><span class="swatch" style="background:var(--text)"></span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="preview">
+        <div class="card"><h3>Başlık</h3><p>Arka plan ve metin renkleri.</p></div>
+        <button class="primary">Birincil Buton</button>
+        <button class="secondary">İkincil Buton</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tema 6 -->
+  <section class="theme-6">
+    <header><h2>Tema 6: Profesyonel Sadelik</h2></header>
+    <div class="content">
+      <div>
+        <table>
+          <tbody>
+            <tr><td>--primary</td><td>Birincil Renk</td><td>#2E8B57</td><td><span class="swatch" style="background:var(--primary)"></span></td></tr>
+            <tr><td>--primary-light</td><td>Birincil Açık</td><td>#60B184</td><td><span class="swatch" style="background:var(--primary-light)"></span></td></tr>
+            <tr><td>--primary-dark</td><td>Birincil Koyu</td><td>#256F47</td><td><span class="swatch" style="background:var(--primary-dark)"></span></td></tr>
+            <tr><td>--secondary</td><td>İkincil Renk</td><td>#EAEFF2</td><td><span class="swatch" style="background:var(--secondary)"></span></td></tr>
+            <tr><td>--secondary-light</td><td>İkincil Açık</td><td>#F5F8FA</td><td><span class="swatch" style="background:var(--secondary-light)"></span></td></tr>
+            <tr><td>--secondary-dark</td><td>İkincil Koyu</td><td>#CBD9E0</td><td><span class="swatch" style="background:var(--secondary-dark)"></span></td></tr>
+            <tr><td>--bg</td><td>Arka Plan</td><td>#FFFFFF</td><td><span class="swatch" style="background:var(--bg)"></span></td></tr>
+            <tr><td>--text</td><td>Metin Rengi</td><td>#2C3E50</td><td><span class="swatch" style="background:var(--text)"></span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="preview">
+        <div class="card"><h3>Başlık</h3><p>Arka plan ve metin renkleri.</p></div>
+        <button class="primary">Birincil Buton</button>
+        <button class="secondary">İkincil Buton</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tema 7 -->
+  <section class="theme-7">
+    <header><h2>Tema 7: Enerjik Kontrast</h2></header>
+    <div class="content">
+      <div>
+        <table>
+          <tbody>
+            <tr><td>--primary</td><td>Birincil Renk</td><td>#E53935</td><td><span class="swatch" style="background:var(--primary)"></span></td></tr>
+            <tr><td>--primary-light</td><td>Birincil Açık</td><td>#FF6F60</td><td><span class="swatch" style="background:var(--primary-light)"></span></td></tr>
+            <tr><td>--primary-dark</td><td>Birincil Koyu</td><td>#AB000D</td><td><span class="swatch" style="background:var(--primary-dark)"></span></td></tr>
+            <tr><td>--secondary</td><td>İkincil Renk</td><td>#283593</td><td><span class="swatch" style="background:var(--secondary)"></span></td></tr>
+            <tr><td>--secondary-light</td><td>İkincil Açık</td><td>#5F5FC4</td><td><span class="swatch" style="background:var(--secondary-light)"></span></td></tr>
+            <tr><td>--secondary-dark</td><td>İkincil Koyu</td><td>#001064</td><td><span class="swatch" style="background:var(--secondary-dark)"></span></td></tr>
+            <tr><td>--bg</td><td>Arka Plan</td><td>#FFFFFF</td><td><span class="swatch" style="background:var(--bg)"></span></td></tr>
+            <tr><td>--text</td><td>Metin Rengi</td><td>#2C3E50</td><td><span class="swatch" style="background:var(--text)"></span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="preview">
+        <div class="card"><h3>Başlık</h3><p>Arka plan ve metin renkleri.</p></div>
+        <button class="primary">Birincil Buton</button>
+        <button class="secondary">İkincil Buton</button>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>

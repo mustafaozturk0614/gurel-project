@@ -1,0 +1,138 @@
+/**
+ * Wave Section Styles
+ * Gürel Yönetim Projesi için oluşturuldu
+ */
+
+.wave-section {
+  position: relative;
+  padding: 100px 0;
+  overflow: hidden;
+}
+
+.wave-section .wave-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+}
+
+.wave-section .wave-top svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 80px;
+}
+
+.wave-section .wave-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.wave-section .wave-bottom svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 80px;
+}
+
+.wave-section .wave-shape {
+  fill: #ffffff;
+}
+
+.wave-section.primary .wave-shape {
+  fill: #0056b3;
+}
+
+.wave-section.light .wave-shape {
+  fill: #f8f9fa;
+}
+
+.wave-section.dark .wave-shape {
+  fill: #343a40;
+}
+
+.wave-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* Dalga animasyonu */
+.wave-animation {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  overflow: hidden;
+}
+
+.wave-animation .wave {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 200%;
+  height: 100%;
+  background-repeat: repeat-x;
+  animation: wave 10s linear infinite;
+}
+
+.wave-animation .wave-1 {
+  background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="%230056b3"/></svg>');
+  background-size: 1200px 100px;
+  z-index: 10;
+  opacity: 0.7;
+}
+
+.wave-animation .wave-2 {
+  background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".5" fill="%230056b3"/></svg>');
+  background-size: 1200px 100px;
+  z-index: 9;
+  opacity: 0.5;
+  animation-delay: -5s;
+  animation-duration: 15s;
+}
+
+.wave-animation .wave-3 {
+  background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".75" fill="%230056b3"/></svg>');
+  background-size: 1200px 100px;
+  z-index: 8;
+  opacity: 0.3;
+  animation-delay: -2s;
+  animation-duration: 20s;
+}
+
+@keyframes wave {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Mobil düzenlemeler */
+@media (max-width: 768px) {
+  .wave-section {
+    padding: 70px 0;
+  }
+  
+  .wave-section .wave-top svg,
+  .wave-section .wave-bottom svg {
+    height: 40px;
+  }
+  
+  .wave-animation {
+    height: 50px;
+  }
+  
+  .wave-animation .wave {
+    background-size: 600px 50px;
+  }
+} 

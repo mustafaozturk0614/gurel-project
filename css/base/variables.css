@@ -1,59 +1,99 @@
-/* 
- * Theme Variables CSS
- * 
- * Bu dosya tema sisteminin temelini oluşturan CSS değişkenlerini içerir.
- * 
- * İçerik Sıralaması:
- * 1. Kök Değişkenler (Tema Renkleri ve Bileşenler)
- * 2. Tema Modu Değişkenleri (Açık, Koyu, Yüksek Kontrast)
- * 3. Renk Tema Varyasyonları (Mavi, Yeşil, Kırmızı, Turuncu, Mor, Turkuaz, Pembe)
- * 4. Erişilebilirlik Değişkenleri (Font, Hareket, Kontrast)
- * 5. Tipografi Sistemi (Başlıklar, Gövde, İkincil metin)
- * 6. Boşluk ve Mesafe Sistemi (Çerçeveler arası mesafeler)
- * 7. Gölge ve Yükseltme Efektleri
- * 8. Geçiş ve Animasyon Stilleri
- * 9. Duyarlı Tasarım (Responsive) Ayarları
- * 10. Bileşen Temel Stilleri (Butonlar, Kartlar, Form)
- * 11. RTL Dil Desteği
- * 12. Sistem Tema Entegrasyonu
- * 13. Özel Durumlar (Print, Karanlık Mod, Yüksek Kontrast)
- */
+/* ====================================
+ * Gürel Yönetim - Ana Tema Değişkenleri
+ * ==================================== */
 
 :root {
-  /* ====================================
-   * 1. Kök Değişkenler - Ana Renk Paleti
-   * ==================================== */
-  
-  /* Ana renkler */
-  --color-primary: #0056b3;
-  --color-primary-light: #2579d5;
-  --color-primary-dark: #003b7a;
-  
-  --color-secondary: #6c757d;
-  --color-secondary-light: #868e96;
-  --color-secondary-dark: #495057;
-  
-  /* Durum renkleri */
-  --color-success: #28a745;
-  --color-success-light: #48c967;
-  --color-success-dark: #1e7e34;
-  
-  --color-danger: #dc3545;
-  --color-danger-light: #e25d6a;
-  --color-danger-dark: #bd2130;
-  
-  --color-warning: #ffc107;
-  --color-warning-light: #ffcf2f;
-  --color-warning-dark: #d39e00;
-  
-  --color-info: #17a2b8;
-  --color-info-light: #31c2d8;
-  --color-info-dark: #117a8b;
-  
-  /* Nötr renkler */
+/* =======================================================================
+ * 🌾  Earthy Clay Palette  •  sıcak • sakin • güven verici
+ * ===================================================================== */
+
+/* ----------------------------------------------------------------------
+ * 1) Marka (kestane tonlu toprak)  → “brand”
+ * -------------------------------------------------------------------- */
+ --color-brand:              #4E3621;   /* ana */
+ --color-brand-light:        #735B48;   /* +20 l */
+ --color-brand-dark:         #342214;   /* –20 l */
+ --color-brand-rgb:          78, 54, 33;
+ 
+ /* ----------------------------------------------------------------------
+  * 2) Birincil (terrakota)  → “primary” – CTA buton & vurgu
+  * -------------------------------------------------------------------- */
+ --color-primary:            #C15C32;
+ --color-primary-light:      #DA875F;
+ --color-primary-dark:       #964721;
+ --color-primary-rgb:        193, 92, 50;
+ 
+ /* ----------------------------------------------------------------------
+  * 3) İkincil (adaçayı yeşili)  → “secondary” – dengeleyici aksan
+  * -------------------------------------------------------------------- */
+ --color-secondary:          #7A9D8A;
+ --color-secondary-light:    #A3BBA9;
+ --color-secondary-dark:     #5B7867;
+ --color-secondary-rgb:      122, 157, 138;
+ 
+ /* ----------------------------------------------------------------------
+  * 4) Tali / Yüzey (kumtaşı)  → “tertiary” – kart, arka plan
+  * -------------------------------------------------------------------- */
+ --color-tertiary:           #E8DDCF;
+ --color-tertiary-light:     #F6F1EA;
+ --color-tertiary-dark:      #C9BFB2;
+ --color-tertiary-rgb:       232, 221, 207;
+ 
+ /* ----------------------------------------------------------------------
+  * 5) Durum Renkleri – palete uyumlu doğal tonlar
+  * -------------------------------------------------------------------- */
+ --color-success:            #2E8540;   /* orman yeşili */
+ --color-success-light:      #5FAF6D;
+ --color-success-dark:       #226432;
+ --color-success-rgb:        46, 133, 64;
+ 
+ --color-info:               #577A96;   /* nötr mavi-gri */
+ --color-info-light:         #87A4B9;
+ --color-info-dark:          #425D70;
+ --color-info-rgb:           87, 122, 150;
+ 
+ --color-warning:            #D7A540;   /* ılık amber */
+ --color-warning-light:      #E6C06F;
+ --color-warning-dark:       #A98232;
+ --color-warning-rgb:        215, 165, 64;
+ 
+ --color-danger:             #B94747;   /* kiremit kırmızısı */
+ --color-danger-light:       #D47373;
+ --color-danger-dark:        #8E3535;
+ --color-danger-rgb:         185, 71, 71;
+ 
+ /* ----------------------------------------------------------------------
+  * 6) Klavye Odak Halkası – adaçayı vurgusu
+  * -------------------------------------------------------------------- */
+ --focus-ring-color:         #7A9D8A;
+ --focus-ring-width:         3px;
+ --focus-ring-offset:        2px;
+ --focus-ring-color-rgb:     122, 157, 138;
+ 
+ /* ----------------------------------------------------------------------
+  * 7) Modern CSS Yardımcıları
+  * -------------------------------------------------------------------- */
+ /* OKLCH geniş gamut (yaklaşık) */
+ --oklch-primary:    oklch(60% 0.18 38);   /* terrakota */
+ --oklch-secondary:  oklch(78% 0.08 155);  /* adaçayı */
+ 
+ /* Dinamik karışımlar (hover/active) */
+ --color-primary-hover:       color-mix(in oklch, var(--color-primary) 80%, black);
+ --color-primary-active:      color-mix(in oklch, var(--color-primary) 60%, black);
+ --color-primary-transparent: color-mix(in oklch, var(--color-primary) 15%, transparent);
+ 
+ /* Kontrast yardımcıları */
+ --color-high-contrast: contrast(var(--color-primary) 150%);
+ --color-low-contrast:  contrast(var(--color-primary)  50%);
+
+
+
+
+  /* Nötr Renkler */
   --color-black: #000000;
+  --color-black-rgb: 0, 0, 0; /* RGB değeri */
   --color-white: #ffffff;
-  --color-gray-100: #f8f9fa;
+  --color-gray-100: #f8f9fa; /* Hafif pastel bir ton için */
   --color-gray-200: #e9ecef;
   --color-gray-300: #dee2e6;
   --color-gray-400: #ced4da;
@@ -61,14 +101,10 @@
   --color-gray-600: #6c757d;
   --color-gray-700: #495057;
   --color-gray-800: #343a40;
-  --color-gray-900: #212529;
-  
-  /* ====================================
-   * 2. Tema Modu Değişkenleri
-   * ==================================== */
-  
-  /* Açık tema (varsayılan) */
-  --bg-body: var(--color-white);
+  --color-gray-900: #2C3E50; /* Ana metinler için daha az sert, yumuşak bir koyuluk. */
+
+  /* Uygulama Renkleri */
+  --bg-body: var(--color-white); /* Çok hafif pastel bir ton için */
   --bg-surface: var(--color-white);
   --bg-surface-elevated: var(--color-white);
   --bg-muted: var(--color-gray-100);
@@ -79,244 +115,202 @@
   --text-muted: var(--color-gray-600);
   --text-subtle: var(--color-gray-500);
   --text-on-primary: var(--color-white);
+  --text-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5); /* Hafif metin gölgesi */
   
   --border-color: var(--color-gray-300);
   --border-color-subtle: var(--color-gray-200);
+
+  /* Animasyon ve Geçişler - Azaltılmış Hareket */
+  --transition-base: 0.2s ease-in-out;
+  --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-reduced: 0.1s linear; /* Azaltılmış hareket tercihi için */
   
-  /* ====================================
-   * 3. Tipografi Sistemi
-   * ==================================== */
+  /* Erişilebilir Tipografi */
+  --font-size-base: 16px;           /* Minimum okunabilir boyut */
+  --line-height-base: 1.5;          /* WCAG önerisi */
+  --letter-spacing-base: 0.5px;     /* Okunabilirlik için */
   
-  /* Font ailesi */
-  --font-family-base: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  --font-family-heading: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  /* Z-index Katmanları */
+  --z-index-skip-link: 9999;        /* En üstte */
+  --z-index-modal: 1050;
+  --z-index-overlay: 1040;
+  --z-index-dropdown: 1030;
+  --z-index-sticky: 1020;
+  --z-index-fixed: 1010;
+  --z-index-base: 1;
+  
+  /* Form Elemanları */
+  --input-height: 44px;             /* Dokunmatik hedef boyutu */
+  --input-padding: 12px;
+  --input-border-width: 2px;
+  --input-border-radius: 4px;
+  
+  /* Erişilebilir Boşluklar */
+  --spacing-touch-target: 44px;     /* Minimum dokunmatik hedef boyutu */
+  --spacing-between-touch: 8px;     /* Dokunmatik hedefler arası minimum boşluk */
+
+
+
+  /* Tipografi */
+  --font-family-base: 'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-family-heading: 'Rubik', sans-serif;
   --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
-  
-  /* Font boyutları */
-  --font-size-base: 1rem;        /* 16px */
-  --font-size-xs: 0.75rem;       /* 12px */
-  --font-size-sm: 0.875rem;      /* 14px */
-  --font-size-lg: 1.125rem;      /* 18px */
-  --font-size-xl: 1.25rem;       /* 20px */
-  --font-size-2xl: 1.5rem;       /* 24px */
-  --font-size-3xl: 1.875rem;     /* 30px */
-  --font-size-4xl: 2.25rem;      /* 36px */
-  --font-size-5xl: 3rem;         /* 48px */
-  --font-size-6xl: 3.75rem;      /* 60px */
-  --font-size-7xl: 4.5rem;       /* 72px */
-  
-  /* Font ağırlıkları */
+
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
+  --font-size-5xl: 3rem;
+
   --font-weight-light: 300;
   --font-weight-normal: 400;
-  --font-weight-medium: 500;
+  --font-weight-medium: 500; /* Daha okunaklı vurgular için */
   --font-weight-semibold: 600;
-  --font-weight-bold: 700;
+  --font-weight-bold: 600; /* Çok ağır olmayan, okunaklı vurgular. */
   --font-weight-extrabold: 800;
-  
-  /* Satır yükseklikleri */
+
   --line-height-none: 1;
   --line-height-tight: 1.25;
   --line-height-snug: 1.375;
   --line-height-normal: 1.5;
   --line-height-relaxed: 1.625;
-  --line-height-loose: 1.75;
-  
-  /* Harf aralıkları */
-  --letter-spacing-tighter: -0.05em;
-  --letter-spacing-tight: -0.025em;
-  --letter-spacing-normal: 0em;
-  --letter-spacing-wide: 0.025em;
-  --letter-spacing-wider: 0.05em;
-  --letter-spacing-widest: 0.1em;
-  
-  /* ====================================
-   * 4. Boşluk ve Mesafe Sistemi
-   * ==================================== */
-  
+  --line-height-loose: 2;
+
+  /* Boşluklar */
   --spacing-0: 0;
-  --spacing-1: 0.25rem;      /* 4px */
-  --spacing-2: 0.5rem;       /* 8px */
-  --spacing-3: 0.75rem;      /* 12px */
-  --spacing-4: 1rem;         /* 16px */
-  --spacing-5: 1.25rem;      /* 20px */
-  --spacing-6: 1.5rem;       /* 24px */
-  --spacing-8: 2rem;         /* 32px */
-  --spacing-10: 2.5rem;      /* 40px */
-  --spacing-12: 3rem;        /* 48px */
-  --spacing-16: 4rem;        /* 64px */
-  --spacing-20: 5rem;        /* 80px */
-  --spacing-24: 6rem;        /* 96px */
-  --spacing-32: 8rem;        /* 128px */
-  
-  /* ====================================
-   * 5. Köşe Yuvarlama (Border Radius)
-   * ==================================== */
-  
-  --radius-none: 0;
-  --radius-sm: 0.125rem;     /* 2px */
-  --radius-md: 0.25rem;      /* 4px */
-  --radius-lg: 0.5rem;       /* 8px */
-  --radius-xl: 0.75rem;      /* 12px */
-  --radius-2xl: 1rem;        /* 16px */
-  --radius-3xl: 1.5rem;      /* 24px */
-  --radius-full: 9999px;     /* Tam yuvarlak */
-  
-  /* ====================================
-   * 6. Gölge ve Yükseltme Efektleri
-   * ==================================== */
-  
-  --shadow-none: none;
-  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-  --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
-  
-  /* ====================================
-   * 7. Geçiş ve Animasyon Stilleri
-   * ==================================== */
-  
-  --transition-none: none;
-  --transition-all: all 0.3s ease;
-  --transition-fast: all 0.15s ease;
-  --transition-normal: all 0.3s ease;
-  --transition-slow: all 0.5s ease;
-  --transition-slower: all 0.8s ease;
-  
-  --easing-default: cubic-bezier(0.4, 0, 0.2, 1);
-  --easing-in: cubic-bezier(0.4, 0, 1, 1);
-  --easing-out: cubic-bezier(0, 0, 0.2, 1);
-  --easing-in-out: cubic-bezier(0.4, 0, 0.2, 1);
-  
-  /* ====================================
-   * 8. Z-index Katmanları
-   * ==================================== */
-  
-  --z-index-below: -1;
-  --z-index-base: 0;
-  --z-index-above: 1;
-  --z-index-dropdown: 1000;
-  --z-index-sticky: 1020;
-  --z-index-fixed: 1030;
-  --z-index-overlay: 1040;
-  --z-index-modal: 1050;
-  --z-index-popover: 1060;
-  --z-index-tooltip: 1070;
-  --z-index-toast: 1080;
-  
-  /* ====================================
-   * 9. Konteyner ve Genişlik Değişkenleri
-   * ==================================== */
-  
-  --container-max-width-sm: 640px;
-  --container-max-width-md: 768px;
-  --container-max-width-lg: 1024px;
-  --container-max-width-xl: 1280px;
-  --container-max-width-2xl: 1536px;
-  
-  /* ====================================
-   * 10. Bileşen Temel Stilleri
-   * ==================================== */
-  
-  /* Buton değişkenleri */
-  --button-padding-x: 1.5rem;
-  --button-padding-y: 0.75rem;
-  --button-border-radius: var(--radius-lg);
-  --button-font-weight: var(--font-weight-medium);
-  
-  /* Kart değişkenleri */
-  --card-border-radius: var(--radius-lg);
-  --card-padding: var(--spacing-6);
-  --card-shadow: var(--shadow-md);
-  
-  /* Form değişkenleri */
-  --input-padding-x: var(--spacing-4);
-  --input-padding-y: var(--spacing-3);
-  --input-border-radius: var(--radius-md);
-  --input-border-color: var(--border-color);
-  --input-focus-border-color: var(--color-primary);
-  --input-focus-ring-color: rgba(0, 86, 179, 0.25);
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-3: 0.75rem;
+  --spacing-4: 1rem;
+  --spacing-5: 1.25rem;
+  --spacing-6: 1.5rem;
+  --spacing-8: 2rem;
+  --spacing-10: 2.5rem; /* Daha büyük boşluklar kullanılabilir. */
+  --spacing-12: 3rem;
+  --spacing-16: 4rem;
+  --spacing-20: 5rem;
+  --spacing-24: 6rem;
+  --spacing-32: 8rem;
+
+  /* Gölgeler */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* Yumuşak ve az belirgin gölgeler */
+  --shadow-md: 0 2px 4px -1px rgba(0, 0, 0, 0.08), 0 1px 2px -1px rgba(0, 0, 0, 0.04); /* Biraz daha belirgin, ama hala hafif */
+  --shadow-lg: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* Hafif gölgelerden kaçınılmalı */
+  --shadow-xl: 0 6px 10px -2px rgba(0, 0, 0, 0.12), 0 3px 6px -2px rgba(0, 0, 0, 0.08); /* Aşırı belirgin gölgelerden kaçınılmalı */
+
+  /* Border Radius */
+  --border-radius-none: 0;
+  --border-radius-sm: 0.125rem;
+  --border-radius-md: 0.25rem;
+  --border-radius-lg: 0.5rem; /* Yuvarlak ve organik şekiller */
+  --border-radius-xl: 0.75rem;
+  --border-radius-2xl: 1rem;
+  --border-radius-3xl: 1.5rem;
+  --border-radius-full: 9999px; /* Tam yuvarlak için */
+
+  /* Semantik Renkler */
+  --color-accent: #FFD166;
+  --color-surface-card: #FFFFFF;
+  --color-background-muted: #FAFCFD;
+  --color-border-muted: #E2E8F0;
+
+  /* Durum Renklerinin RGB Değerleri */
+  --color-success-rgb: 127, 255, 0;
+  --color-danger-rgb: 255, 0, 0;
+  --color-warning-rgb: 255, 215, 0;
+  --color-info-rgb: 0, 191, 255;
+
+  /* Gradientler */
+  --gradient-primary: linear-gradient(45deg, var(--color-primary), var(--color-primary-light));
+  --gradient-secondary: linear-gradient(45deg, var(--color-secondary), var(--color-secondary-light));
+
+  /* Container ve Breakpoint'ler */
+  --container-max-width: 1280px;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+
+  /* Animasyon ve Geçişler */
+  --transition-fast: 0.1s ease-in-out;
+  --transition-normal: 0.2s ease-in-out;
+  --transition-slow: 0.3s ease-in-out;
+  --animation-pulse-duration: 1.5s infinite;
+
+  /* Ek Gölgeler */
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+  /* Dark Mode Rolleri */
+  --bg-body-dark: #1A1A2E;
+  --bg-surface-dark: #2A2A4A;
+  --text-primary-dark: #F8F9FA;
 }
 
 /* ====================================
  * 11. Karanlık Mod Değişkenleri
  * ==================================== */
 
-[data-theme="dark"] {
-  --bg-body: #121212;
-  --bg-surface: #1e1e1e;
-  --bg-surface-elevated: #2c2c2c;
-  --bg-muted: #333333;
-  --bg-subtle: #3e3e3e;
+/* =================================
+ * Karanlık Mod
+ * ================================= */
+:root[data-theme="dark"] {
+  /* Arka plan renkleri */
+  --bg-canvas: var(--color-gray-900);
+  --bg-default: var(--color-gray-800);
+  --bg-subtle: var(--color-gray-700);
+  --bg-muted: var(--color-gray-600);
+  --bg-emphasis: var(--color-gray-500);
   
-  --text-primary: #f8f9fa;
-  --text-secondary: #e9ecef;
-  --text-muted: #adb5bd;
-  --text-subtle: #868e96;
+  /* Metin renkleri */
+  --text-default: var(--color-gray-50);
+  --text-muted: var(--color-gray-300);
+  --text-subtle: var(--color-gray-400);
+  --text-placeholder: var(--color-gray-500);
+  --text-disabled: var(--color-gray-600);
+  --text-inverse: var(--color-gray-900);
   
-  --border-color: #494949;
-  --border-color-subtle: #3e3e3e;
+  /* Border renkleri */
+  --border-default: var(--color-gray-600);
+  --border-muted: var(--color-gray-700);
+  --border-subtle: var(--color-gray-800);
   
-  /* Gölgeler koyu temada daha belirgin olmalı */
-  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+  /* Gölgeler */
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-base: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
 }
 
-/* ====================================
- * 12. Renk Tema Varyasyonları
- * ==================================== */
-
-/* Mavi Tema (Varsayılan) */
-[data-color-theme="blue"] {
-  --color-primary: #0056b3;
-  --color-primary-light: #2579d5;
-  --color-primary-dark: #003b7a;
-}
-
-/* Yeşil Tema */
-[data-color-theme="green"] {
-  --color-primary: #28a745;
-  --color-primary-light: #48c967;
-  --color-primary-dark: #1e7e34;
-}
-
-/* Kırmızı Tema */
-[data-color-theme="red"] {
-  --color-primary: #dc3545;
-  --color-primary-light: #e25d6a;
-  --color-primary-dark: #bd2130;
-}
-
-/* Turuncu Tema */
-[data-color-theme="orange"] {
-  --color-primary: #fd7e14;
-  --color-primary-light: #fe9a4c;
-  --color-primary-dark: #c96512;
-}
-
-/* Mor Tema */
-[data-color-theme="purple"] {
-  --color-primary: #6f42c1;
-  --color-primary-light: #8c68d6;
-  --color-primary-dark: #59339e;
-}
-
-/* Turkuaz Tema */
-[data-color-theme="teal"] {
-  --color-primary: #20c997;
-  --color-primary-light: #3dd8aa;
-  --color-primary-dark: #199d76;
-}
-
-/* Pembe Tema */
-[data-color-theme="pink"] {
-  --color-primary: #e83e8c;
-  --color-primary-light: #ed65a4;
-  --color-primary-dark: #c21e73;
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    /* Arka plan renkleri */
+    --bg-canvas: var(--color-gray-900);
+    --bg-default: var(--color-gray-800);
+    --bg-subtle: var(--color-gray-700);
+    --bg-muted: var(--color-gray-600);
+    --bg-emphasis: var(--color-gray-500);
+    
+    /* Metin renkleri */
+    --text-default: var(--color-gray-50);
+    --text-muted: var(--color-gray-300);
+    --text-subtle: var(--color-gray-400);
+    --text-placeholder: var(--color-gray-500);
+    --text-disabled: var(--color-gray-600);
+    --text-inverse: var(--color-gray-900);
+    
+    /* Border renkleri */
+    --border-default: var(--color-gray-600);
+    --border-muted: var(--color-gray-700);
+    --border-subtle: var(--color-gray-800);
+    
+    /* Gölgeler */
+    --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-base: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  }
 }
 
 /* ====================================
@@ -325,7 +319,7 @@
 
 /* Yüksek Kontrast Modu */
 .high-contrast {
-  --color-primary: #0074D9;
+  --color-primary: #FF6B6B; /* Ana rengi koru veya daha keskin bir ton seç */
   --text-primary: #000000;
   --text-secondary: #000000;
   --text-on-primary: #FFFFFF;
@@ -366,43 +360,144 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) {
-    --bg-body: #121212;
-    --bg-surface: #1e1e1e;
-    --bg-surface-elevated: #2c2c2c;
-    --bg-muted: #333333;
-    --bg-subtle: #3e3e3e;
-    
-    --text-primary: #f8f9fa;
-    --text-secondary: #e9ecef;
-    --text-muted: #adb5bd;
-    --text-subtle: #868e96;
-    
-    --border-color: #494949;
-    --border-color-subtle: #3e3e3e;
+    --bg-body: var(--bg-body-dark);
+    --bg-surface: var(--bg-surface-dark);
+    --text-primary: var(--text-primary-dark);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  :root {
-    --transition-all: none;
-    --transition-fast: none;
-    --transition-normal: none;
-    --transition-slow: none;
-    --transition-slower: none;
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
 @media (prefers-contrast: high) {
   :root {
-    --color-primary: #0074D9;
-    --text-primary: #000000;
-    --text-secondary: #000000;
-    --text-on-primary: #FFFFFF;
-    --border-color: #000000;
-    --border-color-subtle: #000000;
-    --shadow-sm: none;
-    --shadow-md: none;
-    --shadow-lg: none;
-    --shadow-xl: none;
+    --color-primary: #FF0000; /* Yüksek kontrast için daha keskin bir kırmızı */
+    --color-danger: #00FF00; /* Yüksek kontrast için daha belirgin yeşil */
+    --color-success: #0000FF; /* Yüksek kontrast için daha belirgin mavi */
   }
+}
+
+
+
+/* Mantıksal Özellikler */
+:root {
+  /* Yazı yönüne göre ayarlanan kenar boşlukları */
+  --space-inline-xs: var(--space-1);
+  --space-inline-sm: var(--space-2);
+  --space-inline-md: var(--space-4);
+  --space-inline-lg: var(--space-6);
+  --space-inline-xl: var(--space-8);
+  
+  --space-block-xs: var(--space-1);
+  --space-block-sm: var(--space-2);
+  --space-block-md: var(--space-4);
+  --space-block-lg: var(--space-6);
+  --space-block-xl: var(--space-8);
+  
+  /* Mantıksal kenarlıklar */
+  --border-inline-start: var(--border-default);
+  --border-inline-end: var(--border-default);
+  --border-block-start: var(--border-default);
+  --border-block-end: var(--border-default);
+}
+
+/* Container Queries */
+:root {
+  /* Container sorguları için boyutlar */
+  --container-size-xs: 20rem;   /* 320px */
+  --container-size-sm: 30rem;   /* 480px */
+  --container-size-md: 45rem;   /* 720px */
+  --container-size-lg: 60rem;   /* 960px */
+  --container-size-xl: 75rem;   /* 1200px */
+  
+  /* Container başına özel değişkenler */
+  --card-padding-inline: var(--space-4);
+  --card-padding-block: var(--space-4);
+  --card-header-font-size: var(--font-size-lg);
+  
+  --sidebar-width: min(var(--container-size-sm), 100%);
+  --main-content-width: min(var(--container-size-lg), 100%);
+}
+
+/* View Transitions API */
+:root {
+  /* Sayfa geçişleri için değişkenler */
+  --view-transition-duration: 300ms;
+  --view-transition-timing: var(--ease-out);
+  
+  /* Özel geçiş efektleri */
+  --transition-fade: opacity var(--view-transition-duration) var(--view-transition-timing);
+  --transition-slide: transform var(--view-transition-duration) var(--view-transition-timing);
+  --transition-scale: scale var(--view-transition-duration) var(--view-transition-timing);
+  
+  /* Geçiş mesafeleri */
+  --slide-distance: 20px;
+  --scale-start: 0.95;
+}
+
+/* CSS Aspect Ratio */
+:root {
+  --aspect-square: 1 / 1;
+  --aspect-video: 16 / 9;
+  --aspect-cinema: 21 / 9;
+  --aspect-portrait: 3 / 4;
+  --aspect-golden: 1.618 / 1;
+}
+
+/* CSS Grid Templates */
+:root {
+  --grid-main-template: "header header header" auto
+                         "nav content aside" 1fr
+                         "footer footer footer" auto / auto 1fr auto;
+                         
+  --grid-dashboard-template: "sidebar header" auto
+                             "sidebar content" 1fr
+                             "sidebar footer" auto / 280px 1fr;
+                             
+  --grid-landing-template: "hero hero hero" auto
+                           "features features features" auto
+                           "testimonials cta testimonials" auto / 1fr auto 1fr;
+}
+
+/* Custom Media Queries */
+@custom-media --viewport-mobile (width < 640px);
+@custom-media --viewport-tablet (640px <= width < 1024px);
+@custom-media --viewport-desktop (width >= 1024px);
+@custom-media --viewport-hd (width >= 1920px);
+@custom-media --viewport-dark (prefers-color-scheme: dark);
+@custom-media --viewport-light (prefers-color-scheme: light);
+@custom-media --reduced-motion (prefers-reduced-motion: reduce);
+@custom-media --high-contrast (prefers-contrast: high);
+
+/* Scroll Behavior */
+:root {
+  --scroll-padding: var(--space-16);
+  --scroll-behavior: smooth;
+  --scroll-snap-type: y proximity;
+  --scroll-snap-align: start;
+  --scroll-snap-stop: always;
+}
+
+/* Advanced Animation Variables */
+:root {
+  /* Spring animations */
+  --spring-config-gentle: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --spring-config-bounce: cubic-bezier(0.5, -0.5, 0.1, 1.5);
+  
+  /* Animation keyframes constants */
+  --rotate-full: 360deg;
+  --translate-offscreen-up: translate3d(0, -100%, 0);
+  --translate-offscreen-down: translate3d(0, 100%, 0);
+  --translate-offscreen-left: translate3d(-100%, 0, 0);
+  --translate-offscreen-right: translate3d(100%, 0, 0);
+  
+  /* Animation states */
+  --scale-hover: 1.05;
+  --opacity-hover: 0.8;
 } 

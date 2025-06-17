@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Gürel Yönetim - Tema Karşılaştırma</title>
+  <style>
+    /* Genel Stil */
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f5f5f5;
+      color: #333;
+      line-height: 1.6;
+      transition: all 0.3s ease;
+    }
+    
+    /* Tema Seçici */
+    .theme-selector {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 1000;
+      background: #fff;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .theme-selector button {
+      background: none;
+      border: 1px solid #ddd;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      margin: 0.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .theme-selector button:hover {
+      opacity: 0.8;
+    }
+    .theme-selector button.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    /* Ana İçerik */
+    .main-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    /* Tema Kartları */
+    .theme-card {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 1rem 0;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+    .theme-card:hover {
+      transform: translateY(-5px);
+    }
+
+    /* Renk Paleti */
+    .color-palette {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    .color-item {
+      padding: 1rem;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+    .color-item span {
+      display: block;
+      width: 3rem;
+      height: 3rem;
+      border-radius: 4px;
+      margin: 0.5rem auto;
+    }
+
+    /* Komponent Örnekleri */
+    .component-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    .component-card {
+      background: var(--bg);
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .component-card h3 {
+      margin: 0 0 1rem 0;
+      color: var(--text);
+    }
+
+    /* Responsive Tasarım */
+    @media (max-width: 768px) {
+      .theme-selector {
+        position: relative;
+        top: 0;
+        right: 0;
+        margin: 1rem;
+      }
+      .main-content {
+        padding: 1rem;
+      }
+      .theme-card {
+        padding: 1.5rem;
+      }
+    }
+
+    /* Temalar */
+    /* 1: Kurumsal Güven */
+    .theme-1 {
+      --primary: #0052CC;
+      --primary-light: #4077E8;
+      --primary-dark: #003C9E;
+      --secondary: #FF8F00;
+      --secondary-light: #FFB84D;
+      --secondary-dark: #CC7200;
+      --bg: #FFFFFF;
+      --text: #2C3E50;
+      --success: #4CAF50;
+      --warning: #FFC107;
+      --danger: #F44336;
+      --info: #2196F3;
+    }
+    /* 2: Doğal Denge */
+    .theme-2 {
+      --primary: #009688;
+      --primary-light: #4DB6AC;
+      --primary-dark: #00796B;
+      --secondary: #F1E4D3;
+      --secondary-light: #FAF3EA;
+      --secondary-dark: #D7C3AA;
+      --bg: #FFFFFF;
+      --text: #2C3E50;
+      --success: #66BB6A;
+      --warning: #FFA726;
+      --danger: #EF5350;
+      --info: #26A69A;
+    }
+    /* 3: Teknoloji ve Yenilik */
+    .theme-3 {
+      --primary: #6A0DAD;
+      --primary-light: #9B59B6;
+      --primary-dark: #4E008E;
+      --secondary: #00BFFF;
+      --secondary-light: #4DCEFF;
+      --secondary-dark: #009FCC;
+      --bg: #FFFFFF;
+      --text: #2C3E50;
+      --success: #7E57C2;
+      --warning: #FF7043;
+      --danger: #D81B60;
+      --info: #00ACC1;
+    }
+    /* 4: Sıcaklık ve Samimiyet */
+    .theme-4 {
+      --primary: #FF5722;
+      --primary-light: #FF8A50;
+      --primary-dark: #E64A19;
+      --secondary: #FFECB3;
+      --secondary-light: #FFF3E0;
+      --secondary-dark: #FFD180;
+      --bg: #FFFFFF;
+      --text: #2C3E50;
+      --success: #FFA726;
+      --warning: #FFB74D;
+      --danger: #FF5252;
+      --info: #FF7043;
+    }
+    /* 5: Modern Minimalizm */
+    .theme-5 {
+      --primary: #455A64;
+      --primary-light: #718792;
+      --primary-dark: #1C313A;
+      --secondary: #607D8B;
+      --secondary-light: #8EACBB;
+      --secondary-dark: #34515E;
+      --bg: #FFFFFF;
+      --text: #2C3E50;
+      --success: #4CAF50;
+      --warning: #FFA726;
+      --danger: #F44336;
+      --info: #2196F3;
+    }
+    /* 6: Profesyonel Sadelik */
+    .theme-6 {
+      --primary: #2E8B57;
+      --primary-light: #60B184;
+      --primary-dark: #256F47;
+      --secondary: #EAEFF2;
+      --secondary-light: #F5F8FA;
+      --secondary-dark: #CBD9E0;
+      --bg: #FFFFFF;
+      --text: #2C3E50;
+      --success: #43A047;
+      --warning: #FFA726;
+      --danger: #E53935;
+      --info: #00B0FF;
+    }
+    /* 7: Enerjik Kontrast */
+    .theme-7 {
+      --primary: #E53935;
+      --primary-light: #FF6F60;
+      --primary-dark: #AB000D;
+      --secondary: #283593;
+      --secondary-light: #5F5FC4;
+      --secondary-dark: #001064;
+      --bg: #FFFFFF;
+      --text: #2C3E50;
+      --success: #43A047;
+      --warning: #FFA726;
+      --danger: #D81B60;
+      --info: #2196F3;
+    }
+  </style>
+</head>
+<body class="theme-1">
+
+  <div class="theme-selector">
+    <button onclick="setTheme('theme-1')" class="active">Kurumsal Güven</button>
+    <button onclick="setTheme('theme-2')">Doğal Denge</button>
+    <button onclick="setTheme('theme-3')">Teknoloji ve Yenilik</button>
+    <button onclick="setTheme('theme-4')">Sıcaklık ve Samimiyet</button>
+    <button onclick="setTheme('theme-5')">Modern Minimalizm</button>
+    <button onclick="setTheme('theme-6')">Profesyonel Sadelik</button>
+    <button onclick="setTheme('theme-7')">Enerjik Kontrast</button>
+  </div>
+
+  <div class="main-content">
+    <h1>Gürel Yönetim - Tema Karşılaştırma</h1>
+
+    <!-- Renk Paleti -->
+    <div class="theme-card">
+      <h2>Renk Paleti</h2>
+      <div class="color-palette">
+        <div class="color-item">
+          <span style="background: var(--primary)"></span>
+          <p>Ana Renk</p>
+          <p>var(--primary)</p>
+        </div>
+        <div class="color-item">
+          <span style="background: var(--primary-light)"></span>
+          <p>Açık Ana Renk</p>
+          <p>var(--primary-light)</p>
+        </div>
+        <div class="color-item">
+          <span style="background: var(--primary-dark)"></span>
+          <p>Koyu Ana Renk</p>
+          <p>var(--primary-dark)</p>
+        </div>
+        <div class="color-item">
+          <span style="background: var(--secondary)"></span>
+          <p>İkincil Renk</p>
+          <p>var(--secondary)</p>
+        </div>
+        <div class="color-item">
+          <span style="background: var(--success)"></span>
+          <p>Başarılı Renk</p>
+          <p>var(--success)</p>
+        </div>
+        <div class="color-item">
+          <span style="background: var(--warning)"></span>
+          <p>Uyarı Renk</p>
+          <p>var(--warning)</p>
+        </div>
+        <div class="color-item">
+          <span style="background: var(--danger)"></span>
+          <p>Hata</p>
+          <p>var(--danger)</p>
+        </div>
+        <div class="color-item">
+          <span style="background: var(--info)"></span>
+          <p>Bilgi</p>
+          <p>var(--info)</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Komponent Örnekleri -->
+    <div class="theme-card">
+      <h2>Komponent Örnekleri</h2>
+      <div class="component-grid">
+        <div class="component-card">
+          <h3>Butonlar</h3>
+          <button class="primary">Ana Buton</button>
+          <button class="secondary">İkincil Buton</button>
+          <button style="background: var(--success); color: white;">Başarılı</button>
+          <button style="background: var(--warning); color: white;">Uyarı</button>
+          <button style="background: var(--danger); color: white;">Hata</button>
+          <button style="background: var(--info); color: white;">Bilgi</button>
+          <br><br>
+          <button class="primary" style="opacity: 0.7;">Devre dışı</button>
+          <button class="secondary" style="opacity: 0.7;">Devre dışı</button>
+        </div>
+
+        <div class="component-card">
+          <h3>Form Elemanları</h3>
+          <div class="form-group">
+            <label for="name">Adınız:</label>
+            <input type="text" id="name" placeholder="Adınızı girin" style="padding: 0.5rem; border: 1px solid var(--secondary-light); border-radius: 4px;">
+          </div>
+          <div class="form-group">
+            <label for="email">E-posta:</label>
+            <input type="email" id="email" placeholder="E-posta adresi" style="padding: 0.5rem; border: 1px solid var(--secondary-light); border-radius: 4px;">
+          </div>
+          <div class="form-group">
+            <label for="message">Mesaj:</label>
+            <textarea id="message" placeholder="Mesajınızı yazın" style="padding: 0.5rem; border: 1px solid var(--secondary-light); border-radius: 4px; height: 100px;"></textarea>
+          </div>
+          <div class="form-group">
+            <label>
+              <input type="checkbox"> Beni hatırla
+            </label>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3>Kartlar</h3>
+          <div class="card-grid">
+            <div class="card-item" style="background: var(--bg); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+              <div class="card-header">
+                <h4>Kart Başlığı</h4>
+                <span class="card-badge" style="background: var(--primary); color: white; padding: 0.25rem 0.5rem; border-radius: 4px;">Yeni</span>
+              </div>
+              <p>Örnek kart içeriği gösterimi. Bu kart farklı renklerle stilize edilebilir.</p>
+              <div class="card-footer">
+                <button class="primary" style="padding: 0.25rem 0.75rem;">Göster</button>
+              </div>
+            </div>
+
+            <div class="card-item" style="background: var(--bg); padding: 1rem; border-radius: 8px;">
+              <div class="card-header">
+                <h4>İstatistik Kartı</h4>
+              </div>
+              <div class="stats">
+                <div class="stat-item">
+                  <span style="color: var(--success)">+25%</span>
+                  <p>Artış</p>
+                </div>
+                <div class="stat-item">
+                  <span style="color: var(--danger)">-10%</span>
+                  <p>Azalış</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3>Bildirimler</h3>
+          <div class="notification-grid">
+            <div class="notification success">
+              <div class="notification-icon" style="background: var(--success); color: white;">✓</div>
+              <div class="notification-content">
+                <h4>İşlem Başarılı</h4>
+                <p>İşlem başarıyla tamamlandı. Devam etmek için tıklayın.</p>
+              </div>
+            </div>
+
+            <div class="notification warning">
+              <div class="notification-icon" style="background: var(--warning); color: white;">⚠</div>
+              <div class="notification-content">
+                <h4>Dikkat!</h4>
+                <p>Önemli bir değişiklik yapmak üzeresiniz. Devam etmek istiyor musunuz?</p>
+              </div>
+            </div>
+
+            <div class="notification error">
+              <div class="notification-icon" style="background: var(--danger); color: white;">✗</div>
+              <div class="notification-content">
+                <h4>Hata Oluştu</h4>
+                <p>İşlem sırasında bir hata oluştu. Lütfen tekrar deneyin.</p>
+              </div>
+            </div>
+
+            <div class="notification info">
+              <div class="notification-icon" style="background: var(--info); color: white;">ℹ</div>
+              <div class="notification-content">
+                <h4>Bilgi</h4>
+                <p>Önemli bir güncelleme mevcut. Lütfen kontrol edin.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3>Navigation</h3>
+          <nav class="nav-menu">
+            <ul>
+              <li class="active"><a href="#">Ana Sayfa</a></li>
+              <li><a href="#">Hizmetler</a></li>
+              <li><a href="#">Ürünler</a></li>
+              <li><a href="#">Hakkımızda</a></li>
+              <li><a href="#">İletişim</a></li>
+            </ul>
+          </nav>
+        </div>
+
+        <div class="component-card">
+          <h3>Modal Örneği</h3>
+          <button class="primary" onclick="openModal()">Modal Aç</button>
+          
+          <div id="modal" class="modal" style="display: none;">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h3>Modal Başlığı</h3>
+                <button class="close-button" onclick="closeModal()">×</button>
+              </div>
+              <div class="modal-body">
+                <p>Modal içeriği burada gösterilecek. Bu bir örnek modal penceresidir.</p>
+                <form>
+                  <div class="form-group">
+                    <label for="modal-input">Giriş:</label>
+                    <input type="text" id="modal-input" placeholder="Bir şeyler yazın">
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button class="secondary" onclick="closeModal()">İptal</button>
+                <button class="primary">Kaydet</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tema Karşılaştırması -->
+    <div class="theme-card">
+      <h2>Tema Karşılaştırması</h2>
+      <div class="component-grid">
+        <div class="component-card">
+          <h3>Kurumsal Güven</h3>
+          <p>Mavi ve turuncu renk kombinasyonu ile kurumsal bir görünüm sağlar.</p>
+          <p>Uygulama alanları: Kurumsal web siteleri, yönetim paneli uygulamaları, profesyonel platformlar</p>
+        </div>
+        <div class="component-card">
+          <h3>Doğal Denge</h3>
+          <p>Yeşil ve bej tonları ile doğal ve sakin bir görünüm sunar.</p>
+          <p>Uygulama alanları: E-ticaret siteleri, blog platformları, doğal ürünler</p>
+        </div>
+        <div class="component-card">
+          <h3>Teknoloji ve Yenilik</h3>
+          <p>Mavi ve mor tonları ile modern ve yenilikçi bir görünüm sağlar.</p>
+          <p>Uygulama alanları: Teknoloji firmaları, SaaS uygulamaları, yazılım platformları</p>
+        </div>
+        <div class="component-card">
+          <h3>Sıcaklık ve Samimiyet</h3>
+          <p>Kırmızı ve sarı tonları ile sıcak ve dostane bir görünüm sunar.</p>
+          <p>Uygulama alanları: E-ticaret siteleri, sosyal medya platformları, eğlence siteleri</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+      </div>
+      <div class="color-item">
+        <span style="background: var(--danger)"></span>
+        <p>Hata</p>
+        <p>var(--danger)</p>
+      </div>
+      <div class="color-item">
+        <span style="background: var(--info)"></span>
+        <p>Bilgi</p>
+        <p>var(--info)</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Komponent Örnekleri -->
+  <div class="theme-card">
+    <h2>Komponent Örnekleri</h2>
+    <div class="component-grid">
+      <div class="component-card">
+        <h3>Butonlar</h3>
+        <button class="primary">Ana Buton</button>
+        <button class="secondary">İkincil Buton</button>
+        <button style="background: var(--success); color: white;">Başarılı</button>
+        <button style="background: var(--warning); color: white;">Uyarı</button>
+        <button style="background: var(--danger); color: white;">Hata</button>
+        <button style="background: var(--info); color: white;">Bilgi</button>
+        <br><br>
+        <button class="primary" style="opacity: 0.7;">Devre dışı</button>
+        <button class="secondary" style="opacity: 0.7;">Devre dışı</button>
+      </div>
+
+      <div class="component-card">
+        <h3>Form Elemanları</h3>
+        <div class="form-group">
+          <label for="name">Adınız:</label>
+          <input type="text" id="name" placeholder="Adınızı girin" style="padding: 0.5rem; border: 1px solid var(--secondary-light); border-radius: 4px;">
+        </div>
+        <div class="form-group">
+          <label for="email">E-posta:</label>
+          <input type="email" id="email" placeholder="E-posta adresi" style="padding: 0.5rem; border: 1px solid var(--secondary-light); border-radius: 4px;">
+        </div>
+        <div class="form-group">
+          <label for="message">Mesaj:</label>
+          <textarea id="message" placeholder="Mesajınızı yazın" style="padding: 0.5rem; border: 1px solid var(--secondary-light); border-radius: 4px; height: 100px;"></textarea>
+        </div>
+        <div class="form-group">
+          <label>
+            <input type="checkbox"> Beni hatırla
+          </label>
+        </div>
+      </div>
+
+      <div class="component-card">
+        <h3>Kartlar</h3>
+        <div class="card-grid">
+          <div class="card-item" style="background: var(--bg); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+            <div class="card-header">
+              <h4>Kart Başlığı</h4>
+              <span class="card-badge" style="background: var(--primary); color: white; padding: 0.25rem 0.5rem; border-radius: 4px;">Yeni</span>
+            </div>
+            <p>Örnek kart içeriği gösterimi. Bu kart farklı renklerle stilize edilebilir.</p>
+            <div class="card-footer">
+              <button class="primary" style="padding: 0.25rem 0.75rem;">Göster</button>
+            </div>
+          </div>
+
+          <div class="card-item" style="background: var(--bg); padding: 1rem; border-radius: 8px;">
+            <div class="card-header">
+              <h4>İstatistik Kartı</h4>
+            </div>
+            <div class="stats">
+              <div class="stat-item">
+                <span style="color: var(--success)">+25%</span>
+                <p>Artış</p>
+              </div>
+              <div class="stat-item">
+                <span style="color: var(--danger)">-10%</span>
+                <p>Azalış</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="component-card">
+        <h3>Bildirimler</h3>
+        <div class="notification-grid">
+          <div class="notification success">
+            <div class="notification-icon" style="background: var(--success); color: white;">✓</div>
+            <div class="notification-content">
+              <h4>İşlem Başarılı</h4>
+              <p>İşlem başarıyla tamamlandı. Devam etmek için tıklayın.</p>
+            </div>
+          </div>
+
+          <div class="notification warning">
+            <div class="notification-icon" style="background: var(--warning); color: white;">⚠</div>
+            <div class="notification-content">
+              <h4>Dikkat!</h4>
+              <p>Önemli bir değişiklik yapmak üzeresiniz. Devam etmek istiyor musunuz?</p>
+            </div>
+          </div>
+
+          <div class="notification error">
+            <div class="notification-icon" style="background: var(--danger); color: white;">✗</div>
+            <div class="notification-content">
+              <h4>Hata Oluştu</h4>
+              <p>İşlem sırasında bir hata oluştu. Lütfen tekrar deneyin.</p>
+            </div>
+          </div>
+
+          <div class="notification info">
+            <div class="notification-icon" style="background: var(--info); color: white;">ℹ</div>
+            <div class="notification-content">
+              <h4>Bilgi</h4>
+              <p>Önemli bir güncelleme mevcut. Lütfen kontrol edin.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="component-card">
+        <h3>Navigation</h3>
+        <nav class="nav-menu">
+          <ul>
+            <li class="active"><a href="#">Ana Sayfa</a></li>
+            <li><a href="#">Hizmetler</a></li>
+            <li><a href="#">Ürünler</a></li>
+            <li><a href="#">Hakkımızda</a></li>
+            <li><a href="#">İletişim</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="component-card">
+        <h3>Modal Örneği</h3>
+        <button class="primary" onclick="openModal()">Modal Aç</button>
+        
+        <div id="modal" class="modal" style="display: none;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3>Modal Başlığı</h3>
+              <button class="close-button" onclick="closeModal()">×</button>
+            </div>
+            <div class="modal-body">
+              <p>Modal içeriği burada gösterilecek. Bu bir örnek modal penceresidir.</p>
+              <form>
+                <div class="form-group">
+                  <label for="modal-input">Giriş:</label>
+                  <input type="text" id="modal-input" placeholder="Bir şeyler yazın">
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button class="secondary" onclick="closeModal()">İptal</button>
+              <button class="primary">Kaydet</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tema Karşılaştırması -->
+  <div class="theme-card">
+    <h2>Tema Karşılaştırması</h2>
+    <div class="component-grid">
+      <div class="component-card">
+        <h3>Kurumsal Güven</h3>
+        <p>Mavi ve turuncu renk kombinasyonu ile kurumsal bir görünüm sağlar.</p>
+        <p>Uygulama alanları: Kurumsal web siteleri, yönetim paneli uygulamaları, profesyonel platformlar</p>
+      </div>
+      <div class="component-card">
+        <h3>Doğal Denge</h3>
+        <p>Yeşil ve bej tonları ile doğal ve sakin bir görünüm sunar.</p>
+        <p>Uygulama alanları: E-ticaret siteleri, blog platformları, doğal ürünler</p>
+      </div>
+      <div class="component-card">
+        <h3>Teknoloji ve Yenilik</h3>
+        <p>Mavi ve mor tonları ile modern ve yenilikçi bir görünüm sağlar.</p>
+        <p>Uygulama alanları: Teknoloji firmaları, SaaS uygulamaları, yazılım platformları</p>
+      </div>
+      <div class="component-card">
+        <h3>Sıcaklık ve Samimiyet</h3>
+        <p>Kırmızı ve sarı tonları ile sıcak ve dostane bir görünüm sunar.</p>
+        <p>Uygulama alanları: E-ticaret siteleri, sosyal medya platformları, eğlence siteleri</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function setTheme(theme) {
+    document.body.className = theme;
+    // Tema seçici butonlarının durumunu güncelle
+    const buttons = document.querySelectorAll('.theme-selector button');
+  }
+
+  function openModal() {
+    document.getElementById('modal').style.display = 'flex';
+  }
+
+  function closeModal() {
+    document.getElementById('modal').style.display = 'none';
+  }
+
+  // Modal dışına tıklandığında kapat
+  window.onclick = function(event) {
+    const modal = document.getElementById('modal');
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+</script>
+
+<style>
+  /* ... */
+</style>
+
+</body>
+</html>

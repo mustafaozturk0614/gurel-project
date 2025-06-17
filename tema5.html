@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="theme-1">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gürel Yönetim | Tema Vitrini</title>
+
+  <!-- Font & ikon -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+  <style>
+  /* ---------- Tema Değişkenleri ---------- */
+  :root[data-theme="theme-1"]{
+    --primary:#4E5DFF;--secondary:#FF6B6B;--accent:#FFD93D;
+    --bg:#F4F6FB;--text:#1F1F1F;--text-sec:#666
+  }
+  :root[data-theme="theme-2"]{
+    --primary:#17A2B8;--secondary:#FFCE56;--accent:#6FCF97;
+    --bg:#FDFDFD;--text:#202124;--text-sec:#555
+  }
+  :root{--radius:1.25rem;--shadow:0 6px 16px rgba(0,0,0,.1)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);scroll-behavior:smooth;transition:.3s}
+
+  /* ---------- Header ---------- */
+  header{display:flex;justify-content:space-between;align-items:center;
+         padding:1rem 2rem;background:var(--primary);color:#fff;
+         box-shadow:var(--shadow);position:sticky;top:0;z-index:30}
+  nav a{color:#fff;margin-left:1.1rem;font-weight:600;text-decoration:none}
+  #themeToggle{background:var(--accent);border:none;border-radius:var(--radius);
+               padding:.5rem 1.1rem;font-weight:600;cursor:pointer;margin-left:1rem}
+
+  /* Dropdown */
+  .dropdown{position:relative}
+  .dropdown-content{display:none;position:absolute;background:#fff;min-width:160px;
+    box-shadow:var(--shadow);border-radius:var(--radius);overflow:hidden;z-index:40}
+  .dropdown:hover .dropdown-content{display:block}
+  .dropdown-content a{display:block;color:var(--text);padding:.75rem 1rem;text-decoration:none}
+  .dropdown-content a:hover{background:var(--bg)}
+
+  /* ---------- Hero ---------- */
+  .hero{background:url('https://picsum.photos/1600/650?blur=3')center/cover no-repeat;
+        background-blend-mode:overlay;background-color:rgba(0,0,0,.45);
+        color:#fff;text-align:center;padding:6rem 2rem}
+  .hero h1{font-size:3rem;margin-bottom:1rem}
+  .hero p{max-width:700px;margin:auto 0 2rem}
+  .btn{display:inline-block;background:var(--secondary);color:#fff;padding:.8rem 1.5rem;
+       border:none;border-radius:var(--radius);font-weight:600;cursor:pointer;transition:.3s}
+  .btn:hover{transform:translateY(-3px)}
+
+  /* ---------- Tabs ---------- */
+  .tabs{display:flex;justify-content:center;flex-wrap:wrap;margin-top:3rem}
+  .tab-button{background:var(--secondary);border:none;padding:1rem 2rem;margin:.25rem;
+              color:#fff;font-weight:600;cursor:pointer;border-radius:var(--radius) var(--radius) 0 0}
+  .tab-content{display:none;max-width:1100px;margin:auto;padding:2rem;background:#fff;
+               border-radius:0 0 var(--radius) var(--radius);box-shadow:var(--shadow);animation:fade .4s}
+  .tab-content.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+  /* ---------- Grid ---------- */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem;padding:1rem}
+  .grid-item{background:var(--accent);padding:1.5rem;border-radius:var(--radius);
+             box-shadow:var(--shadow);text-align:center;transition:.3s;opacity:0;transform:translateY(20px)}
+  .grid-item.show{opacity:1;transform:translateY(0)}
+  .grid-item:hover{transform:translateY(-6px);box-shadow:0 12px 24px rgba(0,0,0,.12)}
+  .grid-item i{font-size:2rem;margin-bottom:.5rem}
+
+  /* ---------- İstatistik ---------- */
+  .stats{display:flex;flex-wrap:wrap;justify-content:center;gap:1rem;padding:4rem 1rem}
+  .stat{flex:1 1 150px;background:#fff;padding:1.5rem;border-radius:var(--radius);
+        box-shadow:var(--shadow);text-align:center}
+  .stat h3{color:var(--primary);font-size:2rem;margin-bottom:.3rem}
+
+  /* ---------- Pricing ---------- */
+  .pricing{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+           gap:1.5rem;padding:4rem 1rem;max-width:1100px;margin:auto}
+  .price-card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);
+              text-align:center;padding:2rem;transition:.3s}
+  .price-card:hover{transform:translateY(-6px)}
+  .price-card h4{margin-bottom:.6rem;color:var(--primary)}
+  .price{font-size:2.2rem;margin:1rem 0}
+
+  /* ---------- Accordion ---------- */
+  .accordion{max-width:900px;margin:4rem auto}
+  .acc-item+ .acc-item{margin-top:.6rem}
+  .acc-header{background:var(--secondary);color:#fff;padding:1rem;border-radius:var(--radius);
+              cursor:pointer;font-weight:600}
+  .acc-body{display:none;background:#fff;padding:1rem;border-radius:0 0 var(--radius) var(--radius);
+            box-shadow:var(--shadow)}
+
+  /* ---------- Newsletter ---------- */
+  .newsletter{background:var(--primary);color:#fff;text-align:center;padding:3rem 1rem}
+  .newsletter input{padding:.8rem;border:none;border-radius:var(--radius) 0 0 var(--radius);
+                    width:60%;max-width:300px}
+  .newsletter button{padding:.8rem 1.2rem;border:none;border-radius:0 var(--radius) var(--radius) 0;
+                     background:var(--accent);font-weight:600;cursor:pointer}
+
+  /* ---------- Contact ---------- */
+  .contact{max-width:800px;margin:4rem auto;padding:2rem;background:#fff;border-radius:var(--radius);box-shadow:var(--shadow)}
+  .contact input,.contact textarea{width:100%;padding:.8rem;margin-bottom:1rem;border:1px solid #ccc;border-radius:var(--radius)}
+
+  /* ---------- Modal ---------- */
+  .modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);
+         display:none;align-items:center;justify-content:center;z-index:50}
+  .modal.show{display:flex}
+  .modal-box{background:#fff;padding:2rem;border-radius:var(--radius);max-width:500px;
+             box-shadow:var(--shadow);animation:fade .4s}
+  .close-btn{margin-top:1rem;background:var(--primary);color:#fff;border:none;padding:.5rem 1rem;
+             border-radius:var(--radius);cursor:pointer}
+
+  /* ---------- Footer ---------- */
+  footer{background:#111;color:#ddd;padding:2rem 1rem;text-align:center;margin-top:4rem}
+  footer a{color:var(--accent);margin:0 .5rem}
+
+  /* ---------- Responsive ---------- */
+  @media(max-width:768px){
+    header{flex-direction:column;align-items:flex-start}
+    .hero h1{font-size:2rem}
+    .newsletter input{width:100%;border-radius:var(--radius);margin-bottom:1rem}
+    .newsletter button{border-radius:var(--radius)}
+  }
+  </style>
+</head>
+<body>
+
+<header>
+  <strong>Gürel Yönetim</strong>
+  <nav>
+    <a href="#about">Hakkımızda</a>
+    <a href="#services">Hizmetler</a>
+
+    <div class="dropdown">
+      <a href="#">Daha Fazla ▾</a>
+      <div class="dropdown-content">
+        <a href="#faq">SSS</a>
+        <a href="#contact">İletişim</a>
+        <a href="#" onclick="openModal()">Duyuru</a>
+      </div>
+    </div>
+
+    <button id="themeToggle" onclick="toggleTheme()">Tema Değiştir</button>
+  </nav>
+</header>
+
+<section class="hero" id="about">
+  <h1>Gürel Yönetim Tema Vitrini</h1>
+  <p>Modern, renkli ve zengin içerikli bir demo sayfası.</p>
+  <a href="#pricing" class="btn">Planları Gör</a>
+</section>
+
+<!-- Sekmeler -->
+<section class="tabs" id="services">
+  <button class="tab-button" onclick="openTab(0)">Hizmetler</button>
+  <button class="tab-button" onclick="openTab(1)">Kampanyalar</button>
+  <button class="tab-button" onclick="openTab(2)">Görüşler</button>
+  <button class="tab-button" onclick="openTab(3)">Destek</button>
+</section>
+
+<div class="tab-content active">
+  <div class="grid">
+    <div class="grid-item"><i class="fas fa-tools"></i><h4>Yönetim Paneli</h4><p>Dijital kontrol merkezi ile erişim.</p></div>
+    <div class="grid-item"><i class="fas fa-broom"></i><h4>Bakım Hizmetleri</h4><p>Genel temizlik ve teknik destek.</p></div>
+    <div class="grid-item"><i class="fas fa-chart-line"></i><h4>Şeffaf Raporlama</h4><p>Aidat & bütçe yönetimi.</p></div>
+  </div>
+</div>
+
+<div class="tab-content">
+  <div class="grid">
+    <div class="grid-item"><i class="fas fa-percentage"></i><h4>Yaza Özel İndirim</h4><p>%30 bakım hizmetlerinde fırsat.</p></div>
+    <div class="grid-item"><i class="fas fa-mobile-alt"></i><h4>Mobil Bonus</h4><p>İlk girişte özel avantajlar.</p></div>
+  </div>
+</div>
+
+<div class="tab-content">
+  <div class="grid">
+    <div class="grid-item"><i class="fas fa-user"></i><h4>Ali Y.</h4><p>“Tüm süreçleri cep telefonumdan hallediyorum.”</p></div>
+    <div class="grid-item"><i class="fas fa-user"></i><h4>Elif B.</h4><p>“Aidat raporları artık çok net. Teşekkürler!”</p></div>
+  </div>
+</div>
+
+<div class="tab-content">
+  <div class="grid">
+    <div class="grid-item"><i class="fas fa-headset"></i><h4>Canlı Destek</h4><p>7/24 çağrı merkezi.</p></div>
+    <div class="grid-item"><i class="fas fa-shield-alt"></i><h4>Güvenlik Modülü</h4><p>Kamera & personel takibi.</p></div>
+  </div>
+</div>
+
+<!-- İstatistikler -->
+<section class="stats">
+  <div class="stat"><h3>120+</h3><p>Yönetilen Site</p></div>
+  <div class="stat"><h3>5000+</h3><p>Memnun Üye</p></div>
+  <div class="stat"><h3>20</h3><p>Yıllık Deneyim</p></div>
+  <div class="stat"><h3>15</h3><p>Hizmet Paketi</p></div>
+</section>
+
+<!-- Pricing -->
+<section id="pricing" class="pricing">
+  <div class="price-card">
+    <h4>Standart</h4><div class="price">₺1 500</div><button class="btn">Seç</button>
+  </div>
+  <div class="price-card">
+    <h4>Profesyonel</h4><div class="price">₺2 500</div><button class="btn">Seç</button>
+  </div>
+  <div class="price-card">
+    <h4>Kurumsal</h4><div class="price">₺4 000</div><button class="btn">Seç</button>
+  </div>
+</section>
+
+<!-- Accordion -->
+<section id="faq" class="accordion">
+  <div class="acc-item">
+    <div class="acc-header" onclick="toggleAcc(this)">Nasıl üye olurum?</div>
+    <div class="acc-body">Ücretsiz teklif formunu doldurmanız yeterli.</div>
+  </div>
+  <div class="acc-item">
+    <div class="acc-header" onclick="toggleAcc(this)">Hangi illerde hizmet?</div>
+    <div class="acc-body">İstanbul başta olmak üzere Marmara genelinde.</div>
+  </div>
+</section>
+
+<!-- Newsletter -->
+<section class="newsletter">
+  <h3>Bültene Abone Olun</h3>
+  <p>Güncellemeleri kaçırmayın.</p>
+  <div>
+    <input type="email" placeholder="E-posta adresiniz">
+    <button>Abone Ol</button>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="contact">
+  <h2>İletişime Geçin</h2>
+  <form>
+    <input type="text" placeholder="Adınız *" required>
+    <input type="email" placeholder="E-posta *" required>
+    <textarea rows="4" placeholder="Mesajınız *" required></textarea>
+    <button class="btn" type="submit">Gönder</button>
+  </form>
+</section>
+
+<!-- Footer -->
+<footer>
+  © 2025 Gürel Yönetim ·
+  <a href="#">KVKK</a>·
+  <a href="#">Çerez Politikası</a>
+</footer>
+
+<!-- Modal -->
+<div class="modal" id="myModal" onclick="closeModal(event)">
+  <div class="modal-box">
+    <h3>📣 Önemli Duyuru</h3>
+    <p>Yeni mobil uygulamamız yayında! Hemen indirin.</p>
+    <button class="close-btn" onclick="closeModal()">Kapat</button>
+  </div>
+</div>
+
+<script>
+/* Sekmeler */
+function openTab(i){
+  document.querySelectorAll('.tab-content').forEach((t,idx)=>t.classList.toggle('active',idx===i));
+}
+/* Tema Geçişi */
+function toggleTheme(){
+  const html=document.documentElement;
+  html.dataset.theme = html.dataset.theme==='theme-1' ? 'theme-2' : 'theme-1';
+}
+/* Modal */
+function openModal(){document.getElementById('myModal').classList.add('show')}
+function closeModal(e){if(!e || e.target===document.getElementById('myModal'))document.getElementById('myModal').classList.remove('show')}
+/* Accordion */
+function toggleAcc(el){
+  const body=el.nextElementSibling;
+  body.style.display = body.style.display==='block' ? 'none' : 'block';
+}
+/* Grid fade-in */
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>e.isIntersecting && e.target.classList.add('show'))
+},{threshold:.2});
+document.querySelectorAll('.grid-item').forEach(it=>observer.observe(it));
+</script>
+</body>
+</html>

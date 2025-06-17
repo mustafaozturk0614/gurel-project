@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="theme-1">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Gürel Yönetim — Kurumsal Güven</title>
+  <style>
+    /* Tema 1 Renk Değişkenleri */
+    :root[data-theme="theme-1"] {
+      --color-primary:         #0052CC;
+      --color-primary-light:   #3078E6;
+      --color-primary-dark:    #003999;
+      --color-secondary:       #FF8F00;
+      --color-secondary-light: #FFAE33;
+      --color-secondary-dark:  #CC7400;
+      --bg-body:               #FFFFFF;
+      --bg-surface:            #F4F7FB;
+      --text-primary:          #2C3E50;
+      --text-secondary:        #495C6B;
+      --text-on-primary:       #FFFFFF;
+      --border-radius:         .5rem;
+      --spacing:               1rem;
+      --shadow:                0 4px 12px rgba(0,0,0,0.1);
+      --transition:            .3s ease;
+    }
+
+    /* Reset & Global */
+    * { box-sizing: border-box; margin:0; padding:0; }
+    body { 
+        font-family: 'Segoe UI', sans-serif; 
+        background:var(--bg-body); 
+        color:var(--text-primary); 
+        line-height:1.6; 
+        transition: background-color 0.3s ease;
+    }
+    a { 
+        text-decoration:none; 
+        color:inherit; 
+        transition: color 0.3s ease;
+    }
+    .container { 
+        width:90%; 
+        max-width:1200px; 
+        margin:0 auto; 
+        padding: 0 1rem;
+    }
+
+    /* Header */
+    header { 
+        background:var(--bg-surface); 
+        box-shadow:var(--shadow);
+        position:sticky; 
+        top:0; 
+        z-index:100;
+        padding: 1rem 0;
+    }
+    nav { 
+        display:flex; 
+        align-items:center; 
+        justify-content:space-between;
+        padding: 1rem;
+    }
+    .nav-links { 
+        list-style:none; 
+        display:flex; 
+        gap:2rem;
+    }
+    .nav-links a { 
+        font-weight:500; 
+        color:var(--text-primary);
+        transition: color 0.3s ease;
+    }
+    .nav-links a:hover {
+        color: var(--color-primary);
+    }
+    .btn { 
+        padding:.8rem 1.5rem;
+        border-radius:var(--border-radius);
+        transition: all 0.3s ease;
+        cursor:pointer;
+        font-weight: 500;
+    }
+    .btn-primary { 
+        background:var(--color-primary);
+        color:var(--text-on-primary);
+        border: none;
+    }
+    .btn-primary:hover { 
+        background:var(--color-primary-dark);
+        transform: translateY(-2px);
+    }
+    .btn-secondary { 
+        background:var(--color-secondary);
+        color:var(--text-on-primary);
+        border: none;
+    }
+    .btn-secondary:hover { 
+        background:var(--color-secondary-dark);
+        transform: translateY(-2px);
+    }
+
+    /* Hero */
+    .hero {
+        position:relative;
+        background:
+            linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)),
+            url("https://picsum.photos/1600/900?random=1") center/cover no-repeat;
+        color:#fff;
+        text-align:center; 
+        padding:8rem 0 6rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .hero-content {
+        max-width: 800px;
+        text-align: center;
+    }
+    .hero h1 { 
+        font-size:3.5rem; 
+        margin-bottom:1.5rem;
+        background: linear-gradient(45deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .hero p { 
+        font-size:1.3rem; 
+        margin-bottom:2.5rem;
+        color:rgba(255,255,255,0.9);
+        background: linear-gradient(45deg, rgba(255,255,255,0.8), rgba(255,255,255,0.6));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    /* Section Başlık */
+    section { padding:4rem 0; }
+    section h2 {
+      text-align:center; margin-bottom:2rem;
+      color:var(--color-primary);
+    }
+
+    /* Hizmetler */
+    .services {
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+        gap:2rem;
+        padding: 2rem 0;
+    }
+    .service-card {
+        background: white;
+        border-radius:var(--border-radius);
+        box-shadow: var(--shadow);
+        padding:2rem;
+        text-align:center;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(0,0,0,0.1);
+    }
+    .service-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        border-color: var(--color-primary);
+    }
+    .service-card h3 {
+        margin:1.5rem 0;
+        color: var(--color-primary);
+    }
+    .service-card p {
+        color: var(--text-secondary);
+        line-height: 1.8;
+    }
+    .service-card i {
+        font-size: 2.5rem;
+        color: var(--color-primary);
+        margin-bottom: 1rem;
+    }
+
+    /* Özellikler */
+    .features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        padding: 2rem 0;
+    }
+    .feature-card {
+        background: white;
+        border-radius: var(--border-radius);
+        padding: 2rem;
+        box-shadow: var(--shadow);
+        transition: all 0.3s ease;
+    }
+    .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+    }
+    .feature-card h3 {
+        color: var(--color-primary);
+        margin-bottom: 1rem;
+    }
+    .feature-card p {
+        color: var(--text-secondary);
+        line-height: 1.8;
+    }
+    .feature-card i {
+        font-size: 2rem;
+        color: var(--color-primary);
+        margin-bottom: 1rem;
+    }
+
+    /* İstatistikler */
+    .stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        padding: 2rem 0;
+    }
+    .stat-card {
+        background: white;
+        border-radius: var(--border-radius);
+        padding: 2rem;
+        text-align: center;
+        box-shadow: var(--shadow);
+        transition: all 0.3s ease;
+    }
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+    }
+    .stat-card h3 {
+        font-size: 3rem;
+        color: var(--color-primary);
+        margin-bottom: 0.5rem;
+    }
+    .stat-card p {
+        color: var(--text-secondary);
+        font-size: 1.1rem;
+    }
+    .stat-card i {
+        font-size: 2.5rem;
+        color: var(--color-primary);
+        margin-bottom: 1rem;
+    }
+
+    /* Ekip */
+    .team {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+      gap:var(--spacing);
+    }
+    .member {
+      position:relative;
+      border-radius:var(--border-radius);
+      overflow:hidden;
+      box-shadow:var(--shadow);
+    }
+    .member img {
+      width:100%; height:200px; object-fit:cover;
+      filter: brightness(0.8);
+    }
+    .member-info {
+      position:absolute; bottom:0; left:0; right:0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.7));
+      color:#fff; padding:.75rem;
+    }
+    .member-info h4 { margin:0; }
+    .member-info p  { margin:.25rem 0 0; font-size:.9rem; }
+
+    /* Blog */
+    .blog {
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+        gap:2rem;
+        padding: 2rem 0;
+    }
+    .post {
+        background: white;
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+    .post:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+    }
+    .post img {
+        width:100%; 
+        height:200px; 
+        object-fit:cover;
+        transition: transform 0.3s ease;
+    }
+    .post:hover img {
+        transform: scale(1.05);
+    }
+    .post-content { 
+        padding:1.5rem; 
+        flex:1; 
+    }
+    .post-content h4 { 
+        margin-bottom:0.5rem; 
+        color:var(--color-primary-dark);
+        font-size: 1.5rem;
+    }
+    .post-content p  { 
+        flex:1; 
+        color:var(--text-secondary);
+        line-height: 1.8;
+    }
+    .post-content a {
+        margin-top:1rem;
+        color:var(--color-secondary-dark);
+        font-weight:500;
+        display: inline-block;
+    }
+    .post-content a:after {
+        content: '→';
+        margin-left: 0.5rem;
+        transition: transform 0.3s ease;
+    }
+    .post-content a:hover:after {
+        transform: translateX(5px);
+    }
+
+    /* Newsletter */
+    .newsletter {
+        padding: 4rem 2rem;
+        background: var(--color-primary-light);
+        color: var(--text-on-primary);
+        text-align: center;
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+    }
+    .newsletter h2 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        color: var(--text-on-primary);
+    }
+    .newsletter p {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        color: rgba(255,255,255,0.9);
+    }
+    .newsletter form {
+        display: flex;
+        gap: 1rem;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    .newsletter input {
+        flex: 1;
+        padding: 1rem;
+        border: none;
+        border-radius: var(--border-radius);
+        background: white;
+        color: var(--text-primary);
+    }
+    .newsletter button {
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: var(--border-radius);
+        background: var(--color-secondary);
+        color: var(--text-on-primary);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .newsletter button:hover {
+        background: var(--color-secondary-dark);
+        transform: translateY(-2px);
+    }
+
+    /* İletişim */
+    .contact {
+        padding: 4rem 2rem;
+    }
+    .contact form {
+        max-width: 600px;
+        margin: 0 auto;
+        display: grid;
+        gap: 1.5rem;
+    }
+    .contact .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+    .contact label {
+        margin-bottom: 0.5rem;
+        color: var(--text-primary);
+        font-weight: 500;
+    }
+    .contact input,
+    .contact textarea {
+        padding: 1rem;
+        border: 1px solid #ddd;
+        border-radius: var(--border-radius);
+        background: white;
+        color: var(--text-primary);
+        transition: all 0.3s ease;
+    }
+    .contact input:focus,
+    .contact textarea:focus {
+        border-color: var(--color-primary);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(0,82,204,0.1);
+    }
+    .contact button {
+        background: var(--color-primary);
+        color: var(--text-on-primary);
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: var(--border-radius);
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    .contact button:hover {
+        background: var(--color-primary-dark);
+        transform: translateY(-2px);
+    }
+
+    /* Footer */
+    footer {
+        background: var(--bg-surface);
+        padding: 4rem 2rem 2rem;
+        border-top: 1px solid var(--color-primary-light);
+    }
+    .footer-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        margin-bottom: 2rem;
+    }
+    .footer-section h4 {
+        color: var(--color-primary);
+        margin-bottom: 1.5rem;
+    }
+    .footer-links {
+        list-style: none;
+        padding: 0;
+    }
+    .footer-links li {
+        margin-bottom: 0.5rem;
+    }
+    .footer-links a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+    .footer-links a:hover {
+        color: var(--color-primary);
+    }
+    .footer-bottom {
+        text-align: center;
+        padding-top: 2rem;
+        border-top: 1px solid var(--color-primary-light);
+        color: var(--text-secondary);
+    }
+    
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo"><strong>Gürel Yönetim</strong></div>
+        <ul class="nav-links">
+          <li><a href="#about">Hakkımızda</a></li>
+          <li><a href="#services">Hizmetler</a></li>
+          <li><a href="#features">Özellikler</a></li>
+          <li><a href="#stats">İstatistik</a></li>
+          <li><a href="#team">Ekip</a></li>
+          <li><a href="#blog">Blog</a></li>
+          <li><a href="#newsletter">Bülten</a></li>
+          <li><a href="#contact">İletişim</a></li>
+        </ul>
+        <button class="btn btn-primary">Teklif Al</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <h1>Kurumsal Yönetimde Güvenin Adı</h1>
+      <p>Sizin için özelleştirilmiş site ve apartman yönetimi çözümleri.</p>
+      <button class="btn btn-primary">Hizmetlerimiz</button>
+      <button class="btn btn-secondary">İletişime Geç</button>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <h2>Hakkımızda</h2>
+      <p>Gürel Yönetim, 20 yılı aşkın tecrübeyle site ve apartman yönetiminde şeffaflık ve güven sağlar. Müşteri odaklı hizmet anlayışımızla her adımda yanınızdayız.</p>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="container">
+      <h2>Hizmetlerimiz</h2>
+      <div class="services">
+        <div class="service-card"><h3>Site Yönetimi</h3><p>Aidat takibi, bakım ve bütçe yönetimi.</p></div>
+        <div class="service-card"><h3>Apartman Yönetimi</h3><p>Ortak alan takibi ve yasal süreçler.</p></div>
+        <div class="service-card"><h3>Danışmanlık</h3><p>Yönetim süreçleri optimizasyonu.</p></div>
+        <div class="service-card"><h3>Finans Raporlama</h3><p>Şeffaf bütçe ve harcama takibi.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features">
+    <div class="container">
+      <h2>Öne Çıkan Özellikler</h2>
+      <ul class="features">
+        <li>7/24 Çağrı Merkezi Desteği</li>
+        <li>Online Ödeme & Raporlama</li>
+        <li>Periyodik Denetim Planı</li>
+        <li>Hukuki Süreç Yönetimi</li>
+        <li>Mobil Uygulama Erişimi</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- STATISTICS -->
+  <section id="stats" class="stats">
+    <div class="container">
+      <h2>İstatistikler</h2>
+      <div class="stats">
+        <div class="stat"><h3>120+</h3><p>Yönetilen Site</p></div>
+        <div class="stat"><h3>5000+</h3><p>Memnun Üye</p></div>
+        <div class="stat"><h3>20</h3><p>Yıllık Tecrübe</p></div>
+        <div class="stat"><h3>15</h3><p>Hizmet Paketi</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section id="team" class="team">
+    <div class="container">
+      <h2>Ekibimiz</h2>
+      <div class="team">
+        <div class="member">
+          <img src="https://picsum.photos/400/300?random=2" alt="Üye">
+          <div class="member-info"><h4>Ali Veli</h4><p>Genel Müdür</p></div>
+        </div>
+        <div class="member">
+          <img src="https://picsum.photos/400/300?random=3" alt="Üye">
+          <div class="member-info"><h4>Ayşe Demir</h4><p>Finans Uzmanı</p></div>
+        </div>
+        <div class="member">
+          <img src="https://picsum.photos/400/300?random=4" alt="Üye">
+          <div class="member-info"><h4>Mehmet Yılmaz</h4><p>Operasyon Sorumlusu</p></div>
+        </div>
+        <div class="member">
+          <img src="https://picsum.photos/400/300?random=5" alt="Üye">
+          <div class="member-info"><h4>Fatma Kaya</h4><p>Müşteri İlişkileri</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOG -->
+  <section id="blog" class="blog">
+    <div class="container">
+      <h2>Son Yazılar</h2>
+      <div class="blog">
+        <div class="post">
+          <img src="https://picsum.photos/400/200?random=6" alt="Blog">
+          <div class="post-content"><h4>Yönetimde Yeni Trendler</h4><p>2025 için akıllı yönetim sistemleri.</p><a href="#">Devamını Oku →</a></div>
+        </div>
+        <div class="post">
+          <img src="https://picsum.photos/400/200?random=7" alt="Blog">
+          <div class="post-content"><h4>Hukuki Süreç Rehberi</h4><p>Apartman yönetiminde temel mevzuat.</p><a href="#">Devamını Oku →</a></div>
+        </div>
+        <div class="post">
+          <img src="https://picsum.photos/400/200?random=8" alt="Blog">
+          <div class="post-content"><h4>Bakım Planlama İpuçları</h4><p>Periyodik bakım takvimi oluşturma.</p><a href="#">Devamını Oku →</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section id="newsletter" class="newsletter">
+    <div class="container">
+      <h2>Bültene Abone Olun</h2>
+      <p>En güncel haber ve ipuçları e-posta kutunuza gelsin.</p>
+      <div>
+        <input type="email" placeholder="Email adresiniz">
+        <button>Abone Ol</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact">
+    <div class="container">
+      <h2>İletişime Geçin</h2>
+      <form>
+        <input type="text" placeholder="Adınız *" required>
+        <input type="email" placeholder="Email *" required>
+        <textarea rows="4" placeholder="Mesajınız *" required></textarea>
+        <button type="submit">Gönder</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">&copy; 2025 Gürel Yönetim. Tüm hakları saklıdır.</div>
+  </footer>
+</body>
+</html>

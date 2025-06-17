@@ -1,0 +1,1128 @@
+/* =========================================================
+   GÜREL YÖNETİM - SPLIT SCREEN HERO
+   İki farklı iş kolu için bölünmüş ekran tasarımı
+   Versiyon 3.0 - 2024
+   ========================================================= */
+
+@import '../base/variables.css';
+   
+:root {
+  /* Split Screen Temel Değişkenleri - daha az yükseklik */
+  --split-screen-height: 100vh; /* Yüksekliği azalttım */
+  --split-screen-min-height: 100vh; /* Minimum yüksekliği azalttım */
+  
+  /* Genişlik Oranları - hover durumunda daha yatay */
+  --split-inactive-width: 35%; /* Pasif panel daha dar */
+  --split-active-width: 65%; /* Aktif panel daha geniş */
+  
+  /* Overlay ve Efektler */
+  --split-overlay: rgba(var(--color-black-rgb), 0.45);
+  --split-hover-overlay: rgba(var(--color-black-rgb), 0.3);
+  --split-scale-factor: 1.05;
+  
+  /* İçerik Düzeni */
+  --split-content-padding: var(--spacing-8, 1rem);
+  --split-content-max-width: 500px;
+  --split-content-gap: var(--spacing-3, 0.75rem);
+  
+  /* Z-index Değerleri */
+  --split-background-z: 1;
+  --split-overlay-z: 2;
+  --split-content-z: 3;
+  --split-particle-z: 4;
+  
+  /* Yeni: 3D ve Derinlik Değerleri */
+  --split-perspective: 1000px;
+  --split-3d-rotate: 2deg;
+  --split-3d-scale: 1.05;
+  --split-glow-color: rgba(255, 255, 255, 0.2);
+  --split-hover-glow: rgba(255, 255, 255, 0.35);
+  
+  /* Panel Renkleri - Sol Panel (Primary) */
+  --panel-left-bg: rgba(10, 25, 47, 0.65);
+  --panel-left-accent: rgba(66, 153, 225, 0.9);
+  --panel-left-text: rgba(255, 255, 255, 0.95);
+  
+  /* Panel Renkleri - Sağ Panel (Secondary) */
+  --panel-right-bg: rgba(26, 32, 44, 0.65);
+  --panel-right-accent: rgba(236, 72, 153, 0.9);
+  --panel-right-text: rgba(255, 255, 255, 0.95);
+  
+  /* Buton ve ikon renkleri - daha canlı */
+  --btn-primary-bg: rgba(66, 153, 225, 0.2);
+  --btn-primary-text: rgba(255, 255, 255, 0.95);
+  --btn-primary-hover: rgba(66, 153, 225, 0.35);
+  
+  --btn-secondary-bg: rgba(236, 72, 153, 0.2);
+  --btn-secondary-text: rgba(255, 255, 255, 0.95);
+  --btn-secondary-hover: rgba(236, 72, 153, 0.35);
+}
+
+/* ============================================
+   ANA CONTAINER
+   ============================================ */
+.hero-split-screen {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  height: var(--split-screen-height);
+  width: 100%;
+  overflow: hidden;
+ 
+}
+
+/* ============================================
+   SPLIT PANEL
+   ============================================ */
+.split-panel {
+  position: relative;
+  flex: 0 0 50%;
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+/* Hover Durumunda Genişlik Değişimi */
+.hero-split-screen:hover .split-panel {
+  flex: 0 0 var(--split-inactive-width);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-split-screen .split-panel:hover {
+  flex: 0 0 var(--split-active-width);
+}
+
+/* Arka Plan Görseli */
+.split-panel-bg {
+  position: absolute;
+  inset: 0; /* Modern shorthand */
+  background-size: cover;
+  background-position: center;
+  z-index: var(--split-background-z);
+  transition: transform 0.7s cubic-bezier(0.215, 0.61, 0.355, 1);
+  will-change: transform; /* Performans için */
+}
+
+/* Video Arka Plan */
+.split-panel-bg video {
+  position: absolute;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  transition: transform 0.8s ease, opacity 0.5s ease-in-out, filter 0.5s ease;
+}
+
+.split-panel:not(:hover) .split-panel-bg video {
+  opacity: 0.7;
+}
+
+/* Hover durumunda video zoom efekti */
+.split-panel:hover .split-panel-bg video {
+  transform: translate(-50%, -50%) scale(var(--split-3d-scale));
+  filter: brightness(1) contrast(1.05);
+}
+
+/* Panel Overlay */
+.split-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: var(--split-overlay);
+  z-index: var(--split-overlay-z);
+  transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+.split-panel:hover::before {
+  background: linear-gradient(135deg, 
+              rgba(var(--color-black-rgb), 0.3) 0%, 
+              rgba(var(--color-black-rgb), 0.1) 100%);
+  backdrop-filter: blur(0);
+  -webkit-backdrop-filter: blur(0);
+}
+
+/* Sol Panel için farklı gradient */
+.split-panel-left:hover::before {
+  background: linear-gradient(135deg, 
+              rgba(var(--color-primary-rgb), 0.4) 0%, 
+              rgba(var(--color-black-rgb), 0.2) 100%);
+}
+
+/* Sağ Panel için farklı gradient */
+.split-panel-right:hover::before {
+  background: linear-gradient(135deg, 
+              rgba(var(--color-secondary-rgb), 0.4) 0%, 
+              rgba(var(--color-black-rgb), 0.2) 100%);
+}
+
+/* ============================================
+   PANEL İÇERİĞİ
+   ============================================ */
+.split-panel-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 0.75rem; /* Gap azaltıldı */
+  height: 100%;
+  padding: 1rem; /* Padding azaltıldı */
+}
+
+/* İçerik Container */
+.content-container {
+  width: 100%;
+  max-width: 90%; /* İçeriği sınırladım */
+  padding: 1rem; /* Padding azaltıldı */
+  overflow: hidden; /* Taşmaları engelle */
+  border-radius: 16px;
+  transition: all 0.7s cubic-bezier(0.17, 0.67, 0.3, 0.96);
+  position: relative;
+  z-index: 2;
+  /* Başlangıçta çok hafif, neredeyse görünmez kenarlık ve arka plan */
+ 
+  backdrop-filter: blur(5px);
+  transform-origin: center;
+  /* İçerik yerleşimini yatay düzen için optimize ettim */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 0.75rem;
+  color: var(--panel-left-text);
+  letter-spacing: 0.3px;
+}
+
+/* Hover durumunda geliştirilmiş content container */
+.split-panel:hover .content-container {
+  padding: 2.25rem;
+  transform: translateY(-8px) scale(1.02);
+  background: rgba(15, 23, 42, 0.65);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.3),
+    0 0 15px rgba(255, 255, 255, 0.05) inset;
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  /* Yeni parıltı efekti */
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.3),
+    0 0 15px rgba(255, 255, 255, 0.05) inset,
+    0 0 35px rgba(var(--color-primary-rgb), 0.15);
+}
+
+/* Sol panel için özel hover efektleri */
+.split-panel-left:hover .content-container {
+  background: var(--panel-left-bg);
+  border-color: rgba(66, 153, 225, 0.2);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2), 0 0 15px rgba(66, 153, 225, 0.1) inset;
+}
+
+/* Sağ panel için özel hover efektleri */
+.split-panel-right:hover .content-container {
+  background: var(--panel-right-bg);
+  border-color: rgba(236, 72, 153, 0.2);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2), 0 0 15px rgba(236, 72, 153, 0.1) inset;
+}
+
+/* Hover durumunda metin renklerini belirginleştirme */
+.split-panel:hover .split-panel-title, 
+.split-panel:hover .split-panel-description,
+.split-panel:hover .split-feature span {
+  color: var(--color-white);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.7); /* Okunabilirliği artırmak için gölge */
+}
+
+/* Hover durumunda ikonların parlaması */
+.split-panel-left:hover .split-feature i,
+.split-panel-left:hover .split-panel-icon i {
+  color: rgba(var(--color-primary-rgb), 1);
+  filter: drop-shadow(0 0 5px rgba(var(--color-primary-rgb), 0.7));
+}
+
+.split-panel-right:hover .split-feature i,
+.split-panel-right:hover .split-panel-icon i {
+  color: rgba(var(--color-secondary-rgb), 1);
+  filter: drop-shadow(0 0 5px rgba(var(--color-secondary-rgb), 0.7));
+}
+
+/* Kenarlarda hafif parıltı efekti */
+.split-panel:hover .content-container::after {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  bottom: -1px;
+  border-radius: 12px;
+  background: linear-gradient(45deg, 
+              rgba(255, 255, 255, 0.1), 
+              transparent 40%, 
+              transparent 60%, 
+              rgba(255, 255, 255, 0.1));
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Hero Badge */
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 30px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 1rem;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.hero-badge:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.hero-badge i {
+  font-size: 0.9rem;
+}
+
+.hero-badge:hover i {
+  transform: scale(1.2) rotate(5deg);
+}
+
+/* İkon */
+.split-panel-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px; /* Daha büyük ikon */
+  height: 60px; /* Daha büyük ikon */
+  border-radius: 50%;
+  margin-block-end: 0.75rem;
+  background: linear-gradient(135deg, rgba(66, 153, 225, 0.2), rgba(66, 153, 225, 0.4));
+  border: 1px solid rgba(66, 153, 225, 0.3);
+  box-shadow: var(--shadow-md), 0 0 15px rgba(255, 255, 255, 0.3);
+  transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.split-panel-icon::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.4), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.split-panel-icon i {
+  font-size: 30px; /* Daha büyük ikon */
+  color: rgba(255, 255, 255, 0.95);
+  transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+.split-panel:hover .split-panel-icon {
+  transform: translateY(-5px) scale(1.1) rotate(5deg);
+  box-shadow: var(--shadow-lg), 0 0 25px rgba(255, 255, 255, 0.5);
+}
+
+.split-panel:hover .split-panel-icon::before {
+  opacity: 1;
+}
+
+.split-panel:hover .split-panel-icon i {
+  transform: scale(1.1);
+}
+
+/* Başlık Stilleri */
+.split-panel-title {
+  margin-bottom: 0.5rem; /* Margin azaltıldı */
+  font-size: 2.25rem; /* Font boyutu küçültüldü */
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  position: relative;
+  word-break: break-word;
+  width: 100%;
+}
+
+/* Başlık altı çizgisi - modern dokunuş */
+.split-panel-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -8px;
+  width: 40px;
+  height: 3px;
+  transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.split-panel-left .split-panel-title::after {
+  background: linear-gradient(to right, var(--panel-left-accent), rgba(66, 153, 225, 0.3));
+}
+
+.split-panel-right .split-panel-title::after {
+  background: linear-gradient(to right, var(--panel-right-accent), rgba(236, 72, 153, 0.3));
+}
+
+/* Hover durumunda başlık altı çizgisi genişliyor */
+.split-panel:hover .split-panel-title::after {
+  width: 100%;
+}
+
+/* Açıklama */
+.split-panel-description {
+  margin-bottom: 1rem; /* Margin azaltıldı */
+  font-size: 1rem; /* Font boyutu küçültüldü */
+  line-height: 1.6;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.85);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  max-width: 95%;
+  word-break: break-word;
+  width: 100%;
+}
+
+.split-panel:hover .split-panel-description {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+/* Özellikler Listesi */
+.split-panel-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.75rem;
+  width: 100%;
+  margin: 0.75rem 0 1.25rem;
+}
+
+.split-feature {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* Gap azaltıldı */
+  padding: 0.5rem 0.75rem; /* Padding azaltıldı */
+  margin-bottom: 0;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+}
+
+.split-feature:hover {
+  transform: translateX(5px);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.split-feature i {
+  font-size: 0.9rem; /* Font boyutu küçültüldü */
+  width: 24px; /* Genişlik azaltıldı */
+  height: 24px; /* Yükseklik azaltıldı */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  transition: all 0.4s ease;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.split-panel-left:hover .split-feature:hover i {
+  color: rgba(var(--color-primary-rgb), 1);
+  transform: scale(1.2) rotate(-5deg);
+  filter: drop-shadow(0 0 8px rgba(var(--color-primary-rgb), 0.8));
+}
+
+.split-panel-right:hover .split-feature:hover i {
+  color: rgba(var(--color-secondary-rgb), 1);
+  transform: scale(1.2) rotate(-5deg);
+  filter: drop-shadow(0 0 8px rgba(var(--color-secondary-rgb), 0.8));
+}
+
+/* Buton animasyonları ve dinamik efektler */
+.split-panel-btn {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+/* Işık dalgası efekti */
+.split-panel-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.3), 
+    transparent);
+  transition: all 0.6s ease;
+  z-index: 0;
+}
+
+.split-panel-btn:hover::before {
+  left: 100%;
+}
+
+/* Tıklama animasyonu */
+.split-panel-btn:active {
+  transform: scale(0.97) translateY(2px);
+  transition: all 0.2s ease;
+}
+
+/* Buton içeriği z-index düzeltmesi ve ok hareketi */
+.split-panel-btn span, .split-panel-btn i {
+  position: relative;
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+
+.split-panel-btn:hover i {
+  transform: translateX(5px);
+}
+
+/* Sol panel butonu için özel hover efekti */
+.split-panel-left .split-panel-btn:hover {
+  background: var(--btn-primary-hover);
+  box-shadow: 0 5px 15px rgba(66, 153, 225, 0.3);
+  transform: translateY(-3px);
+}
+
+/* Sağ panel butonu için özel hover efekti */
+.split-panel-right .split-panel-btn:hover {
+  background: var(--btn-secondary-hover);
+  box-shadow: 0 5px 15px rgba(236, 72, 153, 0.3);
+  transform: translateY(-3px);
+}
+
+/* ============================================
+   PARTİKÜL EFEKTLERİ
+   ============================================ */
+.hero-particles-container {
+  position: absolute;
+  inset: 0;
+  z-index: var(--split-particle-z);
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(var(--color-primary-rgb), 0.3);
+  filter: blur(8px);
+  opacity: 0;
+  animation: floatParticle 8s ease-in-out infinite;
+}
+
+.particle-1 {
+  width: 120px;
+  height: 120px;
+  top: 15%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.particle-2 {
+  width: 80px;
+  height: 80px;
+  top: 25%;
+  right: 15%;
+  background: rgba(var(--color-secondary-rgb), 0.3);
+  animation-delay: 1s;
+}
+
+.particle-3 {
+  width: 160px;
+  height: 160px;
+  bottom: 20%;
+  left: 20%;
+  background: rgba(var(--color-warning-rgb), 0.2);
+  animation-delay: 2s;
+}
+
+.particle-4 {
+  width: 60px;
+  height: 60px;
+  bottom: 10%;
+  right: 20%;
+  animation-delay: 3s;
+}
+
+.particle-5 {
+  width: 100px;
+  height: 100px;
+  top: 40%;
+  left: 50%;
+  background: rgba(var(--color-secondary-rgb), 0.2);
+  animation-delay: 4s;
+}
+
+/* ============================================
+   NAVİGASYON VE YARDIMCI ELEMENTLER
+   ============================================ */
+/* Yan Gezinme Noktaları */
+.hero-side-nav {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  z-index: 1030;
+  gap: 15px;
+}
+
+.side-nav-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.side-nav-dot:hover, .side-nav-dot.active {
+  background-color: var(--color-brand);
+  transform: scale(1.2);
+}
+
+.side-nav-dot::before {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.3s ease;
+}
+
+.side-nav-dot.active::before {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.side-nav-dot[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: var(--color-brand);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.side-nav-dot:hover[data-tooltip]::after {
+  opacity: 1;
+  visibility: visible;
+  right: 25px;
+}
+
+/* Aşağı Kaydırma Göstergesi */
+.scroll-down-indicator {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  text-align: center;
+}
+
+.scroll-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--color-white);
+  text-decoration: none;
+  transition: transform 0.3s ease;
+}
+
+.scroll-btn:hover {
+  transform: translateY(-5px);
+}
+
+.mouse {
+  width: 30px;
+  height: 50px;
+  border: 2px solid var(--color-white);
+  border-radius: 20px;
+  position: relative;
+  margin-bottom: 10px;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.scroll-btn:hover .mouse {
+  border-color: var(--color-primary-light);
+  box-shadow: 0 0 20px rgba(var(--color-primary-rgb), 0.5);
+}
+
+.wheel {
+  width: 4px;
+  height: 10px;
+  background-color: var(--color-white);
+  border-radius: 2px;
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: scrollWheel 1.5s ease-in-out infinite;
+}
+
+.scroll-btn:hover .wheel {
+  background-color: var(--color-primary-light);
+}
+
+.scroll-text {
+  font-size: var(--font-size-sm);
+  margin-bottom: 5px;
+  transition: all 0.3s ease;
+}
+
+.scroll-btn:hover .scroll-text {
+  color: var(--color-primary-light);
+}
+
+.scroll-btn i {
+  animation: bounce 1.5s infinite;
+  transition: all 0.3s ease;
+}
+
+.scroll-btn:hover i {
+  color: var(--color-primary-light);
+}
+
+/* ============================================
+   ANİMASYONLAR
+   ============================================ */
+@keyframes floatParticle {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateY(-30px) translateX(20px);
+    opacity: 0.8;
+  }
+  75% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes scrollWheel {
+  0% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(15px);
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-5px); }
+  60% { transform: translateY(-3px); }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Yeni eklenen animasyonlar */
+@keyframes glowPulse {
+  0%, 100% { filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3)); }
+  50% { filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.6)); }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* ============================================
+   RESPONSIVE DÜZEN
+   ============================================ */
+/* Desktop */
+@media (min-width: 992px) {
+  .split-panel-content {
+    padding: var(--spacing-8);
+  }
+  
+  .split-panel-title {
+    font-size: 2.4rem;
+  }
+}
+
+/* Tablet */
+@media (max-width: 991px) {
+  .split-panel-features {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .split-panel-content {
+    padding: var(--spacing-4);
+  }
+  
+  .split-panel-title {
+    font-size: 1.8rem;
+  }
+  
+  .hero-side-nav {
+    display: none;
+  }
+}
+
+/* Büyük Mobil */
+@media (max-width: 767px) {
+  .hero-split-screen {
+    flex-direction: column;
+    height: auto;
+  }
+  
+  .split-panel {
+    height: 80vh;
+    min-height: 400px;
+  }
+  
+  .split-panel-features {
+    grid-template-columns: 1fr;
+  }
+  
+  .split-panel-content {
+    padding: var(--spacing-4);
+    max-width: 100%;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .split-panel-title {
+    font-size: 1.5rem;
+  }
+  
+  .split-panel-title::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .hero-badge {
+    align-self: center;
+  }
+  
+  .hero-split-screen:hover .split-panel,
+  .hero-split-screen .split-panel:hover {
+    flex-basis: auto;
+  }
+  
+  .particle {
+    opacity: 0.3;
+    filter: blur(5px);
+  }
+}
+
+/* Küçük Mobil */
+@media (max-width: 576px) {
+  .split-panel {
+    height: 70vh;
+    min-height: 350px;
+  }
+  
+  .split-panel-content {
+    padding: var(--spacing-3);
+  }
+  
+  .split-panel-title {
+    font-size: 1.3rem;
+  }
+  
+  .split-panel-description {
+    font-size: 0.9rem;
+  }
+  
+  .split-panel-icon {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .split-panel-icon i {
+    font-size: 24px;
+  }
+  
+  .hero-badge {
+    font-size: 0.75rem;
+    padding: 0.4rem 0.8rem;
+  }
+  
+  .split-panel-btn {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* ============================================
+   ERİŞİLEBİLİRLİK VE PERFORMANS
+   ============================================ */
+/* Hareket azaltma ayarları */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+html[data-reduced-motion="true"] * {
+  transition: none !important;
+  animation: none !important;
+}
+
+/* Responsive medya sorguları */
+@media (max-width: 1200px) {
+  :root {
+    --split-screen-height: 80vh;
+    --split-screen-min-height: 480px;
+    --split-inactive-width: 30%;
+    --split-active-width: 70%;
+  }
+  
+  .hero-section {
+    margin-top: 60px; /* Header yüksekliğine göre ayarlandı */
+  }
+  
+  .content-container {
+    padding: 1.5rem;
+    max-width: 90%;
+  }
+  
+  .split-panel-title {
+    font-size: 1.75rem;
+  }
+  
+  .split-panel-description {
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+  }
+  
+  .split-panel-features {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+  
+  .split-feature {
+    font-size: 0.85rem;
+    padding: 0.5rem;
+  }
+}
+
+@media (max-width: 992px) {
+  :root {
+    --split-screen-height: 75vh;
+    --split-screen-min-height: 450px;
+  }
+  
+  .hero-split-screen {
+    flex-direction: column;
+    height: auto;
+    min-height: calc(var(--split-screen-min-height) * 2);
+  }
+  
+  .split-panel {
+    width: 100% !important;
+    height: var(--split-screen-height);
+    min-height: var(--split-screen-min-height);
+  }
+  
+  .split-panel-content {
+    padding: 2rem 1.5rem;
+  }
+  
+  /* Scroll indikatörün pozisyonu */
+  .scroll-down-indicator {
+    bottom: calc(var(--split-screen-height) - 100px);
+  }
+  
+  /* Yan gezinme noktalarının pozisyonu */
+  .hero-side-nav {
+    top: 50%;
+    right: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --split-screen-height: 70vh;
+    --split-screen-min-height: 420px;
+  }
+  
+  .hero-section {
+    margin-top: 50px; /* Mobil header yüksekliğine göre ayarlandı */
+  }
+  
+  .split-panel-content {
+    padding: 1.5rem 1rem;
+  }
+  
+  .hero-badge {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.5rem;
+  }
+  
+  .split-panel-title {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .split-panel-description {
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .split-panel-features {
+    grid-template-columns: 1fr;
+    margin: 0.5rem 0 1rem;
+  }
+  
+  .split-panel-btn {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  /* Scroll indikatörü mobilde gizle */
+  .scroll-down-indicator {
+    display: none;
+  }
+  
+  /* Yan gezinme noktalarını küçült */
+  .hero-side-nav {
+    transform: scale(0.8);
+    right: 5px;
+  }
+}
+
+@media (max-width: 576px) {
+  :root {
+    --split-screen-height: 65vh;
+    --split-screen-min-height: 380px;
+  }
+  
+  .content-container {
+    max-width: 95%;
+    padding: 1rem;
+  }
+  
+  .split-panel-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .split-panel-title {
+    font-size: 1.3rem;
+  }
+  
+  .split-panel-description {
+    font-size: 0.85rem;
+  }
+  
+  .split-feature {
+    font-size: 0.8rem;
+    padding: 0.4rem;
+  }
+  
+  .split-panel-btn {
+    padding: 0.5rem 0.9rem;
+    font-size: 0.85rem;
+  }
+  
+  /* Yan gezinme noktalarını mobilde gizle */
+  .hero-side-nav {
+    display: none;
+  }
+}
+
+/* Yatay mod için özel düzenleme */
+@media (max-height: 600px) and (min-width: 576px) {
+  :root {
+    --split-screen-height: 100vh;
+    --split-screen-min-height: 400px;
+  }
+  
+  .split-panel-content {
+    padding-top: 1rem;
+  }
+  
+  .split-panel-title {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .split-panel-description {
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .split-panel-features {
+    margin: 0.5rem 0;
+  }
+  
+  .scroll-down-indicator {
+    bottom: 10px;
+  }
+}
+
+/* Header responsive düzenlemeleri */
+@media (max-width: 992px) {
+  .patreon-header {
+    padding: 0.5rem 0;
+  }
+  
+  .patreon-header.transparent {
+    background: rgba(0, 0, 0, 0.5); /* Mobilde tam şeffaf yerine hafif karartma */
+  }
+  
+  .patreon-header .navbar-brand .header-logo {
+    height: 40px;
+  }
+} 
